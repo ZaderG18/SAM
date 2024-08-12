@@ -50,15 +50,6 @@ $tableQueries = [
         codigo INT NOT NULL,
         cargo INT NOT NULL
     )",
-    "responsavel" => "CREATE TABLE IF NOT EXISTS responsavel (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL,
-        email VARCHAR(40) NOT NULL,
-        senha VARCHAR(255) NOT NULL,
-        nome VARCHAR(40) NOT NULL,
-        codigo INT NOT NULL,
-        cargo INT NOT NULL
-    )",
     "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
@@ -96,8 +87,7 @@ if (!$RM || !$email || !$senha || !$nome || !$codigo || !$cargo) {
 $tableMap = [
     1 => 'aluno',
     2 => 'professor',
-    3 => 'coordenador',
-    4 => 'responsavel'
+    3 => 'coordenador'
 ];
 $tableName = $tableMap[$cargo] ?? 'aluno';
 
@@ -140,18 +130,6 @@ if ($result->num_rows > 0) {
     echo "Nenhum resultado encontrado.";
 }
 $sqlSelect = "SELECT * FROM coordenador";
-$result = $conn->query($sqlSelect);
-$count = 0;
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $count++;
-        header('Location:../cadastro.html');
-       // echo $count . " - RM: " . htmlspecialchars($row["RM"]) . " - Email: " . htmlspecialchars($row["email"]) . " - Senha: " . htmlspecialchars($row["senha"]) . " - Nome: " . htmlspecialchars($row["nome"]) . " - Código: " . htmlspecialchars($row["codigo"]) . "<br>";
-    }
-} else {
-    echo "Nenhum resultado encontrado.";
-}
-$sqlSelect = "SELECT * FROM responsavel";
 $result = $conn->query($sqlSelect);
 $count = 0;
 if ($result->num_rows > 0) {
