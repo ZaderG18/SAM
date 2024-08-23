@@ -154,7 +154,13 @@
                     <i class='bx bx-dots-horizontal-rounded'></i>
                 </div>
             </div>
-            <div class="conversas"></div>
+            <form id="chat-form" method="POST" action="">
+                <input type="hidden" name="receptor_id" value="ID_DO_RECEPTOR">
+                <textarea name="mensagem" placeholder="Digite sua mensagem"></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            
+            
         </div>
     </div>
 </body>

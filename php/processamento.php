@@ -1,6 +1,9 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 
 $host = "localhost";
@@ -31,8 +34,8 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-$tableQueries = [
-    "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
+    $tableQueries = [
+        "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
         email VARCHAR(40) NOT NULL,
@@ -58,8 +61,108 @@ $tableQueries = [
         nome VARCHAR(40) NOT NULL,
         codigo INT NOT NULL,
         cargo INT NOT NULL
+    )",
+    "turma" => "CREATE TABLE IF NOT EXISTS turma (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        disciplina VARCHAR(30) NOT NULL,
+        professor_id INT NOT NULL,
+        coordenador_id INT NOT NULL,
+        aluno_id INT NOT NULL,
+        data_inicio DATE NOT NULL,
+        data_fim DATE NOT NULL,
+        FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
+    )",
+    "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome_disciplina VARCHAR(30) NOT NULL,
+        carga_horaria INT NOT NULL,
+        semestre INT NOT NULL,
+        ano INT NOT NULL,
+        coordenador_id INT NOT NULL,
+        professor_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+        FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "matricula" => "CREATE TABLE IF NOT EXISTS matricula (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        nota DECIMAL(3,2) NOT NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        data DATE NOT NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "faltas" => "CREATE TABLE IF NOT EXISTS faltas (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        data DATE NOT NULL,
+        motivo_ausencia VARCHAR(50) NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        data DATE NOT NULL,
+        presenca VARCHAR(10) NOT NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "mensao" => "CREATE TABLE IF NOT EXISTS mensao (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        aluno_id INT NOT NULL,
+        turma_id INT NOT NULL,
+        mensao VARCHAR(100) NOT NULL,
+        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "mensagens_chat" => "CREATE TABLE IF NOT EXISTS mensagens_chat (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        receptor_id INT NOT NULL,
+        mensagem TEXT NOT NULL,
+        data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+        user_role ENUM('aluno', 'professor', 'coordenador') NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
+        FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
+    )",
+    "cronograma" => "CREATE TABLE IF NOT EXISTS cronograma(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    turma_id INT NOT NULL,
+    data DATE NOT NULL,
+    hora TIME NOT NULL,
+    atividade VARCHAR(100) NOT NULL,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    )",
+    "declaracoes" => "CREATE TABLE IF NOT EXISTS declaracoes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    declaracao TEXT NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )"
-];
+    ];
 
 
 foreach ($tableQueries as $tableName => $sqlTable) {
