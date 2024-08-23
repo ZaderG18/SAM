@@ -245,5 +245,31 @@ if ($result->num_rows > 0) {
     echo "Nenhum resultado encontrado.";
 }
 
+function emailExiste($conn, $email){
+    $sql = "SELECT id FROM aluno WHERE email = ?
+    UNION
+    SELECT id FROM professor WHERE email = ?
+    UNION
+    SELECT id FROM coordenador WHERE email = ?";
+    if ($stmt = $conn->prepare($sql)){
+        $stmt->bind_param("sss", $email, $email, $email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0){
+            return true;
+            }else{
+                return false;
+            }
+            $stmt->close();
+    }else{
+        die("erro na query: " . $conn->error);
+    }
+}
+if(emailExiste($conn, $email)){
+    echo "Email já existe";
+}else{
+    echo "O email não está cadastrado";
+}
+
 $conn->close();
 ?>
