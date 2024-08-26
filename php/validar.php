@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'email' => $email,
                 'role' => 'aluno'  // Define o papel como aluno
             ];
-            header("Location: /SAM/home_aluno.php");
+            header("Location: ../pages/home_aluno.php");
             exit();
         }
     }
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'email' => $email,
                 'role' => 'professor'  // Define o papel como professor
             ];
-            header("Location: /SAM/home_professor.php");
+            header("Location: ../pages/home_professor.php");
             exit();
         }
     }
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'email' => $email,
                 'role' => 'coordenador'  // Define o papel como coordenador
             ];
-            header("Location: /SAM/home_coordenador.php");
+            header("Location: ../pages/home_coordenador.php");
             exit();
         }
     }

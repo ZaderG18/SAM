@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: validar.php');
     exit();
 }
-require_once 'funcao.php';
+require_once '../php/funcao.php';
 $user = $_SESSION['user'];
 
 $host = "localhost";
