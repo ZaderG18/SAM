@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Metadados e links para arquivos CSS e ícones -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/EsqueceuSenha.css"> <!-- Link para o arquivo de estilos CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- Link para o CDN dos ícones Bootstrap -->
+    <link rel="icon" href="imagens/icone-logo-1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <title>Esqueceu Senha - SAM </title> <!-- Título da página -->
+</head>
+<body>
+    <section>
+        <!-- Container para a imagem de fundo -->
+        <div class="imgbx">
+            <img src="imagens/fundo.png" alt="fundo">
+        </div>
+        <div class="contentbx">
+            <!-- Container para o cabeçalho do formulário -->
+            <div class="headerbx">
+                <h2>Esqueceu a Senha?</h2>
+                <p>Insira o e-mail que você usou para criar sua conta para que possamos enviar as instruções sobre como redefinir sua senha.</p>
+            </div>
+            <!-- Início do formulário -->
+            <div class="formbx">
+                <form>
+                    <!-- Campo de entrada para o email -->
+                    <div class="inputbx">
+                        <span>Email</span>
+                        <input type="email" name="email" id="email" placeholder="Digite o seu Email" required>
+                    </div>
+
+                    <!-- Botão de envio -->
+                    <div class="inputbx">
+                        <input type="submit" value="Enviar" onclick="window.location.href='verificarEmail.html'">
+                    </div>
+
+                    <!-- Botão de voltar -->
+                    <div class="inputbx">
+                        <input type="button" value="Voltar" id="voltar" onclick="window.location.href='login.html'"> 
+                    </div>
+
+                    <div class="button-container">
+                        <a href="verificaremail.html" class="simple-btn">Ir para Verificar Email</a>
+                    </div>
+                </form> <!-- Fim do formulário -->
+            </div> <!-- Fim do container formbx -->
+        </div> <!-- Fim do container contentbx -->
+    </section> <!-- Fim da seção principal -->
+</body>
+</html>

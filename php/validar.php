@@ -17,77 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
 
     // Verifica se é aluno
-    $stmt = $conn->prepare("SELECT id, nome, email, RM, codigo, senha FROM aluno WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $nome, $email, $RM, $codigo, $hashed_password);
-        $stmt->fetch();
-        
-        if (password_verify($senha, $hashed_password)) {
-            $_SESSION['user'] = [
-                'id' => $id,
-                'nome' => $nome,
-                'email' => $email,
-                'RM' => $RM,
-                'codigo' => $codigo,
-                'role' => 'aluno'  // Define o papel como aluno
-            ];
-            header("Location: /SAM/home_aluno.php");
-            exit();
-        }
-    }
-
-    // Verifica se é professor
-    $stmt = $conn->prepare("SELECT id, nome, email, codigo, senha FROM professor WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $nome, $email, $codigo, $hashed_password);
-        $stmt->fetch();
-        
-        if (password_verify($senha, $hashed_password)) {
-            $_SESSION['user'] = [
-                'id' => $id,
-                'nome' => $nome,
-                'email' => $email,
-                'codigo' => $codigo,
-                'role' => 'professor'  // Define o papel como professor
-            ];
-            header("Location: /SAM/home_professor.php");
-            exit();
-        }
-    }
-
-    // Verifica se é coordenador (assumindo que coordenadores têm acesso a professores e alunos)
-    $stmt = $conn->prepare("SELECT id, nome, email, codigo, senha FROM coordenador WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $nome, $email, $codigo, $hashed_password);
-        $stmt->fetch();
-        
-        if (password_verify($senha, $hashed_password)) {
-            $_SESSION['user'] = [
-                'id' => $id,
-                'nome' => $nome,
-                'email' => $email,
-                'codigo' => $codigo,
-                'role' => 'coordenador'  // Define o papel como coordenador
-            ];
-            header("Location: /SAM/home_coordenador.php");
-            exit();
-        }
-    }
-
-    // Verifica se é responsável (assumindo que responsáveis têm acesso a um aluno específico)
-    $stmt = $conn->prepare("SELECT id, nome, email, RM FROM responsavel WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, nome, email, senha FROM aluno WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
@@ -101,14 +31,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'id' => $id,
                 'nome' => $nome,
                 'email' => $email,
-                'role' => 'responsavel'  // Define o papel como responsável
+                'role' => 'aluno'  // Define o papel como aluno
             ];
-            header("Location: /SAM/home_responsavel.php");
+            header("Location: /SAM/home_aluno.php");
             exit();
         }
     }
 
-    // Se nenhum usuário foi encontrado, exibe mensagem de erro
+    // Verifica se é professor
+    $stmt = $conn->prepare("SELECT id, nome, email, senha FROM professor WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $nome, $email, $hashed_password);
+        $stmt->fetch();
+        
+        if (password_verify($senha, $hashed_password)) {
+            $_SESSION['user'] = [
+                'id' => $id,
+                'nome' => $nome,
+                'email' => $email,
+                'role' => 'professor'  // Define o papel como professor
+            ];
+            header("Location: /SAM/home_professor.php");
+            exit();
+        }
+    }
+
+    // Verifica se é coordenador (assumindo que coordenadores têm acesso a professores e alunos)
+    $stmt = $conn->prepare("SELECT id, nome, email, senha FROM coordenador WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $nome, $email, $hashed_password);
+        $stmt->fetch();
+        
+        if (password_verify($senha, $hashed_password)) {
+            $_SESSION['user'] = [
+                'id' => $id,
+                'nome' => $nome,
+                'email' => $email,
+                'role' => 'coordenador'  // Define o papel como coordenador
+            ];
+            header("Location: /SAM/home_coordenador.php");
+            exit();
+        }
+    }
     echo "Email ou senha incorretos.";
 
     $stmt->close();

@@ -1,178 +1,147 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Tempo de geração: 27/06/2024 às 03:42
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Conecte ao MySQL Server e crie o banco de dados
+CREATE DATABASE IF NOT EXISTS SAM;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- Use o banco de dados criado
+USE SAM;
 
+-- Criação das tabelas
+CREATE TABLE IF NOT EXISTS aluno (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    RM VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(40) NOT NULL,
+    codigo INT NOT NULL,
+    cargo INT NOT NULL
+);
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE IF NOT EXISTS professor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    RM VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(40) NOT NULL,
+    codigo INT NOT NULL,
+    cargo INT NOT NULL
+);
 
---
--- Banco de dados: `sam`
---
+CREATE TABLE IF NOT EXISTS coordenador (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    RM VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(40) NOT NULL,
+    codigo INT NOT NULL,
+    cargo INT NOT NULL
+);
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS turma (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    disciplina VARCHAR(30) NOT NULL,
+    professor_id INT NOT NULL,
+    coordenador_id INT NOT NULL,
+    aluno_id INT NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
+);
 
---
--- Estrutura para tabela `aluno`
---
+CREATE TABLE IF NOT EXISTS disciplina (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_disciplina VARCHAR(30) NOT NULL,
+    carga_horaria INT NOT NULL,
+    semestre INT NOT NULL,
+    ano INT NOT NULL,
+    coordenador_id INT NOT NULL,
+    professor_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+    FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
-CREATE TABLE `aluno` (
-  `id` int(11) NOT NULL,
-  `RM` varchar(10) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
-  `nome` varchar(40) NOT NULL,
-  `codigo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS matricula (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS avaliacao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    nota DECIMAL(3,2) NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
---
--- Estrutura para tabela `cliente`
---
+CREATE TABLE IF NOT EXISTS atividade (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    data DATE NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
-CREATE TABLE `cliente` (
-  `id` int(11) NOT NULL,
-  `RM` varchar(10) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
-  `nome` varchar(40) NOT NULL,
-  `codigo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS frequencia (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    data DATE NOT NULL,
+    presenca VARCHAR(10) NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS mensao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    mensao VARCHAR(100) NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
---
--- Estrutura para tabela `coordenador`
---
+CREATE TABLE IF NOT EXISTS mensagens_chat (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    receptor_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    user_role ENUM('aluno', 'professor', 'coordenador') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
+);
 
-CREATE TABLE `coordenador` (
-  `id` int(11) NOT NULL,
-  `RM` varchar(10) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
-  `nome` varchar(40) NOT NULL,
-  `codigo` int(11) NOT NULL,
-  `cargo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS cronograma (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    turma_id INT NOT NULL,
+    data DATE NOT NULL,
+    hora TIME NOT NULL,
+    atividade VARCHAR(100) NOT NULL,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
---
--- Despejando dados para a tabela `coordenador`
---
+CREATE TABLE IF NOT EXISTS declaracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    declaracao TEXT NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+);
 
-INSERT INTO `coordenador` (`id`, `RM`, `email`, `senha`, `nome`, `codigo`, `cargo`) VALUES
-(1, '4232', 'arthurhenriquegr818@gmail.com', '$2y$10$9RYcLrHZbGlYQ1NklGwwA.S5gRnxsWYGv', 'Arthur Henrique Goes Rodrigues', 2020, 0);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `professor`
---
-
-CREATE TABLE `professor` (
-  `id` int(11) NOT NULL,
-  `RM` varchar(10) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
-  `nome` varchar(40) NOT NULL,
-  `codigo` int(11) NOT NULL,
-  `cargo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `responsavel`
---
-
-CREATE TABLE `responsavel` (
-  `id` int(11) NOT NULL,
-  `RM` varchar(10) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `senha` varchar(40) NOT NULL,
-  `nome` varchar(40) NOT NULL,
-  `codigo` int(11) NOT NULL,
-  `cargo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices de tabela `aluno`
---
-ALTER TABLE `aluno`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `coordenador`
---
-ALTER TABLE `coordenador`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `professor`
---
-ALTER TABLE `professor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `responsavel`
---
-ALTER TABLE `responsavel`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `aluno`
---
-ALTER TABLE `aluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de tabela `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `coordenador`
---
-ALTER TABLE `coordenador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `professor`
---
-ALTER TABLE `professor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `responsavel`
---
-ALTER TABLE `responsavel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-ALTER TABLE mensagens_chat ADD receptor_id INT NOT NULL;
+CREATE TABLE IF NOT EXISTS chamada (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    nome_aluno VARCHAR(50) NOT NULL,
+    presente TINYINT(1) NOT NULL,
+    motivo_ausencia VARCHAR(50) NULL,
+    data DATE NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
+);
