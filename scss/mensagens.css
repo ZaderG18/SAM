@@ -1,0 +1,334 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+header {
+  width: 100%;
+  height: auto;
+  background-color: #ebebeb;
+  padding: 0 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 999;
+  position: sticky;
+  top: 0;
+}
+
+header .flex-icons {
+  display: flex;
+  align-items: center;
+}
+
+header .flex-icons .atalho-office {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+header .flex-icons .atalho-office:hover {
+  background-color: white;
+}
+
+header .flex-icons .atalho-office img {
+  width: 38px;
+  margin: 5px 20px 0 20px;
+}
+
+header .flex-icons i {
+  font-size: 30px;
+  cursor: pointer;
+  margin-right: 20px;
+  color: #6c6c6c;
+  padding: 10px 25px 10px 25px;
+}
+
+header .flex-icons i:hover {
+  background-color: white;
+  color: #777ee3;
+}
+
+header .flex-icons img {
+  width: 25px;
+  margin-left: 5px;
+}
+
+header .box-serch i {
+  color: #616161;
+  font-size: 20px;
+  padding: 5px 10px 5px 10px;
+}
+
+header .box-serch {
+  width: 30%;
+  height: 37px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+header .box-serch input {
+  border: none;
+  padding: 5px 5px;
+  outline: none;
+  width: 100%;
+}
+
+header .box-right {
+  display: flex;
+  align-items: center;
+}
+
+header .box-right button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+header .box-right .bx-dots-horizontal-rounded {
+  color: #616161;
+  font-size: 25px;
+}
+
+header .box-right .bx-dots-horizontal-rounded:hover {
+  background-color: white;
+}
+
+header .box-right i {
+  font-size: 22px;
+  color: #616161;
+  margin: 0 10px;
+  padding: 5px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+header .box-right i:hover {
+  background-color: white;
+  border-radius: 100px;
+}
+
+header .box-right .right-menu {
+  height: auto;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.flex-container aside {
+  width: 90px;
+  height: 100vh;
+  background-color: #ebebeb;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 20px 0;
+}
+
+.flex-container aside .box-menu-01 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #616161;
+  margin: 10px 0;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.flex-container aside .box-menu-01:hover {
+  background-color: white;
+  color: #777ee3;
+}
+
+.flex-container aside .box-menu-01 i {
+  font-size: 20px;
+}
+
+.flex-container aside .box-menu-01 span {
+  font-size: 10px;
+}
+
+.flex-container .box-chat {
+  background-color: #f0f0f0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  width: 400px;
+  height: 100vh;
+}
+
+.flex-container .box-chat .top-chat {
+  display: flex;
+  color: black;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.596);
+  padding: 25px 10px;
+}
+
+.flex-container .box-chat .top-chat .icons-chat i {
+  font-size: 20px;
+  margin: 0 5px;
+  transition: 0.2s;
+}
+
+.flex-container .box-chat .top-chat .icons-chat i:hover {
+  color: #777ee3;
+  cursor: pointer;
+}
+
+.flex-container .box-chat .box-contatos {
+  padding: 20px 10px 0 10px;
+}
+
+.flex-container .box-chat .box-contatos .box-recentes {
+  display: flex;
+  align-items: center;
+}
+
+.flex-container .box-chat .box-contatos .box-recentes i {
+  color: #868686;
+  font-size: 12px;
+}
+
+.flex-container .box-chat .box-contatos .box-recentes h5 {
+  font-size: 12px;
+  margin-left: 5px;
+  font-weight: 400;
+}
+
+.flex-container .box-chat .contatos {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  margin: 20px 0;
+}
+
+.flex-container .box-chat .contatos:hover {
+  background-color: purple;
+  cursor: pointer;
+}
+
+.flex-container .box-chat .contatos .box-perfil {
+  background-image: url(../imagens/allison-griffith-Q76DPRQ3Ix0-unsplash\ \(1\).jpg);
+  width: 50px;
+  height: 40px;
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.flex-container .box-chat .contatos .content-usuario {
+  width: 100%;
+}
+
+.flex-container .box-chat .contatos .content-usuario h3 {
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.flex-container .box-chat .contatos .content-usuario span {
+  font-size: 10.5px;
+}
+
+.flex-container .box-chat .contatos i {
+  font-size: 22.5px;
+  cursor: pointer;
+}
+
+.flex-container .box-chat .contatos i:hover {
+  color: #777ee3;
+}
+
+.flex-container .chat-aluno {
+  width: 100%;
+}
+
+.flex-container .chat-aluno .header-aluno {
+  width: 100%;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.596);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-container .chat-aluno .header-aluno .box-aluno {
+  display: flex;
+  align-items: center;
+}
+
+.flex-container .chat-aluno .header-aluno .foto-perfil {
+  background-image: url(../imagens/allison-griffith-Q76DPRQ3Ix0-unsplash\ \(1\).jpg);
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.flex-container .chat-aluno .header-aluno .box-aluno h1 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.flex-container .chat-aluno .header-aluno .atalho-chat {
+  display: flex;
+  align-items: center;
+  margin-left: -100px;
+}
+
+.flex-container .chat-aluno .header-aluno .atalho-chat h5 {
+  margin: 0 20px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #575757;
+  transition: 0.2s;
+}
+
+.flex-container .chat-aluno .header-aluno .atalho-chat h5:hover {
+  color: #777ee3;
+  cursor: pointer;
+}
+
+.flex-container .chat-aluno .header-aluno .atalho-chat i {
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #575757;
+}
+
+.flex-container .chat-aluno .header-aluno .atalho-chat i:hover {
+  color: #777ee3;
+  cursor: pointer;
+}
+
+.flex-container .chat-aluno .header-aluno .tipo-chat {
+  display: flex;
+  align-items: center;
+}
+
+.flex-container .chat-aluno .header-aluno .tipo-chat i {
+  color: #575757;
+  font-size: 20px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.flex-container .chat-aluno .header-aluno .tipo-chat i:hover {
+  color: #777ee3;
+}
+
+.flex-container .chat-aluno .conversas {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../imagens/print-tela-teams.JPG);
+  background-repeat: no-repeat;
+}/*# sourceMappingURL=mensagens.css.map */

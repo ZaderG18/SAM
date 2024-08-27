@@ -27,7 +27,7 @@ $professores = $data ['professor'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="shortcut icon" type="imagex/png" href="../imagens/logo.jpg">
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../scss/home.scss">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <style>
         
