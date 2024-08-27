@@ -62,6 +62,15 @@ $tableQueries = [
         codigo INT NOT NULL,
         cargo INT NOT NULL
     )",
+    "diretor"=> "CREATE TABLE IF NOT EXISTS diretor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    RM VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(40) NOT NULL,
+    cargo INT NOT NULL,
+    codigo INT NOT NULL
+    )",
     "turma" => "CREATE TABLE IF NOT EXISTS turma (
         id INT AUTO_INCREMENT PRIMARY KEY,
         disciplina VARCHAR(30) NOT NULL,
@@ -176,8 +185,9 @@ foreach ($tableQueries as $tableName => $sqlTable) {
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
 $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
+$cargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_STRING);
 
-if ( !$email || !$senha || !$nome) {
+if ( !$email || !$senha || !$nome || !$cargo) {
     die("Todos os campos são obrigatórios.");
 }
 
@@ -189,7 +199,8 @@ if (emailExiste($conn, $email)) {
 $tableMap = [
     1 => 'aluno',
     2 => 'professor',
-    3 => 'coordenador'
+    3 => 'coordenador',
+    4=> 'diretor'
 ];
 
 $tableName = $tableMap[$cargo] ?? 'aluno';
