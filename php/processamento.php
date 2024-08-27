@@ -207,7 +207,7 @@ if ($stmt->execute()) {
 }
 
 // Redirect after operations
-header('Location: ../cadastro.html');
+header('Location: ../pages/cadastro.html');
 exit;
 
 function emailExiste($conn, $email) {
