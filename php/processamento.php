@@ -226,9 +226,11 @@ function emailExiste($conn, $email) {
             UNION
             SELECT id FROM professor WHERE email = ?
             UNION
-            SELECT id FROM coordenador WHERE email = ?";
+            SELECT id FROM coordenador WHERE email = ?
+            UNION
+            SELECT id FROM diretor WHERE email = ?";
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("sss", $email, $email, $email);
+        $stmt->bind_param("ssss", $email, $email, $email, $email);
         $stmt->execute();
         $stmt->store_result();
         $exists = $stmt->num_rows > 0;
