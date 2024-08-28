@@ -80,3 +80,5 @@ $stmt->bind_param("sii", $disciplina, $professor_id, $coordenador_id);
 $stmt->execute();
 $turma_id = $stmt->insert_id; // Pega o ID da turma recém-criada
 
+
+header('Location: ../pages/criarTurmas.php');

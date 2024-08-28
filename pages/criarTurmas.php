@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
         <select id="professor" name="professor_id" required>
             <!-- PHP para preencher com opções de professores -->
             <?php
-            include('../php/conexao.php');
+        
             $sql = "SELECT id, nome FROM professor";
             $result = $conn->query($sql);
             while($row = $result->fetch_assoc()) {
@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 
         <input type="submit" value="Criar Turma">
     </form>
+    
 
 <h1>Atribuir Aluno a uma Turma</h1>
 
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 </form>
 
 <h2>Turmas Atribuídas</h2>
-<table border="1">
+<table border="">
     <tr>
         <th>Aluno</th>
         <th>Turma</th>
