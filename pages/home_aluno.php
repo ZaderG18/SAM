@@ -51,7 +51,7 @@ $professores = get_todos_professores($conn);
         <aside>
             <div class="box-menu-01">
                 <i class='bx bxs-bell'></i>
-                <span>Atividade</span>
+                <span><a href="criarTurmas.php">Criar turma</a></span>
             </div>
             <div class="box-menu-01">
                 <i class='bx bxs-hourglass'></i>

@@ -200,10 +200,13 @@ $tableMap = [
     1 => 'aluno',
     2 => 'professor',
     3 => 'coordenador',
-    4=> 'diretor'
+    4 => 'diretor'
 ];
 
 $tableName = $tableMap[$cargo] ?? 'aluno';
+$tableName = $tableMap[$cargo] ?? 'professor';
+$tableName = $tableMap[$cargo] ?? 'coordenador';
+$tableName = $tableMap[$cargo] ?? 'diretor';
 
 $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
 
@@ -241,5 +244,9 @@ function emailExiste($conn, $email) {
     }
 }
 
-$conn->close();
-?>
+if ($conn->connect_error) {
+    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
+}
+
+
+$conn -> close();
