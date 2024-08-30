@@ -1,24 +1,27 @@
 <?php
 
+// Inicia a sessão se ainda não estiver iniciada.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Declarando variáveis para conectar ao banco de dados.
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbName = "SAM";
 
-// Connect to MySQL server
+// Conectando ao servidor MySQL.
 $conn = new mysqli($host, $username, $password);
 
+// Verifica se houve erro na conexão com o servidor MySQL.
 if ($conn->connect_error) {
     die("Erro ao conectar ao servidor de banco de dados: " . $conn->connect_error);
 } else {
     echo "Conectado ao servidor com sucesso!<br>";
 }
 
-// Create database if it does not exist
+// Criando o banco de dados 'SAM' se ele não existir.
 $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
 if ($conn->query($sql) === TRUE) {
     echo "Banco de dados '$dbName' criado com sucesso!<br>";
@@ -26,14 +29,15 @@ if ($conn->query($sql) === TRUE) {
     echo "Erro ao criar banco de dados: " . $conn->error;
 }
 
-// Connect to the specific database
+// Reestabelece a conexão ao banco de dados específico 'SAM'.
 $conn = new mysqli($host, $username, $password, $dbName);
 
+// Verifica se houve erro na conexão com o banco de dados específico.
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-// Table creation queries
+// Consultas para criar as tabelas, se não existirem.
 $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,13 +67,13 @@ $tableQueries = [
         cargo INT NOT NULL
     )",
     "diretor"=> "CREATE TABLE IF NOT EXISTS diretor (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    RM VARCHAR(10) NOT NULL UNIQUE,
-    email VARCHAR(40) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    nome VARCHAR(40) NOT NULL,
-    cargo INT NOT NULL,
-    codigo INT NOT NULL
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        email VARCHAR(40) NOT NULL UNIQUE,
+        senha VARCHAR(255) NOT NULL,
+        nome VARCHAR(40) NOT NULL,
+        cargo INT NOT NULL,
+        codigo INT NOT NULL
     )",
     "turma" => "CREATE TABLE IF NOT EXISTS turma (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -173,6 +177,7 @@ $tableQueries = [
     )"
 ];
 
+// Itera sobre o array de consultas para criar as tabelas no banco de dados.
 foreach ($tableQueries as $tableName => $sqlTable) {
     if ($conn->query($sqlTable) === TRUE) {
         echo "Tabela '$tableName' criada com sucesso!<br>";
@@ -181,21 +186,33 @@ foreach ($tableQueries as $tableName => $sqlTable) {
     }
 }
 
-// Sanitize and validate form inputs
-$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
-$nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-$cargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_STRING);
+// Sanitiza e valida os dados do formulário.
+$usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+$usuarioSenha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
+$usuarioNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
+$usuarioCargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_STRING);
 
-if ( !$email || !$senha || !$nome || !$cargo) {
-    die("Todos os campos são obrigatórios.");
+// Verifica se todos os campos obrigatórios foram preenchidos.
+if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome || !$usuarioCargo) {
+    ?>
+    <script>
+     alert("Todos os campos são obrigatórios !<br>");
+     window.location.href = "pages/cadastro.html";
+     </script>
+     <?php
 }
 
-// Check if the email already exists
-if (emailExiste($conn, $email)) {
-    die("Email já existe");
+// Validação do cargo
+if (!in_array($usuarioCargo, [1, 2, 3, 4])) {
+    die("Cargo inválido.");
 }
 
+// Verifica se o email já existe no banco de dados.
+if (emailExiste($conn, $usuarioEmail)) {
+    die ("Email já existe");
+}
+
+// Mapeia o cargo para o nome da tabela correspondente.
 $tableMap = [
     1 => 'aluno',
     2 => 'professor',
@@ -203,27 +220,33 @@ $tableMap = [
     4 => 'diretor'
 ];
 
-$tableName = $tableMap[$cargo] ?? 'aluno';
-$tableName = $tableMap[$cargo] ?? 'professor';
-$tableName = $tableMap[$cargo] ?? 'coordenador';
-$tableName = $tableMap[$cargo] ?? 'diretor';
+// Define o nome da tabela com base no cargo.
+$tableName = $tableMap[$usuarioCargo];
 
-$hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
+// Gera o hash da senha.
+$hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 
-$sqlInsert = "INSERT INTO $tableName ( email, senha, nome) VALUES (?, ?, ?)";
+// Prepara e executa a consulta de inserção dos dados na tabela apropriada.
+$sqlInsert = "INSERT INTO $tableName (email, senha, nome, cargo) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
-$stmt->bind_param("sss", $email, $hashedPassword, $nome);
+$stmt->bind_param("sssi", $usuarioEmail, $hashedPassword, $usuarioNome, $usuarioCargo);
 
 if ($stmt->execute()) {
-    echo "Os dados foram inseridos com sucesso!<br>";
+    ?>
+    <script>
+     alert("Os dados foram inseridos com sucesso!<br>");
+     window.location.href = "pages/cadastro.html";
+     </script>
+     <?php
 } else {
     echo "Não foi possível inserir os dados na tabela: " . $stmt->error;
 }
 
-// Redirect after operations
+// Redireciona o usuário para a página de cadastro após as operações.
 header('Location: ../pages/cadastro.html');
 exit;
 
+// Função para verificar se o email já existe nas tabelas 'aluno', 'professor', 'coordenador' ou 'diretor'.
 function emailExiste($conn, $email) {
     $sql = "SELECT id FROM aluno WHERE email = ?
             UNION
@@ -244,9 +267,7 @@ function emailExiste($conn, $email) {
     }
 }
 
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-
-
+// Fecha a conexão com o banco de dados.
 $conn -> close();
+
+?>
