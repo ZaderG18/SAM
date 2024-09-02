@@ -1,71 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-body {
+
+*{
     margin: 0;
     padding: 0;
-    line-height: normal;
+    box-sizing: border-box;
     font-family: 'poppins';
-    background-color: #3E235C;  
 }
 
-section {
-    position: relative;
+main{
     width: 100%;
-    height: 100px;
+    height: auto;
+    background-color: #3E235C;
+}
+
+main .container{
+    width: 100%;
+    height: auto;
+}
+
+main .container .flex-elements{
     display: flex;
+    align-items: center;
 }
 
-/* Imagem de fundo */
-section .imgbx {
-    position: relative;
-    width: 682px;
-    height: 1024px;
-    overflow: hidden;
-}
-
-section .imgbx ::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-section .imgbx img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Container principal para o conteúdo do esqueceu senha*/
-section .contentbx {
-    position: relative;
-    top: 54px;
-    width: 100%; 
-    max-width: 750px; 
-    height: calc(100% - 54px); 
-    padding: 0 20px; 
-    box-sizing: border-box; 
-    justify-content: center
-}
-
-/* Cabeçalho do formulário */
-
-section .headerbx {
+main .container .flex-elements .left-img{
+    width: 50%;
+    min-height: 600px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: start; 
-    margin-top: 70px;
-    margin-bottom: 70px;
-    gap: 20px;
-    padding: 30px;
-   
+    justify-content: center;
 }
+
+
+main .container .flex-elements .left-img img{
+    margin: 0 auto;
+}
+
+@keyframes float{
+	0%,100%{
+		transform:translatey(0)
+	}
+	50%{
+		transform:translatey(-30px)
+	}
+}
+main .container .flex-elements .left-img img {
+     animation: float 2s ease-in-out infinite;
+}
+
+
+main .container .flex-elements .right-verif{
+    width: 50%;
+    height: auto;
+}
+
+.headerbx {
+    margin: 30px 0;
+}
+
 
 .headerbx h2 {
     font-size: 40px;
@@ -79,38 +73,74 @@ section .headerbx {
     margin: 0;
 }
 
-/* Estilo para o span */
-section span {
-    width: auto; 
-    font-size: 15px; 
-    line-height: 22px; 
-    font-family: 'poppins', sans-serif;
+main .container .flex-elements .right-verif form .inputbx span{
+    font-size: 10px;
     color: #fff;
-    text-align: left;
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 25px;
+    font-weight: 300;
 }
 
-/* Botão de envio */
+
+main .container .flex-elements .right-verif form{
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+
+.box-input span {
+    width: 100%;
+    font-size: 15px;
+    line-height: 20px;
+    font-family: 'poppins';
+    color: #fff;
+    text-align: left;
+    display: inline-flexbox;
+    height: 27.4px;
+}
+
 
 
 .inputbx input {
-    width: 100%;
+    width: calc( 100% + 200px);
     position: relative;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0) inset;
-    border-radius: 8px;
-    background-color: rgba(245, 245, 245, 0.26);
     border: 1px solid #d1d1d1;
     box-sizing: border-box;
     height: 58px;
     padding: 10px;
     padding-right: 40px;
     color: white;
-   margin-bottom: 30px;
+    background-color: transparent;
+    border: none;
 }
 
-.inputbx input[type="submit"],
+
+/* Botão de login */
+.inputbx input[type="submit"] {
+    background: linear-gradient(90deg, #6a4c93, #341e4e);
+    border: none;
+    padding: 10px 20px;
+    font-family: 'poppins';
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    font-size: 25px;
+    line-height: 100%;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.inputbx input[type="submit"]:hover {
+    background: linear-gradient(90deg, #6a4c93, #341e4e); 
+    color: #fff;
+    border: 2px solid #b395dc; 
+    box-shadow: 0 0 15px rgba(179, 149, 237, 0.9); 
+}
+
 .inputbx input[type="button"] {
     background: linear-gradient(90deg, #6a4c93, #341e4e);
     border: none;
@@ -119,19 +149,113 @@ section span {
     border-radius: 8px;
     cursor: pointer;
     position: relative;
-    font-size: 30px;
+    font-size: 25px;
     line-height: 100%;
     color: #fff;
     text-align: center;
     font-weight: bold;
     transition: border 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
+    width: 100%;
 }
 
-.inputbx input[type="submit"]:hover,
 .inputbx input[type="button"]:hover {
     background: linear-gradient(90deg, #6a4c93, #341e4e); 
     color: #fff;
     border: 2px solid #b395dc; 
     box-shadow: 0 0 15px rgba(179, 149, 237, 0.9); 
+}
+
+
+@media screen and (max-width:870px){
+    main .container .flex-elements{
+        display: flex;
+        flex-direction: column;
+    }
+
+    main .container .flex-elements .left-img{
+        width: 100%;
+        min-height: 400px;
+        height: 400px;
+    }
+
+    main .container .flex-elements .left-img img {
+        width: 400px;
+        
+   }
+
+    main .container .flex-elements .right-verif{
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width:600px){
+    main .container .flex-elements{
+        display: flex;
+        flex-direction: column;
+    }
+
+    
+.headerbx h2 {
+    font-size: 30px;
+    color: #e6e8f0;
+    margin: 0;
+}
+
+.headerbx p {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+}
+
+}
+
+
+@media screen and (max-width:400px){
+
+    main .container .flex-elements .left-img{
+        width: 100%;
+        min-height: 300px;
+        height: 300px;
+    }
+
+    main .container .flex-elements .left-img img {
+        width: 80%;
+        
+   }
+
+
+       
+.headerbx h2 {
+    font-size: 20px;
+}
+
+.headerbx p {
+    font-size: 12px;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.headerbx span {
+    font-size: 10px;
+    color: #fff;
+}
+
+    #enviar,#voltar{
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:370px){
+    main .container .flex-elements .left-img img{
+        margin-bottom: -80px;
+    }
+    
+}
+
+
+@media screen and (max-width:370px){
+    #enviar,#voltar{
+        font-size: 18px;
+    }
 }

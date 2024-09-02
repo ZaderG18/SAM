@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins';
+}
+
+main{
+    min-height: 100vh;
+    height: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #3E235C;
+    color: white;
+    padding:  20px;
+}
+
+main .box-confirm{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+main .box-confirm i{
+    font-size: 40px;
+    margin: 0 10px;
+}
+
+main p{
+    max-width: 800px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+main .box-img{
+    max-width: 500px;
+    height: 500px;
+}
+
+main .box-img img{
+    width: 100%;
+    cursor: pointer;
+}
+
+@keyframes float{
+	0%,100%{
+		transform:translatey(0)
+	}
+	50%{
+		transform:translatey(-30px)
+	}
+}
+main img {
+     animation: float 2s ease-in-out infinite;
+}
+
+
+
+@media screen and (max-width:817px){
+
+    main{
+        min-height: 100vh;
+        height: 850px;
+    }
+
+}
+
+@media screen and (max-width:650px){
+
+    main{
+        min-height: 100vh;
+        height: 850px;
+    }
+
+    main .box-confirm h1{
+        font-size: 25px;
+    }
+
+    main p{
+        font-size: 12px;
+    }
+
+}
+
+@media screen and (max-width:450px){
+    main{
+        min-height: 100vh;
+        height: 660px;
+    }
+}
+
+
+@media screen and (max-width:370px){
+    main{
+        min-height: 100vh;
+        height: 550px;
+    }
+}

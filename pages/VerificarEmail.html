@@ -6,38 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../scss/VerificarEmail.scss"> <!-- Link para o arquivo de estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- Link para o CDN dos ícones Bootstrap -->
-    <link rel="icon" href="../imagens/icone-logo-1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="../imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <title>Verificação Email - SAM </title> <!-- Título da página -->
 </head>
 <body>
-    <section>
-        <!-- Container para a imagem de fundo -->
-        <div class="imgbx">
-            <img src="../imagens/fundo.png" alt="fundo">
+    <main>
+        <div class="container">
+            <div class="flex-elements">
+                <div class="left-img">
+                    <img src="../imagens/ilustration-email.webp" alt="" srcset="">
+                </div>
+                <div class="right-verif">
+
+                    <form>
+                        <div class="headerbx">
+                            <h2>Cheque o seu Email</h2>
+                            <p>Enviamos um e-mail com as informações para redefinir a sua senha de acesso</p>
+                        </div>
+                         
+                        <!-- Botão de envio -->
+                        <div class="inputbx">
+                            <span>Não recebeu o e-mail? Verifique a pasta de spam ou promoções</span>
+                            <input type="submit" value="Enviar novamente" id="enviar">
+                        </div>
+    
+                        <!-- Botão de voltar -->
+                        <div class="inputbx">
+                            <input type="button" value="Voltar" id="voltar" onclick="window.location.href='../index.html'" > 
+                        </div>
+                    </form> <!-- Fim do formulário -->
+                </div><!--caixa da direita, aonde fica  os inputs de reset de senha -->
+            </div>
         </div>
-        <div class="contentbx">
-            <!-- Container para o cabeçalho do formulário -->
-            <div class="headerbx">
-                <h2>Cheque o seu Email</h2>
-                <p>Enviamos um e-mail com as informações para redefinir a senha para</p>
-            </div>
-            <div class="frasebx">
-                <span>Não recebeu o e-mail? Verifique a pasta de spam ou promoções ou</span>
-            </div>
-            <!-- Botão de envio -->
-            <div class="inputbx">
-                <input type="submit" value="Enviar Novamente"> 
-            </div>
-
-            <!-- Botão de voltar -->
-            <div class="inputbx">
-                <input type="button" value="Voltar" id="voltar" onclick="window.location.href='../index.html'">
-            </div>
-
-            <div class="button-container">
-                <a href="ResetarSenha.html" class="simple-btn">Ir para Resetar Senha</a>
-            </div>
-        </div> <!-- Fim do container contentbx -->
-    </section> <!-- Fim da seção principal -->
+    </main>
 </body>
 </html>

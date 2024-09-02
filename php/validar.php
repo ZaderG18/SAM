@@ -1,17 +1,23 @@
 <?php
 session_start();
 
+//declarando variaveis para conexão ao banco de dados
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $host = "localhost";
     $username = "root";
     $password = "";
     $dbname = "SAM";
 
+// conectando ao banco de dados
+
     $conn = new mysqli($host, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
     }
+    
+//filtrando os dados de entrada
 
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);

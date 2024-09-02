@@ -6,70 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../scss/cadastro.scss"> <!-- Link para o arquivo de estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- Link para o CDN dos ícones Bootstrap -->
-    <link rel="icon" href="../imagens/icone-logo-1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="../imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <title>Cadastro - SAM </title> <!-- Título da página -->
 </head>
 <body>
-    <section>
-        <!-- Container para a imagem de fundo -->
-        <div class="imgbx">
-            <img src="../imagens/fundo.png" alt="fundo">
+    <main>
+        <div class="container">
+            <div class="flex-elements">
+                <div class="left-img"></div>
+                <div class="right-reset">
+
+                    <form action="../php/processamento.php" method="post">
+                        <div class="headerbx">
+                            <img src="../imagens/logo.jpg" alt="" srcset="">
+                            <h2>Bem vindo ao Sam</h2>
+                            <p>Faça o seu primeiro acesso para conhecer o Sam</p>
+                        </div>
+                        <!-- Campo de entrada para a senha -->
+                        <div class="box-input">
+                            <span>nome</span>
+                            <div class="inputbx">
+                                <input type="text" name="nome" id="nome" placeholder="Digite o seu nome completo" required>
+                            </div>
+                         </div>
+                         <div class="box-input">
+                            <span>Tipo de acesso</span>
+                            <select name="cargo" id="cargo">
+                                <option value="1">aluno</option>
+                                <option value="2">professor</option>
+                                <option value="3">coordenador</option>
+                                <option value="4">Diretoria</option>
+                              </select>
+                         </div>
+                         <div class="box-input">
+                            <span>Email</span>
+                            <div class="inputbx">
+                                <input type="email" name="email" id="email" placeholder="Digite o seu email" required>
+                            </div>
+                         </div>
+                         <div class="box-input">
+                            <span>Senha</span>
+                            <div class="inputbx">
+                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                                <i class="bi bi-eye" id="btn-senha-confirm" onclick="mostrarSenhaConfirm()"></i> <!-- Ícone para exibir/ocultar senha -->
+                            </div>
+                         </div>
+
+                         <div class="element-senha">
+                           <div class="box-check"> <input type="checkbox" checked  value="Bike"> <span>Lembrar de mim</span></div>
+                         </div>
+                        <!-- Botão de envio -->
+                        <div class="inputbx">
+                            <input type="submit" value="Cadastrar" id="cadastrar">
+                        </div>
+
+                        <p class="criar-conta">Já tem uma conta? <a href="#" onclick="window.location.href='../index.html'"> Faça Login</a></p>
+
+                    </form> <!-- Fim do formulário -->
+                </div><!--caixa da direita, aonde fica  os inputs de reset de senha -->
+            </div>
         </div>
-
-        <!-- Container principal para o conteúdo do login -->
-        <div class="contentbx">
-            <!-- Container para a logo -->
-            <div class="logobx">
-                <img src="../imagens/logo.jpg" alt="logo">
-            </div>
-
-            <!-- Container para o cabeçalho do formulário -->
-            <div class="headerbx">
-                <h2>Bem vindo ao Sam </h2>
-                <h6>Faça o seu primeiro acesso para conhecer o Sam</h6>
-            </div>
-
-            <!-- Início do formulário -->
-            <div class="formbx">
-                <form action="../php/processamento.php" method="post">
-                    <!--Campo para prennchimento do cargo-->
-                    <div class="inputbx">
-                        <span>O que você é?</span>
-                        <select name="cargo" id="cargo">
-                            <option value="1">aluno</option>
-                            <option value="2">Professor</option>
-                            <option value="3">Coordenador</option>
-                            <option value="4">Diretor</option>
-                        </select>
-                    </div>
-                    <!-- Campo de entrada para o email -->
-                    <div class="inputbx">
-                        <span>Nome</span>
-                        <input type="text" name="nome" id="nome" placeholder="Digite o seu Nome" required>
-                    </div> 
-                    <div class="inputbx">
-                        <span>Email</span>
-                        <input type="email" name="email" id="email" placeholder="Digite o seu Email" required>
-                    </div> 
-                    <!-- Campo de entrada para a senha -->
-                    <div class="inputbx">
-                        <span> Senha</span>
-                        <input type="password" name="senha" id="senha" placeholder="Mínimo 8 caracteres" required>
-                        <i class="bi bi-eye" id="btn-senha" onclick="mostrarSenha()"></i> <!-- Ícone para exibir/ocultar senha -->
-                    </div>
-                 <!-- Botão de login -->
-                    <div class="inputbx">
-                      <input type="submit" value="Cadastrar">
-                    </div>
-                                        
-                    <!-- Link para criar uma nova conta -->
-                    <div class="inputbx">
-                        <p>Já tem uma conta? <a href="../index.html">Faça Login</a></p>
-                    </div>
-                </form> <!-- Fim do formulário -->
-            </div> <!-- Fim do container formbx -->
-        </div> <!-- Fim do container contentbx -->
-    </section> <!-- Fim da seção principal -->
+    </main>
 
     <!-- Link para o arquivo JavaScript externo -->
     <script src="../js/scprit.js"></script>

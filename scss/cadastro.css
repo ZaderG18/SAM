@@ -1,83 +1,62 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-body {
+* {
   margin: 0;
   padding: 0;
-  line-height: normal;
+  box-sizing: border-box;
   font-family: "poppins";
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+  height: auto;
   background-color: #3E235C;
 }
 
-section {
-  position: relative;
+main .container {
   width: 100%;
-  height: 100px;
+  height: auto;
+}
+
+main .container .flex-elements {
   display: flex;
+  align-items: center;
 }
 
-/* Imagem de fundo */
-section .imgbx {
-  position: relative;
-  width: 682px;
-  height: 1024px;
-  overflow: hidden;
+main .container .flex-elements .left-img {
+  width: 50%;
+  min-height: 1050px;
+  height: 100vh;
+  background-image: url(../imagens/fundo.png);
+  background-size: cover;
 }
 
-section .imgbx ::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+main .container .flex-elements .right-reset {
+  width: 50%;
+  height: auto;
 }
 
-section .imgbx img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+main .container .flex-elements .right-reset form {
+  width: 90%;
+  margin: 0 auto;
 }
 
-/* Container principal para o conteúdo do login */
-section .contentbx {
-  position: relative;
-  top: 54px;
-  width: 100%;
-  max-width: 750px;
-  height: calc(100% - 54px);
-  padding: 0 20px;
-  box-sizing: border-box;
-  justify-content: center;
-}
-
-/* Container para a logo */
-.logobx {
+.headerbx {
+  margin: 50px 0;
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.logobx img {
-  width: 150px;
-  height: 150px;
-  border-radius: 100px;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-/* Cabeçalho do formulário */
-section .headerbx {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 50px;
+}
+
+.headerbx img {
+  width: 150px;
+  margin-bottom: 20px;
+  border-radius: 100%;
 }
 
 .headerbx h2 {
@@ -86,56 +65,90 @@ section .headerbx {
   margin: 0;
 }
 
-.headerbx h6 {
-  font-size: 16px;
+.headerbx p {
+  font-size: 15px;
   color: #fff;
   margin: 0;
 }
 
-/* Layout do formulário de login */
-section .formbx {
-  position: relative;
-  color: #fff;
-  font-family: Poppins, sans-serif;
-  overflow: hidden;
-  text-align: left;
-  padding: 25px;
-  box-sizing: border-box;
-  justify-content: center;
+main .container .flex-elements .right-reset form .box-input .inputbx {
+  height: auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0) inset;
+  border-radius: 8px;
+  background-color: rgba(245, 245, 245, 0.26);
+  margin-bottom: 30px;
+  margin-top: 5px;
 }
 
-/* Estilos dos campos de entrada */
-section .inputbx {
-  position: relative;
-  margin-bottom: 20px;
+main .container .flex-elements .right-reset form .element-senha {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  color: white;
+  align-items: center;
 }
 
-section .inputbx span {
-  width: 50px;
-  position: relative;
-  font-size: 20px;
+main .container .flex-elements .right-reset form .element-senha .box-check {
+  display: flex;
+  align-items: center;
+}
+
+main .container .flex-elements .right-reset form .element-senha span {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+main .container .flex-elements .right-reset form .element-senha a {
+  color: rgb(179, 149, 220);
+  transition: 0.2s;
+  font-size: 13px;
+}
+
+main .container .flex-elements .right-reset form .element-senha a:hover {
+  color: rgb(131, 105, 167);
+}
+
+.box-input span {
+  width: 100%;
+  font-size: 15px;
   line-height: 20px;
   font-family: "poppins";
   color: #fff;
   text-align: left;
-  display: inline-block;
+  display: inline-flexbox;
   height: 27.4px;
-  margin-bottom: 20px;
+}
+
+select {
+  width: 100%;
+  position: relative;
+  border: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  height: 58px;
+  padding: 10px;
+  color: white;
+  background-color: #6d5983;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 30px;
+  margin-top: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0) inset;
 }
 
 .inputbx input {
-  width: 100%;
+  width: calc(100% + 200px);
   position: relative;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 8px rgba(0, 0, 0, 0) inset;
-  border-radius: 8px;
-  background-color: rgba(245, 245, 245, 0.26);
   border: 1px solid #d1d1d1;
   box-sizing: border-box;
   height: 58px;
   padding: 10px;
   padding-right: 40px;
   color: white;
-  margin-bottom: 5px;
+  background-color: transparent;
+  border: none;
 }
 
 .inputbx ::-moz-placeholder {
@@ -170,16 +183,14 @@ section .inputbx span {
 }
 
 .inputbx i {
-  position: absolute;
-  right: 40px;
-  top: 70%;
-  transform: translateY(-50%);
   color: #a7a1a1;
   font-size: 20px;
   cursor: pointer;
+  position: relative;
+  left: -20px;
 }
 
-/* Botão de cadastro */
+/* Botão de login */
 .inputbx input[type=submit] {
   background: linear-gradient(90deg, #6a4c93, #341e4e);
   border: none;
@@ -188,12 +199,14 @@ section .inputbx span {
   border-radius: 8px;
   cursor: pointer;
   position: relative;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 100%;
   color: #fff;
   text-align: center;
   font-weight: bold;
   transition: border 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 .inputbx input[type=submit]:hover {
@@ -203,25 +216,123 @@ section .inputbx span {
   box-shadow: 0 0 15px rgba(179, 149, 237, 0.9);
 }
 
-/* Link para criar uma nova conta */
-.inputbx p {
+.inputbx input[type=button] {
+  background: linear-gradient(90deg, #6a4c93, #341e4e);
+  border: none;
+  padding: 10px 20px;
+  font-family: "poppins";
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  font-size: 25px;
+  line-height: 100%;
   color: #fff;
   text-align: center;
+  font-weight: bold;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
 }
 
-.inputbx a {
-  color: #b395dc;
-  text-decoration: none;
+.inputbx input[type=button]:hover {
+  background: linear-gradient(90deg, #6a4c93, #341e4e);
+  color: #fff;
+  border: 2px solid #b395dc;
+  box-shadow: 0 0 15px rgba(179, 149, 237, 0.9);
+}
+
+main .container .flex-elements .right-reset form .criar-conta {
+  color: white;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Parte responsiva */
-@media (max-width: 768px) {
-  section .imgbx {
-    position: absolute;
-    top: 0;
-    left: 0;
+main .container .flex-elements .right-reset form .criar-conta a {
+  color: rgb(179, 149, 220);
+}
+
+@media screen and (max-width: 870px) {
+  main .container .flex-elements {
+    display: flex;
+    flex-direction: column;
+  }
+  main .container .flex-elements .left-img {
     width: 100%;
-    height: 100%;
+    min-height: 300px;
+    height: 300px;
+    background-position: center;
+  }
+  main .container .flex-elements .right-reset {
+    width: 100%;
+    height: auto;
+  }
+  .headerbx img {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 100%;
+    /*position: relative;
+    top: -120px;*/
+    margin-bottom: 40px;
+    margin-top: -120px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+}
+@media screen and (max-width: 600px) {
+  main .container .flex-elements {
+    display: flex;
+    flex-direction: column;
+  }
+  .headerbx h2 {
+    font-size: 30px;
+    color: #e6e8f0;
+    margin: 0;
+  }
+  .headerbx p {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+  }
+  .box-input span {
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "poppins";
+    color: #fff;
+    text-align: left;
+    display: inline-flexbox;
+    height: 27.4px;
+  }
+}
+@media screen and (max-width: 440px) {
+  main .container .flex-elements .right-reset form .criar-conta {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 400px) {
+  #cadastrar, #voltar {
+    font-size: 20px;
+  }
+  .headerbx {
+    text-align: center;
+  }
+  .headerbx img {
+    width: 120px;
+    margin-top: -110px;
+  }
+}
+@media screen and (max-width: 370px) {
+  .headerbx h2 {
+    font-size: 30px;
+  }
+  .headerbx p {
+    font-size: 12px;
+  }
+  main .container .flex-elements .left-img {
+    width: 100%;
+    min-height: 250px;
+    height: 250px;
+    background-position: center;
+  }
+  #cadastrar, #voltar {
+    font-size: 18px;
   }
 }/*# sourceMappingURL=cadastro.css.map */

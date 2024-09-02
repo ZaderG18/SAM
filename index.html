@@ -10,64 +10,50 @@
     <title>Login - SAM </title> <!-- Título da página -->
 </head>
 <body>
-    <section>
-        <!-- Container para a imagem de fundo -->
-        <div class="imgbx">
-            <img src="imagens/fundo.png" alt="fundo">
+
+    <main>
+        <div class="container">
+            <div class="flex-elements">
+                <div class="left-img"></div>
+                <div class="right-reset">
+
+                    <form>
+                        <div class="headerbx">
+                            <img src="imagens/logo.jpg" alt="" srcset="">
+                            <h2>Bem vindo</h2>
+                            <p>Faça login para ver sua situação acadêmica</p>
+                        </div>
+                        <!-- Campo de entrada para a senha -->
+                         <div class="box-input">
+                            <span>Email</span>
+                            <div class="inputbx">
+                                <input type="email" name="email" id="email" placeholder="Digite o seu email" required>
+                            </div>
+                         </div>
+                         <div class="box-input">
+                            <span>Senha</span>
+                            <div class="inputbx">
+                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                                <i class="bi bi-eye" id="btn-senha-confirm" onclick="mostrarSenhaConfirm()"></i> <!-- Ícone para exibir/ocultar senha -->
+                            </div>
+                         </div>
+
+                         <div class="element-senha">
+                           <div class="box-check"> <input type="checkbox" checked  value="Bike"> <span>Lembrar de mim</span></div>
+                            <a href="#" onclick="window.location.href='pages/EsqueceuSenha.html'">Esqueceu a senha?</a>
+                         </div>
+                        <!-- Botão de envio -->
+                        <div class="inputbx">
+                            <input type="submit" value="Entrar" id="reset">
+                        </div>
+
+                        <p class="criar-conta">Não é registrado? <a href="#" onclick="window.location.href='pages/cadastro.html'">Crie uma conta</a></p>
+
+                    </form> <!-- Fim do formulário -->
+                </div><!--caixa da direita, aonde fica  os inputs de reset de senha -->
+            </div>
         </div>
-
-        <!-- Container principal para o conteúdo do login -->
-        <div class="contentbx">
-            <!-- Container para a logo -->
-            <div class="logobx">
-                <img src="imagens/logo.jpg" alt="logo">
-            </div>
-
-            <!-- Container para o cabeçalho do formulário -->
-            <div class="headerbx">
-                <h2>Bem vindo de volta</h2>
-                <h6>Faça login para ver sua situação acadêmica</h6>
-            </div>
-
-            <!-- Início do formulário -->
-            <div class="formbx">
-                <form action="php/validar.php" method="post">
-                    <!-- Campo de entrada para o email -->
-                    <div class="inputbx">
-                        <span>Email</span>
-                        <input type="email" name="email" id="email" placeholder="Digite o seu Email" required>
-                    </div> 
-                    <!-- Campo de entrada para a senha -->
-                    <div class="inputbx">
-                        <span> Senha</span>
-                        <input type="password" name="senha" id="senha" placeholder="Mínimo 8 caracteres" required>
-                        <i class="bi bi-eye" id="btn-senha" onclick="mostrarSenha()"></i> <!-- Ícone para exibir/ocultar senha -->
-                    </div> 
-                    <!-- lembrar dos dados -->
-                    <div class="remember-forgot-container">
-                        <div class="remember">
-                            <input type="checkbox" id="remember-me">
-                            <label for="remember-me">Lembrar de mim</label>
-                        </div>
-
-                        <!-- Box Esqueceu a senha -->
-                        <div class="forgot-password">
-                            <a href="pages/EsqueceuSenha.html">Esqueceu a senha?</a>
-                        </div>
-                    </div>
-                    <!-- Botão de login -->
-                    <div class="inputbx">
-                        <input type="submit" value="Entrar">
-                    </div>
-                    
-                    <!-- Link para criar uma nova conta -->
-                    <div class="inputbx">
-                        <p>Não é registrado? <a href="pages/cadastro.html">Crie uma conta</a></p>
-                    </div>
-                </form> <!-- Fim do formulário -->
-            </div> <!-- Fim do container formbx -->
-        </div> <!-- Fim do container contentbx -->
-    </section> <!-- Fim da seção principal -->
+    </main>
 
     <!-- Link para o arquivo JavaScript externo -->
     <script src="js/scprit.js"></script>
