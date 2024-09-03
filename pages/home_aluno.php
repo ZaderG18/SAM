@@ -67,7 +67,7 @@ $professores = get_todos_professores($conn);
             </div>
             <div class="box-menu-01">
                 <i class='bx bxs-message'></i>
-                <span><a href="../SAM/mensagens.html">Mensagens</a></span>
+                <span><a href="mensagens.php">Mensagens</a></span>
             </div>
             <div class="box-menu-01">
                 <i class='bx bx-cog'></i>
