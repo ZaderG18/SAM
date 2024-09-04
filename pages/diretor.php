@@ -24,6 +24,7 @@ if ($conn->connect_error) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="../scss/home.scss">
+    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
 </head>
 <body>
     

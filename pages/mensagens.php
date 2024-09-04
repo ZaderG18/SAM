@@ -59,6 +59,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela principal</title>
     <link rel="stylesheet" href="../scss/mensagens.scss">
+    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
     <!--==== Box-icons ====-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>

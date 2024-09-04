@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 <head>
     <meta charset="UTF-8">
     <title>Escolher Turma</title>
+    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
 </head>
 <body>
 <h1>Criar Turma</h1>

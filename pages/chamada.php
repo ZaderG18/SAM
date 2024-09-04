@@ -52,6 +52,7 @@ $conn->close();
 <html>
 <head>
     <title>Lista de Chamada</title>
+    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
 </head>
 <body>
     <h1>Lista de Chamada</h1>
