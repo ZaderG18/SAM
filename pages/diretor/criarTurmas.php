@@ -1,5 +1,5 @@
 <?php
-include('../php/turmas.php');
+include('../../php/turmas.php');
 
 // Supondo que $conn seja a conexão
 $turmasAtribuidas = getTurmasAtribuidas($conn);
@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 <head>
     <meta charset="UTF-8">
     <title>Escolher Turma</title>
-    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../assets/imagens/icone_logo 1.png" type="image/x-icon">
 </head>
 <body>
 <h1>Criar Turma</h1>
-    <form action="../php/turmas.php" method="post">
+    <form action="../../php/turmas.php" method="post">
         <label for="disciplina">Disciplina:</label>
         <input type="text" id="disciplina" name="disciplina" required><br><br>
 
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 
 <h1>Atribuir Aluno a uma Turma</h1>
 
-<form action="turmas.php" method="POST">
+<form action="../../php/turmas.php" method="POST">
     <label for="aluno_id">Selecione o Aluno:</label>
     <select name="aluno_id" id="aluno_id" required>
         <option value="">Escolha um aluno</option>
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
             <td><?php echo $turmaAtribuida['aluno_nome']; ?></td>
             <td><?php echo $turmaAtribuida['turma_nome']; ?></td>
             <td>
-                <form action="processamento.php" method="POST" style="display:inline;">
+                <form action="../../php/conexao.php" method="POST" style="display:inline;">
                     <input type="hidden" name="aluno_id" value="<?php echo $turmaAtribuida['id']; ?>">
                     <input type="submit" name="remover_turma" value="Remover">
                 </form>

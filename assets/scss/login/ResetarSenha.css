@@ -27,7 +27,7 @@ main .container .flex-elements .left-img {
   width: 50%;
   min-height: 600px;
   height: 100vh;
-  background-image: url(../imagens/fundo.png);
+  background-image: url(../../imagens/fundo.png);
   background-size: cover;
 }
 
@@ -37,29 +37,25 @@ main .container .flex-elements .right-reset {
 }
 
 .headerbx {
-  margin: 50px auto;
-  width: 90%;
+  margin: 50px 0;
 }
 
 .headerbx h2 {
   font-size: 40px;
   color: #e6e8f0;
   margin: 0;
-  text-align: center;
 }
 
 .headerbx p {
-  font-size: 13px;
+  font-size: 15px;
   color: #fff;
   margin: 0;
-  line-height: 27px;
-  width: 100%;
-  text-align: center;
 }
 
 main .container .flex-elements .right-reset form {
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 main .container .flex-elements .right-reset form .box-input .inputbx {
@@ -177,7 +173,6 @@ main .container .flex-elements .right-reset form .box-input .inputbx {
   font-weight: bold;
   transition: border 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  margin-bottom: 30px;
 }
 
 .inputbx input[type=button]:hover {
@@ -185,22 +180,6 @@ main .container .flex-elements .right-reset form .box-input .inputbx {
   color: #fff;
   border: 2px solid #b395dc;
   box-shadow: 0 0 15px rgba(179, 149, 237, 0.9);
-}
-
-main form .reset-senha {
-  color: white;
-  margin-bottom: 20px;
-  font-size: 12px;
-}
-
-main form .reset-senha a {
-  color: rgb(179, 149, 220);
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-main form .reset-senha a:hover {
-  color: rgb(96, 76, 126);
 }
 
 @media screen and (max-width: 870px) {
@@ -244,38 +223,14 @@ main form .reset-senha a:hover {
     display: inline-flexbox;
     height: 27.4px;
   }
-  main form .reset-senha {
-    font-size: 14px;
-  }
 }
 @media screen and (max-width: 400px) {
   #reset, #voltar {
     font-size: 20px;
   }
-  .headerbx {
-    width: 100%;
-  }
-  .headerbx h2 {
-    font-size: 25px;
-    color: #e6e8f0;
-    margin: 0;
-  }
-  .headerbx p {
-    font-size: 12px;
-    color: #fff;
-    margin: 0;
-    line-height: 20px;
-  }
-  main form .reset-senha {
-    font-size: 12px;
-  }
 }
 @media screen and (max-width: 370px) {
-  #enviar, #voltar {
+  #reset, #voltar {
     font-size: 18px;
   }
-  .headerbx p {
-    margin-top: 10px;
-    font-size: 10.5px;
-  }
-}/*# sourceMappingURL=EsqueceuSenha.css.map */
+}/*# sourceMappingURL=ResetarSenha.css.map */

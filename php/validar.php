@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'email' => $email,
                     'role' => $table  // Define o papel do usuário com base na tabela
                 ];
-                header("Location: ../pages/home_$table.php"); // Redireciona para a página correspondente
+                header("Location: ../pages/$table/home_$table.php"); // Redireciona para a página correspondente
                 exit();
             }
         }

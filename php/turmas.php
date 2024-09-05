@@ -1,20 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Inicia a sessão se não estiver já iniciada. Necessário para acessar variáveis de sessão.
-}
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbName = "SAM";
-
-// Conectar ao banco de dados
-$conn = new mysqli($host, $username, $password, $dbName);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error); // Exibe mensagem de erro e encerra o script se a conexão falhar.
-}
-
+include "conexao.php";
 // Função para atribuir um aluno a uma turma
 function atribuirTurma($conn, $aluno_id, $turma_id) {
     // Verificar se o aluno já está matriculado em uma turma
@@ -82,5 +67,5 @@ $stmt->bind_param("sii", $disciplina, $professor_id, $coordenador_id); // Liga o
 $stmt->execute(); // Executa a consulta para inserir a nova turma.
 $turma_id = $stmt->insert_id; // Obtém o ID da turma recém-criada.
 
-header('Location: ../pages/criarTurmas.php'); // Redireciona o usuário para a página de criação de turmas.
+header('Location: ../pages/diretor/criarTurmas.php'); // Redireciona o usuário para a página de criação de turmas.
 ?>

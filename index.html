@@ -4,9 +4,9 @@
     <!-- Metadados e links para arquivos CSS e ícones -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="scss/login.scss"> <!-- Link para o arquivo de estilos CSS -->
+    <link rel="stylesheet" href="assets/scss/login/login.css"> <!-- Link para o arquivo de estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- Link para o CDN dos ícones Bootstrap -->
-    <link rel="icon" href="imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="assets/imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <title>Login - SAM </title> <!-- Título da página -->
 </head>
 <body>
@@ -19,7 +19,7 @@
 
                     <form action="php/validar.php" method="post">
                         <div class="headerbx">
-                            <img src="imagens/logo.jpg" alt="" srcset="">
+                            <img src="assets/imagens/logo.jpg" alt="" srcset="">
                             <h2>Bem vindo</h2>
                             <p>Faça login para ver sua situação acadêmica</p>
                         </div>
@@ -39,14 +39,14 @@
 
                          <div class="element-senha">
                            <div class="box-check"> <input type="checkbox" checked  value="Bike"> <span>Lembrar de mim</span></div>
-                            <a href="#" onclick="window.location.href='pages/EsqueceuSenha.html'">Esqueceu a senha?</a>
+                            <a href="#" onclick="window.location.href='pages/login/EsqueceuSenha.html'">Esqueceu a senha?</a>
                          </div>
                         <!-- Botão de envio -->
                         <div class="inputbx">
                             <input type="submit" value="Entrar" id="reset">
                         </div>
 
-                        <p class="criar-conta">Não é registrado? <a href="#" onclick="window.location.href='pages/cadastro.html'">Crie uma conta</a></p>
+                        <p class="criar-conta">Não é registrado? <a href="#" onclick="window.location.href='pages/login/cadastro.html'">Crie uma conta</a></p>
 
                     </form> <!-- Fim do formulário -->
                 </div><!--caixa da direita, aonde fica  os inputs de reset de senha -->
@@ -55,6 +55,6 @@
     </main>
 
     <!-- Link para o arquivo JavaScript externo -->
-    <script src="js/scprit.js"></script>
+    <script src="assets/js/scprit.js"></script>
 </body>
 </html>

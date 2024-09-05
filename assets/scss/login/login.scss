@@ -8,6 +8,10 @@
     font-family: 'poppins';
 }
 
+a{
+    text-decoration: none;
+}
+
 main{
     width: 100%;
     height: auto;
@@ -26,9 +30,9 @@ main .container .flex-elements{
 
 main .container .flex-elements .left-img{
     width: 50%;
-    min-height: 600px;
+    min-height: 781px;
     height: 100vh;
-    background-image: url(../imagens/fundo.png);
+    background-image: url(../../imagens/fundo.png);
     background-size: cover;
 }
 
@@ -37,9 +41,24 @@ main .container .flex-elements .right-reset{
     height: auto;
 }
 
-.headerbx {
-    margin: 50px auto;
+main .container .flex-elements .right-reset form{
     width: 90%;
+    margin: 0 auto;
+}
+
+
+.headerbx {
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerbx img{
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 100%;
 }
 
 
@@ -47,21 +66,12 @@ main .container .flex-elements .right-reset{
     font-size: 40px;
     color: #e6e8f0;
     margin: 0;
-    text-align: center;
 }
 
 .headerbx p {
-    font-size: 13px;
+    font-size: 15px;
     color: #fff;
     margin: 0;
-    line-height: 27px;
-    width: 100%;
-    text-align: center;
-}
-
-main .container .flex-elements .right-reset form{
-    width: 90%;
-    margin: 0 auto;
 }
 
 main .container .flex-elements .right-reset form .box-input .inputbx{
@@ -74,6 +84,35 @@ main .container .flex-elements .right-reset form .box-input .inputbx{
     margin-bottom: 30px;
     margin-top: 5px;
 }
+
+main .container .flex-elements .right-reset form .element-senha{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    color: white;
+    align-items: center;
+}
+
+main .container .flex-elements .right-reset form .element-senha .box-check{
+    display: flex; 
+    align-items: center;
+}
+
+main .container .flex-elements .right-reset form .element-senha span{
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+main .container .flex-elements .right-reset form .element-senha a{
+    color: rgb(179, 149, 220);
+    transition: 0.2s;
+    font-size: 13px;
+}
+
+main .container .flex-elements .right-reset form .element-senha a:hover{
+    color: rgb(131, 105, 167);
+}
+
 
 .box-input span {
     width: 100%;
@@ -171,7 +210,6 @@ main .container .flex-elements .right-reset form .box-input .inputbx{
     font-weight: bold;
     transition: border 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
-    margin-bottom: 30px;
 }
 
 .inputbx input[type="button"]:hover {
@@ -181,21 +219,16 @@ main .container .flex-elements .right-reset form .box-input .inputbx{
     box-shadow: 0 0 15px rgba(179, 149, 237, 0.9); 
 }
 
-main form .reset-senha{
+main .container .flex-elements .right-reset form .criar-conta{
     color: white;
+    text-align: center;
     margin-bottom: 20px;
-    font-size: 12px;
 }
 
-main form .reset-senha a{
+main .container .flex-elements .right-reset form .criar-conta a{
     color: rgb(179, 149, 220);
-    text-decoration: none;
-    transition: 0.2s;
 }
 
-main form .reset-senha a:hover{
-    color: rgb(96, 76, 126);
-}
 
 @media screen and (max-width:870px){
     main .container .flex-elements{
@@ -205,14 +238,25 @@ main form .reset-senha a:hover{
 
     main .container .flex-elements .left-img{
         width: 100%;
-        min-height: 400px;
-        height: 400px;
+        min-height: 300px;
+        height: 300px;
         background-position: center;
     }
 
     main .container .flex-elements .right-reset{
         width: 100%;
         height: auto;
+    }
+
+    .headerbx img{
+        width: 150px;
+        margin-bottom: 20px;
+        border-radius: 100%;
+        /*position: relative;
+        top: -120px;*/
+        margin-bottom: 40px;
+        margin-top: -120px ;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     }
 }
 
@@ -246,10 +290,12 @@ main form .reset-senha a:hover{
     height: 27.4px;
 }
 
-main form .reset-senha{
-    font-size: 14px;
 }
 
+@media screen and (max-width:440px){
+    main .container .flex-elements .right-reset form .criar-conta{
+        font-size: 12px;
+    }
 }
 
 
@@ -258,36 +304,34 @@ main form .reset-senha{
         font-size: 20px;
     }
 
-    .headerbx {
-        width: 100%;
+    .headerbx{
+        text-align: center;
     }
 
-    .headerbx h2 {
-        font-size: 25px;
-        color: #e6e8f0;
-        margin: 0;
-    }
-    
-    .headerbx p {
-        font-size: 12px;
-        color: #fff;
-        margin: 0;
-        line-height: 20px
-    }
-
-    main form .reset-senha{
-        font-size: 12px;
+    .headerbx img{
+        width: 120px;
+        margin-top: -110px;
     }
 }
 
 @media screen and (max-width:370px){
-
-    #enviar,#voltar{
-        font-size: 18px;
+    .headerbx h2{
+        font-size: 30px;
     }
 
     .headerbx p{
-        margin-top: 10px;
-        font-size: 10.5px;
+        font-size: 12px;
     }
+
+        main .container .flex-elements .left-img{
+            width: 100%;
+            min-height: 250px;
+            height: 250px;
+            background-position: center;
+        }
+
+        #reset,#voltar{
+            font-size: 18px;
+        }
+
 }

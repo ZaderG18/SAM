@@ -15,7 +15,7 @@ function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioNome,
         // Exibe uma mensagem de alerta e redireciona o usuário.
         echo "<script>
                 alert('Todos os campos são obrigatórios!');
-                window.location.href = 'pages/cadastro.html';
+                window.location.href = 'pages/login/cadastro.html';
               </script>";
         exit(); // Encerra o script para garantir que o código subsequente não seja executado.
     }
@@ -61,7 +61,7 @@ if ($stmt->execute()) {
     ?>
     <script>
      alert("Os dados foram inseridos com sucesso!<br>");
-     window.location.href = "pages/cadastro.html";
+     window.location.href = "pages/login/cadastro.html";
      </script>
      <?php
 } else {
@@ -69,7 +69,7 @@ if ($stmt->execute()) {
 }
 
 // Redireciona o usuário para a página de cadastro após as operações.
-header('Location: ../pages/cadastro.html');
+header('Location: ../pages/login/cadastro.html');
 exit;
 
 // Função para verificar se o email já existe nas tabelas 'aluno', 'professor', 'coordenador' ou 'diretor'.
