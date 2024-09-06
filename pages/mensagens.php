@@ -58,8 +58,8 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela principal</title>
-    <link rel="stylesheet" href="../scss/mensagens.scss">
-    <link rel="shortcut icon" href="../imagens/icone_logo 1.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/scss/mensagens.css">
+    <link rel="shortcut icon" href="../assets/imagens/icone_logo 1.png" type="image/x-icon">
     <!--==== Box-icons ====-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
@@ -67,9 +67,9 @@ $result = $stmt->get_result();
     <header>
         <div class="flex-icons">
             <div class="atalho-office">
-                <img src="../imagens/pacoteoffice.webp" alt="Pacote Office">
+                <img src="../assets/imagens/pacoteoffice.webp" alt="Pacote Office">
             </div>
-            <img src="../imagens/logo.jpg" alt="Logo">
+            <img src="../assets/imagens/logo.jpg" alt="Logo">
         </div>
         <div class="box-serch">
             <i class='bx bx-search-alt-2'></i>
@@ -89,7 +89,7 @@ $result = $stmt->get_result();
             </div>
             <div class="box-menu-01">
                 <i class='bx bxs-hourglass'></i>
-                <span><a href="home_aluno.php">Frequência</a></span>
+                <span><a href="aluno/home_aluno.php">Frequência</a></span>
             </div>
             <div class="box-menu-01">
                 <i class='bx bx-notepad'></i>
@@ -101,7 +101,7 @@ $result = $stmt->get_result();
             </div>
             <div class="box-menu-01">
                 <i class='bx bxs-message'></i>
-                <span><a href="mensagens.html">Mensagens</a></span>
+                <span><a href="mensagens.php">Mensagens</a></span>
             </div>
             <div class="box-menu-01">
                 <i class='bx bx-cog'></i>
