@@ -1,43 +1,68 @@
 <?php
 // Função para obter todos os alunos do banco de dados.
 function get_todos_alunos($conn) {
-    // Prepara a consulta SQL para selecionar todos os campos necessários da tabela 'aluno'.
-    $stmt = $conn->prepare("SELECT id, nome, email, RM, codigo FROM aluno");
-    // Executa a consulta.
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Aluno' AS cargo FROM aluno");
     $stmt->execute();
-    // Retorna o resultado da execução da consulta.
     return $stmt->get_result();
 }
 
 // Função para obter todos os professores do banco de dados.
 function get_todos_professores($conn) {
-    // Prepara a consulta SQL para selecionar todos os campos necessários da tabela 'professor'.
-    $stmt = $conn->prepare("SELECT id, RM, nome, email, codigo FROM professor");
-    // Executa a consulta.
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Professor' AS cargo FROM professor");
     $stmt->execute();
-    // Retorna o resultado da execução da consulta.
     return $stmt->get_result();
 }
 
-// Função para obter todos os alunos e professores do banco de dados.
-function get_todos_alunos_e_professores($conn) {
-    // Chama a função para obter todos os alunos.
+// Função para obter todos os coordenadores do banco de dados.
+function get_todos_coordenadores($conn) {
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Coordenador' AS cargo FROM coordenador");
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
+// Função para obter todos os diretores do banco de dados.
+function get_todos_diretores($conn) {
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Diretor' AS cargo FROM diretor");
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
+// Função para obter todos os usuários do banco de dados.
+function get_todos_usuarios($conn) {
     $alunos = get_todos_alunos($conn);
-    // Chama a função para obter todos os professores.
     $professores = get_todos_professores($conn);
-    // Retorna um array associativo contendo os alunos e os professores.
-    return ['aluno' => $alunos, 'professor' => $professores];
-}
+    $coordenadores = get_todos_coordenadores($conn);
+    $diretores = get_todos_diretores($conn);
 
-// Função para obter um aluno específico com base no RM.
-function get_aluno_especifico($conn, $RM) {
-    // Prepara a consulta SQL para selecionar os dados do aluno com o RM especificado.
-    $stmt = $conn->prepare("SELECT id, nome, email, RM, codigo FROM aluno WHERE RM = ?");
-    // Liga o parâmetro RM à consulta.
-    $stmt->bind_param("s", $RM);
-    // Executa a consulta.
+    // Combina os resultados em um único array.
+    $todos = [];
+    while ($row = $alunos->fetch_assoc()) {
+        $todos[] = $row;
+    }
+    while ($row = $professores->fetch_assoc()) {
+        $todos[] = $row;
+    }
+    while ($row = $coordenadores->fetch_assoc()) {
+        $todos[] = $row;
+    }
+    while ($row = $diretores->fetch_assoc()) {
+        $todos[] = $row;
+    }
+
+    return $todos;
+}
+function total_alunos($conn){
+    $stmt = $conn ->prepare("SELECT COUNT(*) AS total FROM aluno");
     $stmt->execute();
-    // Retorna o resultado da execução da consulta.
-    return $stmt->get_result();
+    $resutado = $stmt -> get_result();
+    $row = $resutado->fetch_assoc();
+    return $row["total"];
+}
+function total_professores($conn){
+    $stmt = $conn -> prepare("SELECT COUNT(*) AS total FROM professor");
+    $stmt->execute();
+    $resutado = $stmt -> get_result();
+    $row = $resutado->fetch_assoc();
+    return $row["total"];
 }
 ?>
