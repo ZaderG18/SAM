@@ -35,6 +35,16 @@ CREATE TABLE IF NOT EXISTS coordenador (
     cargo INT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS diretor (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        email VARCHAR(40) NOT NULL UNIQUE,
+        senha VARCHAR(255) NOT NULL,
+        nome VARCHAR(40) NOT NULL,
+        cargo INT NOT NULL,
+        codigo INT NOT NULL
+    );
+    
 CREATE TABLE IF NOT EXISTS turma (
     id INT AUTO_INCREMENT PRIMARY KEY,
     disciplina VARCHAR(30) NOT NULL,
