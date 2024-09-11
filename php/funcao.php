@@ -65,4 +65,11 @@ function total_professores($conn){
     $row = $resutado->fetch_assoc();
     return $row["total"];
 }
+function total_coordenadores($conn){
+    $stmt = $conn -> prepare("SELECT COUNT(*) AS total FROM coordenador");
+    $stmt->execute();
+    $resutado = $stmt -> get_result();
+    $row = $resutado->fetch_assoc();
+    return $row["total"];
+}
 ?>

@@ -19,6 +19,7 @@ if ($conn->connect_error) {
 $usuarios = get_todos_usuarios($conn);
 $totalAlunos = total_alunos($conn);
 $totalProfessor = total_professores($conn);
+$totalCoordenador = total_coordenadores($conn);
 ?>
 
 <!DOCTYPE html>
@@ -158,7 +159,7 @@ $totalProfessor = total_professores($conn);
                         
                                     <p id="user_infos">
                                         <span class="item-description">
-                                            Fulano de Tal
+                                            <?php echo htmlspecialchars($user['nome']); ?>
                                         </span>
                                         <span class="item-description">
                                             Lorem Ipsum
@@ -276,7 +277,7 @@ $totalProfessor = total_professores($conn);
                             <div class="box-menu"><a href=""><img src="../../assets/imagens/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements img3">
                                 <img id="img3" src="../../assets/imagens/home/logo/Layer_1-1.png" alt="">
-                                <h4>150</h4>
+                                <h4><?php echo htmlspecialchars($totalCoordenador); ?></h4>
                             </div>
                             <p>Total de responsáveis   </p>
                         </div>
