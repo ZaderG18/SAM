@@ -27,6 +27,20 @@
             "database": "root",
             "username": "SAM",
             "password": ""
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "sam",
+            "username": "root",
+            "name": "sam",
+            "password": ""
         }
     ]
 }
