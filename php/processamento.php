@@ -4,14 +4,15 @@ include "conexao.php";
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$usuarioSenha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
-$usuarioNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-$usuarioCargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_STRING);
+$usuarioSenha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
+$usuarioRM = filter_input(INPUT_POST, 'RM', FILTER_SANITIZE_NUMBER_INT);
+$usuarioNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+$usuarioCargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_NUMBER_INT);
 
 // Verifica se todos os campos obrigatórios foram preenchidos.
-function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioNome, $usuarioCargo) {
+function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $usuarioNome, $usuarioCargo) {
     // Verifica se algum dos campos obrigatórios está vazio.
-    if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome || !$usuarioCargo) {
+    if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome|| !$usuarioRM || !$usuarioCargo) {
         // Exibe uma mensagem de alerta e redireciona o usuário.
         echo "<script>
                 alert('Todos os campos são obrigatórios!');
@@ -24,9 +25,10 @@ function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioNome,
 $usuarioEmail = $_POST['email'] ?? '';
 $usuarioSenha = $_POST['senha'] ?? '';
 $usuarioNome = $_POST['nome'] ?? '';
+$usuarioRM = $_POST['RM'] ?? '';
 $usuarioCargo = $_POST['cargo'] ?? '';
 
-verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioNome, $usuarioCargo);
+verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $usuarioNome, $usuarioCargo);
 
 // Validação do cargo
 if (!in_array($usuarioCargo, [1, 2, 3, 4])) {
@@ -53,9 +55,9 @@ $tableName = $tableMap[$usuarioCargo];
 $hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 
 // Prepara e executa a consulta de inserção dos dados na tabela apropriada.
-$sqlInsert = "INSERT INTO $tableName (email, senha, nome, cargo) VALUES (?, ?, ?, ?)";
+$sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
-$stmt->bind_param("sssi", $usuarioEmail, $hashedPassword, $usuarioNome, $usuarioCargo);
+$stmt->bind_param("ssssi", $usuarioEmail, $hashedPassword, $usuarioRM, $usuarioNome, $usuarioCargo);
 
 if ($stmt->execute()) {
     ?>

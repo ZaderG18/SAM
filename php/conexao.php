@@ -41,7 +41,7 @@ if ($conn->connect_error) {
 $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
+        RM VARCHAR(10) NOT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -50,7 +50,7 @@ $tableQueries = [
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
+        RM VARCHAR(10) NOT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -59,7 +59,7 @@ $tableQueries = [
     )",
     "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
+        RM VARCHAR(10) NOT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -68,7 +68,7 @@ $tableQueries = [
     )",
     "diretor"=> "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
+        RM VARCHAR(10) NOT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
