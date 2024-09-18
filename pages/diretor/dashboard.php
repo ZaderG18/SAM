@@ -1,6 +1,4 @@
 <?php
-$user = $_SESSION['user'];
-
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -18,11 +16,11 @@ if ($conn->connect_error) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Responsivo usando HTML, CSS & Javscript</title>
+    <title>Dashboard</title>
     <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons+O+Symbols+Outlined"
       rel="stylesheet"-->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+    <link rel="shortcut icon" href="../../assets/imagens/icone_logo 1.png" type="image/x-icon">
     <link rel="stylesheet" href="../../assets/scss/diretor/dashboard/dashboard.css">
 </head>
 <body>
@@ -43,7 +41,7 @@ if ($conn->connect_error) {
                     <span class="material-symbols-outlined">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="../home/home.html" class="active">
+                <a href="home_diretor.php" class="active">
                     <span class="material-symbols-outlined">person</span>
                     <h3>Home</h3>
                 </a>
@@ -78,7 +76,7 @@ if ($conn->connect_error) {
                     <span class="material-symbols-outlined">add</span>
                     <h3>Adicionar Produto</h3>
                 </a>
-                <a href="../login/login.html">
+                <a href="../../php/logout.php">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Sair</h3>
                 </a>

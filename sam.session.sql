@@ -1,13 +1,4 @@
-INSERT INTO aluno (id, RM, email, senha, nome, codigo, cargo)
-VALUES (
-    id:int,
-    'RM:varchar',
-    'email:varchar',
-    'senha:varchar',
-    'nome:varchar',
-    codigo:int,
-    cargo:int
-  );-- Conecte ao MySQL Server e crie o banco de dados
+-- Conecte ao MySQL Server e crie o banco de dados
 CREATE DATABASE IF NOT EXISTS SAM;
 
 -- Use o banco de dados criado

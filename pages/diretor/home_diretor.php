@@ -47,79 +47,220 @@ $maximo_registros = 6;
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
+<header class="header"> 
         <div class="logo-sam"><img src="../../assets/imagens/home/logo/Mask group.png" alt=""></div>
         <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
         <nav class="nav container" id="menu-mobile">
             <div class="nav__data">
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-line nav__burger"></i>
-                    <i class="ri-close-line nav__close"></i>
-                </div>
+               <!-- <a href="#" class="nav__logo">
+                  <i class="ri-planet-line"></i> Company
+               </a> -->
+               
+               <div class="nav__toggle" id="nav-toggle">
+                  <i class="ri-menu-line nav__burger"></i>
+                  <i class="ri-close-line nav__close"></i>
+               </div>
             </div>
-            <!-- Nav Menu -->
+
+            <!--=============== NAV MENU ===============-->
             <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li><a href="#" class="nav__link">Home</a></li>
-                    <li><a href="#" class="nav__link">Company</a></li>
-                    <li class="dropdown__item">
-                        <div class="nav__link">Analytics <i class="ri-arrow-down-s-line dropdown__arrow"></i></div>
-                        <ul class="dropdown__menu">
-                            <li><a href="#" class="dropdown__link"><i class="ri-pie-chart-line"></i> Overview</a></li>
-                            <li><a href="#" class="dropdown__link"><i class="ri-arrow-up-down-line"></i> Transactions</a></li>
-                            <li class="dropdown__subitem">
-                                <div class="dropdown__link"><i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i></div>
-                                <ul class="dropdown__submenu">
-                                    <li><a href="#" class="dropdown__sublink"><i class="ri-file-list-line"></i> Documents</a></li>
-                                    <li><a href="#" class="dropdown__sublink"><i class="ri-cash-line"></i> Payments</a></li>
-                                    <li><a href="#" class="dropdown__sublink"><i class="ri-refund-2-line"></i> Refunds</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav__link">Products</a></li>
-                    <li class="dropdown__item">
-                        <div class="nav__link">Users <i class="ri-arrow-down-s-line dropdown__arrow"></i></div>
-                        <ul class="dropdown__menu">
-                            <li><a href="#" class="dropdown__link"><i class="ri-user-line"></i> Profiles</a></li>
-                            <li><a href="#" class="dropdown__link"><i class="ri-lock-line"></i> Accounts</a></li>
-                            <li><a href="#" class="dropdown__link"><i class="ri-message-3-line"></i> Messages</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav__link">Contact</a></li>
-                </ul>
+               <ul class="nav__list">
+                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/home.svg" alt="" srcset="">Home</a></li>
+
+                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
+
+                  <!--=============== DROPDOWN 1 ===============-->
+                  <li class="dropdown__item">
+                     <div class="nav__link"><img src="../../assets/imagens/home/icons/dashboard.svg" alt="" srcset="">
+                        Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                     </div>
+
+                     <ul class="dropdown__menu">
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-pie-chart-line"></i> Overview
+                           </a>                          
+                        </li>
+
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-arrow-up-down-line"></i> Transactions
+                           </a>
+                        </li>
+
+                        <!--=============== DROPDOWN SUBMENU ===============
+                        <li class="dropdown__subitem">
+                           <div class="dropdown__link">
+                              <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
+                           </div>
+
+                           <ul class="dropdown__submenu">
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-file-list-line"></i> Documents
+                                 </a>
+                              </li>
+      
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-cash-line"></i> Payments
+                                 </a>
+                              </li>
+      
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-refund-2-line"></i> Refunds
+                                 </a>
+                              </li>
+                           </ul>
+                        </li>-->
+                     </ul>
+                  </li>
+                  
+                  <li><a href="#" class="nav__link">Products</a></li>
+
+                  <!--=============== DROPDOWN 2 ===============-->
+                  <li class="dropdown__item">
+                     <div class="nav__link">
+                        Users <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                     </div>
+
+                     <ul class="dropdown__menu">
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-user-line"></i> Profiles
+                           </a>                          
+                        </li>
+
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-lock-line"></i> Accounts
+                           </a>
+                        </li>
+
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-message-3-line"></i> Messages
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li><a href="#" class="nav__link">Contact</a></li>
+               </ul>
             </div>
-        </nav>
+         </nav>
     </header>
     <div class="global-container">
         <aside>
             <div class="sidebar">
-                <nav id="sidebar">
-                    <div id="sidebar_content">
-                        <div id="user">
-                            <img src="../../assets/imagens/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
-                            <p id="user_infos">
-                                <span class="item-description"><?php echo htmlspecialchars($user['nome']); ?></span>
-                                <span class="item-description">Diretor</span>
-                            </p>
-                        </div>
-                        <ul id="side_items">
-                            <li class="side-item active"><a href="#"><i class="fa-solid fa-chart-line"></i><span class="item-description">Dashboard</span></a></li>
-                            <li class="side-item"><a href="#"><i class="fa-solid fa-user"></i><span class="item-description">Usuários</span></a></li>
-                            <li class="side-item"><a href="#"><i class="fa-solid fa-bell"></i><span class="item-description">Notificações</span></a></li>
-                            <li class="side-item"><a href="#"><i class="fa-solid fa-box"></i><span class="item-description">Produtos</span></a></li>
-                            <li class="side-item"><a href="#"><i class="fa-solid fa-image"></i><span class="item-description">Imagens</span></a></li>
-                            <li class="side-item"><a href="#"><i class="fa-solid fa-gear"></i><span class="item-description">Configurações</span></a></li>
-                        </ul>
-                        <button id="open_btn"><i id="open_btn_icon" class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div id="logout">
-                        <button id="logout_btn"><a href="../../php/logout.php"><i class="fa-solid fa-right-from-bracket"></i><span class="item-description">Logout</a></span></button>
-                    </div>
-                </nav>
+                        <!--aside bar-->
+                        <nav id="sidebar">
+                            <div id="sidebar_content">
+                                <div id="user">
+                                    <img src="../../assets/imagens/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                        
+                                    <p id="user_infos">
+                                        <span class="item-description">
+                                            <?php echo htmlspecialchars($user['nome']); ?>
+                                        </span>
+                                        <span class="item-description">
+                                            Lorem Ipsum
+                                        </span>
+                                    </p>
+                                </div>
+                        
+                                <ul id="side_items">
+                                    <li class="side-item active">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/home.svg" alt="" >
+                                            <span class="item-description">
+                                                Home
+                                            </span>
+                                        </a>
+                                    </li>
+                        
+                                    <li class="side-item">
+                                        <a href="docentes.php">
+                                            <img src="../../assets/imagens/home/icons/docentes.svg" alt="">
+                                            <span class="item-description">
+                                                Docentes
+                                            </span>
+                                        </a>
+                                    </li>
+                        
+                                    <li class="side-item">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/cursos.svg" alt="" width="30px">
+                                            <span class="item-description">
+                                                Gerenciar Cursos
+                                            </span>
+                                        </a>
+                                    </li>
+                        
+                                    <li class="side-item">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/user.svg" alt="">
+                                            <span class="item-description">
+                                                Gerenciar usuarios
+                                            </span>
+                                        </a>
+                                    </li>
+                        
+                                    <li class="side-item">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/comunicado.svg" alt="">
+                                            <span class="item-description">
+                                                Gerenciar comunicados
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="side-item">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/documento.svg" alt="">
+                                            <span class="item-description">
+                                                Gerenciar documentos
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li class="side-item">
+                                        <a href="dashboard.php">
+                                            <img src="../../assets/imagens/home/icons/dashboard.svg" alt="">
+                                            <span class="item-description">
+                                                Dashboard
+                                            </span>
+                                        </a>
+                                    </li>
+                        
+                                    <li class="side-item">
+                                        <a href="#">
+                                            <img src="../../assets/imagens/home/icons/configuracao.svg" alt="">
+                                            <span class="item-description">
+                                                Configurações
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                        
+                                <button id="open_btn">
+                                    <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                    
+                            <div id="logout">
+                                <button id="logout_btn" onclick="window.location.href='../../index.html'">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span class="item-description">
+                                        Logout
+                                    </span>
+                                </button>
+                            </div>
+                        </nav>
             </div>
         </aside>
-        <main>
+        <main>            
             <div class="container">
                 <div class="box-welcome">
                     <div class="title-welcome">
