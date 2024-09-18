@@ -11,14 +11,12 @@ $usuarioCargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_NUMBER_INT);
 
 // Verifica se todos os campos obrigatórios foram preenchidos.
 function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $usuarioNome, $usuarioCargo) {
-    // Verifica se algum dos campos obrigatórios está vazio.
-    if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome|| !$usuarioRM || !$usuarioCargo) {
-        // Exibe uma mensagem de alerta e redireciona o usuário.
+    if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome || !$usuarioRM || !$usuarioCargo) {
         echo "<script>
                 alert('Todos os campos são obrigatórios!');
                 window.location.href = 'pages/login/cadastro.html';
               </script>";
-        exit(); // Encerra o script para garantir que o código subsequente não seja executado.
+        exit();
     }
 }
 
@@ -37,7 +35,7 @@ if (!in_array($usuarioCargo, [1, 2, 3, 4])) {
 
 // Verifica se o email já existe no banco de dados.
 if (emailExiste($conn, $usuarioEmail)) {
-    die ("Email já existe");
+    die("Email já existe");
 }
 
 // Mapeia o cargo para o nome da tabela correspondente.
@@ -57,24 +55,27 @@ $hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 // Prepara e executa a consulta de inserção dos dados na tabela apropriada.
 $sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
+
+if ($stmt === false) {
+    die("Erro ao preparar a consulta: " . htmlspecialchars($conn->error));
+}
+
 $stmt->bind_param("ssssi", $usuarioEmail, $hashedPassword, $usuarioRM, $usuarioNome, $usuarioCargo);
 
 if ($stmt->execute()) {
-    ?>
-    <script>
-     alert("Os dados foram inseridos com sucesso!<br>");
-     window.location.href = "pages/login/cadastro.html";
-     </script>
-     <?php
+    echo "<script>
+            alert('Os dados foram inseridos com sucesso!');
+            window.location.href = 'pages/login/cadastro.html';
+          </script>";
 } else {
-    echo "Não foi possível inserir os dados na tabela: " . $stmt->error;
+    echo "Não foi possível inserir os dados na tabela: " . htmlspecialchars($stmt->error);
 }
 
 // Redireciona o usuário para a página de cadastro após as operações.
 header('Location: ../pages/login/cadastro.html');
 exit;
 
-// Função para verificar se o email já existe nas tabelas 'aluno', 'professor', 'coordenador' ou 'diretor'.
+// Função para verificar se o email já existe nas tabelas.
 function emailExiste($conn, $email) {
     $sql = "SELECT id FROM aluno WHERE email = ?
             UNION
@@ -83,6 +84,7 @@ function emailExiste($conn, $email) {
             SELECT id FROM coordenador WHERE email = ?
             UNION
             SELECT id FROM diretor WHERE email = ?";
+    
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("ssss", $email, $email, $email, $email);
         $stmt->execute();
@@ -91,11 +93,11 @@ function emailExiste($conn, $email) {
         $stmt->close();
         return $exists;
     } else {
-        die("Erro na query: " . $conn->error);
+        die("Erro na consulta de email: " . htmlspecialchars($conn->error));
     }
 }
 
 // Fecha a conexão com o banco de dados.
-$conn -> close();
+$conn->close();
 
 ?>
