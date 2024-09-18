@@ -46,7 +46,7 @@ $tableQueries = [
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         codigo INT NOT NULL,
-        cargo INT NOT NULL
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,7 +55,7 @@ $tableQueries = [
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         codigo INT NOT NULL,
-        cargo INT NOT NULL
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
     "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,7 +64,7 @@ $tableQueries = [
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         codigo INT NOT NULL,
-        cargo INT NOT NULL
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
     "diretor"=> "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,7 +73,7 @@ $tableQueries = [
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         cargo INT NOT NULL,
-        codigo INT NOT NULL
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
     "turma" => "CREATE TABLE IF NOT EXISTS turma (
         id INT AUTO_INCREMENT PRIMARY KEY,
