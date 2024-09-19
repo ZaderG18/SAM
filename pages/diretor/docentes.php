@@ -9,7 +9,9 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
 include "../../php/funcao.php";
+include "../../php/search.php";
 $totalProfessor = get_todos_professores($conn);
+$searchProf = procurarProfessor($conn);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -255,7 +257,7 @@ $totalProfessor = get_todos_professores($conn);
 
                         <div class="box-filtro">
                             <label for="">Nome:</label>
-                            <input type="text">
+                            <input type="text" id="search" name="search">
                         </div>
                         <div class="box-filtro">
                             <label for="">Disciplinas ministradas</label>
@@ -290,32 +292,31 @@ $totalProfessor = get_todos_professores($conn);
                             <div class="title-disciplina table"><h5>Disciplina</h5></div>
                             <div class="title-rm table"><h5>RM</h5></div>
                         </div>
-                        <div class="tabela" >
-                            <div class="box-foto">
-                                <img src="../../assets/imagens/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
-                            </div>
-                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
-                                <div class="flex-info nome-info">
+                        <?php while($row = $totalProfessor->FETCH_ASSOC()){
+                        echo '<div class="tabela" >';
+                            echo'<div class="box-foto">
+                                <img src="../../assets/imagens/persona/'.$row['foto'].'" alt="">
+                            </div>';
+                           echo '<div class="box-info-geral" style="display: flex; flex-direction: column;">';
+                                echo '<div class="flex-info nome-info">
                                     <h5>Nome:</h5>
-                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
-                                </div>
-                                <div class="flex-info nome-info">
+                                    <span>'.$row['nome'].'</span>
+                                </div>';
+                                echo '<div class="flex-info nome-info">
                                     <h5>CPF:</h5>
-                                    <span>000.000.000-00</span>
-                                </div>
-                                <div class="flex-info nome-info">
+                                    <span>'.$row['cpf'].'</span>
+                                </div>';
+                                echo'<div class="flex-info nome-info">
                                     <h5>Setor:</h5>
-                                    <span>Área pedagógica</span>
-                                </div>
-                            </div>
-                            <div class="box-disciplina">
-                                <span>Nutrição</span>
-                            </div>
-                            <div class="box-RM">
-                                <span>000-00-000</span>
-                            </div>
-                        </div> 
-
+                                    <span>'.$row['disciplina'].'</span>
+                                </div>';
+                            echo'</div>';
+                           echo '<div class="box-RM">
+                                <span>'.$row['rm'].'</span>
+                            </div>';
+                        echo'</div>';
+                    }
+                    ?>
                         <div class="tabela" >
                             <div class="box-foto">
                                 <img src="../../assets/imagens/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
@@ -341,6 +342,7 @@ $totalProfessor = get_todos_professores($conn);
                                 <span>000-00-000</span>
                             </div>
                         </div> 
+
                         <div class="tabela" >
                             <div class="box-foto">
                                 <img src="../../assets/imagens/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="">
@@ -375,5 +377,6 @@ $totalProfessor = get_todos_professores($conn);
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script>
+    <script src="../../assets/js/global/search.js"></script>
 </body>
 </html>
