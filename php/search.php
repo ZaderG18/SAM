@@ -15,7 +15,7 @@ try {
             $query = $_GET['q'];
 
             // Preparar a consulta SQL para buscar resultados na tabela de professores
-            $stmt = $conn->prepare("SELECT nome FROM professor WHERE nome LIKE :query LIMIT 10");
+            $stmt = $conn->prepare("SELECT nome, cpf, disciplina, rm, foto FROM professor WHERE nome LIKE :query LIMIT 10");
             $stmt->execute([':query' => '%' . $query . '%']);
             
             // Buscar os resultados
@@ -30,6 +30,7 @@ try {
     procurarProfessor($conn);
 
 } catch (PDOException $e) {
+    header('Content-Type: application/json');
     // Retornar erro em formato JSON
     echo json_encode(['erro' => $e->getMessage()]);
 }

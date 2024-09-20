@@ -8,9 +8,7 @@ $conn = new mysqli($host, $username, $senha, $banco);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-include "../../php/funcao.php";
 include "../../php/search.php";
-$totalProfessor = get_todos_professores($conn);
 $searchProf = procurarProfessor($conn);
 ?>
 <!DOCTYPE html>
@@ -292,30 +290,35 @@ $searchProf = procurarProfessor($conn);
                             <div class="title-disciplina table"><h5>Disciplina</h5></div>
                             <div class="title-rm table"><h5>RM</h5></div>
                         </div>
-                        <?php while($row = $totalProfessor->FETCH_ASSOC()){
-                        echo '<div class="tabela" >';
-                            echo'<div class="box-foto">
-                                <img src="../../assets/imagens/persona/'.$row['foto'].'" alt="">
-                            </div>';
-                           echo '<div class="box-info-geral" style="display: flex; flex-direction: column;">';
-                                echo '<div class="flex-info nome-info">
+                        <?php
+                        require '../../php/funcao.php';
+                        
+                        $totalProfessor->get_todos_professores($conn);
+                        foreach($totalProfessor as $value){?>
+                        <div class="tabela" >
+                            <div class="box-foto">
+                                <img src="../../assets/imagens/usuarios/<?php echo $value['foto'];?>" alt="">
+                            </div>
+                           <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
                                     <h5>Nome:</h5>
-                                    <span>'.$row['nome'].'</span>
-                                </div>';
-                                echo '<div class="flex-info nome-info">
+                                    <span><?php echo $value['nome'];?></span>
+                                </div>
+                                <div class="flex-info nome-info">
                                     <h5>CPF:</h5>
-                                    <span>'.$row['cpf'].'</span>
-                                </div>';
-                                echo'<div class="flex-info nome-info">
+                                    <span><?php echo $value['cpf'];?></span>
+                                </div>
+                                <div class="flex-info nome-info">
                                     <h5>Setor:</h5>
-                                    <span>'.$row['disciplina'].'</span>
-                                </div>';
-                            echo'</div>';
-                           echo '<div class="box-RM">
-                                <span>'.$row['rm'].'</span>
-                            </div>';
-                        echo'</div>';
-                    }
+                                    <span><?php echo $value['disciplina'];?></span>
+                                </div>
+                            </div>
+                            <div class="box-RM">
+                                <span><?php echo $value['rm'];?></span>
+                            </div>
+                        </div>
+                    <?php 
+                        }
                     ?>
                         <div class="tabela" >
                             <div class="box-foto">
