@@ -197,38 +197,6 @@ main .container {
   color: white;
 }
 
-/* .tabela{
-    width:0;
-    margin-top: 40px;
-}
-
-.tabela table{
-    width: 100%;
-}
-
-table,tr,th,td{
-    text-align: center;
-    width: 200px ;
-    background-color: red;
-} */
-/* 
-.tabela table td{
-    width: 200px;
-    height: 200px;
-    background-color: purple;
-} */
-/* td .foto-docente{
-    background-image: url(../../img/home/coqui-chang-tnUp0OLSkDg-unsplash.jpg);
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 200px;
-}
-
-table td{
-    padding: 30px 0;
-    color: #282649;
-} */
 .table-flex-title {
   display: flex;
   width: 100%;
@@ -249,7 +217,7 @@ table td{
 }
 
 .table-flex-title .title-dados {
-  width: 60%;
+  width: 80%;
   height: auto;
 }
 
@@ -265,25 +233,26 @@ table td{
   display: flex;
   height: auto;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .box-foto {
   width: 203px;
-  height: 270px;
+  height: 220px;
 }
 
 .box-foto img {
   width: 100%;
-  height: 270px;
+  height: 220px;
 }
 
 .box-info-geral {
-  width: 59%;
+  width: 79%;
   height: auto;
   border-bottom: 1px solid #dadada;
   border-top: 1px solid #dadada;
   background-color: #F9F9F9;
-  padding: 20px;
+  padding: 20px 10px;
   display: flex;
   justify-content: center;
 }
@@ -296,13 +265,13 @@ table td{
 
 .box-info-geral .flex-info span {
   color: #929292;
-  font-size: 17px;
+  font-size: 14px;
   text-transform: uppercase;
   margin-left: 10px;
 }
 
 .box-info-geral .flex-info h5 {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
   text-transform: uppercase;
   color: #313131;
@@ -310,7 +279,7 @@ table td{
 
 .box-disciplina {
   width: 20%;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   background-color: #F9F9F9;
   display: flex;
   justify-content: center;
@@ -341,6 +310,19 @@ table td{
     padding: 50px 20px;
   }
 }
+@media screen and (max-width: 940px) {
+  .container-filtro {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /* padding: 0 20px; */
+  }
+  .container-filtro .box-filtro {
+    width: 46%;
+    margin: 10px 10px;
+    min-width: 200px;
+  }
+}
 @media screen and (max-width: 900px) {
   header .logo-sam {
     display: block;
@@ -356,10 +338,134 @@ table td{
     margin-left: 0;
   }
 }
+@media screen and (max-width: 800px) {
+  .flex-title {
+    flex-direction: column-reverse;
+  }
+  .flex-title .box-img {
+    background-color: rgba(60, 33, 88, 0.6901960784);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  @keyframes float {
+    0%, 100% {
+      transform: translatey(0);
+    }
+    50% {
+      transform: translatey(-3px);
+    }
+  }
+  .flex-title .box-img img {
+    animation: float 2s ease-in-out infinite;
+  }
+  .container .box-title h1 {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 750px) {
+  .tabela {
+    display: flex;
+    height: auto;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  /* 
+      .box-foto{
+          width: 150px;
+          height: auto;
+      }
+
+      .box-foto img{
+          width: 100%;
+          height: 150px;
+          min-height:100px;
+      } */
+  .box-info-geral {
+    width: 59%;
+    height: auto;
+    border-bottom: 1px solid #dadada;
+    border-top: 1px solid #dadada;
+    background-color: #F9F9F9;
+    padding: 20px 10px;
+  }
+  .box-info-geral .flex-info {
+    margin: 5px 0;
+  }
+  .box-info-geral .flex-info span {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-left: 10px;
+  }
+  .box-info-geral .flex-info h5 {
+    font-size: 13px;
+  }
+  .box-disciplina {
+    font-size: 10px;
+  }
+  .box-RM {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .table-flex-title {
+    display: none;
+  }
+  .filtro-tabela .tabela {
+    display: none;
+  }
+  .tabela {
+    width: 100%;
+    flex-direction: column;
+  }
+  .box-info-geral {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #dadada;
+    border-top: 0;
+    background-color: #F9F9F9;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: none;
+  }
+  .flex-info {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: none;
+    align-items: flex-start !important;
+  }
+  .box-info-geral .flex-info span {
+    margin-left: 0;
+  }
+  .box-disciplina {
+    width: 100%;
+    padding: 10px 0;
+  }
+  .box-foto {
+    width: 100%;
+    height: auto;
+  }
+  .box-foto img {
+    width: 100%;
+    height: 300px;
+    min-height: 200px;
+    border-radius: 10px 10px 0 0;
+  }
+}
 @media screen and (max-width: 600px) {
   header {
     justify-content: space-between;
   }
+  /* .slide-flex-tabela{
+      display: flex;
+      justify-content: space-around;
+  } */
 }
 @media screen and (max-width: 600px) {
   header {
@@ -367,5 +473,23 @@ table td{
   }
   header .box-search {
     width: 100%;
+  }
+}
+@media screen and (max-width: 580px) {
+  .container-filtro .box-filtro {
+    width: 100%;
+    margin: 10px 0;
+    min-width: 200px;
+  }
+  .container-filtro #filtrar {
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .container-filtro .box-filtro label {
+    font-size: 12px;
+  }
+  .container-filtro #filtrar {
+    font-size: 12px;
   }
 }/*# sourceMappingURL=style.css.map */

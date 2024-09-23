@@ -39,7 +39,7 @@ $maximo_registros = 6;
     <link rel="stylesheet" href="../../assets/scss/diretor/global/bottomnav.css">
     <link rel="stylesheet" href="../../assets/scss/diretor/global/menumobile.css">
     <!-- CSS -->
-    <link rel="icon" href="../../assets/imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Box-icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -48,7 +48,7 @@ $maximo_registros = 6;
 </head>
 <body>
 <header class="header"> 
-        <div class="logo-sam"><img src="../../assets/imagens/home/logo/Mask group.png" alt=""></div>
+        <div class="logo-sam"><img src="../../assets/img/home/logo/Mask group.png" alt=""></div>
         <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
         <nav class="nav container" id="menu-mobile">
             <div class="nav__data">
@@ -65,13 +65,13 @@ $maximo_registros = 6;
             <!--=============== NAV MENU ===============-->
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
-                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/home.svg" alt="" srcset="">Home</a></li>
+                  <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
 
-                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
+                  <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
 
                   <!--=============== DROPDOWN 1 ===============-->
                   <li class="dropdown__item">
-                     <div class="nav__link"><img src="../../assets/imagens/home/icons/dashboard.svg" alt="" srcset="">
+                     <div class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
                         Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
                      </div>
 
@@ -158,7 +158,7 @@ $maximo_registros = 6;
                         <nav id="sidebar">
                             <div id="sidebar_content">
                                 <div id="user">
-                                    <img src="../../assets/imagens/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                                    <img src="../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
                         
                                     <p id="user_infos">
                                         <span class="item-description">
@@ -173,7 +173,7 @@ $maximo_registros = 6;
                                 <ul id="side_items">
                                     <li class="side-item active">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/home.svg" alt="" >
+                                            <img src="../../assets/img/home/icons/home.svg" alt="" >
                                             <span class="item-description">
                                                 Home
                                             </span>
@@ -182,7 +182,7 @@ $maximo_registros = 6;
                         
                                     <li class="side-item">
                                         <a href="docentes.php">
-                                            <img src="../../assets/imagens/home/icons/docentes.svg" alt="">
+                                            <img src="../../assets/img/home/icons/docentes.svg" alt="">
                                             <span class="item-description">
                                                 Docentes
                                             </span>
@@ -191,7 +191,7 @@ $maximo_registros = 6;
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/cursos.svg" alt="" width="30px">
+                                            <img src="../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
                                             </span>
@@ -200,7 +200,7 @@ $maximo_registros = 6;
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/user.svg" alt="">
+                                            <img src="../../assets/img/home/icons/user.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar usuarios
                                             </span>
@@ -209,7 +209,7 @@ $maximo_registros = 6;
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/comunicado.svg" alt="">
+                                            <img src="../../assets/img/home/icons/comunicado.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar comunicados
                                             </span>
@@ -218,7 +218,7 @@ $maximo_registros = 6;
 
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/documento.svg" alt="">
+                                            <img src="../../assets/img/home/icons/documento.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar documentos
                                             </span>
@@ -227,7 +227,7 @@ $maximo_registros = 6;
 
                                     <li class="side-item">
                                         <a href="dashboard.php">
-                                            <img src="../../assets/imagens/home/icons/dashboard.svg" alt="">
+                                            <img src="../../assets/img/home/icons/dashboard.svg" alt="">
                                             <span class="item-description">
                                                 Dashboard
                                             </span>
@@ -236,7 +236,7 @@ $maximo_registros = 6;
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/configuracao.svg" alt="">
+                                            <img src="../../assets/img/home/icons/configuracao.svg" alt="">
                                             <span class="item-description">
                                                 Configurações
                                             </span>
@@ -273,25 +273,25 @@ $maximo_registros = 6;
                     <h2>Visão geral</h2>
                     <div class="flex-visao-geral">
                         <div class="content-visao" id="content-visao01">
-                            <div class="box-menu"><a href="#"><img src="../../assets/imagens/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="#"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements">
-                                <img id="img1" src="../../assets/imagens/home/logo/Layer_1.png" alt="">
+                                <img id="img1" src="../../assets/img/home/logo/Layer_1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalAlunos); ?></h4>
                             </div>
                             <p>Total de estudantes</p>
                         </div>
                         <div class="content-visao" id="content-visao02">
-                            <div class="box-menu"><a href="#"><img src="../../assets/imagens/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="#"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements">
-                                <img id="img2" src="../../assets/imagens/home/logo/sala-de-aula (3) 1.png" alt="">
+                                <img id="img2" src="../../assets/img/home/logo/sala-de-aula (3) 1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalProfessor); ?></h4>
                             </div>
                             <p>Total de docentes</p>
                         </div>
                         <div class="content-visao" id="content-visao03">
-                            <div class="box-menu"><a href="#"><img src="../../assets/imagens/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="#"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements img3">
-                                <img id="img3" src="../../assets/imagens/home/logo/Layer_1-1.png" alt="">
+                                <img id="img3" src="../../assets/img/home/logo/Layer_1-1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalCoordenador); ?></h4>
                             </div>
                             <p>Total de responsáveis</p>
@@ -302,7 +302,7 @@ $maximo_registros = 6;
                     <div class="box-flex-registro">
                         <div class="grafico">
                             <h2>Perfis <br>incompletos</h2>
-                            <img src="../../assets/imagens/home/logo/grafic.png" alt="">
+                            <img src="../../assets/img/home/logo/grafic.png" alt="">
                             <span>63.8%</span>
                         </div>
                         <div class="registro">

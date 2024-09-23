@@ -19,7 +19,7 @@ document.getElementById('search').addEventListener('input', function() {
                         <span>${item.nome}</span> <!-- Nome do professor -->
                     </div>
                     <div class="box-foto">
-                        <img src="../../assets/imagens/persona/${item.foto}" alt="Foto do Professor">
+                        <img src="../../assets/img/persona/${item.foto}" alt="Foto do Professor">
                     </div>
                     <div class="box-info-geral">
                         <div class="flex-info">

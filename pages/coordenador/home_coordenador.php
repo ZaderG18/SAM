@@ -26,7 +26,7 @@ $professores = $data ['professor'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="shortcut icon" type="imagex/png" href="../../assets/imagens/logo.jpg">
+    <link rel="shortcut icon" type="imagex/png" href="../../assets/img/logo.jpg">
     <link rel="stylesheet" href="../../assets/scss/home.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
@@ -34,7 +34,7 @@ $professores = $data ['professor'];
     <header>
         <div class="flex-icons">
             <i class='bx bx-menu-alt-left'></i>
-            <img src="/imagens/logosam.jpg" alt="">
+            <img src="/img/logosam.jpg" alt="">
         </div>
         <div class="box-search">
             <i class='bx bx-search-alt-2'></i>

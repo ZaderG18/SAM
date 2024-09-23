@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons+O+Symbols+Outlined"
       rel="stylesheet"-->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="shortcut icon" href="../../assets/imagens/icone_logo 1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../assets/img/icone_logo 1.png" type="image/x-icon">
     <link rel="stylesheet" href="../../assets/scss/diretor/dashboard/dashboard.css">
 </head>
 <body>
@@ -230,7 +230,7 @@ if ($conn->connect_error) {
                         <small class="text-muted">Administrador</small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../assets/imagens/persona/coqui-chang-COP.jpg" alt="Imagem de Perfil">
+                        <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Imagem de Perfil">
                     </div>
                 </div>
             </div>
@@ -239,7 +239,7 @@ if ($conn->connect_error) {
                 <div class="updates">
                     <div class="update">
                         <div class="profile-photo">
-                            <img src="../../assets/imagens/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Imagem de Profile da Atualização">
+                            <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Imagem de Profile da Atualização">
                         </div>
                         <div class="message">
                             <p><b>Fulano</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -249,7 +249,7 @@ if ($conn->connect_error) {
 
                     <div class="update">
                         <div class="profile-photo">
-                            <img src="../../assets/imagens/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Imagem de Profile da Atualização">
+                            <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Imagem de Profile da Atualização">
                         </div>
                         <div class="message">
                             <p><b>Fulano</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -259,7 +259,7 @@ if ($conn->connect_error) {
 
                     <div class="update">
                         <div class="profile-photo">
-                            <img src="../../assets/imagens/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Imagem de Profile da Atualização">
+                            <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Imagem de Profile da Atualização">
                         </div>
                         <div class="message">
                             <p><b>Fulano</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -269,7 +269,7 @@ if ($conn->connect_error) {
 
                     <div class="update">
                         <div class="profile-photo">
-                            <img src="../../assets/imagens/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Imagem de Profile da Atualização">
+                            <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Imagem de Profile da Atualização">
                         </div>
                         <div class="message">
                             <p><b>Fulano</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

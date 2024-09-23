@@ -31,7 +31,7 @@ main .container .flex-elements .left-img {
   width: 50%;
   min-height: 1050px;
   height: 100vh;
-  background-image: url(../../imagens/fundo.png);
+  background-image: url(../../img/fundo.png);
   background-size: cover;
 }
 

@@ -8,7 +8,7 @@ function get_todos_alunos($conn) {
 
 // Função para obter todos os professores do banco de dados.
 function get_todos_professores($conn) {
-    $stmt = $conn->prepare("SELECT id, nome, RM, email, 'Professor' AS cargo, data_criacao FROM professor ORDER BY data_criacao DESC");
+    $stmt = $conn->prepare("SELECT id, nome, RM, cpf, email, 'Professor' AS cargo, data_criacao FROM professor ORDER BY data_criacao DESC");
     $stmt->execute();
     return $stmt->get_result();
 }

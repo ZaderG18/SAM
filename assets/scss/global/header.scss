@@ -1,0 +1,486 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: "Poppins", sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+.global-container{
+     display: flex;
+     min-height: 100vh;
+}
+
+header{
+    width: 100%;
+    height: auto;
+    background-color: #28163a;
+    z-index: 998;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    padding: 5px 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+header .logo-sam{
+    display: none;
+    width: 40px;
+    height: 40px;
+}
+
+.logo-sam img{
+    width: 40px;
+}
+
+.box-search{
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;    
+    width: 500px;
+    min-width: 150px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    margin: 0 auto;
+ 
+}
+
+.box-search i{
+    font-size: 20px;
+    padding: 5px 0 5px 5px;
+    margin-left: 10px;
+    color: #616161;
+}
+
+.box-search input{
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+/* icones notificação e perfil */
+
+.notification-area {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    margin-right: 50px;
+}
+
+.notification-icon-container {
+    position: relative;
+    display: inline-block;
+}
+.hidden {
+    display: none;
+}
+.notification-icon {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    margin-right: 25px;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 15px;
+    width: 280px;
+    right: 0;
+    top: 50px;
+    z-index: 1;
+}
+.dropdown-content.show {
+    display: block;
+}
+.notification-item.unread {
+    font-weight: bold;
+}
+.notification-dropdown {
+    right: 90px;
+    padding: 15px;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-dropdown {
+    right: 20px;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo dos itens de notificação */
+.notification-item {
+    display: flow-root;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #d2e3fe;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.notification-item:hover {
+    background-color: #eaeaea;
+}
+
+.notification-item img {
+    float: left;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.notification-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.notification-item.unread::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: absolute;
+    left: 15px;
+}
+
+.time {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Botão para marcar todas como lidas */
+.dropdown-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: #3F215E;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-content h3 button {
+    background-color: #d2bbf1;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content h3 button:hover {
+    background-color: #e1d4f3;
+}
+
+/* Estilo do perfil */
+.profile-info {
+    display: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-info img {
+    float: left;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.profile-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.profile-info p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.edit-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #F7F7F7;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile:hover {
+    background-color: #eaeaea;
+}
+
+.edit-profile img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.edit-profile p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #3F215E;
+}
+
+/* Estilo para mostrar dropdown */
+.show {
+    display: block;
+}
+
+
+
+/* Estilo do menu mobile */
+main{
+    width: 100%; 
+    height: auto; 
+    background-color: #EBEBEB; 
+    padding: 50px 40px;
+    margin-top: 50px;
+    margin-left: 82px;
+}
+
+main .container{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.container .box-welcome{
+    color: #3C2158;
+    font-weight: bold;
+    display: flex ;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box-welcome h1{
+    font-size: 45px;
+}
+
+.box-welcome span{
+    font-weight: normal;
+}
+
+
+/*Responsividade */
+@media screen and (max-width: 600px) {
+    .user-avatar {
+        width: 24px;
+        height: 24px;
+        margin-right: 15px;
+    }
+
+    .notification-icon {
+        width: 12px;
+        height: 12px;
+        margin-right: 15px;
+    }
+
+    .notification-bubble {
+        top: 5px;
+        right: 65px;
+        width: 8px;
+        height: 8px;
+    }
+
+    .dropdown-content {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .notification-dropdown {
+        right: 70px;
+        padding: 10px;
+    }
+
+    .profile-dropdown {
+        right: 10px;
+    }
+
+    .notification-item {
+        padding: 8px;
+    }
+
+    .notification-item img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    .notification-item p {
+        font-size: 12px;
+    }
+
+    .time {
+        font-size: 10px;
+    }
+
+    .dropdown-content h3 {
+        font-size: 14px;
+    }
+
+    .dropdown-content h3 button {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+
+    .profile-info img {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    .profile-info p {
+        font-size: 12px;
+    }
+
+    .profile-info p:first-child {
+        font-size: 14px;
+    }
+
+    .edit-profile {
+        padding: 8px;
+    }
+
+    .edit-profile img {
+        width: 16px;
+    }
+
+    .edit-profile p {
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (min-width:1920px){
+    main .container{
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width:970px){
+
+    
+/* main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img1{
+    width: 25px;
+}
+
+main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img2,#img3{
+    width: 50px;
+}
+    
+main .box-visao-geral .flex-visao-geral .content-visao .visao-elements h4{
+    color: white;
+    font-size: 40px;
+    margin-left: 10px;
+}
+
+main .box-visao-geral .flex-visao-geral .content-visao p{
+    font-size: 14px;
+    margin-top: 10px;
+} */
+
+}
+
+@media screen and (max-width:1100px){
+    main{
+        padding: 50px 20px;
+    }
+}
+
+
+@media screen and (max-width:900px){
+    
+header .logo-sam{
+    display: block;
+    margin-right: 30px;
+}
+
+header .box-search{
+    width: 70%;
+}
+    
+    aside{
+         display: none;
+    }
+
+    main{
+        margin-left: 0;
+    }
+
+}
+
+@media screen and (max-width:800px){
+    
+main .box-welcome h1{
+    font-size: 30px;
+}
+
+}
+
+
+
+@media screen and (max-width:600px){
+    header{
+        justify-content: space-between;
+    }
+
+    /* header .box-search{
+        width: 70%;
+        min-width: 150px;
+    } */
+
+    
+}
+
+@media screen and (max-width:600px){
+    header{
+        justify-content: space-around;
+    }
+
+    header .box-search{
+        width: 100%;
+    } 
+}
+
+
+@media screen and (max-width:400px){
+    main .box-welcome{
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    main .box-welcome .img-welcome{
+        width: 80px; 
+        height:80px;
+        border-radius: 100%;
+        margin-bottom: 20px;
+    }
+}

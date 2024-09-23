@@ -36,11 +36,11 @@ header .logo-sam{
     height: 40px;
 }
 
-header .logo-sam img{
+.logo-sam img{
     width: 40px;
 }
 
-header .box-search{
+.box-search{
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;    
     width: 500px;
@@ -51,14 +51,14 @@ header .box-search{
     border-radius: 5px;
 }
 
-header .box-search i{
+.box-search i{
     font-size: 20px;
     padding: 5px 0 5px 5px;
     margin-left: 10px;
     color: #616161;
 }
 
-header .box-search input{
+.box-search input{
     border: none;
     width: 100%;
     padding: 10px;
@@ -81,7 +81,7 @@ main .container{
     margin: 0 auto;
 }
 
-main .box-welcome{
+.container .box-welcome{
     color: #3C2158;
     font-weight: bold;
     display: flex ;
@@ -89,15 +89,15 @@ main .box-welcome{
     align-items: center;
 }
 
-main .box-welcome h1{
+.box-welcome h1{
     font-size: 45px;
 }
 
-main .box-welcome span{
+.box-welcome span{
     font-weight: normal;
 }
 
-main .box-welcome .img-welcome{
+.box-welcome .img-welcome{
     background-image: url(../../img/home/coqui-chang-tnUp0OLSkDg-unsplash.jpg);
     background-size: cover;
     width: 125px; 
@@ -105,7 +105,7 @@ main .box-welcome .img-welcome{
     border-radius: 100%;
 }
 
-main .container .box-visao-geral{
+.container .box-visao-geral{
     width: 100%;
     height: auto;
     border-radius: 10px;
@@ -115,19 +115,29 @@ main .container .box-visao-geral{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-main .box-visao-geral h2{
-    color: #3C2158;
+.box-visao-geral .box-visao{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
     margin-bottom: 30px;
+}
+
+#data-inicio{
+    color: white;
+}
+
+.box-visao h2{
+    color: #3C2158;
     font-size: 30px;
     margin-left: 10px;
 }
 
-main .box-visao-geral .flex-visao-geral{
+.flex-visao-geral{
     display: flex;
     justify-content: center;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao{
+.flex-visao-geral .content-visao{
     width: 33.3%;
     /* min-width: 200px; */
     height: auto;
@@ -141,35 +151,35 @@ main .box-visao-geral .flex-visao-geral .content-visao{
     padding: 20px 10px 40px 10px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .box-menu{
+.content-visao .box-menu{
     padding: 0 10px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .box-menu img:hover{
+.box-menu img:hover{
     opacity: 0.6;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .visao-elements{
+.content-visao .visao-elements{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img1{
+.visao-elements #img1{
     width: 35px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img2,#img3{
+.visao-elements #img2,#img3{
     width: 60px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .visao-elements h4{
+.visao-elements h4{
     color: white;
     font-size: 55px;
     margin-left: 10px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao p{
+.content-visao p{
     font-size: 18px;
     color: white;
 }
@@ -180,11 +190,11 @@ main .box-registro{
     height: auto;
 }
 
-main .box-registro .box-flex-registro{
+.box-registro .box-flex-registro{
     display: flex;
 }
 
-main .box-registro .box-flex-registro .grafico{
+ .grafico{
     width: 30%;
     min-width: 300px;
     height: auto;
@@ -199,7 +209,7 @@ main .box-registro .box-flex-registro .grafico{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-main .box-registro .box-flex-registro .grafico h2{
+.grafico h2{
     text-align: center;
     font-size: 35px;
     font-weight: bold;
@@ -207,7 +217,7 @@ main .box-registro .box-flex-registro .grafico h2{
     top: -50px;
 }
 
-main .box-registro .box-flex-registro .grafico span{
+.grafico span{
     text-align: center;
     font-size: 32px;
     font-weight: bold;
@@ -215,14 +225,14 @@ main .box-registro .box-flex-registro .grafico span{
     bottom: -50px;
 }
 
-main .box-registro .box-flex-registro .grafico img{
+.grafico img{
     width:60%;
     position: relative;
     right: -10px;
 }
 
 
-main .box-registro .box-flex-registro .registro{
+.registro{
     width: 80%;
     height: auto;
     background-color: white;
@@ -231,33 +241,31 @@ main .box-registro .box-flex-registro .registro{
     color: #3C2158;
     padding: 20px 20px 50px 20px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-}
-
-main .box-registro .box-flex-registro .registro{
     font-size: 20px;
     font-weight: bold;
 }
 
-main .box-registro .box-flex-registro .registro h2{
+
+.registro h2{
     margin-bottom: 50px;
     margin-left: 20px;
 }
 
-main .box-registro .box-flex-registro table{
+.box-flex-registro table{
     width: 100%;
 }
 
 
-main .box-registro .box-flex-registro table,tr,th,td{
+table,tr,th,td{
     text-align: center;
 }
 
-main .box-registro .box-flex-registro td{
+table td{
     padding: 30px 0;
     color: #282649;
 }
 
-main .box-registro .line{
+.box-registro .line{
     border-bottom: 3px solid #E1E1E1; position: relative; bottom: -45px; border-radius: 10px;
 }
 
@@ -306,12 +314,12 @@ main .box-visao-geral .flex-visao-geral .content-visao p{
     }
 
     
-    main .box-visao-geral .flex-visao-geral{
+    .box-visao-geral .flex-visao-geral{
         display: flex;
         flex-wrap: wrap;
     }
     
-    main .box-visao-geral .flex-visao-geral .content-visao{
+    .flex-visao-geral .content-visao{
         width: 49%;
         /* min-width: 100px; */
         margin-top: 20px;
@@ -319,28 +327,28 @@ main .box-visao-geral .flex-visao-geral .content-visao p{
         justify-content:space-around ;
     }
 
-    main .box-visao-geral .flex-visao-geral #content-visao01{
+    .flex-visao-geral #content-visao01{
         margin-left: 0;
     }
 
 
-    main .box-visao-geral .flex-visao-geral #content-visao02{
+    .flex-visao-geral #content-visao02{
         margin-left: 0;
         margin-right: 0;
     }
 
 
-    main .box-visao-geral .flex-visao-geral #content-visao03{
+    .flex-visao-geral #content-visao03{
         width: 100%;
         margin: 10px 0 10px 0;
     }
 
-    main .box-registro .box-flex-registro{
+    .box-flex-registro{
         display: flex;
         flex-wrap: wrap;
     }
 
-    main .box-registro .box-flex-registro .grafico{
+    .grafico{
         width: 100%;
         min-width: 300px;
         height: auto;
@@ -349,7 +357,7 @@ main .box-visao-geral .flex-visao-geral .content-visao p{
         margin: 20px 0;
     }
     
-    main .box-registro .box-flex-registro .grafico h2{
+    .grafico h2{
         text-align: center;
         font-size: 28px;
         font-weight: bold;
@@ -357,7 +365,7 @@ main .box-visao-geral .flex-visao-geral .content-visao p{
         top: 0;
     }
     
-    main .box-registro .box-flex-registro .grafico span{
+    .grafico span{
         text-align: center;
         font-size: 28px;
         font-weight: bold;
@@ -365,14 +373,14 @@ main .box-visao-geral .flex-visao-geral .content-visao p{
         bottom: 0;
     }
     
-    main .box-registro .box-flex-registro .grafico img{
+    .grafico img{
         width:50%;
         position: relative;
         top: -10px;
     }
     
     
-    main .box-registro .box-flex-registro .registro{
+    .registro{
         width: 100%;
         height: auto;
         background-color: white;
@@ -411,7 +419,7 @@ main .box-welcome h1{
     font-size: 30px;
 }
 
-main .box-welcome .img-welcome{
+.box-welcome .img-welcome{
     background-image: url(../../img/home/coqui-chang-tnUp0OLSkDg-unsplash.jpg);
     background-size: cover;
     width: 90px; 
@@ -437,35 +445,35 @@ main .box-visao-geral h2{
     width: 55px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao .visao-elements h4{
+.content-visao .visao-elements h4{
     font-size: 40px;
 }
 
-main .box-visao-geral .flex-visao-geral .content-visao p{
+.content-visao p{
     font-size: 14px;
     color: white;
 }
 
 
-main .box-registro .box-flex-registro .grafico h2{
+.grafico h2{
     text-align: center;
     font-size: 25px;
     font-weight: bold;
 }
 
-main .box-registro .box-flex-registro .grafico span{
+.grafico span{
     text-align: center;
     font-size: 25px;
     font-weight: bold;
 }
 
-main .box-registro .box-flex-registro .grafico img{
+.grafico img{
     width:50%;
     position: relative;
     right: -10px;
 }
 
-main .box-registro .box-flex-registro .registro h2{
+.registro h2{
     margin-bottom: 20px;
     margin-left: 20px;
     font-size: 25px;
@@ -477,17 +485,17 @@ main .box-registro .box-flex-registro .registro h2{
 
 
 @media screen and (max-width:660px){
-    main .box-visao-geral .flex-visao-geral .content-visao{
+    .flex-visao-geral .content-visao{
         width: 100%;
     }
 
-    main .box-visao-geral .flex-visao-geral #content-visao01{
+    .flex-visao-geral #content-visao01{
         margin-left: 0;
         margin-right: 0;
     }
 
 
-    main .box-visao-geral .flex-visao-geral #content-visao02{
+    .flex-visao-geral #content-visao02{
         margin-left: 0;
         margin-right: 0;
         margin-top: 10px;
@@ -505,20 +513,20 @@ main .box-registro .box-flex-registro .registro h2{
     } */
 
     
-    main .box-registro .box-flex-registro table,tr,th,td{
+    table,tr,th,td{
         text-align: center;
         font-size: 12px;
     }
 
-    main .box-registro .box-flex-registro td{
+    table td{
         padding: 10px 0;
     }
 
-    main .box-registro .line{
+    .box-registro .line{
         border-bottom: 2px solid #E1E1E1; position: relative; bottom: -25px; border-radius: 10px;
     }
 
-    main .box-registro .box-flex-registro .grafico{
+    .grafico{
         min-width: 200px;
     }
     

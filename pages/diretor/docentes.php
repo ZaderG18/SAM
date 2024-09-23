@@ -8,8 +8,8 @@ $conn = new mysqli($host, $username, $senha, $banco);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-include "../../php/search.php";
-$searchProf = procurarProfessor($conn);
+include "../../php/funcao.php";
+$professor = get_todos_professores($conn);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,7 +19,10 @@ $searchProf = procurarProfessor($conn);
     <link rel="stylesheet" href="../../assets/scss/diretor/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/diretor/global/menumobile.css">
     <link rel="stylesheet" href="../../assets/scss/diretor/doscente/style.css">
-    <link rel="icon" href="../../assets/imagens/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    
+    <link rel="stylesheet" href="../../assets/scss/doscente/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../assets/scss/doscente/slide.css">
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--=============== REMIXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
@@ -29,7 +32,7 @@ $searchProf = procurarProfessor($conn);
 </head>
 <body>
     <header class="header"> 
-        <div class="logo-sam"><img src="../../assets/imagens/home/logo/Mask group.png" alt=""></div>
+        <div class="logo-sam"><img src="../../assets/img/home/logo/Mask group.png" alt=""></div>
         <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
         <nav class="nav container" id="menu-mobile">
             <div class="nav__data">
@@ -46,20 +49,20 @@ $searchProf = procurarProfessor($conn);
             <!--=============== NAV MENU ===============-->
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
-                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/home.svg" alt="" srcset="">Home</a></li>
+                  <li><a href="home_diretor.php" class="nav__link"><img src="../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
 
-                  <li><a href="#" class="nav__link"><img src="../../assets/imagens/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
+                  <!-- <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li> -->
 
-                  <!--=============== DROPDOWN 1 ===============-->
+                  <!--=============== DROPDOWN 1
                   <li class="dropdown__item">
-                     <div class="nav__link"><img src="../../assets/imagens/home/icons/dashboard.svg" alt="" srcset="">
+                     <div class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
                         Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
                      </div>
 
                      <ul class="dropdown__menu">
                         <li>
-                           <a href="#" class="dropdown__link">
-                              <i class="ri-pie-chart-line"></i> Overview
+                           <a href="../dashboard/index.html" class="dropdown__link">
+                              <i class="ri-pie-chart-line"></i> Painel
                            </a>                          
                         </li>
 
@@ -98,7 +101,9 @@ $searchProf = procurarProfessor($conn);
                      </ul>
                   </li>
                   
-                  <li><a href="#" class="nav__link">Products</a></li>
+                  <li><a href="cursos.php" class="nav__link">Cursos</a></li>
+
+                  <li><a href="dashboard.php" class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
 
                   <!--=============== DROPDOWN 2 ===============-->
                   <li class="dropdown__item">
@@ -139,14 +144,14 @@ $searchProf = procurarProfessor($conn);
                         <nav id="sidebar">
                             <div id="sidebar_content">
                                 <div id="user">
-                                    <img src="../../assets/imagens/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                                    <img src="../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
                         
                                     <p id="user_infos">
                                         <span class="item-description">
-                                            <?php echo htmlspecialchars($user['name']); ?>
+                                            <?php echo htmlspecialchars($user ['nome']); ?>
                                         </span>
                                         <span class="item-description">
-                                            diretor
+                                            Lorem Ipsum
                                         </span>
                                     </p>
                                 </div>
@@ -154,7 +159,7 @@ $searchProf = procurarProfessor($conn);
                                 <ul id="side_items">
                                     <li class="side-item">
                                         <a href="home_diretor.php">
-                                            <img src="../../assets/imagens/home/icons/home.svg" alt="" >
+                                            <img src="../../assets/img/home/icons/home.svg" alt="" >
                                             <span class="item-description">
                                                 Home
                                             </span>
@@ -162,8 +167,8 @@ $searchProf = procurarProfessor($conn);
                                     </li>
                         
                                     <li class="side-item active">
-                                        <a href="#">
-                                            <img src="../../assets/imagens/home/icons/docentes.svg" alt="">
+                                        <a href="docentes.php">
+                                            <img src="../../assets/img/home/icons/docentes.svg" alt="">
                                             <span class="item-description">
                                                 Docentes
                                             </span>
@@ -171,8 +176,8 @@ $searchProf = procurarProfessor($conn);
                                     </li>
                         
                                     <li class="side-item">
-                                        <a href="#">
-                                            <img src="../../assets/imagens/home/icons/cursos.svg" alt="" width="30px">
+                                        <a href="cursos.php">
+                                            <img src="../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
                                             </span>
@@ -181,7 +186,7 @@ $searchProf = procurarProfessor($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/user.svg" alt="">
+                                            <img src="../../assets/img/home/icons/user.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar usuarios
                                             </span>
@@ -190,7 +195,7 @@ $searchProf = procurarProfessor($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/comunicado.svg" alt="">
+                                            <img src="../../assets/img/home/icons/comunicado.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar comunicados
                                             </span>
@@ -199,7 +204,7 @@ $searchProf = procurarProfessor($conn);
 
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/documento.svg" alt="">
+                                            <img src="../../assets/img/home/icons/documento.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar documentos
                                             </span>
@@ -208,7 +213,7 @@ $searchProf = procurarProfessor($conn);
 
                                     <li class="side-item">
                                         <a href="dashboard.php">
-                                            <img src="../../assets/imagens/home/icons/dashboard.svg" alt="">
+                                            <img src="../../assets/img/home/icons/dashboard.svg" alt="">
                                             <span class="item-description">
                                                 Dashboard
                                             </span>
@@ -217,7 +222,7 @@ $searchProf = procurarProfessor($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/imagens/home/icons/configuracao.svg" alt="">
+                                            <img src="../../assets/img/home/icons/configuracao.svg" alt="">
                                             <span class="item-description">
                                                 Configurações
                                             </span>
@@ -231,7 +236,7 @@ $searchProf = procurarProfessor($conn);
                             </div>
                     
                             <div id="logout">
-                                <button id="logout_btn" onclick="window.location.href='../../index.html'">
+                                <button id="logout_btn" onclick="window.location.href='../../php/logout.php'">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span class="item-description">
                                         Logout
@@ -246,7 +251,7 @@ $searchProf = procurarProfessor($conn);
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gestão de professores</h1>
-                        <img src="../../assets/imagens/docente/image 1.png" alt="" srcset="">
+                        <div class="box-img"><img src="../../assets/img/docente/image 1.png" alt="" srcset=""></div>
                     </div>
                 </div><!--box-title-->
 
@@ -255,7 +260,7 @@ $searchProf = procurarProfessor($conn);
 
                         <div class="box-filtro">
                             <label for="">Nome:</label>
-                            <input type="text" id="search" name="search">
+                            <input type="text">
                         </div>
                         <div class="box-filtro">
                             <label for="">Disciplinas ministradas</label>
@@ -275,80 +280,52 @@ $searchProf = procurarProfessor($conn);
                     </div>
 
                     <div class="filtro-tabela">
-                        <nav class="nav">
+                        <!-- <nav class="nav">
                             <ul>
                                 <li><a href="">Prestadores de serviço</a></li>
                                 <li><a href="">Coordenador</a></li>
                                 <li><a href="" class="active">Docentes</a></li>
                             </ul>
-                        </nav>
-                        <div class="line"></div>
+                        </nav> 
+                        <div class="line" style="display: none;"></div>-->
 
                         <div class="table-flex-title">
                             <div class="title-foto table"><h5>foto</h5></div>
                             <div class="title-dados table"><h5>Dados gerais</h5></div>
                             <div class="title-disciplina table"><h5>Disciplina</h5></div>
-                            <div class="title-rm table"><h5>RM</h5></div>
                         </div>
-                        <?php
-                        require '../../php/funcao.php';
-                        
-                        $totalProfessor->get_todos_professores($conn);
-                        foreach($totalProfessor as $value){?>
-                        <div class="tabela" >
-                            <div class="box-foto">
-                                <img src="../../assets/imagens/usuarios/<?php echo $value['foto'];?>" alt="">
-                            </div>
-                           <div class="box-info-geral" style="display: flex; flex-direction: column;">
-                                <div class="flex-info nome-info">
-                                    <h5>Nome:</h5>
-                                    <span><?php echo $value['nome'];?></span>
-                                </div>
-                                <div class="flex-info nome-info">
-                                    <h5>CPF:</h5>
-                                    <span><?php echo $value['cpf'];?></span>
-                                </div>
-                                <div class="flex-info nome-info">
-                                    <h5>Setor:</h5>
-                                    <span><?php echo $value['disciplina'];?></span>
-                                </div>
-                            </div>
-                            <div class="box-RM">
-                                <span><?php echo $value['rm'];?></span>
-                            </div>
-                        </div>
-                    <?php 
-                        }
-                    ?>
-                        <div class="tabela" >
-                            <div class="box-foto">
-                                <img src="../../assets/imagens/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
-                            </div>
-                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
-                                <div class="flex-info nome-info">
-                                    <h5>Nome:</h5>
-                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
-                                </div>
-                                <div class="flex-info nome-info">
-                                    <h5>CPF:</h5>
-                                    <span>000.000.000-00</span>
-                                </div>
-                                <div class="flex-info nome-info">
-                                    <h5>Setor:</h5>
-                                    <span>Área pedagógica</span>
-                                </div>
-                            </div>
-                            <div class="box-disciplina">
-                                <span>Nutrição</span>
-                            </div>
-                            <div class="box-RM">
-                                <span>000-00-000</span>
-                            </div>
-                        </div> 
 
-                        <div class="tabela" >
+                        <?php foreach ($professores as $professor) { ?>
+                        <div class="tabela" ><!--Tabela-->
                             <div class="box-foto">
-                                <img src="../../assets/imagens/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" class="image">
+                            </div>
+                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
+                                    <h5>Nome:</h5>
+                                    <span><?php $professor['nome'] ?></span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>CPF:</h5>
+                                    <span><?php $professor['cpf']?></span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>Setor:</h5>
+                                    <span>Área pedagógica</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span><?php $professor['rm']?></span>
+                                </div>
+                            </div>
+                            <div class="box-disciplina">
+                                <span><?php $professor['disciplina']?></span>
+                            </div>
+                        </div><!--tabela--> 
+                            <?php }?>
+                        <div class="tabela" ><!--Tabela-->
+                            <div class="box-foto">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" class="image">
                             </div>
                             <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                 <div class="flex-info nome-info">
@@ -363,23 +340,148 @@ $searchProf = procurarProfessor($conn);
                                     <h5>Setor:</h5>
                                     <span>Área pedagógica</span>
                                 </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span>000-00-00</span>
+                                </div>
                             </div>
                             <div class="box-disciplina">
                                 <span>Nutrição</span>
                             </div>
-                            <div class="box-RM">
-                                <span>000-00-000</span>
+                        </div><!--tabela--> 
+
+                        <div class="tabela" ><!--Tabela-->
+                            <div class="box-foto">
+                                <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
                             </div>
-                        </div> 
-                    </div>
-                </div><!--box-painel-docente-->
+                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
+                                    <h5>Nome:</h5>
+                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>CPF:</h5>
+                                    <span>000.000.000-00</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>Setor:</h5>
+                                    <span>Área pedagógica</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span>000-00-00</span>
+                                </div>
+                            </div>
+                            <div class="box-disciplina">
+                                <span>Nutrição</span>
+                            </div>
+                        </div><!--tabela--> 
+
+                    </div><!--filtro-tabela-desktop-->
+
+
+
+                                            <!--TABELA DOCENTE MOBILE-->
+
+
+                        <div class="testimonial mySwiper">
+                            <div class="testi-content swiper-wrapper">
+                              <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+
+                            <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+
+                            <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+                
+                              </div>
+                            </div>
+                </div>
             </div><!--container-->
         </main>
     </div>
 
+        <!-- Swiper JS -->
+        <script src="../../assets/js/docente/swiper-bundle.min.js"></script>
+
+        <!-- JavaScript -->
+        <script src="../../assets/js/docente/script.js"></script>
+
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script>
-    <script src="../../assets/js/global/search.js"></script>
 </body>
 </html>
