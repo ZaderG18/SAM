@@ -42,65 +42,80 @@ $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
-        cargo int NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
-        foto VARCHAR NOT NULL,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
+        sobrenome VARCHAR(40) NOT NULL,
+        telefone VARCHAR(15),
+        data_nascimento DATE,
+        genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer'),
+        endereco TEXT,
+        curso VARCHAR(50),
         codigo INT NOT NULL,
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
-        foto VARCHAR NOT NULL,
-        cargo int NOT NULL,
-        disciplina varchar (15) NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
-        codigo INT NOT NULL,
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        sobrenome VARCHAR(40) NOT NULL,
+        telefone VARCHAR(15),
+        disciplina VARCHAR(50) NOT NULL,
+        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
     "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
-        cargo int NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
-        foto VARCHAR NOT NULL,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
-        codigo INT NOT NULL,
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        sobrenome VARCHAR(40) NOT NULL,
+        telefone VARCHAR(15),
+        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-    "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
+     "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
         RM VARCHAR(10) NOT NULL,
-        cargo int NOT NULL,
-        foto VARCHAR NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
-        cargo INT NOT NULL,
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        sobrenome VARCHAR(40) NOT NULL,
+        telefone VARCHAR(15),
+        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-    "turma" => "CREATE TABLE IF NOT EXISTS turma (
+     "turma" => "CREATE TABLE IF NOT EXISTS turma (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(50) NOT NULL,
         disciplina VARCHAR(30) NOT NULL,
         professor_id INT NOT NULL,
         coordenador_id INT NOT NULL,
         aluno_id INT NOT NULL,
         data_inicio DATE NOT NULL,
         data_fim DATE NOT NULL,
+        status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
     )",
-    "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
+   "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome_disciplina VARCHAR(30) NOT NULL,
         carga_horaria INT NOT NULL,
@@ -117,14 +132,17 @@ $tableQueries = [
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
+        data_matricula DATE DEFAULT CURRENT_DATE,
+        status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
+   "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         nota DECIMAL(3,2) NOT NULL,
+        data_avaliacao DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
@@ -132,7 +150,9 @@ $tableQueries = [
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
+        descricao TEXT NOT NULL,
         data DATE NOT NULL,
+        status ENUM('pendente', 'concluida') DEFAULT 'pendente',
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
@@ -141,7 +161,7 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         data DATE NOT NULL,
-        presenca VARCHAR(10) NOT NULL,
+        presenca ENUM('presente', 'ausente') NOT NULL,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
@@ -150,32 +170,35 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         mensao VARCHAR(100) NOT NULL,
+        data_mensao DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "mensagens_chat" => "CREATE TABLE IF NOT EXISTS mensagens_chat (
+     "mensagens_chat" => "CREATE TABLE IF NOT EXISTS mensagens_chat (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
         receptor_id INT NOT NULL,
         mensagem TEXT NOT NULL,
         data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
-        user_role ENUM('aluno', 'professor', 'coordenador') NOT NULL,
+        user_role ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
         FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
     )",
-    "cronograma" => "CREATE TABLE IF NOT EXISTS cronograma(
+    "cronograma" => "CREATE TABLE IF NOT EXISTS cronograma (
         id INT AUTO_INCREMENT PRIMARY KEY,
         turma_id INT NOT NULL,
         data DATE NOT NULL,
         hora TIME NOT NULL,
         atividade VARCHAR(100) NOT NULL,
+        status ENUM('pendente', 'concluida') DEFAULT 'pendente',
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "declaracoes" => "CREATE TABLE IF NOT EXISTS declaracoes(
+    "declaracoes" => "CREATE TABLE IF NOT EXISTS declaracoes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         declaracao TEXT NOT NULL,
+        data_emissao DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
@@ -184,7 +207,7 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         nome_aluno VARCHAR(50) NOT NULL,
         presente TINYINT(1) NOT NULL,
-        motivo_ausencia VARCHAR(50) NULL,
+        motivo_ausencia VARCHAR(50) DEFAULT NULL,
         data DATE NOT NULL,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
     )"

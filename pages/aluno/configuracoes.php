@@ -215,11 +215,13 @@ if ($conn->connect_error) {
                     <div class="grid-container">
                         <div class="card-up">
                         <class="foto-upload">
+                            <form action="../../php/upload.php" method="post" enctype="multipart/form-data">
                           <div class="upload-box">
                             <div class="foto-placeholder"></div>
-                            <input type="file" accept="image/*">
-                            <button class="mudar-btn">Mudar</button>
+                            <input type="file" name="foto" id="foto" accept="image/*">
+                            <button class="mudar-btn" type="submit">Mudar</button>
                           </div>
+                          </form>
                           <div class="notificacoes">
                             <h3>Notificações</h3>
                             <label>Email</label>
@@ -258,20 +260,20 @@ if ($conn->connect_error) {
                           </div>
                         </div>
                     </div>
-                  
+                  <form action="../../php/upload.php" method="post" >
                         <div class="informacoes-pessoais">
                         <div class="card-info">
                           <h3>Informações Pessoais</h3>
                           <label>Nome</label>
-                          <input type="text" placeholder="Digite seu nome">
+                          <input type="text" placeholder="Digite seu nome" id="nome" name="nome">
                           <label>Sobrenome</label>
-                          <input type="text" placeholder="Digite seu sobrenome">
+                          <input type="text" placeholder="Digite seu sobrenome" name="sobrenome" id="sobrenome">
                           <label>Telefone</label>
-                          <input type="text" placeholder="Digite seu telefone">
+                          <input type="text" placeholder="Digite seu telefone" name="telefone" id="telefone">
                           <label>Email</label>
-                          <input type="email" placeholder="Digite seu email">
+                          <input type="email" placeholder="Digite seu email" name="email" id="email">
                           <label>Gênero</label>
-                          <select>
+                          <select id="genero" name="genero">
                             <option value="" >Selecione seu gênero</option>
                             <option value="masculino" >Homem</option>
                             <option value="feminino">Mulher</option>
@@ -279,31 +281,32 @@ if ($conn->connect_error) {
                             <option value="prefiro-nao-dizer">Prefiro Não Dizer</option>
                           </select>
                           <label>Data de Nascimento</label>
-                          <input type="date">
+                          <input type="date" name="dataNascimento" id="dataNascimento">
                           <label>Endereço</label>
-                          <input type="text" placeholder="Digite seu endereço">
+                          <input type="text" placeholder="Digite seu endereço" name="endereco" id="endereco">
                           <label>ID</label>
-                          <input type="text" placeholder="Digite seu ID">
+                          <input type="text" placeholder="Digite seu ID" id="id" name="id">
                           <label>Curso</label>
-                          <select>
+                          <select id="curso" name="curso">
                             <option>Selecione o seu curso</option>
                             <option value="nutricao" >Nutrição</option>
                             <option value="desenvolvimento-de-sistemas">Desenvolvimento de Sistemas</option>
                             <option value="gastronomia">Gastronomia</option>
                             <option value="enfermagem">Enfermagem</option>
                           </select>
-                          <button>Salvar</button>
+                          <button type="submit">Salvar</button>
 
                           <h3>Atualizar Senha</h3>
                           <label>Senha Atual</label>
-                          <input type="password" placeholder="Digite sua senha atual">
+                          <input type="password" placeholder="Digite sua senha atual" id="senha" name="senha">
                           <label>Nova Senha</label>
-                          <input type="password" placeholder="Digite sua nova senha">
+                          <input type="password" placeholder="Digite sua nova senha" id="novaSenha" name="novaSenha">
                           <label>Confirmar Nova Senha</label>
-                          <input type="password" placeholder="Confirme sua nova senha">
-                          <button>Salvar</button>
+                          <input type="password" placeholder="Confirme sua nova senha" name="senhaConfirmada" id="senhaConfirmada">
+                          <button type="submit">Salvar</button>
                         </div>
                       </div>
+                      </form>
                     </div>
 
                 </main>      
