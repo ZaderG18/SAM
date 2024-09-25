@@ -7,6 +7,12 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: validar.php');
+    exit();
+}
+$user = $_SESSION['user'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -91,8 +97,8 @@ if ($conn->connect_error) {
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
-                        <p>Nome: Juliana Santos</p>
-                        <p>RM: 4230</p>
+                        <p><?php echo htmlspecialchars($user['nome']); ?></p>
+                        <p>RM: <?php echo htmlspecialchars($user['RM']); ?></p>
                     </div>
                     <div class="edit-profile">
                         <img src="../../assets/img/home/icons/icone_profile.svg" alt="Edit Icon">
@@ -281,7 +287,7 @@ if ($conn->connect_error) {
                             <option value="prefiro-nao-dizer">Prefiro Não Dizer</option>
                           </select>
                           <label>Data de Nascimento</label>
-                          <input type="date" name="dataNascimento" id="dataNascimento">
+                          <input type="date" name="data_nascimento" id="data_nascimento">
                           <label>Endereço</label>
                           <input type="text" placeholder="Digite seu endereço" name="endereco" id="endereco">
                           <label>ID</label>
