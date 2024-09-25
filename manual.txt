@@ -13,4 +13,6 @@ antes de começar a programar/codar eu tenho que te pedir umas coisas.
 
 6. manter todas as classes e id's atuais do projeto para não haver falhas no projeto.
 
+Assinado
+
 Por enquanto teremos essas 5 regras base para um projeto organizado e eficaz, peço para que sigam essas regras para que possamos agir de forma sincronizada.
