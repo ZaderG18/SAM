@@ -7,6 +7,25 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
+require_once '../../php/upload.php';
+require_once '../../php/validar.php';
+$user = $_SESSION['user'];
+$id = $user['id'];
+$sql = "SELECT foto FROM aluno WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($fotoNome);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+
+// Verifica se há uma imagem para o usuário
+if (!empty($fotoNome)) {
+    $fotoCaminho = "../assets/img/uploads/" . $fotoNome;
+} else {
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão caso o aluno não tenha enviado uma foto
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -87,12 +106,12 @@ if ($conn->connect_error) {
             <!-- perfil-->
 
             <div class="dropdown">
-                <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
+                <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
-                        <p>Nome: Juliana Santos</p>
-                        <p>RM: 4230</p>
+                        <p><?php echo htmlspecialchars($user['nome']); ?></p>
+                        <p>RM: <?php echo htmlspecialchars($user['RM']); ?></p>
                     </div>
                     <div class="edit-profile">
                         <img src="../../assets/img/home/icons/icone_profile.svg" alt="Edit Icon">
@@ -215,7 +234,7 @@ if ($conn->connect_error) {
                     <div class="grid-container">
                         <div class="card-up">
                         <class="foto-upload">
-                            <form action="../../php/upload.php" method="post" enctype="multipart/form-data">
+                            <form id="uploadForm" method="post" enctype="multipart/form-data">
                           <div class="upload-box">
                             <div class="foto-placeholder"></div>
                             <input type="file" name="foto" id="foto" accept="image/*">
@@ -281,7 +300,7 @@ if ($conn->connect_error) {
                             <option value="prefiro-nao-dizer">Prefiro Não Dizer</option>
                           </select>
                           <label>Data de Nascimento</label>
-                          <input type="date" name="dataNascimento" id="dataNascimento">
+                          <input type="date" name="data_nascimento" id="data_nascimento">
                           <label>Endereço</label>
                           <input type="text" placeholder="Digite seu endereço" name="endereco" id="endereco">
                           <label>ID</label>
@@ -316,5 +335,6 @@ if ($conn->connect_error) {
     <script src="../../assets/js/home/menumobile.js"></script>
     <script src="../../assets/js/home/home.js"></script>
     <script src="../../assets/js/configuracoes/configuracoes.js"></script>
+    <script src="../../assets/js/configuracoes/upload.js"></script>
 </body>
 </html>

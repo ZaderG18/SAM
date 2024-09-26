@@ -41,6 +41,7 @@ if ($conn->connect_error) {
 $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< HEAD
         RM VARCHAR(10) NOT NULL,
 <<<<<<< HEAD
         cpf VARCHAR(11) NOT NULL UNIQUE,
@@ -50,22 +51,29 @@ $tableQueries = [
         cpf VARCHAR(11) NOT NULL,
         foto LONGBLOB NOT NULL,
 >>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
+=======
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255),
+        cargo ENUM('aluno') NOT NULL,
+>>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
-        data_nascimento DATE,
-        genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer'),
+        data_nascimento DATE NOT NULL,
+        genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
         endereco TEXT,
         curso VARCHAR(50),
-        codigo INT NOT NULL,
+        codigo INT NOT NULL UNIQUE,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< HEAD
         RM VARCHAR(10) NOT NULL,
 <<<<<<< HEAD
         cpf VARCHAR(11) NOT NULL UNIQUE,
@@ -76,6 +84,12 @@ $tableQueries = [
         disciplina varchar (15) NOT NULL,
         cpf VARCHAR(11) NOT NULL,
 >>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
+=======
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255),
+        cargo ENUM('professor') NOT NULL,
+>>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -86,8 +100,9 @@ $tableQueries = [
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-    "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
+   "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< HEAD
         RM VARCHAR(10) NOT NULL,
 <<<<<<< HEAD
         cpf VARCHAR(11) NOT NULL UNIQUE,
@@ -97,6 +112,12 @@ $tableQueries = [
         cpf VARCHAR(11) NOT NULL,
         foto LONGBLOB NOT NULL,
 >>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
+=======
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255),
+        cargo ENUM('coordenador') NOT NULL,
+>>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -108,6 +129,7 @@ $tableQueries = [
     )",
      "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< HEAD
         RM VARCHAR(10) NOT NULL,
 <<<<<<< HEAD
         cpf VARCHAR(11) NOT NULL UNIQUE,
@@ -117,6 +139,12 @@ $tableQueries = [
         foto LONGBLOB NOT NULL,
         cpf VARCHAR(11) NOT NULL,
 >>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
+=======
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        cpf VARCHAR(11) NOT NULL UNIQUE,
+        foto VARCHAR(255),
+        cargo ENUM('diretor') NOT NULL,
+>>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -132,13 +160,11 @@ $tableQueries = [
         disciplina VARCHAR(30) NOT NULL,
         professor_id INT NOT NULL,
         coordenador_id INT NOT NULL,
-        aluno_id INT NOT NULL,
         data_inicio DATE NOT NULL,
         data_fim DATE NOT NULL,
         status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
-        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
+        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
    "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -146,12 +172,10 @@ $tableQueries = [
         carga_horaria INT NOT NULL,
         semestre INT NOT NULL,
         ano INT NOT NULL,
-        coordenador_id INT NOT NULL,
         professor_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+        coordenador_id INT NOT NULL,
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
     "matricula" => "CREATE TABLE IF NOT EXISTS matricula (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -162,7 +186,7 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-   "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
+  "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
@@ -181,7 +205,7 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
+   "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,

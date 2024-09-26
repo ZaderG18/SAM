@@ -9,6 +9,8 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
 include "../../php/funcao.php";
+require_once '../../php/validar.php';
+$user = $_SESSION['user'];
 $professor = get_todos_professores($conn);
 ?>
 <!DOCTYPE html>

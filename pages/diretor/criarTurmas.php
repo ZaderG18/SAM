@@ -10,7 +10,8 @@ $conn = new mysqli("localhost", "root", "", "SAM");
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-
+require_once '../../php/validar.php';
+$user = $_SESSION['user'];
 // Busca os alunos e as turmas do banco de dados
 $alunos = $conn->query("SELECT id, nome FROM aluno");
 $turmas = $conn->query("SELECT id, disciplina FROM turma");
