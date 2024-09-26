@@ -1,3 +1,17 @@
+<?php
+
+$host = 'localhost';
+$database = 'sam';
+$username = 'root';
+$password = '';
+$conn = new mysqli($host, $username, $password, $database);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+    require_once '../../php/validar.php';
+$user = $_SESSION['user'];
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

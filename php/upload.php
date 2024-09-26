@@ -9,6 +9,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
+session_start();
 $user = $_SESSION['user'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
@@ -38,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         window.location.href='../pages/aluno/configuracoes.php';</script>" . $stmt->error;
     }
 
-    // Processa o upload da foto
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
         $foto = $_FILES['foto'];
         $fotoNome = basename($foto['name']);
@@ -47,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
         // Verifica se o diretório existe, caso contrário, cria
         if (!is_dir($fotoPasta)) {
-            mkdir($fotoPasta, 0777, true);
+            if (!mkdir($fotoPasta, 0777, true)) {
+                die("Erro ao criar o diretório de upload.");
+            }
         }
     
         // Valida o tipo de arquivo (apenas imagens)
@@ -66,10 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Atualiza o campo 'foto' no banco de dados
                     $sqlFoto = "UPDATE aluno SET foto = ? WHERE id = ?";
                     $stmtFoto = $conn->prepare($sqlFoto);
+    
+                    if (!$stmtFoto) {
+                        die("Erro na preparação da consulta: " . $conn->error);
+                    }
+    
                     $stmtFoto->bind_param("si", $fotoNovoNome, $id);
     
                     if ($stmtFoto->execute()) {
-                        echo "<script> alert('Foto do aluno atualizada com sucesso!');
+                        echo "<script> alert('Foto do aluno atualizada com sucesso!'); 
                         window.location.href = '../pages/aluno/configuracoes.php';</script>";
                     } else {
                         // Exibe um erro caso a consulta não funcione
@@ -88,6 +95,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.";
         }
     } else {
-        echo "Erro no upload da imagem: " . $_FILES['foto']['error'];
+        // Exibe mensagem de erro caso algo aconteça durante o upload
+        switch ($_FILES['foto']['error']) {
+            case UPLOAD_ERR_INI_SIZE:
+                echo "A imagem excede o tamanho máximo permitido pelo servidor.";
+                break;
+            case UPLOAD_ERR_FORM_SIZE:
+                echo "A imagem excede o tamanho máximo permitido pelo formulário.";
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                echo "O upload da imagem foi feito parcialmente.";
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                echo "Nenhuma imagem foi enviada.";
+                break;
+            default:
+                echo "Erro no upload da imagem: " . $_FILES['foto']['error'];
+                break;
+        }
     }
 }

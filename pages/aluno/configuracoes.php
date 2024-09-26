@@ -7,12 +7,25 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
+require_once '../../php/upload.php';
+require_once '../../php/validar.php';
 $user = $_SESSION['user'];
+$id = $user['id'];
+$sql = "SELECT foto FROM aluno WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($fotoNome);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+
+// Verifica se há uma imagem para o usuário
+if (!empty($fotoNome)) {
+    $fotoCaminho = "../assets/img/uploads/" . $fotoNome;
+} else {
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão caso o aluno não tenha enviado uma foto
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -93,7 +106,7 @@ $user = $_SESSION['user'];
             <!-- perfil-->
 
             <div class="dropdown">
-                <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
+                <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
@@ -221,7 +234,7 @@ $user = $_SESSION['user'];
                     <div class="grid-container">
                         <div class="card-up">
                         <class="foto-upload">
-                            <form action="../../php/upload.php" method="post" enctype="multipart/form-data">
+                            <form id="uploadForm" method="post" enctype="multipart/form-data">
                           <div class="upload-box">
                             <div class="foto-placeholder"></div>
                             <input type="file" name="foto" id="foto" accept="image/*">
@@ -322,5 +335,6 @@ $user = $_SESSION['user'];
     <script src="../../assets/js/home/menumobile.js"></script>
     <script src="../../assets/js/home/home.js"></script>
     <script src="../../assets/js/configuracoes/configuracoes.js"></script>
+    <script src="../../assets/js/configuracoes/upload.js"></script>
 </body>
 </html>

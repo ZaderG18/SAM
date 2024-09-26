@@ -8,6 +8,8 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
+require_once '../../php/validar.php';
+$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
