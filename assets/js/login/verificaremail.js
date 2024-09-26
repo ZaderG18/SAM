@@ -7,5 +7,5 @@ document.getElementById('enviar').addEventListener('click', function(e) {
 
 document.getElementById('voltar').addEventListener('click', function() {
     // Redireciona para a tela de login, o comportamento padrão onclick já faz isso, mas mantendo no JS
-    window.location.href = 'login.html';
+    window.location.href = '../../index.html';
 });

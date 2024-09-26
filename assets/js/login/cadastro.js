@@ -20,8 +20,8 @@ function cadastrarUsuario(event) {
 
     // Captura os dados do formulário
     const nome = document.getElementById('nome').value;
-    const tipoAcesso = document.getElementById('cars').value;
-    const email = document.getElementById('password').value;
+    const tipoAcesso = document.getElementById('cargo').value;
+    const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
     const lembrarDeMim = document.querySelector('.box-check input').checked;
 

@@ -1,31 +1,38 @@
 // Função para validar o login
-function validarLogin() {
-    // Obtém os valores dos campos de email e senha
+async function validarLogin() {
     var email = document.getElementById('email').value;
     var senha = document.getElementById('senha').value;
 
-    // Regex para validar a senha (mínimo 8 caracteres, incluindo letras, números e um caractere especial)
+    // Regex para validar a senha
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    // Carrega os usuários cadastrados do localStorage
-    var usuariosCadastrados = JSON.parse(localStorage.getItem('usuariosCadastrados')) || [];
-
-    // Verifica se o email e a senha correspondem a um usuário cadastrado
-    var usuarioEncontrado = usuariosCadastrados.find(function(usuario) {
-        return usuario.email === email && usuario.senha === senha;
-    });
 
     // Verifica se a senha atende aos critérios
     if (!passwordPattern.test(senha)) {
         alert('A senha deve ter no mínimo 8 caracteres, incluindo letras, números e um caractere especial.');
-        return; // Interrompe a execução se a senha não atender aos critérios
+        return; // Interrompe se a senha não atender
     }
 
-    if (usuarioEncontrado) {
-        alert('Sucesso!'); // Mensagem de sucesso
-        window.location.href = "../home/home.html"; // Redireciona para a página home
-    } else {
-        alert('Usuário ou senha incorretos!'); // Mensagem de erro
+    // Faz a requisição para o servidor
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, senha }), // Envia os dados
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Sucesso!'); // Mensagem de sucesso
+            window.location.href = result.redirect; // Redireciona para a página home
+        } else {
+            alert('Usuário ou senha incorretos!'); // Mensagem de erro
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Ocorreu um erro, tente novamente.'); // Tratamento de erro
     }
 }
 
@@ -33,33 +40,21 @@ function validarLogin() {
 document.addEventListener('DOMContentLoaded', function () {
     const lembrarCheckbox = document.querySelector('input[type="checkbox"]');
 
-    // Verifica se o estado "Lembrar de mim" está salvo no localStorage
+    // Verifica o estado "Lembrar de mim"
     const lembrar = localStorage.getItem('lembrarDeMim');
-    if (lembrar === 'true') {
-        lembrarCheckbox.checked = true;
-        console.log('Lembrar de mim já estava ativado');
-    } else {
-        lembrarCheckbox.checked = false;
-        console.log('Lembrar de mim desativado por padrão');
-    }
+    lembrarCheckbox.checked = lembrar === 'true';
 
     lembrarCheckbox.addEventListener('change', function () {
-        if (this.checked) {
-            console.log('Lembrar de mim ativado');
-            localStorage.setItem('lembrarDeMim', 'true');
-        } else {
-            console.log('Lembrar de mim desativado');
-            localStorage.setItem('lembrarDeMim', 'false');
-        }
+        localStorage.setItem('lembrarDeMim', this.checked); // Salva o estado
     });
 });
 
 // Função para mostrar a senha do input de senha
 function mostrarSenha() {
-    var inputPass = document.getElementById('senha'); // Pega o input de senha
-    var btnShowPass = document.getElementById('btn-senha'); // Pega o botão de mostrar senha
+    var inputPass = document.getElementById('senha');
+    var btnShowPass = document.getElementById('btn-senha');
 
-    // Se o tipo do input for password, ele muda para text e troca o ícone do botão
+    // Alterna entre mostrar e esconder a senha
     if (inputPass.type === 'password') {
         inputPass.setAttribute('type', 'text');
         btnShowPass.classList.replace('bi-eye', 'bi-eye-slash');
