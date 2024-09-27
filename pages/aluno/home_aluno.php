@@ -281,9 +281,9 @@ $professores = get_todos_professores($conn);
                 <!-- Dados do Aluno -->
                 <div class="card dados-aluno">
                     <h2>Dados do Aluno</h2>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Foto do Aluno" class="profile-img">
+                    <img src="<?php echo $user['foto']; ?>" alt="Foto do Aluno" class="profile-img">
                     <p><strong>Nome:</strong> <?php echo htmlspecialchars($user['nome']); ?></p>
-                    <p><strong>Curso:</strong> Desenvolvimento de Sistemas</p>
+                    <p><strong>Curso:</strong> <?php echo htmlspecialchars($user['curso']); ?></p>
                     <p><strong>Situação:</strong> Cursando</p>
                     <p><strong>Turma:</strong> A</p>
                     <p><strong>Início do curso:</strong> Jan de 2024</p>

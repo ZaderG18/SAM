@@ -33,6 +33,10 @@ if (!in_array($usuarioCargo, [1, 2, 3, 4])) {
     die("Cargo inválido.");
 }
 
+// criterios para uma senha segura
+function ValidarSenha($senha){
+    return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/', $senha);
+}
 // Verifica se o email já existe no banco de dados.
 if (emailExiste($conn, $usuarioEmail)) {
     die("Email já existe");
@@ -96,8 +100,3 @@ function emailExiste($conn, $email) {
         die("Erro na consulta de email: " . htmlspecialchars($conn->error));
     }
 }
-
-// Fecha a conexão com o banco de dados.
-$conn->close();
-
-?>

@@ -234,7 +234,7 @@ if (!empty($fotoNome)) {
                     <div class="grid-container">
                         <div class="card-up">
                         <class="foto-upload">
-                            <form id="uploadForm" method="post" enctype="multipart/form-data">
+                            <form id="uploadForm" action="../../php/upload.php" method="post" enctype="multipart/form-data">
                           <div class="upload-box">
                             <div class="foto-placeholder"></div>
                             <input type="file" name="foto" id="foto" accept="image/*">

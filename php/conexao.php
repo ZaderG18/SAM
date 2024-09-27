@@ -41,22 +41,9 @@ if ($conn->connect_error) {
 $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
         id INT AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
-        RM VARCHAR(10) NOT NULL,
-<<<<<<< HEAD
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255) DEFAULT NULL,
-=======
-        cargo int NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
-        foto LONGBLOB NOT NULL,
->>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
-=======
         RM VARCHAR(10) NOT NULL UNIQUE,
         cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255),
-        cargo ENUM('aluno') NOT NULL,
->>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
+        foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
@@ -66,6 +53,7 @@ $tableQueries = [
         genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
         endereco TEXT,
         curso VARCHAR(50),
+        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
         codigo INT NOT NULL UNIQUE,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -73,83 +61,46 @@ $tableQueries = [
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
-        RM VARCHAR(10) NOT NULL,
-<<<<<<< HEAD
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255) DEFAULT NULL,
-=======
-        foto LONGBLOB NOT NULL,
-        cargo int NOT NULL,
-        disciplina varchar (15) NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
->>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
-=======
         RM VARCHAR(10) NOT NULL UNIQUE,
         cpf VARCHAR(11) NOT NULL UNIQUE,
         foto VARCHAR(255),
-        cargo ENUM('professor') NOT NULL,
->>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
         disciplina VARCHAR(50) NOT NULL,
+        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-   "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
+    "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
-        RM VARCHAR(10) NOT NULL,
-<<<<<<< HEAD
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255) DEFAULT NULL,
-=======
-        cargo int NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
-        foto LONGBLOB NOT NULL,
->>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
-=======
         RM VARCHAR(10) NOT NULL UNIQUE,
         cpf VARCHAR(11) NOT NULL UNIQUE,
         foto VARCHAR(255),
-        cargo ENUM('coordenador') NOT NULL,
->>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
+        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-     "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
+    "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< HEAD
-        RM VARCHAR(10) NOT NULL,
-<<<<<<< HEAD
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255) DEFAULT NULL,
-=======
-        cargo int NOT NULL,
-        foto LONGBLOB NOT NULL,
-        cpf VARCHAR(11) NOT NULL,
->>>>>>> 669cf1401154097bd37094133604fec66fc6b04e
-=======
         RM VARCHAR(10) NOT NULL UNIQUE,
         cpf VARCHAR(11) NOT NULL UNIQUE,
         foto VARCHAR(255),
-        cargo ENUM('diretor') NOT NULL,
->>>>>>> ce59a6049b974f4dab4fea36a875e551f3cd8b09
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
+        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
