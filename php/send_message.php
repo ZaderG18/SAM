@@ -1,7 +1,7 @@
 <?php
 session_start(); // Inicia a sessão ou retoma a sessão existente. Necessário para acessar variáveis de sessão.
 
-include('conexao.php'); // Inclui o arquivo 'processamento.php', que deve conter a conexão com o banco de dados.
+include('global/conexao.php'); // Inclui o arquivo 'processamento.php', que deve conter a conexão com o banco de dados.
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Verifica se a requisição foi feita via método POST.
     $remetente_id = $_SESSION['user_id']; // Obtém o ID do usuário remetente a partir da variável de sessão.

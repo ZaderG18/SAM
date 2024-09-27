@@ -1,5 +1,5 @@
 <?php
-include "conexao.php";
+include "global/conexao.php";
 // Função para atribuir um aluno a uma turma
 function atribuirTurma($conn, $aluno_id, $turma_id) {
     // Verificar se o aluno já está matriculado em uma turma

@@ -9,7 +9,7 @@ session_unset();
 session_destroy();
 
 // Redireciona o usuário para a página 'index.html' na pasta pai (../).
-header('Location: ../index.html');
+header('Location: ../../index.html');
 
 // Garante que o script pare de ser executado após o redirecionamento.
 exit();

@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: validar.php');
     exit();
 }
-require_once '../../php/funcao.php';
+require_once '../../php/global/funcao.php';
 $user = $_SESSION['user'];
 
 $host = "localhost";
@@ -16,7 +16,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-$data = get_todos_alunos_e_professores($conn);
+$data = get_todos_usuarios($conn);
 $alunos = $data ['aluno'];
 $professores = $data ['professor'];
 ?>
@@ -27,7 +27,7 @@ $professores = $data ['professor'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="shortcut icon" type="imagex/png" href="../../assets/img/logo.jpg">
-    <link rel="stylesheet" href="../../assets/scss/home.css">
+    <link rel="stylesheet" href="../../assets/scss/coordenador/home.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
 <body>

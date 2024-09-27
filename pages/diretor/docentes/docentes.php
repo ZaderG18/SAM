@@ -8,8 +8,8 @@ $conn = new mysqli($host, $username, $senha, $banco);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-include "../../php/funcao.php";
-require_once '../../php/validar.php';
+include "../../../php/funcao.php";
+require_once '../../../php/validar.php';
 $user = $_SESSION['user'];
 $professor = get_todos_professores($conn);
 ?>
@@ -18,13 +18,13 @@ $professor = get_todos_professores($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/scss/diretor/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/diretor/global/menumobile.css">
-    <link rel="stylesheet" href="../../assets/scss/diretor/doscente/style.css">
+    <link rel="stylesheet" href="../../../../assets/scss/diretor/global/sidebar.css">
+    <link rel="stylesheet" href="../../../../assets/scss/diretor/global/menumobile.css">
+    <link rel="stylesheet" href="../../../../assets/scss/diretor/doscente/style.css">
     
-    <link rel="stylesheet" href="../../assets/scss/doscente/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets/scss/doscente/slide.css">
-    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="stylesheet" href="../../../../assets/scss/doscente/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../../../assets/scss/doscente/slide.css">
+    <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--=============== REMIXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
@@ -34,7 +34,7 @@ $professor = get_todos_professores($conn);
 </head>
 <body>
     <header class="header"> 
-        <div class="logo-sam"><img src="../../assets/img/home/logo/Mask group.png" alt=""></div>
+        <div class="logo-sam"><img src="../../../../assets/img/home/logo/Mask group.png" alt=""></div>
         <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
         <nav class="nav container" id="menu-mobile">
             <div class="nav__data">
@@ -51,13 +51,13 @@ $professor = get_todos_professores($conn);
             <!--=============== NAV MENU ===============-->
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
-                  <li><a href="home_diretor.php" class="nav__link"><img src="../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
+                  <li><a href="home_diretor.php" class="nav__link"><img src="../../../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
 
-                  <!-- <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li> -->
+                  <!-- <li><a href="#" class="nav__link"><img src="../../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li> -->
 
                   <!--=============== DROPDOWN 1
                   <li class="dropdown__item">
-                     <div class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
+                     <div class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
                         Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
                      </div>
 
@@ -105,7 +105,7 @@ $professor = get_todos_professores($conn);
                   
                   <li><a href="cursos.php" class="nav__link">Cursos</a></li>
 
-                  <li><a href="dashboard.php" class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
+                  <li><a href="dashboard.php" class="nav__link"><img src="../../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
 
                   <!--=============== DROPDOWN 2 ===============-->
                   <li class="dropdown__item">
@@ -146,7 +146,7 @@ $professor = get_todos_professores($conn);
                         <nav id="sidebar">
                             <div id="sidebar_content">
                                 <div id="user">
-                                    <img src="../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                                    <img src="../../../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
                         
                                     <p id="user_infos">
                                         <span class="item-description">
@@ -161,7 +161,7 @@ $professor = get_todos_professores($conn);
                                 <ul id="side_items">
                                     <li class="side-item">
                                         <a href="home_diretor.php">
-                                            <img src="../../assets/img/home/icons/home.svg" alt="" >
+                                            <img src="../../../../assets/img/home/icons/home.svg" alt="" >
                                             <span class="item-description">
                                                 Home
                                             </span>
@@ -170,7 +170,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item active">
                                         <a href="docentes.php">
-                                            <img src="../../assets/img/home/icons/docentes.svg" alt="">
+                                            <img src="../../../../assets/img/home/icons/docentes.svg" alt="">
                                             <span class="item-description">
                                                 Docentes
                                             </span>
@@ -179,7 +179,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item">
                                         <a href="cursos.php">
-                                            <img src="../../assets/img/home/icons/cursos.svg" alt="" width="30px">
+                                            <img src="../../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
                                             </span>
@@ -188,7 +188,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/user.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/user.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar usuarios
                                             </span>
@@ -197,7 +197,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/comunicado.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/comunicado.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar comunicados
                                             </span>
@@ -206,7 +206,7 @@ $professor = get_todos_professores($conn);
 
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/documento.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/documento.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar documentos
                                             </span>
@@ -215,7 +215,7 @@ $professor = get_todos_professores($conn);
 
                                     <li class="side-item">
                                         <a href="dashboard.php">
-                                            <img src="../../assets/img/home/icons/dashboard.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/dashboard.svg" alt="">
                                             <span class="item-description">
                                                 Dashboard
                                             </span>
@@ -224,7 +224,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/configuracao.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/configuracao.svg" alt="">
                                             <span class="item-description">
                                                 Configurações
                                             </span>
@@ -238,7 +238,7 @@ $professor = get_todos_professores($conn);
                             </div>
                     
                             <div id="logout">
-                                <button id="logout_btn" onclick="window.location.href='../../php/logout.php'">
+                                <button id="logout_btn" onclick="window.location.href='../../../php/login/logout.php'">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span class="item-description">
                                         Logout
@@ -253,7 +253,7 @@ $professor = get_todos_professores($conn);
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gestão de professores</h1>
-                        <div class="box-img"><img src="../../assets/img/docente/image 1.png" alt="" srcset=""></div>
+                        <div class="box-img"><img src="../../../assets/img/docente/image 1.png" alt="" srcset=""></div>
                     </div>
                 </div><!--box-title-->
 
@@ -300,7 +300,7 @@ $professor = get_todos_professores($conn);
                         <?php foreach ($professores as $professor) { ?>
                         <div class="tabela" ><!--Tabela-->
                             <div class="box-foto">
-                                <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" class="image">
+                                <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" class="image">
                             </div>
                             <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                 <div class="flex-info nome-info">
@@ -327,7 +327,7 @@ $professor = get_todos_professores($conn);
                             <?php }?>
                         <div class="tabela" ><!--Tabela-->
                             <div class="box-foto">
-                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" class="image">
+                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" class="image">
                             </div>
                             <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                 <div class="flex-info nome-info">
@@ -354,7 +354,7 @@ $professor = get_todos_professores($conn);
 
                         <div class="tabela" ><!--Tabela-->
                             <div class="box-foto">
-                                <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
+                                <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
                             </div>
                             <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                 <div class="flex-info nome-info">
@@ -390,7 +390,7 @@ $professor = get_todos_professores($conn);
                             <div class="testi-content swiper-wrapper">
                               <div class="slide swiper-slide tabela" ><!--Tabela-->
                                 <div class="box-foto">
-                                    <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="" class="image">
+                                    <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="" class="image">
                                 </div>
                                 <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                     <div class="flex-info nome-info">
@@ -417,7 +417,7 @@ $professor = get_todos_professores($conn);
 
                             <div class="slide swiper-slide tabela" ><!--Tabela-->
                                 <div class="box-foto">
-                                    <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="" class="image">
+                                    <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="" class="image">
                                 </div>
                                 <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                     <div class="flex-info nome-info">
@@ -444,7 +444,7 @@ $professor = get_todos_professores($conn);
 
                             <div class="slide swiper-slide tabela" ><!--Tabela-->
                                 <div class="box-foto">
-                                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
+                                    <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
                                 </div>
                                 <div class="box-info-geral" style="display: flex; flex-direction: column;">
                                     <div class="flex-info nome-info">
@@ -477,13 +477,13 @@ $professor = get_todos_professores($conn);
     </div>
 
         <!-- Swiper JS -->
-        <script src="../../assets/js/docente/swiper-bundle.min.js"></script>
+        <script src="../../../assets/js/diretor/docente/swiper-bundle.min.js"></script>
 
         <!-- JavaScript -->
-        <script src="../../assets/js/docente/script.js"></script>
+        <script src="../../../assets/js/diretor/docente/script.js"></script>
 
-    <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script>
+    <script src="../../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../../assets/js/home/bottomnav.js"></script>
+    <script src="../../../assets/js/home/menumobile.js"></script>
 </body>
 </html>

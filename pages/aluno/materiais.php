@@ -7,7 +7,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-require_once '../../php/validar.php';
+require_once '../../php/login/validar.php';
 $user = $_SESSION['user'];
 ?>
 <!DOCTYPE html>
@@ -337,6 +337,6 @@ $user = $_SESSION['user'];
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script>
     <script src="../../assets/js/home/home.js"></script>
-    <script src="../../assets/js/materias/materias.js"></script>
+    <script src="../../assets/js/aluno/materias/materias.js"></script>
 </body>
 </html>

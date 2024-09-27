@@ -1,6 +1,6 @@
 <?php
 
-include "conexao.php";
+include "../global/conexao.php";
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -14,7 +14,7 @@ function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $
     if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome || !$usuarioRM || !$usuarioCargo) {
         echo "<script>
                 alert('Todos os campos são obrigatórios!');
-                window.location.href = 'pages/login/cadastro.html';
+                window.location.href = '../../pages/login/cadastro.html';
               </script>";
         exit();
     }
@@ -69,14 +69,14 @@ $stmt->bind_param("ssssi", $usuarioEmail, $hashedPassword, $usuarioRM, $usuarioN
 if ($stmt->execute()) {
     echo "<script>
             alert('Os dados foram inseridos com sucesso!');
-            window.location.href = 'pages/login/cadastro.html';
+            window.location.href = '../../pages/login/cadastro.html';
           </script>";
 } else {
     echo "Não foi possível inserir os dados na tabela: " . htmlspecialchars($stmt->error);
 }
 
 // Redireciona o usuário para a página de cadastro após as operações.
-header('Location: ../pages/login/cadastro.html');
+header('Location: ../../pages/login/cadastro.html');
 exit;
 
 // Função para verificar se o email já existe nas tabelas.

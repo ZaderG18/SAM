@@ -22,7 +22,7 @@ $stmt->bind_param("bi",$foto, $userId);
 if ($stmt->execute()) {
     echo "<script>
         alert('Foto de perfil atualizada com sucesso!');
-        window.location.href = '../../pages/aluno/configuracoes.php';
+        window.location.href = '../pages/aluno/configuracoes.php';
         </script>
     ";
 }

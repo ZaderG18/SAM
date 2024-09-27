@@ -1,5 +1,5 @@
 <?php
-include "conexao.php"; // Inclui o arquivo 'processamento.php', que deve conter a conexão com o banco de dados.
+include "../global/conexao.php"; // Inclui o arquivo 'processamento.php', que deve conter a conexão com o banco de dados.
 
 if (isset($_POST['escolher_turma'])) { // Verifica se o formulário foi enviado com o campo 'escolher_turma'
     $aluno_id = $_POST['aluno_id']; // Obtém o ID do aluno a partir do formulário POST.

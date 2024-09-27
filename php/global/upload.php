@@ -33,17 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Executa a consulta
     if ($stmt->execute()) {
         echo "<script> alert('Dados do aluno atualizados com sucesso!');
-        window.location.href='../pages/aluno/configuracoes.php';</script>";
+        window.location.href='../../pages/aluno/configuracoes.php';</script>";
     } else {
         echo "<script> alert('Erro ao atualizar os dados do aluno: ');
-        window.location.href='../pages/aluno/configuracoes.php';</script>" . $stmt->error;
+        window.location.href='../../pages/aluno/configuracoes.php';</script>" . $stmt->error;
     }
 
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
         $foto = $_FILES['foto'];
         $fotoNome = basename($foto['name']);
         $fotoTemp = $foto['tmp_name'];
-        $fotoPasta = '../assets/img/uploads/';
+        $fotoPasta = '../../assets/img/uploads/';
     
         // Verifica se o diretório existe, caso contrário, cria
         if (!is_dir($fotoPasta)) {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
                     if ($stmtFoto->execute()) {
                         echo "<script> alert('Foto do aluno atualizada com sucesso!'); 
-                        window.location.href = '../pages/aluno/configuracoes.php';</script>";
+                        window.location.href = '../../pages/aluno/configuracoes.php';</script>";
                     } else {
                         // Exibe um erro caso a consulta não funcione
                         echo "Erro ao atualizar a foto do aluno: " . $stmtFoto->error;

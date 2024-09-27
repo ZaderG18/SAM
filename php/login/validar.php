@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ];
 
                 // Redireciona para a página correspondente ao papel do usuário
-                header("Location: ../pages/$table/home_$table.php");
+                header("Location: ../../pages/$table/home_$table.php");
                 exit();
             } else {
                 // Senha incorreta, continua a busca nas próximas tabelas
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$userFound) {
         echo "<script>
                 alert('Email ou senha incorretos.');
-                window.location.href = '../index.html';
+                window.location.href = '../../index.html';
               </script>";
     }
 

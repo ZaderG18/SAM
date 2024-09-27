@@ -334,7 +334,7 @@ if (!empty($fotoNome)) {
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script>
     <script src="../../assets/js/home/home.js"></script>
-    <script src="../../assets/js/configuracoes/configuracoes.js"></script>
-    <script src="../../assets/js/configuracoes/upload.js"></script>
+    <script src="../../assets/js/aluno/configuracoes/configuracoes.js"></script>
+    <script src="../../assets/js/aluno/configuracoes/upload.js"></script>
 </body>
 </html>
