@@ -16,7 +16,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-$professores = get_todos_professores($conn);
+//$professores = get_todos_professores($conn);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

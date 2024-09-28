@@ -1,4 +1,12 @@
 <?php
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "sam";
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 // Função para obter todos os alunos do banco de dados.
 function get_todos_alunos($conn) {
     $stmt = $conn->prepare("SELECT id, nome, RM, 'Aluno' AS cargo, data_criacao FROM aluno ORDER BY data_criacao DESC");
