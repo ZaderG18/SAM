@@ -9,8 +9,9 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $user = $_SESSION['user'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and validate input
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Handle upload errors
         switch ($_FILES['foto']['error']) {
             case UPLOAD_ERR_INI_SIZE:
-                echo "A imagem excede o tamanho máximo permitido pelo servidor.";
+                echo "A imagem excede o tamanho máximo permitido.";
                 break;
             case UPLOAD_ERR_FORM_SIZE:
                 echo "A imagem excede o tamanho máximo permitido pelo formulário.";
@@ -105,11 +106,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             case UPLOAD_ERR_NO_FILE:
                 echo "Nenhuma imagem foi enviada.";
                 break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                echo "Pasta temporária ausente.";
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                echo "Falha em escrever a imagem no disco.";
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                echo "Upload de imagem interrompido por uma extensão.";
+                break;
             default:
-                echo "Erro no upload da imagem: " . $_FILES['foto']['error'];
+                echo "Erro desconhecido no upload da imagem.";
                 break;
         }
     }
 }
-
-$conn->close();
+?>

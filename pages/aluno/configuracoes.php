@@ -41,18 +41,20 @@ if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão caso o aluno não tenha enviado uma foto
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações</title>
+
                             <!-- CSS-->
     <link rel="stylesheet" href="../../assets/scss/configuracoes/configuracoes.css">
     <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/global/header.css">
+
     <!-- <link rel="stylesheet" href="../../assets/css/home/bottomnav.css"> -->
+
     <link rel="stylesheet" href="../../assets/scss/global/menumobile.css">
                             <!-- CSS-->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png"> <!-- Ícone da aba do navegador -->
@@ -102,6 +104,7 @@ if (!empty($fotoNome)) {
         <img id="notificationNoAlert" src="../../assets/img/home/icons/Notificação.svg" alt="Notification Bell" class="notification-icon hidden" onclick="toggleNotificationDropdown()">
                 
                 <!-- Dropdown de notificações -->
+                 
                 <div id="notificationDropdown" class="dropdown-content notification-dropdown">
                     <h3>Não Lidas <span><button onclick="markAllAsRead()">Todas lidas</button></span></h3>
                     <div class="notification-item unread">
@@ -249,7 +252,7 @@ if (!empty($fotoNome)) {
                     <div class="grid-container">
                         <div class="card-up">
                         <class="foto-upload">
-                            <form id="uploadForm" action="../../php/upload.php" method="post" enctype="multipart/form-data">
+                            <form id="uploadForm" action="../../php/global/upload.php" method="post" enctype="multipart/form-data">
                           <div class="upload-box">
                             <div class="foto-placeholder"></div>
                             <input type="file" name="foto" id="foto" accept="image/*">
@@ -294,7 +297,7 @@ if (!empty($fotoNome)) {
                           </div>
                         </div>
                     </div>
-                  <form action="../../php/upload.php" method="post" >
+                  <form action="../../php/global/upload.php" method="post" >
                         <div class="informacoes-pessoais">
                         <div class="card-info">
                           <h3>Informações Pessoais</h3>

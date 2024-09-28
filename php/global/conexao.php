@@ -53,11 +53,14 @@ $tableQueries = [
         genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
         endereco TEXT,
         curso VARCHAR(50),
-        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
+        cargo VARCHAR(30) NOT NULL,
         codigo INT NOT NULL UNIQUE,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX (email),
+        INDEX (cpf),
+        INDEX (RM)
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,10 +73,13 @@ $tableQueries = [
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
         disciplina VARCHAR(50) NOT NULL,
-        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
+        cargo VARCHAR(30) NOT NULL,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX (email),
+        INDEX (cpf),
+        INDEX (RM)
     )",
     "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,10 +91,13 @@ $tableQueries = [
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
-        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
+        cargo VARCHAR(30) NOT NULL,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX (email),
+        INDEX (cpf),
+        INDEX (RM)
     )",
     "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -100,12 +109,15 @@ $tableQueries = [
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
-        cargo VARCHAR(30) NOT NULL,  -- Adicionada a coluna 'cargo'
+        cargo VARCHAR(30) NOT NULL,
         status ENUM('ativo', 'inativo') DEFAULT 'ativo',
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX (email),
+        INDEX (cpf),
+        INDEX (RM)
     )",
-     "turma" => "CREATE TABLE IF NOT EXISTS turma (
+    "turma" => "CREATE TABLE IF NOT EXISTS turma (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(50) NOT NULL,
         disciplina VARCHAR(30) NOT NULL,
@@ -117,7 +129,7 @@ $tableQueries = [
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
-   "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
+    "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome_disciplina VARCHAR(30) NOT NULL,
         carga_horaria INT NOT NULL,
