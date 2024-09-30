@@ -1,3 +1,17 @@
+<?php
+
+$host = 'localhost';
+$database = 'sam';
+$username = 'root';
+$password = '';
+$conn = new mysqli($host, $username, $password, $database);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+    require_once '../../../php/login/validar.php';
+$user = $_SESSION['user'];
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -36,12 +50,12 @@
                <ul class="nav__list">
                   <li><a href="../home_diretor.php" class="nav__link"><img src="../../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
 
-                  <li><a href="../docente/index.html" class="nav__link"><img src="../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
+                  <li><a href="../docentes/docentes.php" class="nav__link"><img src="../../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
 
-                  <li><a href="../dashboard/index.html" class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
+                  <li><a href="../dashboard.php" class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
                   <!--=============== DROPDOWN 1 
                   <li class="dropdown__item">
-                     <div class="nav__link"><img src="../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
+                     <div class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
                         Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
                      </div>
 
@@ -127,22 +141,22 @@
                         <nav id="sidebar">
                             <div id="sidebar_content">
                                 <div id="user">
-                                    <img src="../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                                    <img src="../../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
                         
                                     <p id="user_infos">
                                         <span class="item-description">
-                                            Fulano de Tal
+                                            <?php echo htmlspecialchars($user['nome']); ?>
                                         </span>
                                         <span class="item-description">
-                                            Lorem Ipsum
+                                            Diretor
                                         </span>
                                     </p>
                                 </div>
                         
                                 <ul id="side_items">
                                     <li class="side-item">
-                                        <a href="../home/home.html">
-                                            <img src="../../assets/img/home/icons/home.svg" alt="" >
+                                        <a href="../home_diretor.php">
+                                            <img src="../../../assets/img/home/icons/home.svg" alt="" >
                                             <span class="item-description">
                                                 Home
                                             </span>
@@ -150,8 +164,8 @@
                                     </li>
                         
                                     <li class="side-item">
-                                        <a href="../docente/index.html">
-                                            <img src="../../assets/img/home/icons/docentes.svg" alt="">
+                                        <a href="../docentes/docentes.php">
+                                            <img src="../../../assets/img/home/icons/docentes.svg" alt="">
                                             <span class="item-description">
                                                 Docentes
                                             </span>
@@ -159,8 +173,8 @@
                                     </li>
                         
                                     <li class="side-item active">
-                                        <a href="#">
-                                            <img src="../../assets/img/home/icons/cursos.svg" alt="" width="30px">
+                                        <a href="cursos.php">
+                                            <img src="../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
                                             </span>
@@ -169,7 +183,7 @@
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/user.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/user.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar usuarios
                                             </span>
@@ -178,7 +192,7 @@
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/comunicado.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/comunicado.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar comunicados
                                             </span>
@@ -187,7 +201,7 @@
 
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/documento.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/documento.svg" alt="">
                                             <span class="item-description">
                                                 Gerenciar documentos
                                             </span>
@@ -195,8 +209,8 @@
                                     </li>
 
                                     <li class="side-item">
-                                        <a href="../dashboard/index.html">
-                                            <img src="../../assets/img/home/icons/dashboard.svg" alt="">
+                                        <a href="../dashboard.php">
+                                            <img src="../../../assets/img/home/icons/dashboard.svg" alt="">
                                             <span class="item-description">
                                                 Dashboard
                                             </span>
@@ -205,7 +219,7 @@
                         
                                     <li class="side-item">
                                         <a href="#">
-                                            <img src="../../assets/img/home/icons/configuracao.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/configuracao.svg" alt="">
                                             <span class="item-description">
                                                 Configurações
                                             </span>
@@ -219,7 +233,7 @@
                             </div>
                     
                             <div id="logout">
-                                <button id="logout_btn" onclick="window.location.href='../login/login.html'">
+                                <button id="logout_btn" onclick="window.location.href='../../../php/login/logout.php'">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span class="item-description">
                                         Logout
@@ -233,8 +247,8 @@
             <div class="container">
                 <div class="box-title">
                     <div class="flex-title">
-                        <h1>Criar Curso</h1>
-                        <div class="box-img"><img src="../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
+                        <h1>Gerenciamento de Cursos</h1>
+                        <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->
@@ -343,7 +357,7 @@
                         </div><!--box-inputs-->
                         <div class="box-buttons">
                             <button type="submit" class="salvar">Salvar alterações</button>
-                            <button type="submit" class="cancelar" onclick="window.location.href='index.html'">Cancelar</button>
+                            <button type="submit" class="cancelar">Cancelar</button>
                         </div><!--box-buttons-->
                         </fieldset> 
                     </form>
@@ -351,8 +365,8 @@
         </main>
     </div>
 
-    <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script>
+    <script src="../../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../../assets/js/home/bottomnav.js"></script>
+    <script src="../../../assets/js/home/menumobile.js"></script>
 </body>
 </html>

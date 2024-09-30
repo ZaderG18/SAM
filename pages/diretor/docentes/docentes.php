@@ -8,8 +8,8 @@ $conn = new mysqli($host, $username, $senha, $banco);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
-include "../../../php/funcao.php";
-require_once '../../../php/validar.php';
+include "../../../php/global/funcao.php";
+require_once '../../../php/login/validar.php';
 $user = $_SESSION['user'];
 $professor = get_todos_professores($conn);
 ?>
@@ -18,12 +18,12 @@ $professor = get_todos_professores($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../../assets/scss/diretor/global/sidebar.css">
-    <link rel="stylesheet" href="../../../../assets/scss/diretor/global/menumobile.css">
-    <link rel="stylesheet" href="../../../../assets/scss/diretor/doscente/style.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/global/sidebar.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/global/menumobile.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/doscente/style.css">
     
-    <link rel="stylesheet" href="../../../../assets/scss/doscente/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../../../assets/scss/doscente/slide.css">
+    <link rel="stylesheet" href="../../../assets/scss/doscente/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../../assets/scss/doscente/slide.css">
     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--=============== REMIXICONS ===============-->
@@ -34,7 +34,7 @@ $professor = get_todos_professores($conn);
 </head>
 <body>
     <header class="header"> 
-        <div class="logo-sam"><img src="../../../../assets/img/home/logo/Mask group.png" alt=""></div>
+        <div class="logo-sam"><img src="../../../assets/img/home/logo/Mask group.png" alt=""></div>
         <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
         <nav class="nav container" id="menu-mobile">
             <div class="nav__data">
@@ -51,7 +51,7 @@ $professor = get_todos_professores($conn);
             <!--=============== NAV MENU ===============-->
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
-                  <li><a href="home_diretor.php" class="nav__link"><img src="../../../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
+                  <li><a href="home_diretor.php" class="nav__link"><img src="../../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
 
                   <!-- <li><a href="#" class="nav__link"><img src="../../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li> -->
 
@@ -105,7 +105,7 @@ $professor = get_todos_professores($conn);
                   
                   <li><a href="cursos.php" class="nav__link">Cursos</a></li>
 
-                  <li><a href="dashboard.php" class="nav__link"><img src="../../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
+                  <li><a href="dashboard.php" class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
 
                   <!--=============== DROPDOWN 2 ===============-->
                   <li class="dropdown__item">
@@ -146,7 +146,7 @@ $professor = get_todos_professores($conn);
                         <nav id="sidebar">
                             <div id="sidebar_content">
                                 <div id="user">
-                                    <img src="../../../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
+                                    <img src="../../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
                         
                                     <p id="user_infos">
                                         <span class="item-description">
@@ -160,8 +160,8 @@ $professor = get_todos_professores($conn);
                         
                                 <ul id="side_items">
                                     <li class="side-item">
-                                        <a href="home_diretor.php">
-                                            <img src="../../../../assets/img/home/icons/home.svg" alt="" >
+                                        <a href="../home_diretor.php">
+                                            <img src="../../../assets/img/home/icons/home.svg" alt="" >
                                             <span class="item-description">
                                                 Home
                                             </span>
@@ -170,7 +170,7 @@ $professor = get_todos_professores($conn);
                         
                                     <li class="side-item active">
                                         <a href="docentes.php">
-                                            <img src="../../../../assets/img/home/icons/docentes.svg" alt="">
+                                            <img src="../../../assets/img/home/icons/docentes.svg" alt="">
                                             <span class="item-description">
                                                 Docentes
                                             </span>
@@ -178,8 +178,8 @@ $professor = get_todos_professores($conn);
                                     </li>
                         
                                     <li class="side-item">
-                                        <a href="cursos.php">
-                                            <img src="../../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
+                                        <a href="../cursos/cursos.php">
+                                            <img src="../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
                                             </span>
@@ -214,7 +214,7 @@ $professor = get_todos_professores($conn);
                                     </li>
 
                                     <li class="side-item">
-                                        <a href="dashboard.php">
+                                        <a href="../dashboard.php">
                                             <img src="../../../assets/img/home/icons/dashboard.svg" alt="">
                                             <span class="item-description">
                                                 Dashboard
