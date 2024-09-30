@@ -16,22 +16,6 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao servidor de banco de dados: " . $conn->connect_error);
 }
 
-// Criando o banco de dados 'SAM' se ele não existir
-$sql = "CREATE DATABASE IF NOT EXISTS $dbName";
-if ($conn->query($sql) === TRUE) {
-    // Banco de dados criado com sucesso
-} else {
-    die("Erro ao criar banco de dados: " . $conn->error);
-}
-
-// Reestabelece a conexão ao banco de dados específico 'SAM'
-$conn->select_db($dbName);
-
-// Verifica se houve erro na conexão com o banco de dados específico
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-
 // Verifica se o método de solicitação é POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $remetente_id = $_SESSION['user_id']; // Obtém o ID do usuário que está enviando a mensagem da sessão

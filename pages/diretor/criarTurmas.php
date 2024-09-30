@@ -10,7 +10,7 @@ $conn = new mysqli("localhost", "root", "", "SAM");
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-require_once '../../php/validar.php';
+require_once '../../php/login/validar.php';
 $user = $_SESSION['user'];
 // Busca os alunos e as turmas do banco de dados
 $alunos = $conn->query("SELECT id, nome FROM aluno");
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
 <head>
     <meta charset="UTF-8">
     <title>Escolher Turma</title>
-    <link rel="shortcut icon" href="../../assets/img/icone_logo 1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../assets/img/Group 4.png" type="image/x-icon">
 </head>
 <body>
 <h1>Criar Turma</h1>
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['escolher_turma'])) {
             <td><?php echo $turmaAtribuida['aluno_nome']; ?></td>
             <td><?php echo $turmaAtribuida['turma_nome']; ?></td>
             <td>
-                <form action="../../php/conexao.php" method="POST" style="display:inline;">
+                <form action="../../php/global/conexao.php" method="POST" style="display:inline;">
                     <input type="hidden" name="aluno_id" value="<?php echo $turmaAtribuida['id']; ?>">
                     <input type="submit" name="remover_turma" value="Remover">
                 </form>

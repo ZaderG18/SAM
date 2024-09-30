@@ -8,7 +8,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-require_once '../../php/validar.php';
+require_once '../../php/login/validar.php';
 $user = $_SESSION['user'];
 ?>
 
@@ -22,7 +22,7 @@ $user = $_SESSION['user'];
     <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons+O+Symbols+Outlined"
       rel="stylesheet"-->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="shortcut icon" href="../../assets/img/icone_logo 1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../assets/img/Group 4.png" type="image/x-icon">
     <link rel="stylesheet" href="../../assets/scss/diretor/dashboard/dashboard.css">
 </head>
 <body>
@@ -78,7 +78,7 @@ $user = $_SESSION['user'];
                     <span class="material-symbols-outlined">add</span>
                     <h3>Adicionar Produto</h3>
                 </a>
-                <a href="../../php/logout.php">
+                <a href="../../php/login/logout.php">
                     <span class="material-symbols-outlined">logout</span>
                     <h3>Sair</h3>
                 </a>
@@ -334,7 +334,7 @@ $user = $_SESSION['user'];
         
     </div>
     
-    <script src="../../assets/js/dashboard/orders.js"></script>
-    <script src="../../assets/js/dashboard/index.js"></script>
+    <script src="../../assets/js/diretor/dashboard/orders.js"></script>
+    <script src="../../assets/js/diretor/dashboard/index.js"></script>
 </body>
 </html>

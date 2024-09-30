@@ -1,7 +1,7 @@
 document.getElementById('search').addEventListener('input', function() {
     const query = this.value;
     if (query.length > 2) {
-        fetch('../../php/search.php?q=' + encodeURIComponent(query))
+        fetch('../../php/global/search.php?q=' + encodeURIComponent(query))
         .then(response => response.json())
         .then(data => {
             const results = document.querySelector('.filtro-tabela');

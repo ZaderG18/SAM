@@ -19,13 +19,15 @@ $user = $_SESSION['user'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/sidebar.css">
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/menumobile.css">
-    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/gerencursos.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/cursos.css">
+
+    <link rel="icon" href="../../../assets/img/Group 4.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--=============== REMIXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Gestão de professores</title>
+    <title>Gerenciamento de Cursos</title>
 </head>
 <body>
     <header class="header"> 
@@ -146,7 +148,7 @@ $user = $_SESSION['user'];
                                             <?php echo htmlspecialchars($user['nome']); ?>
                                         </span>
                                         <span class="item-description">
-                                            Lorem Ipsum
+                                            Diretor
                                         </span>
                                     </p>
                                 </div>
@@ -171,7 +173,7 @@ $user = $_SESSION['user'];
                                     </li>
                         
                                     <li class="side-item active">
-                                        <a href="#">
+                                        <a href="cursos.php">
                                             <img src="../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
                                             <span class="item-description">
                                                 Gerenciar Cursos
@@ -246,27 +248,119 @@ $user = $_SESSION['user'];
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gerenciamento de Cursos</h1>
-                        <div class="box-img"><img src="../../../assets/img/diretor/cursos/cusos.svg" alt="" srcset=""></div>
+                        <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->
+                    <form action="#" method="POST">
+                
 
-                <p>Oferece a capacidade de gerenciar permissões e funções dos usuários, acompanhar o status das contas, e visualizar o histórico de atividades. Tudo isso de maneira centralizada e organizada, facilitando o controle e a administração dos usuários no sistema.</p>
+                         <fieldset style="border: none;">
+                            <div class="box-inputs">
 
-                <div class="flex-gerenciamento-user">
-                    <div class="box-user">
-                        <a href="criarcursos.php">
-                            <img src="../../../assets/img/diretor/cursos/adcionar.svg" alt="" srcset="">
-                            <span>Criar curso</span>
-                        </a>
-                    </div>
-                    <div class="box-user editar">
-                        <a href="editarcursos.php">
-                            <img src="../../../assets/img/diretor/cursos/editar.svg" alt="" srcset="">
-                            <span>Editar curso</span>
-                        </a>
-                    </div>
-                </div><!--flex-gerenciamento-user-->
+                                <div class="input">
+                                    <label for="nome-curso">Nome do Curso:</label>
+                                    <input type="text" id="nome-curso" name="nome-curso" placeholder="Digite o nome do curso" required>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="codigo">Código:</label>
+                                    <input type="text" id="codigo" name="codigo" placeholder="Digite o código do curso" required>
+                                </div><!--input-->
+
+                                <div class="input ">
+                                    <label for="descricao">Descrição:</label>
+                                    <textarea id="descricao" name="descricao" rows="4"  placeholder="Descreva o curso" required></textarea>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="departamento">Departamento:</label>
+                                    <input type="text" id="departamento" name="departamento" placeholder="Digite o departamento" required>
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="carga-horaria">Carga Horária (em horas):</label>
+                                    <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Ex: 40" min="1" required>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="pre-requisitos">Pré-requisitos:</label>
+                                    <input type="text" id="pre-requisitos" placeholder="Digite os pré-requisitos" name="pre-requisitos">
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="tipo-curso">Tipo de Curso:</label>
+                                    <select id="tipo-curso" name="tipo-curso" required>
+                                        <option value="presencial">Presencial</option>
+                                        <option value="online">Online</option>
+                                        <option value="semipresencial">Semipresencial</option>
+                                    </select>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="nivel-curso">Nível do Curso:</label>
+                                    <select id="nivel-curso" name="nivel-curso" required>
+                                        <option value="basico">Básico</option>
+                                        <option value="intermediario">Intermediário</option>
+                                        <option value="avancado">Avançado</option>
+                                    </select>
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="periodo">Período/Semestre:</label>
+                                    <input type="text" id="periodo" name="periodo" placeholder="Ex: 1º Semestre de 2024" required>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="professor">Professor/Instrutor:</label>
+                                    <input type="text" id="professor" placeholder="Digite o nome do professor" name="professor" required>
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="status-curso">Status do Curso:</label>
+                                    <select id="status-curso" name="status-curso" required>
+                                        <option value="ativo">Ativo</option>
+                                        <option value="inativo">Inativo</option>
+                                    </select>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="data-inicio">Data de Início:</label>
+                                    <input type="date" id="data-inicio" name="data-inicio" required>
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="data-termino">Data de Término:</label>
+                                    <input type="date" id="data-termino" name="data-termino" required>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="vagas">Vagas Disponíveis:</label>
+                                    <input type="number" id="vagas" name="vagas" min="1" placeholder="Ex: 30" required>
+                                </div><!--input-->
+
+                                <div class="input">
+                                    <label for="modalidade">Modalidade:</label>
+                                    <input type="text" id="modalidade" name="modalidade" placeholder="Ex: EAD, Presencial" required>
+                                </div><!--input-->
+
+                                <div class="input input-right">
+                                    <label for="material-recurso">Material e Recurso:</label>
+                                    <textarea id="material-recurso" name="material-recurso" rows="3" placeholder="Liste os materiais e recursos necessários"></textarea>
+                                </div><!--input-->
+
+                                <div class="input-obser">
+                                    <label for="observacoes">Observações:</label>
+                                    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Ex: Este curso requer participação ativa em atividades práticas"></textarea>
+                                </div><!--input-->
+
+                        </div><!--box-inputs-->
+                        <div class="box-buttons">
+                            <button type="submit" class="salvar">Salvar alterações</button>
+                            <button type="submit" class="cancelar">Cancelar</button>
+                        </div><!--box-buttons-->
+                        </fieldset> 
+                    </form>
             </div><!--container-->
         </main>
     </div>

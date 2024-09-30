@@ -24,7 +24,7 @@ $professor = get_todos_professores($conn);
     
     <link rel="stylesheet" href="../../../assets/scss/doscente/swiper-bundle.min.css">
     <link rel="stylesheet" href="../../../assets/scss/doscente/slide.css">
-    <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="../../../assets/img/Group 4.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--=============== REMIXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
