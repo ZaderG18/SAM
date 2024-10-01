@@ -94,8 +94,8 @@ $user = $_SESSION['user'];
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
-                        <p>Nome: Juliana Santos</p>
-                        <p>RM: 4230</p>
+                        <p>Nome: <?php echo htmlspecialchars($user['nome']); ?></p>
+                        <p>RM: <?php echo htmlspecialchars($user['RM']); ?></p>
                     </div>
                     <div class="edit-profile">
                         <img src="../../assets/img/home/icons/icone_profile.svg" alt="Edit Icon">

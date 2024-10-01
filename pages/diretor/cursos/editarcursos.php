@@ -146,7 +146,7 @@ $user = $_SESSION['user'];
                         
                                     <p id="user_infos">
                                         <span class="item-description">
-                                            Fulano de Tal
+                                            <?php echo htmlspecialchars($user['nome']); ?>
                                         </span>
                                         <span class="item-description">
                                             Lorem Ipsum

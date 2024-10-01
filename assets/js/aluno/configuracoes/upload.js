@@ -8,7 +8,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     if (fotoInput.files.length > 0) {
         formData.append('foto', fotoInput.files[0]);
 
-        fetch('../../php/global/upload.php', {
+        fetch('../../../php/configuracoes.php', {
             method: 'POST',
             body: formData,
         })
