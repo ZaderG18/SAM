@@ -1,13 +1,15 @@
-<?php 
+<?php
 $host = "localhost";
 $username = "root";
 $password = "";
-$dbname = "sam";
+$dbname = "SAM";
 $conn = new mysqli($host, $username, $password, $dbname);
+
 if ($conn->connect_error) {
-    die("Erro ao conectar ao banco". $conn->connect_error);
+    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-require_once '../../php/login/validar.php';
+require '../../php/login/validar.php';
+
 $user = $_SESSION['user'];
 ?>
 <!DOCTYPE html>
@@ -15,9 +17,9 @@ $user = $_SESSION['user'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matérias</title>
+    <title>Secretaria</title>
                             <!-- CSS-->
-    <link rel="stylesheet" href="../../assets/scss/aluno/materiais/materiais.css">
+    <link rel="stylesheet" href="../../assets/scss/aluno/suporte/suporte.css">
     <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/global/header.css">
     <!-- <link rel="stylesheet" href="../../assets/scss/home/bottomnav.css"> -->
@@ -32,9 +34,6 @@ $user = $_SESSION['user'];
 
       <!------ REMIXICONS ----->
       <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-
-      <link rel="shortcut icon" href="../../assets/img/logo.jpg" type="image/x-icon">
-
 </head>
 <body>
     <header class="header"> 
@@ -49,15 +48,15 @@ $user = $_SESSION['user'];
             </div>
             <!----- NAV MENU ----->
             <div class="nav__menu" id="nav-menu">
-               <ul class="nav__list">
-                <li><a href="home_aluno.php" class="nav__link"><img src="../../assets/img/home/icons/Inicio.svg" alt="" srcset="">Início</a></li>
-                <li><a href="chat.php" class="nav__link"><img src="../../assets/img/home/icons/Chat.svg" alt="" srcset="">Chat</a></li>
-                <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Cronograma.svg" alt="" srcset="">Cronograma</a></li>
-                <li><a href="materiais.php" class="nav__link"><img src="../../assets/img/home/icons/Matérias.svg" alt="" srcset="">Matérias</a></li>
-                <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Desempenho Aluno.svg" alt="" srcset="">Desempenho Aluno </a></li>
-                <li><a href="configuracoes.php" class="nav__link"><img src="../../assets/img/home/icons/Configurações.svg" alt="" srcset="">Configurações</a></li>
-                <li><a href="../../php/login/logout.php" class="nav__link"><img src="../../assets/img/home/icons/Sair.svg" alt="" srcset="">Sair</a></li>
-            </div>
+                <ul class="nav__list">
+                 <li><a href="home_aluno.php" class="nav__link"><img src="../../assets/img/home/icons/Inicio.svg" alt="" srcset="">Início</a></li>
+                 <li><a href="chat.php" class="nav__link"><img src="../../assets/img/home/icons/Chat.svg" alt="" srcset="">Chat</a></li>
+                 <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Cronograma.svg" alt="" srcset="">Cronograma</a></li>
+                 <li><a href="materiais.php" class="nav__link"><img src="../../assets/img/home/icons/Matérias.svg" alt="" srcset="">Matérias</a></li>
+                 <li><a href="documentos.php" class="nav__link"><img src="../../assets/img/home/icons/Solicitação de Documentos.svg" alt="" srcset="">Solicitação de Documentos </a></li>
+                 <li><a href="configuracoes.php" class="nav__link"><img src="../../assets/img/home/icons/Configurações.svg" alt="" srcset="">Configurações</a></li>
+                 <li><a href="../../php/login/logout.php" class="nav__link"><img src="../../assets/img/home/icons/Sair.svg" alt="" srcset="">Sair</a></li>
+             </div>
          </nav>
           </div>   
 
@@ -99,7 +98,7 @@ $user = $_SESSION['user'];
                     </div>
                     <div class="edit-profile">
                         <img src="../../assets/img/home/icons/icone_profile.svg" alt="Edit Icon">
-                        <p>Editar Perfil</p>
+                        <p><a href="configuracoes.php">Editar Perfil </a></p>
                     </div>
                 </div>
             </div>
@@ -168,15 +167,15 @@ $user = $_SESSION['user'];
                                                 Matérias
                                             </span>
                                         </a>
-                                    <!----Icone Desempenho Aluno ---->
+                                    <!----Icone Solicitação de Documentos---->
                                     </li>
                                     <li class="side-item">
-                                        <a href="#">
+                                        <a href="documentos.php">
                                             <svg width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.98851 0.000137051C9.9378 0.000771221 9.88741 0.00671094 9.83858 0.0178085L1.60329 1.92307C1.48046 1.95155 1.37242 2.01164 1.29551 2.09424C1.21861 2.17684 1.17701 2.27746 1.17701 2.3809C1.17701 2.48433 1.21861 2.58496 1.29551 2.66755C1.37242 2.75015 1.48046 2.81024 1.60329 2.83873L4.3256 3.46839L3.55354 5.57873C3.54582 5.60068 3.54006 5.62306 3.53631 5.64569L2.38051 10.7913C0.976774 11.3229 0 12.4739 0 13.8094V16.6666C0 18.5051 1.84665 20 4.11765 20H15.8824C18.1534 20 20 18.5051 20 16.6666V13.8094C20 12.4741 19.0235 11.323 17.6201 10.7913L16.4643 5.64709C16.4604 5.62398 16.4545 5.60113 16.4465 5.57873L15.6744 3.46885L17.6482 3.01218V6.19025C17.5998 6.86224 18.8708 6.86224 18.8224 6.19025V2.40066C18.8279 2.294 18.789 2.18894 18.7119 2.10233C18.6348 2.01572 18.524 1.95259 18.3973 1.92307L10.162 0.0178085C10.1056 0.00495512 10.0471 -0.00100112 9.98851 0.000137051ZM9.99943 0.970205L16.0938 2.37973L9.99885 3.78926L3.90682 2.37973L9.99943 0.970205ZM5.45726 3.7302L9.83858 4.74398C9.94427 4.76844 10.0563 4.76844 10.162 4.74398L14.5427 3.73067L15.162 5.42247C14.6187 5.61712 12.8924 6.19025 10 6.19025C7.10756 6.19025 5.38132 5.61712 4.83801 5.42247L5.45726 3.7302ZM4.90579 6.47532C5.96497 6.76684 7.75794 7.14265 10 7.14265C12.2339 7.14265 14.0209 6.77011 15.0816 6.47904C14.9523 6.98419 14.8016 7.59089 14.7139 8.01692C14.5497 8.81478 13.8874 9.69458 12.99 10.3509C12.0926 11.0073 10.9777 11.4284 10 11.4284C9.02342 11.4284 7.93028 11.0069 7.04044 10.3486C6.1506 9.69028 5.4813 8.80574 5.28263 8.00157L4.90579 6.47532ZM4.14694 8.24665C4.35916 9.04466 4.87172 9.81488 5.56468 10.476H4.11765C3.95615 10.476 3.79755 10.4855 3.64085 10.5002L4.14694 8.24665ZM15.8536 8.24897L16.3591 10.5002C16.2024 10.4855 16.0439 10.476 15.8824 10.476H14.4732C15.1635 9.81913 15.6676 9.05125 15.8536 8.24897ZM4.11765 11.4284H5L8.35306 15.0474C8.40362 15.1019 8.46806 15.1471 8.54204 15.1797C8.61601 15.2124 8.69779 15.2318 8.78183 15.2366C8.86587 15.2415 8.95022 15.2316 9.02917 15.2078C9.10812 15.184 9.17982 15.1467 9.23943 15.0985L10 14.4828L10.7606 15.0985C10.8202 15.1467 10.8919 15.184 10.9708 15.2078C11.0498 15.2316 11.1341 15.2415 11.2182 15.2366C11.3022 15.2318 11.384 15.2124 11.458 15.1797C11.5319 15.1471 11.5964 15.1019 11.6469 15.0474L15 11.4284H15.8824C17.5219 11.4284 18.8235 12.4821 18.8235 13.8094V16.6666C18.8235 17.9939 17.5219 19.0476 15.8824 19.0476H4.11765C2.47806 19.0476 1.17647 17.9939 1.17647 16.6666V13.8094C1.17647 12.4821 2.47806 11.4284 4.11765 11.4284ZM6.47059 11.4284H6.81526C7.59563 11.9015 8.48303 12.2415 9.41177 12.345V13.6122L8.88729 14.0368L6.47059 11.4284ZM13.2129 11.4284H13.5294L11.1127 14.0368L10.5882 13.6122V12.345C11.5229 12.2421 12.422 11.903 13.2129 11.4284ZM3.52941 15.238C3.3734 15.238 3.22378 15.2882 3.11347 15.3775C3.00315 15.4668 2.94118 15.5879 2.94118 15.7142C2.94118 15.8405 3.00315 15.9616 3.11347 16.0509C3.22378 16.1402 3.3734 16.1904 3.52941 16.1904C3.68542 16.1904 3.83504 16.1402 3.94536 16.0509C4.05567 15.9616 4.11765 15.8405 4.11765 15.7142C4.11765 15.5879 4.05567 15.4668 3.94536 15.3775C3.83504 15.2882 3.68542 15.238 3.52941 15.238ZM10 15.238C9.84399 15.238 9.69437 15.2882 9.58405 15.3775C9.47374 15.4668 9.41177 15.5879 9.41177 15.7142C9.41177 15.8405 9.47374 15.9616 9.58405 16.0509C9.69437 16.1402 9.84399 16.1904 10 16.1904C10.156 16.1904 10.3056 16.1402 10.4159 16.0509C10.5263 15.9616 10.5882 15.8405 10.5882 15.7142C10.5882 15.5879 10.5263 15.4668 10.4159 15.3775C10.3056 15.2882 10.156 15.238 10 15.238ZM5.29412 15.2385C5.13803 15.2385 4.98834 15.2887 4.87797 15.378C4.7676 15.4674 4.7056 15.5886 4.7056 15.7149C4.7056 15.8413 4.7676 15.9625 4.87797 16.0518C4.98834 16.1411 5.13803 16.1913 5.29412 16.1913H6.47116C6.62725 16.1913 6.77694 16.1411 6.88731 16.0518C6.99768 15.9625 7.05969 15.8413 7.05969 15.7149C7.05969 15.5886 6.99768 15.4674 6.88731 15.378C6.77694 15.2887 6.62725 15.2385 6.47116 15.2385H5.29412ZM10 17.1428C9.84399 17.1428 9.69437 17.193 9.58405 17.2823C9.47374 17.3716 9.41177 17.4927 9.41177 17.619C9.41177 17.7453 9.47374 17.8664 9.58405 17.9557C9.69437 18.045 9.84399 18.0952 10 18.0952C10.156 18.0952 10.3056 18.045 10.4159 17.9557C10.5263 17.8664 10.5882 17.7453 10.5882 17.619C10.5882 17.4927 10.5263 17.3716 10.4159 17.2823C10.3056 17.193 10.156 17.1428 10 17.1428Z" fill="white"/>
-                                                </svg>               
+                                                <path d="M1.42857 17.5H2.85714V18.75C2.85714 19.0815 3.00765 19.3995 3.27556 19.6339C3.54347 19.8683 3.90683 20 4.28571 20H18.5714C18.9503 20 19.3137 19.8683 19.5816 19.6339C19.8495 19.3995 20 19.0815 20 18.75V3.75C20 3.41848 19.8495 3.10054 19.5816 2.86612C19.3137 2.6317 18.9503 2.5 18.5714 2.5H17.1429V1.25C17.1429 0.918479 16.9923 0.600537 16.7244 0.366117C16.4565 0.131696 16.0932 0 15.7143 0L1.42857 0C1.04969 0 0.686328 0.131696 0.418419 0.366117C0.15051 0.600537 0 0.918479 0 1.25V16.25C0 16.5815 0.15051 16.8995 0.418419 17.1339C0.686328 17.3683 1.04969 17.5 1.42857 17.5ZM15.7143 16.25H1.42857V1.25H15.7143V16.25ZM18.5714 3.75V18.75H4.28571V17.5H15.7143C16.0932 17.5 16.4565 17.3683 16.7244 17.1339C16.9923 16.8995 17.1429 16.5815 17.1429 16.25V3.75H18.5714ZM5.71429 4.375C5.71429 4.54076 5.78954 4.69973 5.9235 4.81694C6.05745 4.93415 6.23913 5 6.42857 5H13.5714C13.7609 5 13.9426 4.93415 14.0765 4.81694C14.2105 4.69973 14.2857 4.54076 14.2857 4.375C14.2857 4.20924 14.2105 4.05027 14.0765 3.93306C13.9426 3.81585 13.7609 3.75 13.5714 3.75H6.42857C6.23913 3.75 6.05745 3.81585 5.9235 3.93306C5.78954 4.05027 5.71429 4.20924 5.71429 4.375ZM3.57143 8.75H13.5714C13.7609 8.75 13.9426 8.68415 14.0765 8.56694C14.2105 8.44973 14.2857 8.29076 14.2857 8.125C14.2857 7.95924 14.2105 7.80027 14.0765 7.68306C13.9426 7.56585 13.7609 7.5 13.5714 7.5H3.57143C3.38199 7.5 3.20031 7.56585 3.06635 7.68306C2.9324 7.80027 2.85714 7.95924 2.85714 8.125C2.85714 8.29076 2.9324 8.44973 3.06635 8.56694C3.20031 8.68415 3.38199 8.75 3.57143 8.75ZM3.57143 11.25H13.5714C13.7609 11.25 13.9426 11.1842 14.0765 11.0669C14.2105 10.9497 14.2857 10.7908 14.2857 10.625C14.2857 10.4592 14.2105 10.3003 14.0765 10.1831C13.9426 10.0658 13.7609 10 13.5714 10H3.57143C3.38199 10 3.20031 10.0658 3.06635 10.1831C2.9324 10.3003 2.85714 10.4592 2.85714 10.625C2.85714 10.7908 2.9324 10.9497 3.06635 11.0669C3.20031 11.1842 3.38199 11.25 3.57143 11.25ZM3.57143 13.75H13.5714C13.7609 13.75 13.9426 13.6842 14.0765 13.5669C14.2105 13.4497 14.2857 13.2908 14.2857 13.125C14.2857 12.9592 14.2105 12.8003 14.0765 12.6831C13.9426 12.5658 13.7609 12.5 13.5714 12.5H3.57143C3.38199 12.5 3.20031 12.5658 3.06635 12.6831C2.9324 12.8003 2.85714 12.9592 2.85714 13.125C2.85714 13.2908 2.9324 13.4497 3.06635 13.5669C3.20031 13.6842 3.38199 13.75 3.57143 13.75Z" fill="white"/>
+                                                </svg>              
                                                 <span class="item-description">
-                                                Desempenho Aluno
+                                                    Solicitação de Documentos
                                             </span>
                                         </a>
                                     <!---Icone Configurações -->
@@ -208,135 +207,93 @@ $user = $_SESSION['user'];
                                     </span>
                                  </button>
                                 </div>
-                            </nav>
-                       </div>
-                   </aside>
+                        </nav>
+            </div>
+        </aside>
 
-                    <!---Conteúdo da página---->
-                    <!---Cards---->
-                <main>
-                    <div class="grid-container">
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-1">1</div>
-                                <button class="enter-btn">Entrar</button>
-                            </div>
-                            <div class="content">
-                                <h3>Inglês</h3>
-                                <p>Professor: Daniel</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
-                            </div>
+                   <!---Conteúdo da página---->
+                  
+            <main> 
+               <div class="containerbx">
+                    <div class="containerpx">
+                        <div class="secretaria">
+                            <h2>Horário de atendimento</h2>
+                            <p>Segunda-feira a sexta-feira das 9h-13h e das 15h as 20h</p>
                         </div>
+
+                        <div class="secretaria">
+                            <h2>Prazo para entrega de Documentos</h2>
+                            <p>Declarações: 48hrs</p>
+                            <p>Transferências: 48hrs</p>
+                            <p>Históricos: 15 dias</p>
+                        </div>
+
+                        <div class="secretaria">
+                            <h2>Comunicados de Rematrícula</h2>
+                            <p> Prezados Pais, Responsáveis e Alunos,
+
+                                Informamos que o período de Rematrícula para 2024 acontecerá de (data de início) a (data de término). As rematrículas podem ser feitas online por aqui ou presencialmente na secretaria da escola.
+                                
+                                Não deixe para a última hora! Garanta sua vaga e atualize seus dados dentro do prazo.
+                                
+                                Para mais informações, entre em contato pelo e-mail [e-mail da escola] ou telefone [número de contato].
+                                
+                                Atenciosamente,
+                                [Nome da Escola]
+                            </p>
+                        </div>
+                    </div> 
+                        
                     
-
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-2">2</div>
-                                <button class="enter-btn">Entrar</button>
+                    <div class="form-container">
+                        <h2>Formulário de ajuda</h2>
+                        <form action="#" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="nome-completo">Nome Completo:</label>
+                                <input type="text" id="nome-completo" name="nome-completo" class = "caixa" required>
                             </div>
-                            <div class="content">
-                                <h3>Matemática</h3>
-                                <p>Professor: Maria</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
+                            <div class="form-group">
+                                <label for="telefone">Telefone:</label>
+                                <input type="tel" id="telefone" name="telefone" class = "caixa" required>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-3">3</div>
-                                <button class="enter-btn">Entrar</button>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" class = "caixa" required>
                             </div>
-                            <div class="content">
-                                <h3>Português</h3>
-                                <p>Professor: Marta</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
+                            <div class="form-group">
+                                <label for="rm">RM:</label>
+                                <input type="text" id="rm" name="rm" class = "caixa" required>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-4">4</div>
-                                <button class="enter-btn">Entrar</button>
+                            <div class="form-group">
+                                <label for="curso">Curso:</label>
+                                <select id="curso" name="curso" class = "caixa" required>
+                                    <option value="">Selecione o curso</option>
+                                    <option value="curso1">Desenvolvimento de sistemas</option>
+                                    <option value="curso2">Nutrição</option>
+                                    <option value="curso3">Gastronomia</option>
+                                    <option value="curso4">Enfermagem</option>
+                                </select>
                             </div>
-                            <div class="content">
-                                <h3>Geografia</h3>
-                                <p>Professor: Carlos</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
+                            <div class="form-group">
+                                <label for="mensagem">Mensagem:</label>
+                                <textarea id="mensagem" name="mensagem" rows="4" class="textarea" required></textarea>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-5">5</div>
-                                <button class="enter-btn">Entrar</button>
+                            <div class="file-group">
+                                <label for="arquivo">Envio de Arquivos:</label>
+                                <input type="file" id="arquivo" name="arquivo" class="btn-upload">
                             </div>
-                            <div class="content">
-                                <h3>História</h3>
-                                <p>Professor: Ana</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
+                            <div class="form-group">
+                                <button type="submit" class="btn">Enviar</button>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-cabeca">
-                                <div class="number-6">6</div>
-                                <button class="enter-btn">Entrar</button>
-                            </div>
-                            <div class="content">
-                                <h3>Física</h3>
-                                <p>Professor: João</p>
-                                <div class="members">
-                                    <img src="../../assets/img/home/fotos/img_enrico.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_joao.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_neide.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_paulo.png" alt="Avatar">
-                                    <img src="../../assets/img/home/fotos/img_sana.png" alt="Avatar">
-                                </div>
-                                <p class="members-count">12 Membros</p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </main>      
+            
+                </div> 
+            </main>
 
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/aluno/home/menumobile.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
-    <script src="../../assets/js/aluno/materias/materias.js"></script>
+    <script src="../../assets/js/aluno/suporte/suporte.js"></script>
 </body>
 </html>

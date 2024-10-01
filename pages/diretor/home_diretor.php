@@ -339,7 +339,7 @@ $maximo_registros = 6;
 
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script>
+    <script src="../../assets/js/aluno/home/menumobile.js"></script>
 </body>
 </html>
 

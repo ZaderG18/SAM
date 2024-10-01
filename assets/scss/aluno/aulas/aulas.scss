@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: "Poppins", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.global-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Estilo do conteudo */
+main {
+    width: 100%;
+    height: auto;
+    background-color: #EBEBEB;
+    padding: 50px 40px;
+    margin-top: 50px;
+    margin-left: 82px;
+}
+
+main .container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* Conteudo da Pagina */
+.card-slider, .activity-slider {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden; /* Esconde a rolagem horizontal */
+    max-width: 1350px; /* Ajusta a largura máxima do container */
+    margin: 0 auto;
+}
+
+.card-slider h2, .activity-slider h2 {  
+    font-size: 20px;
+    font-weight: bold;
+    color: #341e4e;
+    margin-bottom: 10px;
+}
+
+.activity-slider h2 {
+    margin-top: 30px;
+}
+
+.card-slide, .activity-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 10px; /* Define o espaço entre os cards */
+}
+
+.card, .activity-card {
+    min-width: 300px;
+    margin: 0 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-content, .activity-card-content {
+    padding: 15px;
+}
+
+.card-content h3, .activity-card-content h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #341e4e;
+    margin-bottom: 10px;
+}
+
+.card-content p, .activity-card-content p {
+    font-size: 14px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+button.prev, button.next , .prevslide, .nextslide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color:#341e4e;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 30%;
+}
+
+.ver-mais-btn, .moreinfobtn {
+    position: relative;
+    display: flex;
+    background: linear-gradient(135deg, #1e0442, #4b0082); /* Gradiente de cor */
+    color: #fff;
+    padding: 12px 30px; /* Aumenta o padding para um botão maior */
+    border: none;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px; /* Aumenta o tamanho da fonte */
+    text-align: center; /* Centraliza o texto dentro do botão */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra */
+    transition: all 0.3s ease; /* Transição suave para hover */  
+    margin-top: 30px; /* Espaçamento entre os botões */
+    top: -30px;
+    right: -70px;
+}
+
+.ver-mais-btn:hover, .moreinfobtn:hover {
+    background: linear-gradient(135deg, #4b0082, #1e0442); /* Inverte o gradiente no hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+    transform: translateY(-2px); /* Eleva o botão no hover */
+}
+
+button.prev, .prevslide {
+    left: 10px;
+}
+
+button.next, .nextslide {
+    right: 10px;
+}
+
+/* Estilo Recursos adicionais */
+.recursos-adicionais {
+    background-color: #f9f9f9; /* Cor de fundo clara */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    margin: 20px 0; /* Margem em cima e embaixo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.recursos-adicionais h2 {
+    color:#341e4e; /* Cor do título */
+    font-size: 24px; /* Tamanho da fonte */
+}
+
+.recursos-adicionais p {
+    margin-bottom: 10px; /* Espaçamento abaixo do parágrafo */
+}
+
+.recursos-adicionais ul {
+    list-style-type: none; /* Remove as bolinhas da lista */
+    padding: 0; /* Remove o padding padrão */
+}
+
+.recursos-adicionais li {
+    margin-bottom: 8px; /* Espaçamento entre os itens da lista */
+}
+
+.recursos-adicionais a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: #341e4e; /* Cor dos links */
+}
+
+.recursos-adicionais a:hover {
+    text-decoration: underline; /* Sublinha ao passar o mouse */
+    color: #6a4c93; /* Muda a cor ao passar o mouse */
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 1200px) {
+    main {
+        padding: 40px 30px;
+        margin-left: 60px;
+    }
+
+    .card, .activity-card {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    main {
+        padding: 30px 20px;
+        margin-left: 40px;
+    }
+
+    .card, .activity-card {
+        min-width: 200px;
+    }
+
+    .ver-mais-btn, .moreinfobtn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px 10px;
+        margin-left: 20px;
+    }
+
+    .card, .activity-card {
+        min-width: 150px;
+    }
+
+    .ver-mais-btn, .moreinfobtn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    button.prev, button.next , .prevslide, .nextslide {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 10px 5px;
+        margin-left: 10px;
+    }
+
+    .card, .activity-card {
+        min-width: 100px;
+    }
+
+    .ver-mais-btn, .moreinfobtn {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    button.prev, button.next , .prevslide, .nextslide {
+        padding: 6px;
+    }
+}

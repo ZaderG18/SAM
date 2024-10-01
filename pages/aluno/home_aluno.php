@@ -28,7 +28,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="../../assets/scss/aluno/home.css">
     <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/global/header.css">
-    <!-- <link rel="stylesheet" href="../../assets/css/home/bottomnav.css"> -->
+    <!-- <link rel="stylesheet" href="../../assets/scss/home/bottomnav.css"> -->
     <link rel="stylesheet" href="../../assets/scss/global/menumobile.css">
                             <!-- CSS-->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png"> <!-- Ícone da aba do navegador -->
@@ -59,7 +59,7 @@ if ($conn->connect_error) {
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
                 <li><a href="home_aluno.php" class="nav__link"><img src="../../assets/img/home/icons/Inicio.svg" alt="" srcset="">Início</a></li>
-                <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Chat.svg" alt="" srcset="">Chat</a></li>
+                <li><a href="chat.php" class="nav__link"><img src="../../assets/img/home/icons/Chat.svg" alt="" srcset="">Chat</a></li>
                 <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Cronograma.svg" alt="" srcset="">Cronograma</a></li>
                 <li><a href="materiais.php" class="nav__link"><img src="../../assets/img/home/icons/Matérias.svg" alt="" srcset="">Matérias</a></li>
                 <li><a href="#" class="nav__link"><img src="../../assets/img/home/icons/Desempenho Aluno.svg" alt="" srcset="">Desempenho Aluno </a></li>
@@ -134,7 +134,7 @@ if ($conn->connect_error) {
                                <!----- Icone Home ------>
                                 <ul id="side_items">
                                     <li class="side-item">
-                                        <a href="#">
+                                        <a href="home_aluno.php">
                                             <svg width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M18.8889 6.01673L12.2222 0.763019C11.6111 0.271652 10.82 0 10 0C9.18011 0 8.38896 0.271652 7.77783 0.763019L1.11121 6.01673C0.758287 6.30047 0.476658 6.64853 0.285072 7.03776C0.0934866 7.42698 -0.00365837 7.84842 0.000105326 8.27403V17.0036C0.000105326 17.7983 0.351292 18.5604 0.976409 19.1224C1.60153 19.6843 2.44937 20 3.33341 20H16.6667C17.5507 20 18.3985 19.6843 19.0237 19.1224C19.6488 18.5604 20 17.7983 20 17.0036V8.26404C20.0021 7.84011 19.9042 7.42059 19.7127 7.0332C19.5212 6.6458 19.2404 6.29935 18.8889 6.01673ZM12.2222 18.0024H7.77783V13.0084C7.77783 12.7435 7.89489 12.4894 8.10326 12.3021C8.31163 12.1148 8.59425 12.0096 8.88893 12.0096H11.1111C11.4058 12.0096 11.6884 12.1148 11.8968 12.3021C12.1052 12.4894 12.2222 12.7435 12.2222 13.0084V18.0024ZM17.7778 17.0036C17.7778 17.2685 17.6607 17.5225 17.4523 17.7098C17.2439 17.8972 16.9613 18.0024 16.6667 18.0024H14.4444V13.0084C14.4444 12.2137 14.0933 11.4515 13.4681 10.8896C12.843 10.3276 11.9952 10.012 11.1111 10.012H8.88893C8.00488 10.012 7.15704 10.3276 6.53192 10.8896C5.90681 11.4515 5.55562 12.2137 5.55562 13.0084V18.0024H3.33341C3.03873 18.0024 2.75612 17.8972 2.54775 17.7098C2.33937 17.5225 2.22231 17.2685 2.22231 17.0036V8.26404C2.22251 8.12223 2.2563 7.98208 2.32144 7.85291C2.38658 7.72375 2.48157 7.60854 2.60009 7.51494L9.26671 2.27121C9.46947 2.11109 9.73014 2.02278 10 2.02278C10.2699 2.02278 10.5306 2.11109 10.7334 2.27121L17.4 7.51494C17.5185 7.60854 17.6135 7.72375 17.6786 7.85291C17.7438 7.98208 17.7776 8.12223 17.7778 8.26404V17.0036Z" fill="white"/>
                                               </svg>
@@ -145,7 +145,7 @@ if ($conn->connect_error) {
                                     </li>
                                     <!----- Icone Chat ------->
                                     <li class="side-item">
-                                        <a href="#">
+                                        <a href="chat.php">
                                             <svg width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M18.6115 17.1914C19.2378 16.3518 19.6676 15.3822 19.8692 14.3543C20.0708 13.3263 20.039 12.2662 19.7762 11.2522C19.5133 10.2382 19.0261 9.2961 18.3506 8.49554C17.675 7.69497 16.8283 7.05632 15.873 6.62673C15.6649 5.42943 15.1867 4.29532 14.4746 3.31057C13.7625 2.32581 12.8354 1.51633 11.7636 0.943619C10.6918 0.370908 9.50363 0.0500409 8.28927 0.00539774C7.07491 -0.0392454 5.86635 0.19351 4.75542 0.685978C3.64449 1.17845 2.66042 1.91767 1.87798 2.84748C1.09554 3.77729 0.535324 4.87323 0.239892 6.05201C-0.0555399 7.2308 -0.0784126 8.46142 0.173012 9.65037C0.424437 10.8393 0.943544 11.9553 1.69089 12.9136L0.301664 14.2929C0.162983 14.4334 0.0690394 14.6119 0.0316861 14.8058C-0.00566725 14.9997 0.0152438 15.2003 0.0917806 15.3823C0.166759 15.5649 0.294086 15.7211 0.457715 15.8314C0.621344 15.9417 0.813953 16.001 1.01127 16.002H6.6981C7.26443 17.196 8.15732 18.2052 9.27341 18.9127C10.3895 19.6203 11.6831 19.9973 13.0046 20H19.0012C19.1986 19.999 19.3912 19.9396 19.5548 19.8294C19.7184 19.7191 19.8458 19.5628 19.9207 19.3803C19.9973 19.1983 20.0182 18.9977 19.9808 18.8038C19.9435 18.6099 19.8495 18.4314 19.7108 18.2909L18.6115 17.1914ZM6.00848 13.0035C6.00986 13.3382 6.03659 13.6724 6.08844 14.003H3.41993L3.76973 13.6632C3.86341 13.5703 3.93776 13.4597 3.9885 13.3379C4.03924 13.2161 4.06537 13.0855 4.06537 12.9535C4.06537 12.8216 4.03924 12.691 3.9885 12.5692C3.93776 12.4474 3.86341 12.3368 3.76973 12.2439C3.2096 11.6899 2.76554 11.0298 2.46351 10.3021C2.16148 9.57445 2.00755 8.79388 2.01071 8.00603C2.01071 6.41554 2.6425 4.89018 3.76709 3.76553C4.89168 2.64088 6.41696 2.00905 8.00737 2.00905C9.24836 2.00159 10.4605 2.38325 11.4734 3.10037C12.4862 3.81749 13.2489 4.83401 13.6542 6.00704C13.4343 6.00704 13.2245 6.00704 13.0046 6.00704C11.1491 6.00704 9.36962 6.74417 8.0576 8.05626C6.74557 9.36836 6.00848 11.1479 6.00848 13.0035ZM16.5426 18.001L16.5926 18.051H13.0046C11.8486 18.0489 10.729 17.6461 9.83667 16.9112C8.94432 16.1762 8.33436 15.1546 8.11071 14.0204C7.88706 12.8861 8.06355 11.7094 8.61011 10.6907C9.15667 9.672 10.0395 8.87431 11.1082 8.43352C12.1769 7.99273 13.3653 7.93612 14.4711 8.27333C15.5768 8.61054 16.5315 9.3207 17.1724 10.2828C17.8133 11.245 18.1008 12.3996 17.986 13.5499C17.8712 14.7003 17.3611 15.7753 16.5426 16.5917C16.3543 16.7763 16.2465 17.0277 16.2428 17.2914C16.2433 17.4236 16.2701 17.5544 16.3216 17.6762C16.3731 17.7981 16.4482 17.9084 16.5426 18.001Z" fill="white"/>
                                                 </svg>  
@@ -245,7 +245,7 @@ if ($conn->connect_error) {
             <div class="container-flip">
                 <div class="card-flip">
                     <div class="icon-circle"></div>
-                    <a href="#"></a>
+                    <a href="frequencia.php"></a>
                     <img src="../../assets/img/home/fotos/circulo_verde.png"  class="icon-circle-img">
                      <div class="vertical"></div>   
                     <span>Frequência</span>
@@ -253,7 +253,7 @@ if ($conn->connect_error) {
 
                 <div class="card-flip">
                     <div class="icon-circle"></div>
-                    <a href="#"></a>
+                    <a href="boletim.php"></a>
                     <img src="../../assets/img/home/fotos/circulo_azul.png" class="icon-circle-img">
                     <div class="vertical"></div>
                     <span>Boletim</span>
@@ -269,7 +269,7 @@ if ($conn->connect_error) {
 
                 <div class="card-flip">
                     <div class="icon-circle"></div>
-                    <a href="#"></a>
+                    <a href="suporte.php"></a>
                     <img src="../../assets/img/home/fotos/circulo_rosa.png" class="icon-circle-img">
                     <div class="vertical"></div>
                     <span>Suporte</span>
@@ -439,7 +439,7 @@ if ($conn->connect_error) {
 
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script>
+    <script src="../../assets/js/aluno/home/menumobile.js"></script>
     <script src="../../assets/js/home/home.js"></script>
 </body>
 </html>

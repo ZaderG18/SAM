@@ -48,13 +48,10 @@ main .container{
     max-width: 350px; /* Define uma largura máxima */
     height: 200px;
     margin: 10px;
-    padding: 15px;
-    transition: transform 0.2s;
+    padding: 15px; 
 }
 
-.card:hover {
-    transform: scale(1.05);
-}
+
 
 .card-cabeca {
     display: flex;
@@ -80,11 +77,24 @@ main .container{
 .number-6 { background-color: #bc1eff; }
 
 .enter-btn {
-    background-color: transparent;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 5px 10px;
+    position: relative;
+    display: flex;
+    background: linear-gradient(135deg, #1e0442, #4b0082); /* Gradiente de cor */
+    color: #fff;
+    padding: 10px 10px; /* Aumenta o padding para um botão maior */
+    border: none;
+    border-radius: 8px; /* Bordas mais arredondadas */
     cursor: pointer;
+    font-weight: 600;
+    font-size: 15px; /* Aumenta o tamanho da fonte */
+    text-align: center; /* Centraliza o texto dentro do botão */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra */
+    transition: all 0.3s ease; /* Transição suave para hover */  
+}
+.enter-btn:hover {
+    background: linear-gradient(135deg, #4b0082, #1e0442); /* Inverte o gradiente no hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+    transform: translateY(-2px); /* Eleva o botão no hover */
 }
 
 .content h3 {
