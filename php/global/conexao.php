@@ -150,14 +150,14 @@ $tableQueries = [
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
   "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        nota DECIMAL(3,2) NOT NULL,
-        data_avaliacao DATE DEFAULT CURRENT_DATE,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    nota DECIMAL(3,2) NOT NULL CHECK (nota >= 0 AND nota <= 10),
+    data_avaliacao DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+)",
     "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -169,14 +169,14 @@ $tableQueries = [
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
    "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        data DATE NOT NULL,
-        presenca ENUM('presente', 'ausente') NOT NULL,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    data DATE NOT NULL,
+    presenca TINYINT(1) NOT NULL,  -- 1 para presente, 0 para ausente
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+)",
     "mensao" => "CREATE TABLE IF NOT EXISTS mensao (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -193,6 +193,7 @@ $tableQueries = [
         mensagem TEXT NOT NULL,
         data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
         user_role ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
+        status ENUM('lido', 'nao_lido') DEFAULT 'nao_lido',
         FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
     )",
