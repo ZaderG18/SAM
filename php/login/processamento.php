@@ -1,6 +1,6 @@
 <?php
 
-include "../global/conexao.php"; // Assegure-se de que a conexão usa PDO
+include "../global/conexao.php"; // Assegure-se de que a conexão usa MySQLi
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -32,11 +32,6 @@ function ValidarSenha($senha){
     return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/', $senha);
 }
 
-// Verifica se o email já existe no banco de dados.
-if (emailExiste($conn, $usuarioEmail)) {
-    die("Email já existe");
-}
-
 // Mapeia o cargo para o nome da tabela correspondente.
 $tableMap = [
     1 => 'aluno',
@@ -52,14 +47,9 @@ $tableName = $tableMap[$usuarioCargo];
 $hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 
 // Prepara e executa a consulta de inserção dos dados na tabela apropriada.
-$sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (:email, :senha, :RM, :nome, :cargo)";
+$sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
-
-$stmt->bindParam(':email', $usuarioEmail);
-$stmt->bindParam(':senha', $hashedPassword);
-$stmt->bindParam(':RM', $usuarioRM);
-$stmt->bindParam(':nome', $usuarioNome);
-$stmt->bindParam(':cargo', $usuarioCargo);
+$stmt->bind_param("ssisi", $usuarioEmail, $hashedPassword, $usuarioRM, $usuarioNome, $usuarioCargo);
 
 try {
     if ($stmt->execute()) {
@@ -68,26 +58,15 @@ try {
                 window.location.href = '../../pages/login/cadastro.html';
               </script>";
     } else {
-        echo "Não foi possível inserir os dados na tabela.";
+        echo "<script>
+                alert('Não foi possível inserir os dados!');
+                window.location.href = '../../pages/login/cadastro.html';
+              </script>";
     }
-} catch (PDOException $e) {
+} catch (mysqli_sql_exception $e) {
     echo "Erro: " . htmlspecialchars($e->getMessage());
 }
 
-// Função para verificar se o email já existe nas tabelas.
-function emailExiste($conn, $email) {
-    $sql = "SELECT id FROM aluno WHERE email = :email
-            UNION
-            SELECT id FROM professor WHERE email = :email
-            UNION
-            SELECT id FROM coordenador WHERE email = :email
-            UNION
-            SELECT id FROM diretor WHERE email = :email";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    
-    $stmt->execute();
-    return $stmt->rowCount() > 0;
-}
+$stmt->close(); // Fecha a declaração
+$conn->close(); // Fecha a conexão
 ?>

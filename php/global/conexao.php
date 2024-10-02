@@ -11,219 +11,212 @@ $username = "root";
 $password = "";
 $dbName = "SAM";
 
-try {
-    // Conectando ao servidor MySQL com PDO.
-    $conn = new PDO("mysql:host=$host", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Conectando ao servidor MySQL com MySQLi.
+    $conn = new mysqli($host, $username, $password);
+
+    // Verifica a conexão
+    if ($conn->connect_error) {
+        die("Conexão falhou: ");
+    }
     echo "Conectado ao servidor com sucesso!<br>";
 
     // Criando o banco de dados 'SAM' se ele não existir.
     $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
-    $conn->exec($sql);
-    echo "Banco de dados '$dbName' criado com sucesso!<br>";
+    if ($conn->query($sql) === TRUE) {
+        echo "Banco de dados '$dbName' criado com sucesso!<br>";
+    } else {
+        echo "Erro ao criar o banco de dados: " . $conn->error . "<br>";
+    }
 
     // Reestabelece a conexão ao banco de dados específico 'SAM'.
-    $conn = new PDO("mysql:host=$host;dbname=$dbName", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->select_db($dbName);
 
+    // Consultas para criar as tabelas, se não existirem.
+    $tableQueries = [
+        "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            RM VARCHAR(10) NOT NULL UNIQUE,
+            cpf VARCHAR(11) NOT NULL UNIQUE,
+            foto VARCHAR(255) DEFAULT NULL,
+            email VARCHAR(40) NOT NULL UNIQUE,
+            senha VARCHAR(255) NOT NULL,
+            nome VARCHAR(40) NOT NULL,
+            sobrenome VARCHAR(40) NOT NULL,
+            telefone VARCHAR(15),
+            data_nascimento DATE NOT NULL,
+            genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
+            endereco TEXT,
+            curso VARCHAR(50),
+            cargo VARCHAR(30) NOT NULL,
+            codigo INT NOT NULL UNIQUE,
+            status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX (email),
+            INDEX (cpf),
+            INDEX (RM)
+        )",
+        "professor" => "CREATE TABLE IF NOT EXISTS professor (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            RM VARCHAR(10) NOT NULL UNIQUE,
+            cpf VARCHAR(11) NOT NULL UNIQUE,
+            foto VARCHAR(255),
+            email VARCHAR(40) NOT NULL UNIQUE,
+            senha VARCHAR(255) NOT NULL,
+            nome VARCHAR(40) NOT NULL,
+            sobrenome VARCHAR(40) NOT NULL,
+            telefone VARCHAR(15),
+            disciplina VARCHAR(50) NOT NULL,
+            cargo VARCHAR(30) NOT NULL,
+            status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX (email),
+            INDEX (cpf),
+            INDEX (RM)
+        )",
+        "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            RM VARCHAR(10) NOT NULL UNIQUE,
+            cpf VARCHAR(11) NOT NULL UNIQUE,
+            foto VARCHAR(255),
+            email VARCHAR(40) NOT NULL UNIQUE,
+            senha VARCHAR(255) NOT NULL,
+            nome VARCHAR(40) NOT NULL,
+            sobrenome VARCHAR(40) NOT NULL,
+            telefone VARCHAR(15),
+            cargo VARCHAR(30) NOT NULL,
+            status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX (email),
+            INDEX (cpf),
+            INDEX (RM)
+        )",
+        "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            RM VARCHAR(10) NOT NULL UNIQUE,
+            cpf VARCHAR(11) NOT NULL UNIQUE,
+            foto VARCHAR(255),
+            email VARCHAR(40) NOT NULL UNIQUE,
+            senha VARCHAR(255) NOT NULL,
+            nome VARCHAR(40) NOT NULL,
+            sobrenome VARCHAR(40) NOT NULL,
+            telefone VARCHAR(15),
+            cargo VARCHAR(30) NOT NULL,
+            status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX (email),
+            INDEX (cpf),
+            INDEX (RM)
+        )",
+        "turma" => "CREATE TABLE IF NOT EXISTS turma (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(50) NOT NULL,
+            disciplina VARCHAR(30) NOT NULL,
+            professor_id INT NOT NULL,
+            coordenador_id INT NOT NULL,
+            data_inicio DATE NOT NULL,
+            data_fim DATE NOT NULL,
+            status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
+            FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+            FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
+        )",
+        "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome_disciplina VARCHAR(30) NOT NULL,
+            carga_horaria INT NOT NULL,
+            semestre INT NOT NULL,
+            ano INT NOT NULL,
+            professor_id INT NOT NULL,
+            coordenador_id INT NOT NULL,
+            FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+            FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
+        )",
+        "matricula" => "CREATE TABLE IF NOT EXISTS matricula (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            data_matricula DATE DEFAULT CURRENT_DATE,
+            status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            nota DECIMAL(3,2) NOT NULL CHECK (nota >= 0 AND nota <= 10),
+            data_avaliacao DATE DEFAULT CURRENT_DATE,
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            descricao TEXT NOT NULL,
+            data DATE NOT NULL,
+            status ENUM('pendente', 'concluida') DEFAULT 'pendente',
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            data DATE NOT NULL,
+            presenca TINYINT(1) NOT NULL,  -- 1 para presente, 0 para ausente
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "mensao" => "CREATE TABLE IF NOT EXISTS mensao (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            mensao VARCHAR(100) NOT NULL,
+            data_mensao DATE DEFAULT CURRENT_DATE,
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "mensagens_chat" => "CREATE TABLE IF NOT EXISTS mensagens_chat (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            receptor_id INT NOT NULL,
+            mensagem TEXT NOT NULL,
+            data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+            user_role ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
+            status ENUM('lido', 'nao_lido') DEFAULT 'nao_lido',
+            FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
+        )",
+        "cronograma" => "CREATE TABLE IF NOT EXISTS cronograma (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            turma_id INT NOT NULL,
+            data DATE NOT NULL,
+            hora TIME NOT NULL,
+            atividade VARCHAR(100) NOT NULL,
+            status ENUM('pendente', 'concluida') DEFAULT 'pendente',
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )",
+        "declaracoes" => "CREATE TABLE IF NOT EXISTS declaracoes (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            turma_id INT NOT NULL,
+            declaracao TEXT NOT NULL,
+            data DATE DEFAULT CURRENT_DATE,
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        )"
+    ];
 
-// Consultas para criar as tabelas, se não existirem.
-$tableQueries = [
-    "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255) DEFAULT NULL,
-        email VARCHAR(40) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        nome VARCHAR(40) NOT NULL,
-        sobrenome VARCHAR(40) NOT NULL,
-        telefone VARCHAR(15),
-        data_nascimento DATE NOT NULL,
-        genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
-        endereco TEXT,
-        curso VARCHAR(50),
-        cargo VARCHAR(30) NOT NULL,
-        codigo INT NOT NULL UNIQUE,
-        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX (email),
-        INDEX (cpf),
-        INDEX (RM)
-    )",
-    "professor" => "CREATE TABLE IF NOT EXISTS professor (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255),
-        email VARCHAR(40) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        nome VARCHAR(40) NOT NULL,
-        sobrenome VARCHAR(40) NOT NULL,
-        telefone VARCHAR(15),
-        disciplina VARCHAR(50) NOT NULL,
-        cargo VARCHAR(30) NOT NULL,
-        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX (email),
-        INDEX (cpf),
-        INDEX (RM)
-    )",
-    "coordenador" => "CREATE TABLE IF NOT EXISTS coordenador (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255),
-        email VARCHAR(40) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        nome VARCHAR(40) NOT NULL,
-        sobrenome VARCHAR(40) NOT NULL,
-        telefone VARCHAR(15),
-        cargo VARCHAR(30) NOT NULL,
-        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX (email),
-        INDEX (cpf),
-        INDEX (RM)
-    )",
-    "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        RM VARCHAR(10) NOT NULL UNIQUE,
-        cpf VARCHAR(11) NOT NULL UNIQUE,
-        foto VARCHAR(255),
-        email VARCHAR(40) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        nome VARCHAR(40) NOT NULL,
-        sobrenome VARCHAR(40) NOT NULL,
-        telefone VARCHAR(15),
-        cargo VARCHAR(30) NOT NULL,
-        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
-        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX (email),
-        INDEX (cpf),
-        INDEX (RM)
-    )",
-    "turma" => "CREATE TABLE IF NOT EXISTS turma (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(50) NOT NULL,
-        disciplina VARCHAR(30) NOT NULL,
-        professor_id INT NOT NULL,
-        coordenador_id INT NOT NULL,
-        data_inicio DATE NOT NULL,
-        data_fim DATE NOT NULL,
-        status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
-        FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
-        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
-    )",
-    "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nome_disciplina VARCHAR(30) NOT NULL,
-        carga_horaria INT NOT NULL,
-        semestre INT NOT NULL,
-        ano INT NOT NULL,
-        professor_id INT NOT NULL,
-        coordenador_id INT NOT NULL,
-        FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
-        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
-    )",
-    "matricula" => "CREATE TABLE IF NOT EXISTS matricula (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        data_matricula DATE DEFAULT CURRENT_DATE,
-        status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
-  "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    aluno_id INT NOT NULL,
-    turma_id INT NOT NULL,
-    nota DECIMAL(3,2) NOT NULL CHECK (nota >= 0 AND nota <= 10),
-    data_avaliacao DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-)",
-    "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        descricao TEXT NOT NULL,
-        data DATE NOT NULL,
-        status ENUM('pendente', 'concluida') DEFAULT 'pendente',
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
-   "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    aluno_id INT NOT NULL,
-    turma_id INT NOT NULL,
-    data DATE NOT NULL,
-    presenca TINYINT(1) NOT NULL,  -- 1 para presente, 0 para ausente
-    FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-)",
-    "mensao" => "CREATE TABLE IF NOT EXISTS mensao (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        mensao VARCHAR(100) NOT NULL,
-        data_mensao DATE DEFAULT CURRENT_DATE,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
-     "mensagens_chat" => "CREATE TABLE IF NOT EXISTS mensagens_chat (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        receptor_id INT NOT NULL,
-        mensagem TEXT NOT NULL,
-        data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
-        user_role ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
-        status ENUM('lido', 'nao_lido') DEFAULT 'nao_lido',
-        FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE
-    )",
-    "cronograma" => "CREATE TABLE IF NOT EXISTS cronograma (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        turma_id INT NOT NULL,
-        data DATE NOT NULL,
-        hora TIME NOT NULL,
-        atividade VARCHAR(100) NOT NULL,
-        status ENUM('pendente', 'concluida') DEFAULT 'pendente',
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
-    "declaracoes" => "CREATE TABLE IF NOT EXISTS declaracoes (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        turma_id INT NOT NULL,
-        declaracao TEXT NOT NULL,
-        data_emissao DATE DEFAULT CURRENT_DATE,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
-    )",
-    "chamada" => "CREATE TABLE IF NOT EXISTS chamada (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        aluno_id INT NOT NULL,
-        nome_aluno VARCHAR(50) NOT NULL,
-        presente TINYINT(1) NOT NULL,
-        motivo_ausencia VARCHAR(50) DEFAULT NULL,
-        data DATE NOT NULL,
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
-    )"
-];
+    // Executando as consultas de criação das tabelas.
+    foreach ($tableQueries as $tableName => $createQuery) {
+        if ($conn->query($createQuery) === TRUE) {
+            echo "Tabela '$tableName' criada com sucesso!<br>";
+        } else {
+            echo "Erro ao criar a tabela '$tableName': " . $conn->error . "<br>";
+        }
+    }
 
-foreach ($tableQueries as $tableName => $sqlTable) {
-    $conn->exec($sqlTable);
-    echo "Tabela '$tableName' criada com sucesso!<br>";
-}
-
-} catch (PDOException $e) {
-echo "Erro: " . $e->getMessage();
-}
-
-// Fecha a conexão
-$conn = null;
