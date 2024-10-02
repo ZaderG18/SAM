@@ -152,6 +152,20 @@ $dbName = "SAM";
             FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
             FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
         )",
+        "notas" => "CREATE TABLE IF NOT EXISTS notas (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            aluno_id INT NOT NULL,
+            disciplina_id INT NOT NULL,
+            faltas INT DEFAULT 0,
+            nota1 DECIMAL(5,2) DEFAULT NULL,
+            nota2 DECIMAL(5,2) DEFAULT NULL,
+            nota3 DECIMAL(5,2) DEFAULT NULL,
+            nota4 DECIMAL(5,2) DEFAULT NULL,
+            observacoes TEXT,
+            data_avaliacao DATE DEFAULT CURRENT_DATE,
+            FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+            FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
+        );",        
         "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
             id INT AUTO_INCREMENT PRIMARY KEY,
             aluno_id INT NOT NULL,

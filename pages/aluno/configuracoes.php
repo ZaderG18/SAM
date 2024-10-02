@@ -1,25 +1,32 @@
 <?php
 session_start(); // Ensure session is started
 
+// Database connection
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "sam";
 $conn = new mysqli($host, $username, $password, $dbname);
 
+// Check connection
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco: " . $conn->connect_error);
 }
 
+// Include required files for upload and validation
 require_once '../../php/global/upload.php';
 require_once '../../php/login/validar.php';
 
+// Ensure the user is authenticated
 if (!isset($_SESSION['user'])) {
     die("Usuário não autenticado.");
 }
 
+// Get user data from session
 $user = $_SESSION['user'];
 $id = $user['id'];
+
+// Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
@@ -27,6 +34,7 @@ if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 
+// Bind parameters and execute
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $stmt->bind_result($fotoNome);
@@ -34,12 +42,13 @@ $stmt->fetch();
 $stmt->close();
 $conn->close();
 
-// Verifica se há uma imagem para o usuário
+// Check if there is a photo for the user
 if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/uploads/" . htmlspecialchars($fotoNome);
 } else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão caso o aluno não tenha enviado uma foto
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -118,7 +127,7 @@ if (!empty($fotoNome)) {
             <!-- perfil-->
 
             <div class="dropdown">
-                <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
+            <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
@@ -246,14 +255,16 @@ if (!empty($fotoNome)) {
                     <div class="cards-container">
                         <!-- Lado esquerdo - Info Card -->
                         <div class="info-card">
-                            <div class="profile-picture">
-                                <form action="../../php/configuracoes.php"></form>
-                                <h3>Upload Foto(150px X 150px)</h3>
-                                <img src="profile-placeholder.png" id="profile-pic"/>
-                                <label for="upload" class="upload-button">Escolher Arquivo</label>
-                                <input type="file" id="upload" accept="image/*" class="input">
-                                <button class="btn-padrao">Salvar</button>
-                            </div>
+                        <div class="profile-picture">
+                        <form action="../../php/configuracoes.php" method="POST" enctype="multipart/form-data">
+                            <h3>Upload Foto (150px X 150px)</h3>
+                            <img src="profile-placeholder.png" id="profile-pic" />
+                            <label for="upload" class="upload-button">Escolher Arquivo</label>
+                            <input type="file" id="upload" name="foto" accept="image/*" class="input" required>
+                            <button type="submit" class="btn-padrao">Salvar</button>
+                        </form>
+                     </div>
+
                             <div class="notifications">
                                 <h3>Notificações</h3>
                                 <label>Email</label>
