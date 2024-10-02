@@ -219,7 +219,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-1">1</div>
-                                <button class="enter-btn">Entrar</button>
+                                <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>Inglês</h3>
@@ -239,7 +239,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-2">2</div>
-                                <button class="enter-btn">Entrar</button>
+                                <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>Matemática</h3>
@@ -258,7 +258,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-3">3</div>
-                                <button class="enter-btn">Entrar</button>
+                                <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>Português</h3>
@@ -277,7 +277,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-4">4</div>
-                                <button class="enter-btn">Entrar</button>
+                                 <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>Geografia</h3>
@@ -296,7 +296,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-5">5</div>
-                                <button class="enter-btn">Entrar</button>
+                                <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>História</h3>
@@ -315,7 +315,7 @@ $user = $_SESSION['user'];
                         <div class="card">
                             <div class="card-cabeca">
                                 <div class="number-6">6</div>
-                                <button class="enter-btn">Entrar</button>
+                                <a href="aulas.php"><button class="enter-btn">Entrar</button></a>
                             </div>
                             <div class="content">
                                 <h3>Física</h3>

@@ -11,31 +11,21 @@ $username = "root";
 $password = "";
 $dbName = "SAM";
 
-// Conectando ao servidor MySQL.
-$conn = new mysqli($host, $username, $password);
-
-// Verifica se houve erro na conexão com o servidor MySQL.
-if ($conn->connect_error) {
-    die("Erro ao conectar ao servidor de banco de dados: " . $conn->connect_error);
-} else {
+try {
+    // Conectando ao servidor MySQL com PDO.
+    $conn = new PDO("mysql:host=$host", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Conectado ao servidor com sucesso!<br>";
-}
 
-// Criando o banco de dados 'SAM' se ele não existir.
-$sql = "CREATE DATABASE IF NOT EXISTS $dbName";
-if ($conn->query($sql) === TRUE) {
+    // Criando o banco de dados 'SAM' se ele não existir.
+    $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
+    $conn->exec($sql);
     echo "Banco de dados '$dbName' criado com sucesso!<br>";
-} else {
-    echo "Erro ao criar banco de dados: " . $conn->error;
-}
 
-// Reestabelece a conexão ao banco de dados específico 'SAM'.
-$conn = new mysqli($host, $username, $password, $dbName);
+    // Reestabelece a conexão ao banco de dados específico 'SAM'.
+    $conn = new PDO("mysql:host=$host;dbname=$dbName", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Verifica se houve erro na conexão com o banco de dados específico.
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
 
 // Consultas para criar as tabelas, se não existirem.
 $tableQueries = [
@@ -226,11 +216,14 @@ $tableQueries = [
     )"
 ];
 
-// Itera sobre o array de consultas para criar as tabelas no banco de dados.
 foreach ($tableQueries as $tableName => $sqlTable) {
-    if ($conn->query($sqlTable) === TRUE) {
-        echo "Tabela '$tableName' criada com sucesso!<br>";
-    } else {
-        echo "Erro ao criar a tabela '$tableName': " . $conn->error . "<br>";
-    }
+    $conn->exec($sqlTable);
+    echo "Tabela '$tableName' criada com sucesso!<br>";
 }
+
+} catch (PDOException $e) {
+echo "Erro: " . $e->getMessage();
+}
+
+// Fecha a conexão
+$conn = null;
