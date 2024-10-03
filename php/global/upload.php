@@ -24,10 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data_nascimento = filter_var($_POST['data_nascimento'], FILTER_SANITIZE_STRING);
     $genero = filter_var($_POST['genero'], FILTER_SANITIZE_STRING);
 
-    if ($email === false) {
-        echo "<script>alert('Email inválido!'); window.history.back();</script>";
-        exit();
-    }
 
     // Prepare SQL to update student data
     $sql = "UPDATE aluno 
@@ -71,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (move_uploaded_file($fotoTemp, $fotoCaminhoCompleto)) {
                 // Update the photo in the database
                 if (isset($id) && !empty($id)) {
-                    $sqlFoto = "UPDATE aluno SET foto = ? WHERE id = ?";
+                    $sqlFoto = "INSERT INTO aluno SET foto = ? WHERE id = ?";
                     $stmtFoto = $conn->prepare($sqlFoto);
                     $stmtFoto->bind_param("si", $fotoNovoNome, $id);
     

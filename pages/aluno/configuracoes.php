@@ -44,7 +44,7 @@ $conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
-    $fotoCaminho = "../../assets/img/uploads/" . htmlspecialchars($fotoNome);
+    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
 } else {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
@@ -130,7 +130,7 @@ if (!empty($fotoNome)) {
             <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
-                        <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
+                        <img src="<?php echo $fotoCaminho; ?>" alt="Profile Avatar" class="user-avatar-small">
                         <p>Nome: <?php echo htmlspecialchars($user['nome']); ?></p>
                         <p>RM: <?php echo htmlspecialchars($user['RM']); ?></p>
                     </div>
@@ -256,7 +256,7 @@ if (!empty($fotoNome)) {
                         <!-- Lado esquerdo - Info Card -->
                         <div class="info-card">
                         <div class="profile-picture">
-                        <form action="../../php/configuracoes.php" method="POST" enctype="multipart/form-data">
+                        <form action="../../php/global/upload.php" method="POST" enctype="multipart/form-data">
                             <h3>Upload Foto (150px X 150px)</h3>
                             <img src="profile-placeholder.png" id="profile-pic" />
                             <label for="upload" class="upload-button">Escolher Arquivo</label>
@@ -323,7 +323,7 @@ if (!empty($fotoNome)) {
                                         <option value="nao-dizer">Prefiro Não Dizer</option>
                                     </select>
                                     <label>Data de Nascimento*</label>
-                                    <input type="date" name="data_nascimento" required>
+                                    <input type="date" name="data_nascimento" id="data_nascimento" required>
                                     <label>Endereço*</label>
                                     <input type="text" name="endereco" id="endereco" required>
                                     <label>RM</label>

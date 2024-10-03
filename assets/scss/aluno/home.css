@@ -32,580 +32,261 @@ main .container {
   margin: 0 auto;
 }
 
-/*mostrar e esconder*/
-.hide-button, .show-button, .botoes {
-  background: none;
-  display: flex;
-  border: none;
-  font-size: 15px;
-  font-family: "Poppins", sans-serif;
-  color: #696969;
-  font-weight: 600;
+/*conteudo da pagina*/
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.hide-button i, .show-button i {
-  color: #696969;
-  font-weight: bold;
-  font-family: "Poppins", sans-serif;
-}
-
-/*Estilo do banner*/
-.welcome-banner {
-  background-image: linear-gradient(180deg, #ffb6ff 0, #ffaaff 25%, #f29df2 50%, #ce90df 75%, #af84ce 100%);
-  background-image: radial-gradient(circle at 50% -20.71%, #d6d4f1 0, #dad3ef 6.25%, #dfd2ed 12.5%, #e3d0ea 18.75%, #e7cfe8 25%, #eacfe4 31.25%, #edcee1 37.5%, #f0cdde 43.75%, #f2cdda 50%, #f4cdd6 56.25%, #f5cdd3 62.5%, #f5cdcf 68.75%, #f5cdcb 75%, #f5cec8 81.25%, #f4cec5 87.5%, #f3cfc2 93.75%, #f1d0c0 100%);
-  border-radius: 8px;
-  width: 50%;
+/* Banner de saudação */
+.banner {
+  background-color: #d8eaf0;
+  border-radius: 10px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-  transition: max-height 0.5s ease, opacity 0.5s ease; /* Transição para o banner */
+  margin-bottom: 30px;
 }
 
-.hide {
-  opacity: 0; /* Tornar o banner invisível */
-  transition: max-height 0.5s ease, opacity 0.5s ease; /* Transições */
+.banner h1 {
+  font-size: 40px;
+  color: #104061;
 }
 
-.welcome-text h1 {
-  font-size: 20px;
-  color: #341e4e;
-  margin: 0;
-}
-
-.welcome-text p {
-  font-size: 13px;
-  color: white;
-}
-
-.watch-button {
-  border: none;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(90deg, #6a4c93, #341e4e);
-  color: white;
-  padding: 5px 40px;
-  height: 40px;
-  border-radius: 4px;
-  font-size: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Contêiner dos cards */
-.card-container-flip {
-  display: flex;
-  flex-direction: row; /* Manter os cards lado a lado */
-  flex-wrap: wrap; /* Permitir quebra de linha para responsividade */
-  justify-content: center; /* Centralizar os cards */
-}
-
-/* Estilo para os cards */
-.container-flip {
-  display: flex;
-  justify-content: space-between; /* Para distribuir os cards igualmente */
-  padding: 10px;
-  flex-wrap: wrap; /* Permitir quebra de linha para responsividade */
-}
-
-.card-flip {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 200px;
-  height: 70px;
-  display: flex;
-  align-items: center; /* Alinha os itens no centro verticalmente */
-  padding: 10px;
-  margin: 10px; /* Adicionar margem para espaçamento entre os cards */
-  position: relative; /* Necessário para o posicionamento absoluto da linha vertical */
-}
-
-/* Linha vertical entre ícone e texto */
-.vertical {
-  border-left: 2px solid #341e4e;
-  height: 25px; /* Alinhar com a altura do conteúdo */
-  position: absolute;
-  left: 33%;
-  transform: translateX(-50%); /* Centraliza a linha */
-}
-
-/* Imagem do ícone dentro do card */
-.card-flip img {
-  width: 50px;
-  height: 50px;
-}
-
-/* Texto dentro do card */
-.card-flip span {
+.banner p {
   font-size: 16px;
-  font-weight: bold;
-  margin-left: 20px; /* Espaçamento entre o texto e a linha vertical */
-  color: #341e4e;
-  text-align: center; /* Centralizar o texto */
+  color: #34495E;
 }
 
-/* Estilo do card de visão geral */
-.container-aluno {
-  display: flex; /* Flexbox para alinhar os itens horizontalmente */
-  justify-content: space-between; /* Distribuir os itens igualmente */
-  padding: 10px;
-  flex-wrap: wrap; /* Permitir quebra de linha para responsividade */
-  gap: 10px;
+.banner img {
+  position: relative;
+  left: -5%;
+  width: 40%;
+  height: 40%;
+}
+
+/* Estilos dos cards principais */
+.cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .card {
-  background-color: white;
-  padding: 10px;
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-}
-
-h2 {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  color: #341e4e;
-}
-
-.profile-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  margin-bottom: 10px;
-  align-self: left;
-}
-
-.dados-aluno {
-  width: 200px;
-  height: 350px;
-  font-size: 12px;
-}
-
-.resumo-dia {
-  width: 300px;
-  height: 450px;
-  font-size: 12px;
-}
-
-.pendencias {
-  width: 300px;
-  height: 300px;
-  font-size: 12px;
-}
-
-.materias {
-  height: 400px;
-  width: 1000px;
-  font-size: 12px;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-}
-
-/* Tabela de notas */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #6a4c93;
-  color: white;
-}
-
-td {
-  color: #333;
-}
-
-select {
-  margin-bottom: 10px;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 12px;
-}
-
-/* Calendário */
-.calendario {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 300px;
-  height: 400px;
-  font-size: 12px;
-  color: black;
-  padding: 10px;
-  margin: 20px 0;
-}
-
-.cabecalho {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  color: #341e4e;
-}
-
-.btn {
-  cursor: pointer;
-}
-
-#mes-ano {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.semanas, .dias {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.dias {
-  height: 240px;
-}
-
-.semanas div, .dias div {
-  width: 14.28%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 10px 0;
-  border-radius: 5px;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.dias div {
-  cursor: pointer;
-  transition: background-color 0.3s;
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.dias div:hover {
-  background-color: white;
-  color: orangered;
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #341e4e;
 }
 
-.dias .today {
-  background-color: blue;
-  color: white;
-}
-
-.dias .fade {
-  color: #555;
-}
-
-/* chatbox */
-/* Estilo do botão roxo de abrir/fechar o chat */
-.chat-toggle {
-  background-color: #341e4e; /* Cor de fundo roxa */
-  border: none; /* Remove borda */
-  color: white; /* Cor do ícone */
-  padding: 15px; /* Tamanho do botão */
-  border-radius: 50%; /* Formato circular */
-  cursor: pointer; /* Cursor de mãozinha ao passar o mouse */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
-  display: flex; /* Centraliza o ícone */
-  align-items: center;
-  justify-content: center;
-  position: fixed; /* Fixa o botão no canto da tela */
-  bottom: 20px; /* Distância do botão em relação ao fundo */
-  right: 20px; /* Distância do botão em relação à lateral direita */
-  z-index: 1000; /* Coloca o botão acima de outros elementos */
-  transition: background-color 0.3s ease; /* Efeito suave na mudança de cor */
-}
-
-/* Ícone do botão */
-.chat-toggle i {
-  font-size: 24px; /* Tamanho do ícone */
-}
-
-/* Efeito hover no botão */
-.chat-toggle:hover {
-  background-color: #6a4c93; /* Muda a cor do botão ao passar o mouse */
-}
-
-/* Estilo da janela de chat */
-.chat-window {
-  background-color: white;
-  width: 300px;
-  height: 400px;
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  display: none; /* Escondido inicialmente */
-  flex-direction: column;
-  z-index: 999;
-}
-
-/* Cabeçalho do chat */
-.chat-header {
-  background-color: #341e4e;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  color: white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-/* Informações do usuário */
-.chat-img {
+.card img {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  -o-object-fit: cover;
-     object-fit: cover;
   margin-bottom: 10px;
-  align-self: left;
-}
-
-.chat-user-info h3 {
-  margin: 0;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-/* Container do status do usuário */
-.user-status {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
-/* Círculo indicando o status (online/offline) */
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #4caf50; /* Cor verde para "online" */
-  right: 80%;
-  top: 45px;
-  position: absolute;
-}
-
-/* Texto do status ("Online", "Offline") */
-#statusText {
-  font-size: 12px;
-  color: #ccc;
-  margin-left: 10px;
-}
-
-/* Corpo do chat */
-.chat-body {
-  padding: 10px;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-/* Mensagem dentro do chat */
-.message {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 10px;
-}
-
-.message img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.message-content {
-  margin-left: 10px;
-  background-color: #f2f2f2;
-  padding: 5px 10px;
-  border-radius: 10px;
-}
-
-.message-content p {
-  margin: 0;
-  font-size: 15px;
-}
-
-.message-content span {
-  font-size: 10px;
-  color: #888;
   display: block;
-  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Rodapé do chat */
-.chat-footer {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  background-color: #f2f2f2;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+/* Seções abaixo dos cards */
+.sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  gap: 20px;
 }
 
-.chat-footer input {
-  flex-grow: 1;
-  padding: 10px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
+.section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.media {
+  color: black;
+  font-weight: bold;
   margin-right: 10px;
 }
 
-.chat-footer button {
-  background-color: #341e4e;
-  color: white;
-  border: none;
-  padding: 10px;
+.maior {
+  color: #178b20;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.menor {
+  color: #ff0000;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.section h4 {
+  font-size: 15px;
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.section p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Perfil do Aluno */
+.profile {
+  background-color: #fff;
+  padding: 20px;
+  /* width: 50%; */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile h3 {
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #341e4e;
+  text-align: left;
+}
+
+.profile h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #341e4e;
+}
+
+.profile p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Feed de atualizações recentes */
+.feed {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feed h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.feed ul {
+  list-style: none;
+}
+
+.feed li {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.feed span {
+  font-size: 14px;
+  color: #999;
+}
+
+/* Calendário */
+.calendar {
+  background-color: #fff;
+  padding: 20px;
+  /* width: 50%; */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendar h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-header button {
+  background-color: #5e3ea1;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-/*Responsividade */
-@media screen and (min-width: 1920px) {
-  main .container {
-    max-width: 1920px;
-    margin: 0 auto;
-  }
+.calendar-header button:hover {
+  background-color: #4b2d7e;
 }
-@media screen and (max-width: 970px) {
-  /* main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img1{
-      width: 25px;
-  }
 
-  main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img2,#img3{
-      width: 50px;
-  }
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
 
-  main .box-visao-geral .flex-visao-geral .content-visao .visao-elements h4{
-      color: white;
-      font-size: 40px;
-      margin-left: 10px;
-  }
+.calendar-day {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  color: #666;
+}
 
-  main .box-visao-geral .flex-visao-geral .content-visao p{
-      font-size: 14px;
-      margin-top: 10px;
-  } */
+.calendar-day.today {
+  background-color: #5e3ea1;
+  color: #fff;
 }
-@media screen and (max-width: 1100px) {
-  main {
-    padding: 50px 20px;
-  }
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #341e4e;
 }
-@media screen and (max-width: 900px) {
-  aside {
-    display: none;
-  }
-  main {
-    margin-left: 0;
-  }
-}
-@media screen and (max-width: 800px) {
-  main .box-welcome h1 {
-    font-size: 30px;
-  }
-}
-@media screen and (max-width: 400px) {
-  main .box-welcome {
-    flex-direction: column-reverse;
-    text-align: center;
-  }
-  main .box-welcome .img-welcome {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    margin-bottom: 20px;
-  }
-}
-/* Responsividade para o banner */
-@media screen and (max-width: 900px) {
-  .welcome-banner {
-    width: 70%;
-    padding: 15px;
-  }
-  .welcome-text h1 {
-    font-size: 18px;
-  }
-  .welcome-text p {
-    font-size: 9px;
-  }
-  .watch-button {
-    padding: 5px 30px;
-    font-size: 18px;
-  }
-}
-@media screen and (max-width: 600px) {
-  .welcome-banner {
-    width: 90%;
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cards {
     flex-direction: column;
-    text-align: center;
   }
-  .welcome-text h1 {
-    font-size: 16px;
-  }
-  .welcome-text p {
-    font-size: 8px;
-  }
-  .watch-button {
-    padding: 5px 20px;
-    font-size: 16px;
-  }
-}
-@media screen and (max-width: 400px) {
-  .welcome-banner {
-    width: 100%;
-    padding: 10px;
-  }
-  .welcome-text h1 {
-    font-size: 14px;
-  }
-  .welcome-text p {
-    font-size: 7px;
-  }
-  .watch-button {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-}
-/* Responsividade para os cards */
-@media screen and (max-width: 600px) {
-  .card {
-    width: 100%; /* Cards ocupam toda a largura disponível */
-    height: auto; /* Ajustar altura automaticamente */
-    flex-direction: column; /* Mudar para coluna em telas menores */
-    align-items: flex-start; /* Alinhar itens no início */
-  }
-  .vertical {
-    display: none; /* Esconder linha vertical em telas menores */
-  }
-  .card img {
-    margin-bottom: 10px; /* Espaçamento abaixo do ícone */
-  }
-  .card span {
-    margin-left: 0; /* Remover margem esquerda */
-    text-align: left; /* Alinhar texto à esquerda */
-  }
-}
-/* Responsividade para os cards de visão geral */
-@media screen and (max-width: 600px) {
-  .dados-aluno, .resumo-dia, .pendencias, .materias {
-    width: 100%; /* Cards ocupam toda a largura disponível */
-    height: auto; /* Ajustar altura automaticamente */
+  .sections {
+    grid-template-columns: 1fr;
   }
 }/*# sourceMappingURL=home.css.map */

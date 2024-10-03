@@ -11,6 +11,30 @@ if ($conn->connect_error) {
 require '../../php/login/validar.php';
 
 $user = $_SESSION['user'];
+$id = $user['id'];
+
+// Prepare SQL statement to retrieve photo
+$sql = "SELECT foto FROM aluno WHERE id = ?";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+
+// Bind parameters and execute
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($fotoNome);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+
+// Check if there is a photo for the user
+if (!empty($fotoNome)) {
+    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
+} else {
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -89,7 +113,7 @@ $user = $_SESSION['user'];
             <!-- perfil-->
 
             <div class="dropdown">
-                <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
+               <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
                         <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
