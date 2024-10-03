@@ -1,5 +1,5 @@
 <?php
-if(session_status() === PHP_SESSION_NONE){
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -36,7 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($tables as $table) {
         // Preparando a query para selecionar os campos necessários
-        $stmt = $conn->prepare("SELECT * FROM $table WHERE email = ?");
+        // Ajuste os campos conforme necessário, aqui estão exemplos genéricos
+        $stmt = $conn->prepare("SELECT id, nome, RM, status, curso, foto, email, senha FROM $table WHERE email = ?");
+        
+        if (!$stmt) {
+            die("Erro ao preparar a consulta: " . $conn->error);
+        }
+
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
