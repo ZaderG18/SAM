@@ -2,6 +2,7 @@
 if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
+
 // Configurações seguras para o cookie da sessão
 $session_options = [
     'cookie_lifetime' => 86400,    // Duração do cookie (1 dia)
@@ -9,10 +10,6 @@ $session_options = [
     'cookie_httponly' => true,     // Impede que o cookie seja acessado por JavaScript
     'cookie_samesite' => 'Strict'  // Evita o envio do cookie em requests cross-site
 ];
-
-
-// Regenerar o ID da sessão para maior segurança
-session_regenerate_id(true);
 
 // Verificar se o método de requisição é POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -38,13 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userFound = false; // Variável para controlar se o usuário foi encontrado
 
     foreach ($tables as $table) {
-        $stmt = $conn->prepare("SELECT id, nome, RM, email, senha FROM $table WHERE email = ?");
+        // Preparando a query para selecionar os campos necessários
+        $stmt = $conn->prepare("SELECT * FROM $table WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $nome, $RM, $emailBD, $hashed_password);
+            // Recuperando os valores do banco de dados
+            $stmt->bind_result($id, $nome, $RM, $status, $curso, $foto, $emailBD, $hashed_password);
             $stmt->fetch();
 
             // Verifica se a senha inserida é igual à senha armazenada no banco de dados
@@ -59,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'foto' => $foto,
                     'email' => $emailBD,
                     'RM' => $RM,
+                    'status' => $status,
                     'curso' => $curso,
                     'role' => $table // Define o papel do usuário com base na tabela
                 ];

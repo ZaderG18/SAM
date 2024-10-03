@@ -7,6 +7,12 @@ if (!isset($_SESSION['user'])) {
 require_once '../../php/global/funcao.php';
 require_once '../../php/global/upload.php';
 $user = $_SESSION['user'];
+if (isset($_SESSION['user']['status'])) {
+    $status = $_SESSION['user']['status'];
+} else {
+    $status = 'Desconhecido'; // Valor padrão caso não esteja definido
+}
+
 
 $host = "localhost";
 $username = "root";
@@ -121,13 +127,13 @@ if (!empty($fotoNome)) {
                 <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
-                        <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
+                        <img src="<?php echo $fotoCaminho; ?>" alt="Profile Avatar" class="user-avatar-small">
                         <p>Nome: <?php echo htmlspecialchars($user['nome']);?></p>
                         <p>RM: <?php echo htmlspecialchars($user['RM']);?></p>
                     </div>
                     <div class="edit-profile">
                         <img src="../../assets/img/home/icons/icone_profile.svg" alt="Edit Icon">
-                        <p><a href="../../html/configuracoes/index.html">Editar Perfil </a></p>
+                        <p><a href="configuracoes.php">Editar Perfil </a></p>
                     </div>
                 </div>
             </div>
@@ -313,11 +319,11 @@ if (!empty($fotoNome)) {
                     <div class="profile">
                         <h3>Dados Aluno</h3>
                         <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno">
-                        <h2><?php echo htmlspecialchars($user['nome']);?></h2>
-                        <p>Desenvolvimento de Sistemas</p>
+                        <h2><?php echo htmlspecialchars($_SESSION['user']['nome']);?></h2>
+                        <p>Curso: <?php echo htmlspecialchars($_SESSION['user']['curso']);?></p>
                         <p>Matrícula: <?php echo htmlspecialchars($user['RM']);?></p>
                         <p>3º Semestre</p>
-                        <p>Situação: Cursando</p>
+                        <p>Situação: <?php echo htmlspecialchars($_SESSION['user']['status'])?></p>
                         <p>Email: <?php echo htmlspecialchars($user['email']);?></p>
                     </div>
 
