@@ -1,6 +1,7 @@
 <?php
+// Iniciar sessão se ainda não estiver iniciada
 if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Start the session
+    session_start();
 }
 
 $host = "localhost";
@@ -8,120 +9,107 @@ $username = "root";
 $password = "";
 $dbname = "sam";
 
-// Improved database connection with error handling
+// Conexão com o banco de dados
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if user ID is set in session
+// Verificar se o usuário está logado
 if (!isset($_SESSION['user']['id'])) {
-    die("User not logged in.");
+    die("Usuário não está logado.");
 }
 
 $usuario_id = $_SESSION['user']['id'];
 
-// Função para consultar o banco de dados de forma genérica
-function consultarBanco($conn, $tabela, $usuario_id) {
-    $sql = "SELECT * FROM $tabela WHERE aluno_id = ?";
+// Função para realizar consulta no banco
+function consultarBanco($conn, $sql, $usuario_id) {
     $stmt = $conn->prepare($sql);
-    
     if (!$stmt) {
-        error_log("Prepare failed: " . $conn->error);
-        return null; // Return null instead of false
-    }
-    
-    $stmt->bind_param("i", $usuario_id);
-    if (!$stmt->execute()) {
-        error_log("Execute failed: " . $stmt->error);
-        $stmt->close();
-        return null; // Return null on execution failure
-    }
-    
-    $result = $stmt->get_result();
-    $stmt->close(); // Close the statement
-    return $result; // Return the result
-}
-
-// Recupera as informações do aluno
-function obterAluno($conn, $usuario_id) {
-    $sql_usuario = "SELECT * FROM aluno WHERE id = ?";
-    $stmt = $conn->prepare($sql_usuario);
-    if (!$stmt) {
-        error_log("Prepare failed: " . $conn->error);
-        return null; // Handle prepare failure
+        die("Erro ao preparar consulta: " . $conn->error);
     }
     
     $stmt->bind_param("i", $usuario_id);
     $stmt->execute();
-    $resultado_usuario = $stmt->get_result();
-    $stmt->close(); // Close the statement
-    return $resultado_usuario->fetch_assoc(); // Retorna os dados do aluno
+    $result = $stmt->get_result();
+    $stmt->close();
+    
+    return $result;
 }
 
-// Improved average calculation with error handling
-function calcularMedia($resultado_notas) {
-    if ($resultado_notas->num_rows === 0) return 0; // No grades found
+// Buscar notas do aluno
+$notas_sql = "SELECT nota_media FROM notas WHERE aluno_id = ?";
+$notas_result = consultarBanco($conn, $notas_sql, $usuario_id);
 
-    $soma_notas = 0;
-    $total_notas = 0; // To keep track of the total number of grades
-
-    while ($nota = $resultado_notas->fetch_assoc()) {
-        // Assuming your columns are named nota1, nota2, nota3, nota4
-        for ($i = 1; $i <= 4; $i++) {
-            $nota_column = 'nota' . $i; // Construct the column name
-            if (isset($nota[$nota_column]) && is_numeric($nota[$nota_column])) {
-                $soma_notas += $nota[$nota_column];
-                $total_notas++;
-            }
-        }
+$notas = [];
+if ($notas_result->num_rows > 0) {
+    while ($row = $notas_result->fetch_assoc()) {
+        $notas[] = $row['nota_media']; // Usar a coluna correta
     }
-
-    return $total_notas > 0 ? $soma_notas / $total_notas : 0; // Return average
-}
-
-$usuario = obterAluno($conn, $usuario_id);
-
-if ($usuario) {
-    // Obtendo dados do aluno
-    $notas = consultarBanco($conn, "nota_media", $usuario_id);
-    if ($notas === null) {
-        echo "Erro ao consultar notas.<br>";
-    } else {
-        // Calculando a média das notas
-        $media_notas = calcularMedia($notas);
-        echo "Média das notas: " . htmlspecialchars($media_notas) . "<br>";
-    }
-    
-    // Obtendo atualizações
-    $atualizacoes = consultarBanco($conn, "atualizacao", $usuario_id);
-    if ($atualizacoes === null) {
-        echo "Erro ao consultar atualizações.<br>";
-    } else {
-        if ($atualizacoes->num_rows > 0) {
-            while ($atualizacao = $atualizacoes->fetch_assoc()) {
-                echo "Atualização: " . htmlspecialchars($atualizacao['descricao']) . "<br>";
-            }
-        } else {
-            echo "Nenhuma atualização encontrada.<br>";
-        }
-    }
-    
-    // Obtendo frequência
-    $frequencia = consultarBanco($conn, "frequencia", $usuario_id);
-    if ($frequencia === null) {
-        echo "Erro ao consultar frequência.<br>";
-    } else {
-        if ($frequencia->num_rows > 0) {
-            while ($registro_frequencia = $frequencia->fetch_assoc()) {
-                echo "Frequência: " . htmlspecialchars($registro_frequencia['status']) . "<br>";
-            }
-        } else {
-            echo "Nenhum registro de frequência encontrado.<br>";
-        }
-    }
-    
+    $media = array_sum($notas) / count($notas);
+    $maior_nota = max($notas);
+    $menor_nota = min($notas);
 } else {
-    echo "Aluno não encontrado.";
+    $media = $maior_nota = $menor_nota = 0;
 }
-?>
+
+// Buscar tarefas pendentes do aluno
+$atividades_sql = "SELECT descricao, data_entrega FROM atividade WHERE aluno_id = ? AND status = 'pendente'";
+$atividades_result = consultarBanco($conn, $atividades_sql, $usuario_id);
+
+// Verifique se a consulta retornou um resultado válido
+if ($atividades_result === false) {
+    die("Erro ao consultar atividades: " . $conn->error);
+}
+
+$atividades = [];
+if ($atividades_result->num_rows > 0) {
+    while ($row = $atividades_result->fetch_assoc()) {
+        $atividades[] = [
+            "descricao" => $row['descricao'],
+            "data_entrega" => $row['data_entrega'] // Certifique-se de que 'data_entrega' é o nome correto
+        ];
+    }
+} 
+
+
+// Buscar frequência do aluno
+$frequencia_sql = "SELECT status FROM chamada WHERE aluno_id = ?";
+$frequencia_result = consultarBanco($conn, $frequencia_sql, $usuario_id);
+
+$frequencia = [];
+if ($frequencia_result->num_rows > 0) {
+    while ($row = $frequencia_result->fetch_assoc()) {
+        $frequencia[] = $row['status'];
+    }
+}
+
+// Buscar horários de aula
+$horarios_sql = "SELECT disciplina, dia_semana, hora_inicio, hora_fim FROM horarios WHERE aluno_id = ?";
+$horarios_result = consultarBanco($conn, $horarios_sql, $usuario_id);
+
+$horarios = [];
+if ($horarios_result->num_rows > 0) {
+    while ($row = $horarios_result->fetch_assoc()) {
+        $horarios[] = [
+            "disciplina" => $row['disciplina'],
+            "dia_semana" => $row['dia_semana'],
+            "hora_inicio" => $row['hora_inicio'],
+            "hora_fim" => $row['hora_fim']
+        ];
+    }
+}
+
+// Buscar atualizações recentes
+$atualizacoes_sql = "SELECT descricao, data_atualizacao FROM atualizacoes WHERE aluno_id = ? ORDER BY data_atualizacao DESC LIMIT 5";
+$atualizacoes_result = consultarBanco($conn, $atualizacoes_sql, $usuario_id);
+
+$atualizacoes = [];
+if ($atualizacoes_result->num_rows > 0) {
+    while ($row = $atualizacoes_result->fetch_assoc()) {
+        $atualizacoes[] = [
+            "descricao" => $row['descricao'],
+            "data_atualizacao" => $row['data_atualizacao']
+        ];
+    }
+}

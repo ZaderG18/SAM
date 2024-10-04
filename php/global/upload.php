@@ -32,9 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sssssssi", $nome, $telefone, $email, $endereco, $curso, $data_nascimento, $genero, $id);
 
     if ($stmt->execute()) {
-        echo "<script> alert('Dados do aluno atualizados com sucesso!');</script>";
+        echo "<script> alert('Dados do aluno atualizados com sucesso!');
+        window.location.href = '../../pages/aluno/configuracoes.php'
+        </script>";
     } else {
-        echo "<script> alert('Erro ao atualizar os dados do aluno: " . $stmt->error . "');</script>";
+        echo "<script> alert('Erro ao atualizar os dados do aluno:');
+        window.location.href = '../../pages/aluno/configuracoes.php'" . $stmt->error . "');</script>";
     }
 
     // Processa o upload da foto

@@ -195,10 +195,29 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
+"atualizacoes" => "CREATE TABLE IF NOT EXISTS atualizacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT,
+    descricao TEXT,
+    data_atualizacao DATETIME,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id)
+);
+",
+"horarios" => "CREATE TABLE horarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    disciplina VARCHAR(100) NOT NULL,
+    dia_semana VARCHAR(15) NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fim TIME NOT NULL,
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id) -- Altere para o nome correto da tabela de alunos
+);
+",
     "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
+        status VARCHAR (50) NOT NULL,
         data DATE NOT NULL,
         presenca TINYINT(1) NOT NULL,  -- 1 para presente, 0 para ausente
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,

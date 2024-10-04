@@ -13,7 +13,6 @@ if (isset($_SESSION['user']['status'])) {
 } else {
     $status = 'Desconhecido'; // Valor padrão caso não esteja definido
 }
-
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -320,7 +319,7 @@ if (!empty($fotoNome)) {
                         <h3>Dados Aluno</h3>
                         <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno">
                         <h2><?php echo htmlspecialchars($_SESSION['user']['nome']);?></h2>
-                        <p>Curso: <?php echo htmlspecialchars($_SESSION['user']['curso']);?></p>
+                        <p>Curso: <?php echo htmlspecialchars($user['curso']);?></p>
                         <p>Matrícula: <?php echo htmlspecialchars($user['RM']);?></p>
                         <p>3º Semestre</p>
                         <p>Situação: <?php echo htmlspecialchars($_SESSION['user']['status'])?></p>
@@ -331,39 +330,52 @@ if (!empty($fotoNome)) {
                   
                         <div class="section">
                             <h3>Notas e Desempenho</h3>
-                            <p><span class="media">Sua média geral:</span> 8.5</p>
-                            <p><span class="maior">Maior Nota:</span>Programação Web: 9.0 </p>
-                            <p><span class="menor">Menor Nota:</span>Banco de Dados: 8.2 </p>
+                            <p><span class="media">Sua média geral:</span><?= number_format($media, 2, ',', '.')?></p>
+                            <p><span class="maior">Maior Nota:</span><?= number_format($maior_nota, 2, ',', '.')?></p>
+                            <p><span class="menor">Menor Nota:</span><?= number_format($menor_nota, 2, ',', '.')?></p>
                         </div>
 
                         <!-- Tarefas Pendentes -->
                         <div class="section">
                             <h3>Tarefas Pendentes</h3>
                             <ul>
-                                <li>Atividade de Programação Web <span>(entrega em 2 dias)</span></li>
+                                <?php if(!empty($atividades)): ?>
+                                    <?php foreach($atividades as $atividade): ?>
+                                <li><?= $atividade['descricao']?> <span>(entrega em <?= date('d/m/Y', strtotime($atividade['data'])) ?>)</span></li>
                                 <li>Projeto de Banco de Dados <span>(entrega em 5 dias)</span></li>
                                 <li>Revisão de Prova de Redes <span>(entrega em 1 semana)</span></li>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li>Não há tarefas pendentes</li>
+                                    <?php endif; ?>
                             </ul>
                         </div>
 
                         <!-- Horário de Aula -->
                         <div class="section">
                             <h3>Horário de Aula</h3>
-                            <h4>Segunda-feira</h4>
-                            <p>Programação Web: 08:00 - 09:00 </p>
-                            <p>Banco de Dados: 10:00 - 11:00 </p>
-                            <p>Intervalo: 12:00 - 13:00</p>
-                            <p>Redes de Computadores: 14:00 - 16:00 </p>
-                            <p>Redes de Computadores: 17:00 - 18:00 </p>
+                           <ul>
+                            <?php if(!empty($horarios)): ?>
+                                <?php foreach($horarios as $horario): ?>
+                                    <li><?= $horario['disciplina']?> <span><?= $horario['hora_inicio']?> - <?= $horario['dia_semana']?></span></li>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li>Não há horários de aula</li>
+                                    <?php endif; ?>
+                           </ul>
                         </div>
 
                         <!-- Feed de atualizações recentes -->
                         <div class="feed">
                             <h3>Atualizações Recentes</h3>
                             <ul>
-                                <li>Nota de Programação Web lançada <span>(ontem)</span></li>
-                                <li>Nova atividade em Banco de Dados <span>(2 dias atrás)</span></li>
-                                <li>Evento: Semana de Tecnologia <span>(5 dias atrás)</span></li>
+                                <?php if(!empty($atualizacoes)): ?>
+                                    <?php foreach($atualizacoes as $atualizacao): ?>
+                                        <li><?= $atualizacao['descricao']?> <span>(<?= date('d/m/Y', strtotime($atualizacao['data'])) ?>)</span></li>
+                                     <?php endforeach; ?>
+                                    <?php else: ?>
+                                       <li>Não há atualizações recentes</li>
+                                    <?php endif; ?>
                             </ul>
                         </div>
                     </div>
