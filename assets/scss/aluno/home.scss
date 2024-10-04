@@ -275,7 +275,10 @@ main .container{
     background-color: #5e3ea1;
     color: #fff;
 }
-
+.calendar-days .evento {
+    background-color: #76ff03; /* Cor para dias com eventos */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
 .calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);

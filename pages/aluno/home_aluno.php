@@ -6,13 +6,13 @@ if (!isset($_SESSION['user'])) {
 }
 require_once '../../php/global/funcao.php';
 require_once '../../php/global/upload.php';
+require_once '../../php/aluno/home.php';
 $user = $_SESSION['user'];
 if (isset($_SESSION['user']['status'])) {
     $status = $_SESSION['user']['status'];
 } else {
     $status = 'Desconhecido'; // Valor padrão caso não esteja definido
 }
-
 
 $host = "localhost";
 $username = "root";
@@ -23,8 +23,9 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-$id = $user['id'];
+$id = $user['id']; // ID do usuário
 
+// Prepara SQL statement para recuperar a foto
 $sql = "SELECT foto FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
@@ -40,11 +41,11 @@ $stmt->fetch();
 $stmt->close();
 $conn->close();
 
-// Check if there is a photo for the user
+// Verifica se há uma foto para o usuário
 if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
 } else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão se nenhuma foto for carregada
 }?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -123,10 +124,10 @@ if (!empty($fotoNome)) {
             <!-- perfil-->
 
             <div class="dropdown">
-                <img src="<?php echo $fotoCaminho; ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
+                <img src="<?php echo htmlspecialchars($fotoCaminho); ?>" alt="User Avatar" class="user-avatar" onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
-                        <img src="<?php echo $fotoCaminho; ?>" alt="Profile Avatar" class="user-avatar-small">
+                        <img src="<?php echo htmlspecialchars($fotoCaminho); ?>" alt="Profile Avatar" class="user-avatar-small">
                         <p>Nome: <?php echo htmlspecialchars($user['nome']);?></p>
                         <p>RM: <?php echo htmlspecialchars($user['RM']);?></p>
                     </div>

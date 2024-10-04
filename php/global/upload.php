@@ -1,91 +1,90 @@
 <?php
-// Database connection
-$dsn = 'mysql:host=localhost;dbname=sam';
-$username = 'root';
-$password = '';
-
-try {
-    $conn = new PDO($dsn, $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    error_log("Erro ao conectar ao banco de dados: " . $e->getMessage());
-    header("Location: ../../index.html");
-    exit();
-}
-
-// Session management
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "sam";
+$conn = new mysqli($host, $username, $password, $dbname);
 
-if (!isset($_SESSION['user'])) {
-    header("Location: ../../index.html");
-    exit();
+// Verifica se a conexão foi bem-sucedida
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
 }
 
 $user = $_SESSION['user'];
+$id = $user['id']; // ID do usuário
 
-// Form input validation and sanitization
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $input = $_POST;
-    $validator = new Respect\Validation\Validator();
-    $input = $validator->validate($input, [
-        'nome' => v::notEmpty()->alpha(),
-        'telefone' => v::notEmpty()->phone(),
-        'email' => v::notEmpty()->email(),
-        'endereco' => v::notEmpty()->string(),
-        'curso' => v::notEmpty()->string(),
-        'data_nascimento' => v::notEmpty()->date(),
-        'genero' => v::notEmpty()->string(),
-    ]);
+    // Recebe os dados do formulário
+    $nome = $_POST['nome'] ?? null;
+    $telefone = $_POST['telefone'] ?? null;
+    $email = $_POST['email'] ?? null;
+    $endereco = $_POST['endereco'] ?? null;
+    $curso = $_POST['curso'] ?? null;
+    $data_nascimento = $_POST['data_nascimento'] ?? null;
+    $genero = $_POST['genero'] ?? null;
 
-    if ($input->isValid()) {
-        // Update student data
-        $sql = "UPDATE aluno 
-                SET nome = ?, telefone = ?, email = ?, endereco = ?, curso = ?, data_nascimento = ?, genero = ? 
-                WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            $input['nome'],
-            $input['telefone'],
-            $input['email'],
-            $input['endereco'],
-            $input['curso'],
-            $input['data_nascimento'],
-            $input['genero'],
-            $id,
-        ]);
+    // Atualiza os dados do aluno
+    $sql = "UPDATE aluno SET nome = ?, telefone = ?, email = ?, endereco = ?, curso = ?, data_nascimento = ?, genero = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssi", $nome, $telefone, $email, $endereco, $curso, $data_nascimento, $genero, $id);
 
-        if ($stmt->rowCount() > 0) {
-            echo "<script>alert('Dados do aluno atualizados com sucesso!'); window.location.href='../../pages/aluno/configuracoes.php';</script>";
-        } else {
-            error_log("Erro ao atualizar dados: " . $stmt->error);
-            echo "<script>alert('Erro ao atualizar os dados do aluno.'); window.location.href='../../pages/aluno/configuracoes.php';</script>";
-        }
-
-        $stmt->close();
-
-        // Handle file upload
-        if (isset($_FILES['foto'])) {
-            $file = $_FILES['foto'];
-            $fileType = mime_content_type($file['tmp_name']);
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
-            if (in_array($fileType, $allowedTypes)) {
-                $fileName = uniqid('foto_', true) . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
-                $fileDir = '../../assets/img/uploads/';
-                $filePath = $fileDir . $fileName;
-
-                if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                    // Update photo in database
-                    $sqlFoto = "UPDATE aluno SET foto = ? WHERE id = ?";
-                    $stmtFoto = $conn->prepare($sqlFoto);
-                    $stmtFoto->execute([$fileName, $id]);
-
-                    if ($stmtFoto->rowCount() > 0) {
-                        echo "<script>alert('Foto do aluno atualizada com sucesso')</script>";
-                    }
-                }
-            }
-        }
+    if ($stmt->execute()) {
+        echo "<script> alert('Dados do aluno atualizados com sucesso!');</script>";
+    } else {
+        echo "<script> alert('Erro ao atualizar os dados do aluno: " . $stmt->error . "');</script>";
     }
+
+    // Processa o upload da foto
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $foto = $_FILES['foto'];
+        $fotoNome = basename($foto['name']);
+        $fotoTemp = $foto['tmp_name'];
+        $fotoPasta = '../../assets/img/uploads/';
+
+        // Verifica se o diretório existe, caso contrário, cria
+        if (!is_dir($fotoPasta)) {
+            mkdir($fotoPasta, 0777, true);
+        }
+
+        // Valida o tipo de arquivo (apenas imagens)
+        $fotoTipo = mime_content_type($fotoTemp);
+        $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+
+        if (in_array($fotoTipo, $tiposPermitidos)) {
+            // Gera um nome único para a foto
+            $fotoNovoNome = uniqid() . '_' . $fotoNome;
+            $fotoCaminhoCompleto = $fotoPasta . $fotoNovoNome;
+
+            // Move a foto para o diretório
+            if (move_uploaded_file($fotoTemp, $fotoCaminhoCompleto)) {
+                // Atualiza o campo 'foto' no banco de dados
+                $sqlFoto = "UPDATE aluno SET foto = ? WHERE id = ?";
+                $stmtFoto = $conn->prepare($sqlFoto);
+                $stmtFoto->bind_param("si", $fotoNovoNome, $id);
+
+                if ($stmtFoto->execute()) {
+                    echo "<script> alert('Foto do aluno atualizada com sucesso!');
+                    window.location.href = '../../pages/aluno/configuracoes.php'
+                    </script>";
+                } else {
+                    echo "<script> alert('Erro ao atualizar a foto do aluno!');
+                    window.location.href = '../../pages/aluno/configuracoes.php'
+                    </script>" . $stmtFoto->error;
+                }
+                $stmtFoto->close();
+            } else {
+                echo "Erro no upload da foto.";
+            }
+        } else {
+            echo "Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.";
+        }
+    } else {
+        echo "Erro no upload da imagem: " . $_FILES['foto']['error'];
+    }
+
+    $stmt->close();
+}
+?>

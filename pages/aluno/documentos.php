@@ -116,7 +116,7 @@ if (!empty($fotoNome)) {
                <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno" class="user-avatar"onclick="toggleProfileDropdown()">
                 <div id="profileDropdown" class="dropdown-content profile-dropdown">
                     <div class="profile-info">
-                        <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Profile Avatar" class="user-avatar-small">
+                        <img src="<?php echo htmlspecialchars($fotoCaminho) ;?>" alt="Profile Avatar" class="user-avatar-small">
                         <p>Nome: <?php echo htmlspecialchars($user['nome']); ?></p>
                         <p>RM: <?php echo htmlspecialchars($user['RM']); ?></p>
                     </div>

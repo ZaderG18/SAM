@@ -68,4 +68,4 @@ try {
 }
 
 $stmt->close(); // Fecha a declaração
-$conn->close(); // Fecha a conexão
+

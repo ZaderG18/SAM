@@ -24,21 +24,23 @@ showButton.addEventListener('click', function() {
 //Calendário
 
 document.addEventListener('DOMContentLoaded', function () {
-    const monthYear = document.getElementById('mes-ano');
-    const daysContainer = document.getElementById('dias');
-    const prevButton = document.getElementById('prev');
-    const nextButton = document.getElementById('next');
-
+    const monthYear = document.getElementById('monthYear');
+    const daysContainer = document.getElementById('calendarDays');
+    const prevButton = document.getElementById('prevMonth');
+    const nextButton = document.getElementById('nextMonth');
 
     const months = [
         'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
         'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
     ];
 
-
     let currentDate = new Date();
-    let today = new Date();
-
+    const atividades = {
+        // Exemplo de dados, você pode preenchê-los dinamicamente
+        '2024-10-10': 'Reunião de equipe',
+        '2024-10-15': 'Entrega de projeto',
+        '2024-10-20': 'Prova de matemática'
+    };
 
     function renderCalendar(date) {
         const year = date.getFullYear();
@@ -46,12 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const firstDay = new Date(year, month, 1).getDay();
         const lastDay = new Date(year, month + 1, 0).getDate();
 
-
         monthYear.textContent = `${months[month]} ${year}`;
         daysContainer.innerHTML = '';
 
-
-        // Previous month's dates
+        // Datas do mês anterior
         const prevMonthLastDay = new Date(year, month, 0).getDate();
         for (let i = firstDay; i > 0; i--) {
             const dayDiv = document.createElement('div');
@@ -60,19 +60,27 @@ document.addEventListener('DOMContentLoaded', function () {
             daysContainer.appendChild(dayDiv);
         }
 
-
-        // Current month's dates
+        // Datas do mês atual
         for (let i = 1; i <= lastDay; i++) {
+            const diaFormatado = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
             const dayDiv = document.createElement('div');
             dayDiv.textContent = i;
-            if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+
+            // Verifica se há atividades para a data
+            if (atividades[diaFormatado]) {
+                dayDiv.classList.add('evento'); // Adiciona uma classe para eventos
+                dayDiv.title = atividades[diaFormatado]; // Tooltip com a descrição
+            }
+
+            // Destaca o dia de hoje
+            if (i === new Date().getDate() && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
                 dayDiv.classList.add('today');
             }
+
             daysContainer.appendChild(dayDiv);
         }
 
-
-        // Next month's dates
+        // Datas do próximo mês
         const nextMonthStartDay = 7 - new Date(year, month + 1, 0).getDay() - 1;
         for (let i = 1; i <= nextMonthStartDay; i++) {
             const dayDiv = document.createElement('div');
@@ -80,26 +88,21 @@ document.addEventListener('DOMContentLoaded', function () {
             dayDiv.classList.add('fade');
             daysContainer.appendChild(dayDiv);
         }
-
-
-        
     }
-
 
     prevButton.addEventListener('click', function () {
         currentDate.setMonth(currentDate.getMonth() - 1);
         renderCalendar(currentDate);
     });
 
-
     nextButton.addEventListener('click', function () {
         currentDate.setMonth(currentDate.getMonth() + 1);
         renderCalendar(currentDate);
     });
 
-
     renderCalendar(currentDate);
 });
+
 
 //Chatbox mensagem 
 
