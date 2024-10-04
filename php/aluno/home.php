@@ -63,12 +63,16 @@ if ($atividades_result === false) {
 }
 
 $atividades = [];
+$tarefas_pendentes = 0; // Contador para tarefas pendentes
+
 if ($atividades_result->num_rows > 0) {
     while ($row = $atividades_result->fetch_assoc()) {
         $atividades[] = [
             "descricao" => $row['descricao'],
             "data_entrega" => $row['data_entrega'] // Certifique-se de que 'data_entrega' é o nome correto
         ];
+        $tarefas_pendentes++; // Incrementa o contador
+
     }
 } 
 
@@ -105,11 +109,15 @@ $atualizacoes_sql = "SELECT descricao, data_atualizacao FROM atualizacoes WHERE 
 $atualizacoes_result = consultarBanco($conn, $atualizacoes_sql, $usuario_id);
 
 $atualizacoes = [];
+$atualizacoes_importantes = 0; // Contador para atualizações importantes
+
 if ($atualizacoes_result->num_rows > 0) {
     while ($row = $atualizacoes_result->fetch_assoc()) {
         $atualizacoes[] = [
             "descricao" => $row['descricao'],
             "data_atualizacao" => $row['data_atualizacao']
         ];
+        $atualizacoes_importantes++; // Incrementa o contador
+
     }
 }

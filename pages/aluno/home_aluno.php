@@ -254,8 +254,8 @@ if (!empty($fotoNome)) {
                     <div class="banner">
                         <div>
                             <h1>Bem-vindo, <?php echo htmlspecialchars($user['nome']);?>!</h1>
-                            <p>Você tem 2 atualizações importantes e 3 tarefas pendentes.</p>
-                        </div>
+                            <p>Você tem <?= $atualizacoes_importantes ?> atualizações importantes e <?= $tarefas_pendentes ?> tarefas pendentes.</p>
+                            </div>
                         <img src="../../assets/img/home/fotos/aluno_de_pé.png" alt="Avatar">
                     </div>
 
