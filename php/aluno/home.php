@@ -64,18 +64,27 @@ function calcularMedia($resultado_notas) {
     if ($resultado_notas->num_rows === 0) return 0; // No grades found
 
     $soma_notas = 0;
+    $total_notas = 0; // To keep track of the total number of grades
+
     while ($nota = $resultado_notas->fetch_assoc()) {
-        $soma_notas += $nota['nota'];
+        // Assuming your columns are named nota1, nota2, nota3, nota4
+        for ($i = 1; $i <= 4; $i++) {
+            $nota_column = 'nota' . $i; // Construct the column name
+            if (isset($nota[$nota_column]) && is_numeric($nota[$nota_column])) {
+                $soma_notas += $nota[$nota_column];
+                $total_notas++;
+            }
+        }
     }
-    
-    return $soma_notas / $resultado_notas->num_rows; // Return average
+
+    return $total_notas > 0 ? $soma_notas / $total_notas : 0; // Return average
 }
 
 $usuario = obterAluno($conn, $usuario_id);
 
 if ($usuario) {
     // Obtendo dados do aluno
-    $notas = consultarBanco($conn, "nota", $usuario_id);
+    $notas = consultarBanco($conn, "nota_media", $usuario_id);
     if ($notas === null) {
         echo "Erro ao consultar notas.<br>";
     } else {
@@ -115,6 +124,4 @@ if ($usuario) {
 } else {
     echo "Aluno não encontrado.";
 }
-
-
 ?>

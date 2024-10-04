@@ -81,8 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo "Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.";
         }
-    } else {
-        echo "Erro no upload da imagem: " . $_FILES['foto']['error'];
     }
 
     $stmt->close();
