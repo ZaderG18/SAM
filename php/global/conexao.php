@@ -153,7 +153,7 @@ $tableQueries = [
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
-    "matricula" => "CREATE TABLE matriculas (
+    "matricula" => "CREATE TABLE if NOT EXISTS matricula (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
@@ -187,7 +187,7 @@ $tableQueries = [
         data_avaliacao DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
-    );",        
+    )",        
     "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -206,7 +206,7 @@ $tableQueries = [
     FOREIGN KEY (aluno_id) REFERENCES aluno(id)
 );
 ",
-"horarios" => "CREATE TABLE horarios (
+"horarios" => "CREATE TABLE if NOT EXISTS horarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
     disciplina VARCHAR(100) NOT NULL,
