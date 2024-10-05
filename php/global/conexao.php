@@ -159,10 +159,10 @@ $tableQueries = [
         turma_id INT NOT NULL,
         modulo_id INT NOT NULL,
         data_matricula DATE NOT NULL,
-        status ENUM('ativo', 'inativo', 'concluido') DEFAULT 'ativo',
-        FOREIGN KEY (aluno_id) REFERENCES alunos(id),
-        FOREIGN KEY (turma_id) REFERENCES turmas(id),
-        FOREIGN KEY (modulo_id) REFERENCES modulos(id)    
+        status ENUM('ativo', 'inativo', 'concluido') DEFAULT 'ativo'
+        -- FOREIGN KEY (aluno_id) REFERENCES alunos(id),
+        -- FOREIGN KEY (turma_id) REFERENCES turmas(id),
+        -- FOREIGN KEY (modulo_id) REFERENCES modulos(id)    
     )",
     "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -204,8 +204,7 @@ $tableQueries = [
     descricao TEXT,
     data_atualizacao DATETIME,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id)
-);
-",
+)",
 "horarios" => "CREATE TABLE if NOT EXISTS horarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
@@ -214,8 +213,7 @@ $tableQueries = [
     hora_inicio TIME NOT NULL,
     hora_fim TIME NOT NULL,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id) -- Altere para o nome correto da tabela de alunos
-);
-",
+)",
     "frequencia" => "CREATE TABLE IF NOT EXISTS frequencia (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -223,7 +221,7 @@ $tableQueries = [
         status VARCHAR (50) NOT NULL,
         aulas_dadas INT,
         disciplina VARCHAR(255),
-        faltas INT;
+        faltas INT,
         faltas_permitidas INT,
         frequencia_atual DECIMAL(5,2),
         frequencia_total INT,
@@ -289,7 +287,7 @@ $viewQueries = [
     JOIN turma t ON f.turma_id = t.id",
     
     "view_atividades" => "CREATE OR REPLACE VIEW view_atividades AS
-    SELECT a.nome AS aluno, t.nome AS turma, at.descricao, at.data, at.status
+    SELECT a.nome AS aluno, t.nome AS turma, at.descricao, at.status
     FROM atividade at
     JOIN aluno a ON at.aluno_id = a.id
     JOIN turma t ON at.turma_id = t.id"

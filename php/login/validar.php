@@ -36,7 +36,7 @@ $userFound = false; // Variável para controlar se o usuário foi encontrado
 
 foreach ($tables as $table) {
     // Ajuste na consulta SQL para incluir as colunas corretas
-    $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, curso, email, senha FROM $table WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha FROM $table WHERE email = ?");
 
     if (!$stmt) {
         die("Erro ao preparar a consulta: " . $conn->error);
@@ -49,7 +49,7 @@ foreach ($tables as $table) {
     if ($stmt->num_rows > 0) {
         // Recuperando os valores do banco de dados
         // Ajuste aqui: deve corresponder exatamente ao número de colunas retornadas
-        $stmt->bind_result($id, $nome, $RM, $status, $foto, $curso, $emailBD, $hashed_password);
+        $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password);
         $stmt->fetch();
 
         // Verifica se a senha inserida é igual à senha armazenada no banco de dados
@@ -63,7 +63,6 @@ foreach ($tables as $table) {
                 'nome' => $nome,
                 'foto' => $foto,
                 'email' => $emailBD,
-                'curso' => $curso,
                 'RM' => $RM,
                 'status' => $status,
                 'role' => $table // Define o papel do usuário com base na tabela
