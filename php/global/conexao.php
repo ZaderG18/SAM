@@ -40,6 +40,8 @@ $tableQueries = [
         foto VARCHAR(255) DEFAULT NULL,
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
+        reset_token VARCHAR(255) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
@@ -74,6 +76,8 @@ $tableQueries = [
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         nome VARCHAR(40) NOT NULL,
+        reset_token VARCHAR(255) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
         data_nascimento DATE NOT NULL,
@@ -95,6 +99,8 @@ $tableQueries = [
         foto VARCHAR(255),
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
+        reset_token VARCHAR(255) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
@@ -116,6 +122,8 @@ $tableQueries = [
         foto VARCHAR(255),
         email VARCHAR(40) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
+        reset_token VARCHAR(255) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
         nome VARCHAR(40) NOT NULL,
         sobrenome VARCHAR(40) NOT NULL,
         telefone VARCHAR(15),
@@ -160,9 +168,9 @@ $tableQueries = [
         modulo_id INT NOT NULL,
         data_matricula DATE NOT NULL,
         status ENUM('ativo', 'inativo', 'concluido') DEFAULT 'ativo'
-        -- FOREIGN KEY (aluno_id) REFERENCES alunos(id),
-        -- FOREIGN KEY (turma_id) REFERENCES turmas(id),
-        -- FOREIGN KEY (modulo_id) REFERENCES modulos(id)    
+        -- FOREIGN KEY (aluno_id) REFERENCES aluno(id),
+        -- FOREIGN KEY (turma_id) REFERENCES turma(id),
+        -- FOREIGN KEY (modulo_id) REFERENCES modulo(id)    
     )",
     "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
