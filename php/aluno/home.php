@@ -76,18 +76,6 @@ if ($atividades_result->num_rows > 0) {
     }
 } 
 
-
-// Buscar frequência do aluno
-$frequencia_sql = "SELECT status FROM chamada WHERE aluno_id = ?";
-$frequencia_result = consultarBanco($conn, $frequencia_sql, $usuario_id);
-
-$frequencia = [];
-if ($frequencia_result->num_rows > 0) {
-    while ($row = $frequencia_result->fetch_assoc()) {
-        $frequencia[] = $row['status'];
-    }
-}
-
 // Buscar horários de aula
 $horarios_sql = "SELECT disciplina, dia_semana, hora_inicio, hora_fim FROM horarios WHERE aluno_id = ?";
 $horarios_result = consultarBanco($conn, $horarios_sql, $usuario_id);

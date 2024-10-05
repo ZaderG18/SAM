@@ -153,14 +153,16 @@ $tableQueries = [
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
-    "matricula" => "CREATE TABLE IF NOT EXISTS matricula (
+    "matricula" => "CREATE TABLE matriculas (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
-        data_matricula DATE DEFAULT CURRENT_DATE,
-        status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-        FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+        modulo_id INT NOT NULL,
+        data_matricula DATE NOT NULL,
+        status ENUM('ativo', 'inativo', 'concluido') DEFAULT 'ativo',
+        FOREIGN KEY (aluno_id) REFERENCES alunos(id),
+        FOREIGN KEY (turma_id) REFERENCES turmas(id),
+        FOREIGN KEY (modulo_id) REFERENCES modulos(id)    
     )",
     "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -180,6 +182,7 @@ $tableQueries = [
         nota2 DECIMAL(5,2) DEFAULT NULL,
         nota3 DECIMAL(5,2) DEFAULT NULL,
         nota4 DECIMAL(5,2) DEFAULT NULL,
+        nota_media  DECIMAL(5,2) DEFAULT NULL,
         observacoes TEXT,
         data_avaliacao DATE DEFAULT CURRENT_DATE,
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
@@ -190,7 +193,7 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         descricao TEXT NOT NULL,
-        data DATE NOT NULL,
+        data_entrega DATE NOT NULL,
         status ENUM('pendente', 'concluida') DEFAULT 'pendente',
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
@@ -218,6 +221,12 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         status VARCHAR (50) NOT NULL,
+        aulas_dadas INT,
+        disciplina VARCHAR(255),
+        faltas INT;
+        faltas_permitidas INT,
+        frequencia_atual DECIMAL(5,2),
+        frequencia_total INT,
         data DATE NOT NULL,
         presenca TINYINT(1) NOT NULL,  -- 1 para presente, 0 para ausente
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,

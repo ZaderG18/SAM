@@ -88,4 +88,3 @@ if (!$userFound) {
           </script>";
 }
 }
-$stmt->close();

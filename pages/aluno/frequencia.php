@@ -4,14 +4,15 @@ $username = "root";
 $password = "";
 $dbname = "SAM";
 $conn = new mysqli($host, $username, $password, $dbname);
-
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 require '../../php/login/validar.php';
+require '../../php/aluno/frequencia.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
+
 
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM aluno WHERE id = ?";
@@ -268,14 +269,17 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php foreach ($frequencias  as $frequencia): ?>
                                         <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                                            <td>50</td>
-                                            <td>1</td>
-                                            <td>25</td>
-                                            <td>99%</td>
-                                          <td>100%</td>
+                                            <td><?php  echo $frequencia['aulas_dadas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas_permitidas']; ?></td>
+                                            <td><?php  echo $frequencia['freq_atual']; ?></td>
+                                            <td><?php  echo $frequencia['freq_total']; ?></td>
                                         </tr>
+                                        <?php  endforeach; ?>
+<!--
                                         <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
                                             <td>30</td>
@@ -315,10 +319,11 @@ if (!empty($fotoNome)) {
                                             <td>16</td>
                                             <td>93%</td>
                                             <td>100%</td>
-                                        </tr>
+                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
+                                
  <!---------------------------------------------------------------------Modulo 2-------------------------------------------------------->
                             <div id="modulo2" class="module-table" style="display:none;">
                                 <table class="module-selection">
@@ -333,15 +338,17 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php foreach ($frequencias  as $frequencia): ?>
                                         <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                                            <td>40</td>
-                                            <td>1</td>
-                                            <td>25</td>
-                                            <td>99%</td>
-                                          <td>100%</td>
+                                            <td><?php  echo $frequencia['aulas_dadas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas_permitidas']; ?></td>
+                                            <td><?php  echo $frequencia['freq_atual']; ?></td>
+                                            <td><?php  echo $frequencia['freq_total']; ?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <!-- <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
                                             <td>60</td>
                                             <td>2</td>
@@ -380,7 +387,7 @@ if (!empty($fotoNome)) {
                                             <td>16</td>
                                             <td>93%</td>
                                             <td>100%</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -398,15 +405,17 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php foreach ($frequencias  as $frequencia): ?>
                                         <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                                            <td>100</td>
-                                            <td>1</td>
-                                            <td>25</td>
-                                            <td>99%</td>
-                                          <td>100%</td>
+                                            <td><?php  echo $frequencia['aulas_dadas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas']; ?></td>
+                                            <td><?php  echo $frequencia['faltas_permitidas']; ?></td>
+                                            <td><?php  echo $frequencia['freq_atual']; ?></td>
+                                            <td><?php  echo $frequencia['freq_total']; ?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <!-- <tr>
                                             <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
                                             <td>100</td>
                                             <td>2</td>
@@ -445,7 +454,7 @@ if (!empty($fotoNome)) {
                                             <td>16</td>
                                             <td>93%</td>
                                             <td>100%</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                         </div>
@@ -466,20 +475,28 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
+                                        <!-- <tr>
                                             <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
                                             <td>0</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -502,20 +519,28 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
+                                        <!-- <tr>
                                             <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
                                             <td>0</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -538,19 +563,27 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
                                         <tr>
-                                            <td>12/09</td>
+                                            <!-- <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
-                                            <td>0</td>
+                                            <td>0</td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -574,20 +607,28 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
+                                        <!-- <tr>
                                             <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
                                             <td>0</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -610,20 +651,28 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
+                                        <!-- <tr>
                                             <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
                                             <td>0</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -645,20 +694,28 @@ if (!empty($fotoNome)) {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if (! empty($dadosModal)): ?>
+                                            <?php foreach ($dadosModal as $modal): ?>
                                         <tr>
-                                            <td>19/08</td>
-                                            <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                                            <td>Daniela</td>
-                                            <td>2,5</td>
-                                            <td>0</td>
+                                            <td><?php echo htmlspecialchars($modal['data']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['conteudo']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['professor']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['aulas_dadas']);?></td>
+                                            <td><?php echo htmlspecialchars($modal['faltas']);?></td>
                                         </tr>
-                                        <tr>
+                                        <?php  endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5">Nenhum conteúdo encontrado.</td>
+                                            </tr>
+                                            <?php  endif; ?>
+                                        <!-- <tr>
                                             <td>12/09</td>
                                             <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
                                             <td>Daniela</td>
                                             <td>2,5</td>
                                             <td>0</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
