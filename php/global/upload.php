@@ -18,13 +18,13 @@ $id = $user['id']; // ID do usuário
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
-    $nome = $_POST['nome'] ?? null;
-    $telefone = $_POST['telefone'] ?? null;
-    $email = $_POST['email'] ?? null;
-    $endereco = $_POST['endereco'] ?? null;
-    $curso = $_POST['curso'] ?? null;
-    $data_nascimento = $_POST['data_nascimento'] ?? null;
-    $genero = $_POST['genero'] ?? null;
+    $nome = $_POST['nome'];
+    $telefone = $_POST['telefone'];
+    $email = $_POST['email'];
+    $endereco = $_POST['endereco'];
+    $curso = $_POST['curso'];
+    $data_nascimento = $_POST['data_nascimento'];
+    $genero = $_POST['genero'];
 
     // Atualiza os dados do aluno
     $sql = "UPDATE aluno SET nome = ?, telefone = ?, email = ?, endereco = ?, curso = ?, data_nascimento = ?, genero = ? WHERE id = ?";

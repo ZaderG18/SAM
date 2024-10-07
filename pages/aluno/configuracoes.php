@@ -343,11 +343,11 @@ if (!empty($fotoNome)) {
                                 <div class="password-update">
                                     <h3>Atualizar Senha</h3>
                                     <label>Senha Atual</label>
-                                    <input type="password" required>
+                                    <input type="password" name="senhaAtual" required>
                                     <label>Nova Senha*</label>
-                                    <input type="password" required>
+                                    <input type="password" name="novaSenha" required>
                                     <label>Confirmar Nova Senha*</label>
-                                    <input type="password" required>
+                                    <input type="password" name="ConfirNovaSenha" required>
                                     <button class="btn-padrao">Salvar</button>
                                 </div>
                             </form>

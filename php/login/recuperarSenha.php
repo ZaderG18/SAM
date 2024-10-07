@@ -47,13 +47,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Envia o e-mail com o link para redefinição de senha
                 enviarEmailRecuperacao($email, $token);
-                echo "Um e-mail foi enviado com as instruções para redefinir sua senha.";
+                echo "<script> alert('Um e-mail foi enviado com as instruções para redefinir sua senha.');
+                window.location.href='../../pages/login/EsqueceuSenha.html'; </script>";
                 break; // Não precisa continuar verificando outras tabelas
             }
         }
 
         if (!$found) {
-            echo "E-mail não encontrado!";
+            echo "<script> alert('E-mail não encontrado!');
+            window.location.href='../../pages/login/EsqueceuSenha.html'; </script>";
         }
     } elseif (isset($_POST['token']) && isset($_POST['new_password'])) {
         $token = $_POST['token'];
