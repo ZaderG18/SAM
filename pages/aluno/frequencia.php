@@ -7,12 +7,12 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
+
 require '../../php/login/validar.php';
 require '../../php/aluno/frequencia.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
-
 
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM aluno WHERE id = ?";
@@ -27,8 +27,7 @@ $stmt->bind_param("i", $id);
 $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
-$stmt->close();
-$conn->close();
+$stmt->close(); // Fechamos o statement aqui, pois ele já foi utilizado.
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
@@ -36,6 +35,29 @@ if (!empty($fotoNome)) {
 } else {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
+
+// Consulta para buscar as frequências do aluno
+$frequencias = []; // Inicializa como array vazio para evitar o erro
+
+$sql_frequencias = "SELECT * FROM frequencia WHERE aluno_id = ?";
+$stmt_frequencias = $conn->prepare($sql_frequencias);
+
+if (!$stmt_frequencias) {
+    die("Prepare failed: " . $conn->error);
+}
+
+$stmt_frequencias->bind_param("i", $id);
+$stmt_frequencias->execute();
+$result_frequencias = $stmt_frequencias->get_result();
+
+if ($result_frequencias->num_rows > 0) {
+    // Preenche o array $frequencias com os resultados da consulta
+    while ($row = $result_frequencias->fetch_assoc()) {
+        $frequencias[] = $row;
+    }
+}
+
+$stmt_frequencias->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,6 +78,7 @@ if (!empty($fotoNome)) {
      <!----- Box-icons ----->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
      
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
       <!------ REMIXICONS ----->
       <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">

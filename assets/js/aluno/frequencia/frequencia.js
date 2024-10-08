@@ -25,3 +25,36 @@ function closeModal(modalId) {
 
 // Exibe a tabela do primeiro módulo por padrão
 document.getElementById("modulo1").style.display = "block";
+
+function carregarFrequencia(modulo) {
+    if (modulo !== "") {
+        $.ajax({
+            url: '../../../php/aluno/frequencia.php', // Arquivo PHP que vai retornar os dados
+            method: 'POST',
+            data: { modulo: modulo },
+            dataType: 'json',
+            success: function(response) {
+                var tableBody = $("#frequenciaTable tbody");
+                tableBody.empty(); // Limpa a tabela antes de inserir os novos dados
+
+                if (response.length > 0) {
+                    // Preenche a tabela com os dados retornados
+                    $.each(response, function(index, item) {
+                        tableBody.append("<tr><td>" + item.disciplina + "</td><td>" + item.frequencia + "</td></tr>");
+                    });
+                } else {
+                    tableBody.append("<tr><td colspan='2'>Nenhuma frequência encontrada</td></tr>");
+                }
+            },
+            error: function() {
+                alert("Erro ao buscar as frequências.");
+            }
+        });
+    }
+}
+
+// Detecta mudanças no select de módulos
+$('#modulo').on('change', function() {
+    var moduloSelecionado = $(this).val();
+    carregarFrequencia(moduloSelecionado);
+});
