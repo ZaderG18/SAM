@@ -1,19 +1,19 @@
 <?php
-// Configuration
+// Configuração do banco de dados
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "sam";
 
-// Database connection using mysqli
+// Conexão com o banco de dados usando mysqli
 $conn = new mysqli($host, $username, $password, $dbname);
 
-// Check connection
+// Verifica a conexão
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Function to retrieve the current module for a student
+// Função para recuperar o módulo atual de um aluno
 function getModuloAtual($conn, $aluno_id) {
     $stmt = $conn->prepare("SELECT modulo_id FROM matricula WHERE aluno_id = ?");
     $stmt->bind_param("i", $aluno_id);
@@ -24,7 +24,7 @@ function getModuloAtual($conn, $aluno_id) {
     return $modulo_atual;
 }
 
-// Function to handle POST requests
+// Função para processar as requisições POST
 function handlePostRequest($conn, $aluno_id, $turma_id, $data, $presenca) {
     try {
         if (!empty($_POST['id'])) {
@@ -46,7 +46,7 @@ function handlePostRequest($conn, $aluno_id, $turma_id, $data, $presenca) {
     }
 }
 
-// Function to retrieve frequency data for the current module
+// Função para obter os dados de frequência do módulo atual
 function getFrequenciaData($conn, $modulo_atual) {
     $stmt = $conn->prepare("SELECT disciplina, aulas_dadas, faltas, faltas_permitidas, frequencia_atual, frequencia_total 
                            FROM frequencia WHERE turma_id = ?");
@@ -61,7 +61,7 @@ function getFrequenciaData($conn, $modulo_atual) {
     return $frequencia_data;
 }
 
-// Function to retrieve specific data for the "Programação Mobile" discipline
+// Função para recuperar dados específicos da disciplina "Programação Mobile"
 function getDadosModal($conn, $disciplina) {
     $stmt = $conn->prepare("SELECT data, conteudo, professor, aulas_dadas, faltas FROM aulas WHERE disciplina = ?");
     $stmt->bind_param("s", $disciplina);
@@ -75,24 +75,44 @@ function getDadosModal($conn, $disciplina) {
     return $dadosModal;
 }
 
-// Main script
+// Função para registrar erros em um arquivo de log
+function logError($message) {
+    $logFile = 'logs/error.log';
+    file_put_contents($logFile, date('Y-m-d H:i:s') . " - $message\n", FILE_APPEND);
+}
+
+// Script principal
 session_start();
 $aluno_id = isset($_SESSION['aluno_id']) ? $_SESSION['aluno_id'] : null;
+
 if ($aluno_id) {
     $modulo_atual = getModuloAtual($conn, $aluno_id);
+    
     if ($modulo_atual) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $turma_id = filter_var($_POST['turma_id'], FILTER_SANITIZE_NUMBER_INT);
             $data = filter_var($_POST['data'], FILTER_SANITIZE_STRING);
             $presenca = filter_var($_POST['presenca'], FILTER_SANITIZE_STRING);
+            
+            // Valida se a data está no formato correto
+            $dateObject = DateTime::createFromFormat('Y-m-d', $data);
+            if (!$dateObject) {
+                logError("Data inválida: $data");
+                echo 'Data inválida. Tente novamente.';
+                exit();
+            }
+
             $mensagem = handlePostRequest($conn, $aluno_id, $turma_id, $data, $presenca);
             echo $mensagem;
+
         } else {
+            // Obtém os dados de frequência
             $frequencia_data = getFrequenciaData($conn, $modulo_atual);
-            // Process frequency data
+
+            // Caso seja necessário mostrar dados específicos da disciplina
             if (isset($_GET['disciplina']) && $_GET['disciplina'] === 'Programação Mobile') {
                 $dadosModal = getDadosModal($conn, 'Programação Mobile');
-                // Process modal data
+                // Processa os dados do modal, se necessário
             }
         }
     } else {
@@ -100,11 +120,5 @@ if ($aluno_id) {
     }
 } else {
     echo 'Aluno ID não encontrado';
-}
-
-// Log error function
-function logError($message) {
-    // Implement logging mechanism
-    echo 'Erro: ' . $message;
 }
 ?>

@@ -32,12 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sssssssi", $nome, $telefone, $email, $endereco, $curso, $data_nascimento, $genero, $id);
 
     if ($stmt->execute()) {
-        echo "<script> alert('Dados do aluno atualizados com sucesso!');
-        window.location.href = '../../pages/aluno/configuracoes.php'
-        </script>";
+        echo "<script> alert('Dados do aluno atualizados com sucesso!');</script>";
     } else {
-        echo "<script> alert('Erro ao atualizar os dados do aluno:');
-        window.location.href = '../../pages/aluno/configuracoes.php'" . $stmt->error . "');</script>";
+        echo "<script> alert('Erro ao atualizar os dados do aluno: " . $stmt->error . "');</script>";
     }
 
     // Processa o upload da foto
@@ -69,23 +66,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmtFoto->bind_param("si", $fotoNovoNome, $id);
 
                 if ($stmtFoto->execute()) {
-                    echo "<script> alert('Foto do aluno atualizada com sucesso!');
-                    window.location.href = '../../pages/aluno/configuracoes.php'
-                    </script>";
+                    echo "<script> alert('Foto do aluno atualizada com sucesso!');</script>";
                 } else {
-                    echo "<script> alert('Erro ao atualizar a foto do aluno!');
-                    window.location.href = '../../pages/aluno/configuracoes.php'
-                    </script>" . $stmtFoto->error;
+                    echo "<script> alert('Erro ao atualizar a foto do aluno: " . $stmtFoto->error . "');</script>";
                 }
                 $stmtFoto->close();
             } else {
-                echo "Erro no upload da foto.";
+                echo "<script> alert('Erro no upload da foto.');</script>";
             }
         } else {
-            echo "Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.";
+            echo "<script> alert('Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.');</script>";
         }
     }
 
+    // Após tudo, redireciona a página
+    echo "<script> window.location.href = '../../pages/aluno/configuracoes.php'; </script>";
+
     $stmt->close();
 }
-?>
