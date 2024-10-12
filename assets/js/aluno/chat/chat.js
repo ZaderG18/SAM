@@ -1,84 +1,62 @@
-function openChat(user) {
-    document.querySelector('.sidebarchat').style.display = 'none';
-    document.querySelector('.chat-area').style.display = 'flex';
-    document.getElementById('chat-person-name').textContent = user;
-}
+// start: Sidebar
+document.querySelector('.chat-sidebar-profile-toggle').addEventListener('click', function(e) {
+    e.preventDefault()
+    this.parentElement.classList.toggle('active')
+})
 
-function closeChat() {
-    document.querySelector('.sidebarchat').style.display = 'block';
-    document.querySelector('.chat-area').style.display = 'none';
-}
-
-// Esconde a área de chat inicialmente em telas pequenas
-if (window.innerWidth <= 768) {
-    document.querySelector('.chat-area').style.display = 'none';
-}
-
-// Função para adicionar nova pessoa à lista de conversas
-function addPerson() {
-    const personName = prompt("Digite o nome da pessoa:");
-    if (personName) {
-        const chatList = document.querySelector('.chat-list');
-        const newChatItem = document.createElement('div');
-        newChatItem.className = 'chat-item';
-        newChatItem.onclick = () => openChat(personName);
-        newChatItem.innerHTML = `
-            <img src="../../assets/img/home/fotos/default.png" alt="User" class="chat-img">
-            <div class="chat-info">
-                <h3>${personName}</h3>
-                <p>Última mensagem...</p>
-            </div>
-        `;
-        chatList.appendChild(newChatItem);
+document.addEventListener('click', function(e) {
+    if(!e.target.matches('.chat-sidebar-profile, .chat-sidebar-profile *')) {
+        document.querySelector('.chat-sidebar-profile').classList.remove('active')
     }
-}
-
-// Função para enviar mensagem
-function sendMessage() {
-    const messageInput = document.getElementById('message-input');
-    const messageText = messageInput.value.trim();
-    if (messageText) {
-        const messagesContainer = document.querySelector('.messages');
-        const newMessage = document.createElement('div');
-        newMessage.className = 'message sent';
-        const currentTime = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-        newMessage.innerHTML = `
-            <div class="message-content">
-                <p>${messageText}</p>
-                <span class="message-time">${currentTime}</span>
-                <div class="message-actions">
-                    <button onclick="replyMessage(this)"><i class="fas fa-reply"></i>Responder</button>
-                    <button onclick="deleteMessage(this)"><i class="fas fa-trash"></i>Apagar</button>
-                </div>
-            </div>
-        `;
-        messagesContainer.appendChild(newMessage);
-        messageInput.value = '';
-    }
-}
-
-// Função para responder mensagem
-function replyMessage(button) {
-    const messageContent = button.closest('.message-content').querySelector('p').textContent;
-    const messageInput = document.getElementById('message-input');
-    messageInput.value = `Respondendo: ${messageContent}`;
-}
-
-// Função para apagar mensagem
-function deleteMessage(button) {
-    const message = button.closest('.message');
-    message.remove();
-}
+})
+// end: Sidebar
 
 
- // Função para lidar com input de arquivo
-        function handleFileInput(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const messageInput = document.getElementById('message-input');
-                messageInput.value = `Arquivo: ${file.name}`;
-            }
+
+// start: Coversation
+document.querySelectorAll('.conversation-item-dropdown-toggle').forEach(function(item) {
+    item.addEventListener('click', function(e) {
+        e.preventDefault()
+        if(this.parentElement.classList.contains('active')) {
+            this.parentElement.classList.remove('active')
+        } else {
+            document.querySelectorAll('.conversation-item-dropdown').forEach(function(i) {
+                i.classList.remove('active')
+            })
+            this.parentElement.classList.add('active')
         }
+    })
+})
 
+document.addEventListener('click', function(e) {
+    if(!e.target.matches('.conversation-item-dropdown, .conversation-item-dropdown *')) {
+        document.querySelectorAll('.conversation-item-dropdown').forEach(function(i) {
+            i.classList.remove('active')
+        })
+    }
+})
 
-        
+document.querySelectorAll('.conversation-form-input').forEach(function(item) {
+    item.addEventListener('input', function() {
+        this.rows = this.value.split('\n').length
+    })
+})
+
+document.querySelectorAll('[data-conversation]').forEach(function(item) {
+    item.addEventListener('click', function(e) {
+        e.preventDefault()
+        document.querySelectorAll('.conversation').forEach(function(i) {
+            i.classList.remove('active')
+        })
+        document.querySelector(this.dataset.conversation).classList.add('active')
+    })
+})
+
+document.querySelectorAll('.conversation-back').forEach(function(item) {
+    item.addEventListener('click', function(e) {
+        e.preventDefault()
+        this.closest('.conversation').classList.remove('active')
+        document.querySelector('.conversation-default').classList.add('active')
+    })
+})
+// end: Coversation

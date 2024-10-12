@@ -42,9 +42,9 @@ if (!empty($fotoNome)) {
     <title>FAQ - SAM</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/faq/faq.css">
-    <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/aluno/faq/faq.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
@@ -99,15 +99,15 @@ if (!empty($fotoNome)) {
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
-                <a href="../../html/perfil/index.html" class="header__dropdown-item">
+                <a href="perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
                 </a>
-                <a href="../../html/configuracoes/index.html" class="header__dropdown-item">
+                <a href="configuracoes.php" class="header__dropdown-item">
                     <i class='bx bx-cog'></i> Configurações
                 </a>
-                <a href="../../html/faq/index.html" class="header__dropdown-item">
+                <a href="faq.php" class="header__dropdown-item">
                     <i class='bx bx-help-circle'></i> Ajuda
                 </a>
             </div>
@@ -129,34 +129,34 @@ if (!empty($fotoNome)) {
             <div class="nav__list">
                 <div class="nav__items">
                     <h3 class="nav__subtitle">Home</h3>
-                    <a href="../../html/home/home.html" class="nav__link">
+                    <a href="home_aluno.php" class="nav__link">
                         <i class='bx bx-home nav__icon'></i>
                         <span class="nav__name">Home</span>
                     </a>
-                    <a href="../../html/historico/index.html" class="nav__link active">
+                    <a href="historico.php" class="nav__link active">
                         <i class='bx bx-history nav__icon'></i>
                         <span class="nav__name">Histórico</span>
                     </a>
-                    <a href="../../html/documentos/index.html" class="nav__link">
+                    <a href="documentos.php" class="nav__link">
                         <i class='bx bx-file nav__icon'></i>
                         <span class="nav__name">Documentos</span>
                     </a>
-                    <a href="../../html/calendario/index.html" class="nav__link">
+                    <a href="cronograma.php" class="nav__link">
                         <i class='bx bx-calendar nav__icon'></i>
                         <span class="nav__name">Cronograma</span>
                     </a>
-                    <a href="../../html/enquetes/index.html" class="nav__link">
+                    <a href="secretaria.php" class="nav__link">
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
-                    <a href="../../html/chat/index.html" class="nav__link">
+                    <a href="chat.php" class="nav__link">
                         <i class='bx bx-chat nav__icon'></i>
                         <span class="nav__name">Chat</span>
                     </a>
                 </div>
             </div>
         </div>
-        <a href="../../html/login/login.html" class="nav__link nav__logout">
+        <a href="../../php/login/logout.php" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon'></i>
             <span class="nav__name">Sair</span>
         </a>

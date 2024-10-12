@@ -54,9 +54,9 @@ if (!empty($fotoNome)) {
     <title>Bem vindo ao SAM</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
-    <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/aluno/home.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
@@ -111,12 +111,12 @@ if (!empty($fotoNome)) {
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
-                <a href="../../html/perfil/index.html" class="header__dropdown-item">
+                <a href="perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
                 </a>
-                <a href="../../html/configuracoes/index.html" class="header__dropdown-item">
+                <a href="configuracoes.php" class="header__dropdown-item">
                     <i class='bx bx-cog'></i> Configurações
                 </a>
                 <a href="faq.php" class="header__dropdown-item">

@@ -1,37 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
-    font-family: "Poppins", sans-serif;
-}
-
-a {
-    text-decoration: none;
-}
-
-.global-container {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* Estilo do conteudo */
-main {
-    width: 100%;
-    height: auto;
-    background-color: #EBEBEB;
-    padding: 50px 40px;
-    margin-top: 50px;
-    margin-left: 82px;
-}
-
-main .container {
-    max-width: 1440px;
-    margin: 0 auto;
-}
-
 /* Container principal */
 .form-container {
     display: grid;
@@ -39,14 +5,10 @@ main .container {
     gap: 20px; /* Espaçamento entre colunas */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px; 
 }
 
 .box {
-
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -164,5 +126,21 @@ main .container {
     .box button {
         padding: 8px 30px; /* Ajusta o padding do botão para telas menores */
         font-size: 12px; /* Ajusta o tamanho da fonte do botão para telas menores */
+    }
+}
+
+/* Adicionando mais responsividade para telas muito pequenas */
+@media (max-width: 320px) {
+    .box h2 {
+        font-size: 16px; /* Ajusta o tamanho da fonte do título para telas muito pequenas */
+    }
+
+    .box p, .box label {
+        font-size: 12px; /* Ajusta o tamanho da fonte dos textos para telas muito pequenas */
+    }
+
+    .box button {
+        padding: 6px 20px; /* Ajusta o padding do botão para telas muito pequenas */
+        font-size: 10px; /* Ajusta o tamanho da fonte do botão para telas muito pequenas */
     }
 }

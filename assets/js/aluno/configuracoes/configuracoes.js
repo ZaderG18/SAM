@@ -1,10 +1,13 @@
-// Variáveis para armazenar as informações pessoais
 let personalInfo = {
     nome: '',
+    cpf: '',
+    rg: '',
     telefone: '',
     email: '',
     genero: '',
+    estadoCivil: '',
     dataNascimento: '',
+    nacionalidade: '',
     endereco: '',
     rm: '',
     curso: ''
@@ -44,14 +47,18 @@ saveNotificationButton.addEventListener('click', function () {
 const editPersonalInfoButton = document.querySelector('.personal-info .btn-padrao:first-of-type');
 editPersonalInfoButton.addEventListener('click', function () {
     // Preencher os campos do formulário com as informações pessoais
-    document.querySelector('.personal-info input[type="text"]').value = personalInfo.nome;
-    document.querySelector('.personal-info input[type="tel"]').value = personalInfo.telefone;
-    document.querySelector('.personal-info input[type="email"]').value = personalInfo.email;
-    document.querySelector('.personal-info select').value = personalInfo.genero;
-    document.querySelector('.personal-info input[type="date"]').value = personalInfo.dataNascimento;
-    document.querySelector('.personal-info input[type="text"]:nth-of-type(2)').value = personalInfo.endereco; // Para o endereço
-    document.querySelector('.personal-info input[type="text"]:nth-of-type(3)').value = personalInfo.rm; // Para o RM
-    document.querySelector('.personal-info select:nth-of-type(2)').value = personalInfo.curso; // Para o curso
+    document.querySelector('.personal-info input[name="nome"]').value = personalInfo.nome;
+    document.querySelector('.personal-info input[name="cpf"]').value = personalInfo.cpf;
+    document.querySelector('.personal-info input[name="rg"]').value = personalInfo.rg;
+    document.querySelector('.personal-info input[name="telefone"]').value = personalInfo.telefone;
+    document.querySelector('.personal-info input[name="email"]').value = personalInfo.email;
+    document.querySelector('.personal-info select[name="genero"]').value = personalInfo.genero;
+    document.querySelector('.personal-info input[name="dataNascimento"]').value = personalInfo.dataNascimento;
+    document.querySelector('.personal-info input[name="endereco"]').value = personalInfo.endereco;
+    document.querySelector('.personal-info input[name="rm"]').value = personalInfo.rm;
+    document.querySelector('.personal-info select[name="curso"]').value = personalInfo.curso;
+    document.querySelector('.personal-info select[name="estadoCivil"]').value = personalInfo.estadoCivil;
+    document.querySelector('.personal-info input[name="nacionalidade"]').value = personalInfo.nacionalidade;
 });
 
 // Função para o botão "Salvar" no formulário de informações pessoais
@@ -60,14 +67,18 @@ personalInfoForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Evita o envio do formulário para fins de demonstração
 
     // Atualizar as informações pessoais com os dados do formulário
-    personalInfo.nome = document.querySelector('.personal-info input[type="text"]').value;
-    personalInfo.telefone = document.querySelector('.personal-info input[type="tel"]').value;
-    personalInfo.email = document.querySelector('.personal-info input[type="email"]').value;
-    personalInfo.genero = document.querySelector('.personal-info select').value;
-    personalInfo.dataNascimento = document.querySelector('.personal-info input[type="date"]').value;
-    personalInfo.endereco = document.querySelector('.personal-info input[type="text"]:nth-of-type(2)').value; // Para o endereço
-    personalInfo.rm = document.querySelector('.personal-info input[type="text"]:nth-of-type(3)').value; // Para o RM
-    personalInfo.curso = document.querySelector('.personal-info select:nth-of-type(2)').value; // Para o curso
+    personalInfo.nome = document.querySelector('.personal-info input[name="nome"]').value;
+    personalInfo.cpf = document.querySelector('.personal-info input[name="cpf"]').value;
+    personalInfo.rg = document.querySelector('.personal-info input[name="rg"]').value;
+    personalInfo.telefone = document.querySelector('.personal-info input[name="telefone"]').value;
+    personalInfo.email = document.querySelector('.personal-info input[name="email"]').value;
+    personalInfo.genero = document.querySelector('.personal-info select[name="genero"]').value;
+    personalInfo.dataNascimento = document.querySelector('.personal-info input[name="dataNascimento"]').value;
+    personalInfo.endereco = document.querySelector('.personal-info input[name="endereco"]').value;
+    personalInfo.rm = document.querySelector('.personal-info input[name="rm"]').value;
+    personalInfo.curso = document.querySelector('.personal-info select[name="curso"]').value;
+    personalInfo.estadoCivil = document.querySelector('.personal-info select[name="estadoCivil"]').value;
+    personalInfo.nacionalidade = document.querySelector('.personal-info input[name="nacionalidade"]').value;
 
     alert(`Informações pessoais salvas:\n${JSON.stringify(personalInfo, null, 2)}`);
 });

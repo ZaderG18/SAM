@@ -1,0 +1,144 @@
+/* Perfil */
+
+.containerpx {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.headerpx {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #2b1a49;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.headerpx img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 4px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+
+.headerpx .info {
+    flex: 1;
+}
+
+.info h2, .info p {
+    margin: 0;
+    color: white;
+}
+
+.info p {
+    margin-top: 5px;
+}
+
+.section-title {
+    font-size: 24px;
+    margin: 25px 0 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    color: #341e4e;
+    font-weight: bold;
+}
+
+.details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.details .detail-item {
+    width: 48%;
+    margin-bottom: 20px;
+}
+
+.detail-item label {
+    font-weight: bold;
+    color: #341e4e;
+}
+
+.detail-item p {
+    margin: 5px 0;
+    color: #666;
+}
+
+@media (max-width: 1024px) {
+    .containerpx {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .headerpx {
+        padding: 15px;
+    }
+
+    .headerpx img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .details .detail-item {
+        width: 100%;
+    }
+
+    .headerpx {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .headerpx img {
+        margin-bottom: 15px;
+    }
+
+    .info h2 {
+        font-size: 22px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .containerpx {
+        width: 100%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .headerpx {
+        padding: 10px;
+    }
+
+    .headerpx img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .info h2 {
+        font-size: 20px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+}

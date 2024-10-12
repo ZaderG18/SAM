@@ -1,0 +1,73 @@
+@charset "UTF-8";
+/* Estilo do calendario */
+h2 {
+  text-align: center;
+  color: #341e4e;
+  margin-top: 20px;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: auto;
+}
+
+.tablecontainer {
+  width: 90%;
+  margin: 20px auto;
+  overflow-x: auto; /* Permitir rolagem horizontal em telas pequenas */
+}
+
+table {
+  width: 100%; /* Ajuste para 100% para melhor ajuste em contêineres */
+  margin: 80px auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e1bee7; /* Lavender */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  border: none;
+  padding: 20px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+th {
+  background-color: #6a1b9a; /* Purple */
+  color: white;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+td {
+  font-size: 1em;
+  color: black;
+  cursor: pointer; /* Indicar que a célula é clicável */
+}
+
+.interval {
+  background-color: #6a1b9a; /* Purple */
+  font-weight: bold;
+  font-size: 1.2em;
+  color: white;
+}
+
+.time-slot {
+  background-color: #f5f5f5; /* Light Gray */
+  font-weight: bold;
+  color: #333;
+}
+
+/* Media query para telas pequenas */
+@media (max-width: 768px) {
+  th, td {
+    padding: 10px; /* Reduzir o padding em telas pequenas */
+    font-size: 0.9em; /* Ajustar o tamanho da fonte em telas pequenas */
+  }
+  h2 {
+    font-size: 1.5em; /* Ajustar o tamanho da fonte do título em telas pequenas */
+  }
+  .tablecontainer {
+    width: 100%; /* Ajustar a largura do contêiner em telas pequenas */
+  }
+}/*# sourceMappingURL=cronograma.css.map */
