@@ -233,10 +233,6 @@ if (!empty($fotoNome)) {
                     <h3>Informações Pessoais</h3>
                     <label>Nome Completo*</label>
                     <input type="text" required>
-                    <label>CPF*</label>
-                    <input type="text" required>
-                    <label>RG*</label>
-                    <input type="text" required>
                     <label>Telefone*</label>
                     <input type="tel" required>
                     <label>Email*</label>
