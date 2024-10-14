@@ -43,8 +43,8 @@ if (!empty($fotoNome)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <!--CSS-->
-    <link rel="stylesheet" href="../../assets/scss/aluno/chat/tailwindcss-colors.css">
-    <link rel="stylesheet" href="../../assets/scss/aluno/chat/style.css">
+    <link rel="stylesheet" href="../../assets/scss/aluno/chat/tailwindcss-colors.scss">
+    <link rel="stylesheet" href="../../assets/scss/aluno/chat/chat.scss">
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
     

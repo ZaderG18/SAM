@@ -43,8 +43,8 @@ if (!empty($fotoNome)) {
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../assets/scss/aluno/materiais/materiais.css">
-    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.scss">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.scss">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
@@ -171,7 +171,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_01.jpg" alt="Matéria 1">
             <h3>Matemática na programação</h3>
             <p>Professores: João, Maria</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------- Card 2 ---------------------------------->
@@ -179,7 +179,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_02.jpg" alt="Matéria 2">
             <h3>Redes de Internet</h3>
             <p>Professores: Carla, Pedro</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!-------------------------- Card 3 --------------------------------->
@@ -187,7 +187,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_03.jpg" alt="Matéria 3">
             <h3>Algoritmos Avançados</h3>
             <p>Professores: Lucas, Ana</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!---------------------------- Card 4 -------------------------------->
@@ -195,7 +195,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_04.jpg" alt="Matéria 4">
             <h3>Desenvolvimento Web</h3>
             <p>Professores: Fernanda, Paulo</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------------- Card 5 ------------------------------>
@@ -203,7 +203,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_05.jpg" alt="Matéria 5">
             <h3>Banco de Dados</h3>
             <p>Professores: Beatriz, Carlos</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!------------------------------ Card 6 ----------------------------->
@@ -211,7 +211,7 @@ if (!empty($fotoNome)) {
             <img src="../../assets/img/home/cards/aula_06.jpg" alt="Matéria 6">
             <h3>Análises de Projetos</h3>
             <p>Professores: Rafael, Juliana</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
     </div>
     

@@ -43,8 +43,8 @@ if (!empty($fotoNome)) {
     
     <!-- CSS -->
     <link rel="stylesheet" href="../../assets/scss/aluno/atividade/atividade.css">
-    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.scss">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.scss">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
@@ -167,7 +167,7 @@ if (!empty($fotoNome)) {
 
         <main>
             <div class="activity-page">
-                <a href="../../html/aulas/index.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
+                <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
                 <h1>Atividade 11/01 - Redação Inglês</h1>
                 <p class="due-date">Vence 17 de janeiro de 2024 às 23:59 • Fecha 17 de janeiro de 2024 às 23:59</p>
                 <div class="activity-description">

@@ -45,8 +45,8 @@ if (!empty($fotoNome)) {
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../assets/scss/aluno/suporte/suporte.css">
-    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.scss">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.scss">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
