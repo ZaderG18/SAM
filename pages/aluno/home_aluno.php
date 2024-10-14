@@ -1,18 +1,23 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
+
+// Verificar se o usuário está logado e pertence à role 'aluno'
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'aluno') {
     header('Location: validar.php');
     exit();
 }
+
+// Requerendo arquivos necessários
 require_once '../../php/global/funcao.php';
 require_once '../../php/global/upload.php';
 require_once '../../php/aluno/home.php';
+
+// Acessando os dados do usuário da sessão
 $user = $_SESSION['user'];
-if (isset($_SESSION['user']['status'])) {
-    $status = $_SESSION['user']['status'];
-} else {
-    $status = 'Desconhecido'; // Valor padrão caso não esteja definido
-}
+
+// Verificando o status do usuário, com valor padrão se não estiver definido
+$status = isset($user['status']) ? $user['status'] : 'Desconhecido';
+
 $host = "localhost";
 $username = "root";
 $password = "";

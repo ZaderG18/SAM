@@ -13,13 +13,11 @@ $session_options = [
 
 // Verificar se o método de requisição é POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Declarando variáveis para conexão ao banco de dados
+    // Conexão ao banco de dados
     $host = "localhost";
     $username = "root";
     $password = "";
     $dbname = "SAM";
-
-    // Conectando ao banco de dados
     $conn = new mysqli($host, $username, $password, $dbname);
 
     if ($conn->connect_error) {
@@ -28,62 +26,87 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Filtrando os dados de entrada
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
+    $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    // Verifica se o usuário existe em qualquer uma das tabelas
-$tables = ['aluno', 'professor', 'coordenador', 'diretor'];
-$userFound = false; // Variável para controlar se o usuário foi encontrado
+    // Definindo as tabelas para a busca do usuário
+    $tables = ['aluno', 'professor', 'coordenador', 'diretor'];
+    $userFound = false;
 
-foreach ($tables as $table) {
-    // Ajuste na consulta SQL para incluir as colunas corretas
-    $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha FROM $table WHERE email = ?");
-
-    if (!$stmt) {
-        die("Erro ao preparar a consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        // Recuperando os valores do banco de dados
-        // Ajuste aqui: deve corresponder exatamente ao número de colunas retornadas
-        $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password);
-        $stmt->fetch();
-
-        // Verifica se a senha inserida é igual à senha armazenada no banco de dados
-        if (password_verify($senha, $hashed_password)) {
-            // Regenerar a sessão após o login para evitar ataque de Session Fixation
-            session_regenerate_id(true);
-
-            // Armazena os dados do usuário na sessão
-            $_SESSION['user'] = [
-                'id' => $id,
-                'nome' => $nome,
-                'foto' => $foto,
-                'email' => $emailBD,
-                'RM' => $RM,
-                'status' => $status,
-                'role' => $table // Define o papel do usuário com base na tabela
-            ];
-
-            // Redireciona para a página correspondente ao papel do usuário
-            header("Location: ../../pages/$table/home_$table.php");
-            exit();
+    // Loop por cada tabela para buscar o usuário
+    foreach ($tables as $table) {
+        // Preparando a consulta específica para cada tipo de usuário
+        if ($table === 'aluno') {
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso_id, frequencia FROM aluno WHERE email = ?");
+        } elseif ($table === 'professor') {
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM professor WHERE email = ?");
+        } elseif ($table === 'coordenador') {
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM coordenador WHERE email = ?");
         } else {
-            // Senha incorreta, continua a busca nas próximas tabelas
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM diretor WHERE email = ?");
         }
-        $userFound = true; // Define que o usuário foi encontrado
-        break; // Sai do loop, pois já encontrou o usuário
-    }
-}
 
-// Se o usuário não for encontrado em nenhuma tabela
-if (!$userFound) {
-    echo "<script>
-            alert('Email ou senha incorretos.');
-            window.location.href = '../../index.html';
-          </script>";
-}
+        if (!$stmt) {
+            die("Erro ao preparar a consulta: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            // Bind dos resultados com base na tabela atual
+            if ($table === 'aluno') {
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $frequencia);
+            } else {
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf);
+            }
+            
+            $stmt->fetch();
+
+            // Verifica se a senha é correta
+            if (password_verify($senha, $hashed_password)) {
+                session_regenerate_id(true);
+
+                // Armazenando informações específicas na sessão de acordo com o tipo de usuário
+                if ($table === 'aluno') {
+                    $_SESSION['user'] = [
+                        'id' => $id,
+                        'nome' => $nome,
+                        'foto' => $foto,
+                        'email' => $emailBD,
+                        'RM' => $RM,
+                        'status' => $status,
+                        'curso_id' => $curso_id,
+                        'frequencia' => $frequencia,
+                        'role' => $table
+                    ];
+                } else {
+                    $_SESSION['user'] = [
+                        'id' => $id,
+                        'nome' => $nome,
+                        'foto' => $foto,
+                        'email' => $emailBD,
+                        'RM' => $RM,
+                        'status' => $status,
+                        'cpf' => $cpf,
+                        'role' => $table
+                    ];
+                }
+
+                // Redireciona o usuário para a página específica
+                header("Location: ../../pages/$table/home_$table.php");
+                exit();
+            }
+            $userFound = true;
+            break;
+        }
+    }
+
+    // Se o usuário não foi encontrado
+    if (!$userFound) {
+        echo "<script>
+                alert('Email ou senha incorretos.');
+                window.location.href = '../../index.html';
+              </script>";
+    }
 }

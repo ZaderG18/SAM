@@ -30,6 +30,7 @@ if ($conn->query($sql) === TRUE) {
 
 // Reestabelece a conexão ao banco de dados específico 'SAM'.
 $conn->select_db($dbName);
+
 function atualizarBanco($conn){
 // Consultas para criar as tabelas, se não existirem.
 $tableQueries = [
@@ -56,7 +57,7 @@ $tableQueries = [
     frequencia INT DEFAULT 0,
     status ENUM('ativo', 'inativo') DEFAULT 'ativo',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     -- FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE CASCADE
 )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
