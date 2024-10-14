@@ -1,0 +1,131 @@
+@charset "UTF-8";
+.containerxx {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: black;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.headerpx {
+  text-align: center;
+  color: white;
+  background-color: #341e4e;
+  border-radius: 10px;
+  margin: 15px;
+  padding: 10px;
+}
+
+.summary {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.summary p {
+  margin: 10px 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filters div {
+  flex: 1;
+  margin-right: 10px;
+  min-width: 150px;
+}
+
+.filters div:last-child {
+  margin-right: 0;
+}
+
+.filters label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filters select,
+.filters input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #edeef7;
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Suaviza a rolagem no mobile */
+  width: 100%; /* Para garantir que a rolagem ocupe o espaço inteiro */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap; /* Para evitar quebra de texto nas células */
+}
+
+table th {
+  background-color: #4b0082;
+  color: white;
+}
+
+.approved {
+  color: green;
+}
+
+.failed {
+  color: red;
+}
+
+.timeline {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.timeline h3 {
+  margin-top: 0;
+}
+
+.timeline-content {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+  }
+  .filters div {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .filters div:last-child {
+    margin-bottom: 0;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  table th,
+  table td {
+    padding: 5px;
+  }
+}/*# sourceMappingURL=historico.css.map */

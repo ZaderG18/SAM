@@ -146,7 +146,7 @@ $user = $_SESSION['user'];
                         
                                     <p id="user_infos">
                                         <span class="item-description">
-                                            Fulano de Tal
+                                            <?php echo htmlspecialchars($user['nome']); ?>
                                         </span>
                                         <span class="item-description">
                                             Lorem Ipsum
@@ -234,7 +234,7 @@ $user = $_SESSION['user'];
                             </div>
                     
                             <div id="logout">
-                                <button id="logout_btn" onclick="window.location.href='../login/login.html'">
+                                <button id="logout_btn" onclick="window.location.href='../../php/login/logout.php'">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span class="item-description">
                                         Logout

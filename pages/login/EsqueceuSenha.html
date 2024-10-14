@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../assets/scss/login/EsqueceuSenha.scss"> <!-- Link para o arquivo de estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> <!-- Link para o CDN dos ícones Bootstrap -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png"> <!-- Ícone da aba do navegador -->
-    <title>Esqueceu Senha - SAM </title> <!-- Título da página -->
+    <title>Esqueceu Senha - SAM</title> <!-- Título da página -->
 </head>
 <body>
     <main>
@@ -15,32 +15,29 @@
             <div class="flex-elements">
                 <div class="left-img"></div>
                 <div class="right-reset">
-
-                    <form action="" method="post">
+                    <form action="../../php/login/recuperarSenha.php" method="post">
                         <div class="headerbx">
                             <h2>Esqueceu a Senha?</h2>
                             <p>Insira o e-mail que você usou para criar sua conta para que possamos enviar as instruções sobre como redefinir sua senha.</p>
                         </div>
-                        <!-- Campo de entrada para a senha -->
-                         <div class="box-input">
+                        <!-- Campo de entrada para o email -->
+                        <div class="box-input">
                             <span>Email</span>
                             <div class="inputbx">
-                                <input type="text" name="email" id="email" placeholder="Digite seu email" required>
+                                <input type="email" name="email" id="email" placeholder="Digite seu email" required>
                             </div>
-                         </div>
+                        </div>
                         <!-- Botão de envio -->
                         <div class="inputbx">
-                            <input type="submit" value="Enviar" id="enviar" onclick="window.location.href='VerificarEmail.html'">
+                            <input type="submit" value="Enviar" id="enviar">
                         </div>
-    
                         <!-- Botão de voltar -->
                         <div class="inputbx">
-                            <input type="button" value="Voltar" id="voltar" onclick="window.location.href='../../index.html'" > 
+                            <input type="button" value="Voltar" id="voltar" onclick="window.location.href='../../index.html'"> 
                         </div>
-
-                        <p class="reset-senha">já recebeu o código ? <a href="#" onclick="window.location.href='ResetarSenha.html'">Crie uma nova senha</a></p>
+                        <p class="reset-senha">Já recebeu o código? <a href="ResetarSenha.php">Crie uma nova senha</a></p>
                     </form> <!-- Fim do formulário -->
-                </div><!--caixa da direita, aonde fica  os inputs de reset de senha -->
+                </div><!-- caixa da direita, onde ficam os inputs de reset de senha -->
             </div>
         </div>
     </main>

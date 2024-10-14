@@ -1,0 +1,209 @@
+/* Container principal */
+.containerbx {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Duas colunas: info-card 1fr, personal-info/password-update 2fr */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Card de informações (lado esquerdo) */
+.containerpx {
+    background-color: #f7f7f7; /* Fundo do card */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.secretaria {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.secretaria h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #341e4e;
+    margin-bottom: 10px;
+}
+
+.secretaria p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/*form lado direito*/
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-container label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.caixa, .textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #edeef7;
+    margin-bottom: 10px;
+}
+
+.form-container h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #341e4e;
+    margin-bottom: 10px;
+}
+
+/*arquivo form*/
+.file-group {
+    margin-bottom: 20px;
+}
+
+.btn-upload {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #38095a; /* Cor primária suavizada */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+    background-color: #9b72cf; /* Cor ao passar o mouse suavizada */
+}
+
+.btn-upload::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.btn-upload::before {
+    content: 'Selecionar Arquivo';
+    display: inline-block;
+    background-color: #38095a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-upload:hover::before {
+    background-color: #9b72cf;
+}
+
+.btn-upload:active::before {
+    background-color: #9b72cf;
+}
+
+/*botão form*/
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #1e0442, #4b0082); /* Gradiente de cor */
+    color: #fff;
+    padding: 12px 100px; /* Aumenta o padding para um botão maior */
+    border: none;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px; /* Aumenta o tamanho da fonte */
+    margin-top: 20px;
+    text-align: center; /* Centraliza o texto dentro do botão */
+    margin-left: auto; /* Centraliza o botão horizontalmente */
+    margin-right: auto; /* Centraliza o botão horizontalmente */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra */
+    transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #4b0082, #1e0442); /* Inverte o gradiente no hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+    transform: translateY(-2px); /* Eleva o botão no hover */
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .containerbx {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+        margin-top: 20px;
+        margin-left: 0;
+    }
+
+    .containerbx {
+        padding: 10px;
+    }
+
+    .btn {
+        padding: 12px 50px; /* Reduz o padding para botões menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .secretaria h2 {
+        font-size: 18px;
+    }
+
+    .secretaria p {
+        font-size: 14px;
+    }
+
+    .form-container h2 {
+        font-size: 24px;
+    }
+
+    .btn {
+        padding: 10px 30px; /* Reduz ainda mais o padding para botões menores */
+        font-size: 14px; /* Reduz o tamanho da fonte */
+    }
+}
+
+@media (max-width: 320px) {
+    .secretaria h2 {
+        font-size: 16px;
+    }
+
+    .secretaria p {
+        font-size: 12px;
+    }
+
+    .form-container h2 {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 8px 20px; /* Reduz ainda mais o padding para botões menores */
+        font-size: 12px; /* Reduz o tamanho da fonte */
+    }
+}

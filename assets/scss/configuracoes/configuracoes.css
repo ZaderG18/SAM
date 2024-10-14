@@ -1,187 +1,240 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
-    font-family: "Poppins", sans-serif;
+@charset "UTF-8";
+/* Container principal */
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Duas colunas: info-card 1fr, personal-info/password-update 2fr */
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 8px; /* Bordas arredondadas */
 }
 
-a{
-    text-decoration: none;
+/* Card de informações (lado esquerdo) */
+.info-card {
+  background-color: #f7f7f7; /* Fundo do card */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.global-container{
-     display: flex;
-     min-height: 100vh;
+/* Estilo da imagem de perfil e botão de upload */
+.profile-picture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-/* Estilo do conteudo */
-main{
-    width: 100%; 
-    height: auto; 
-    background-color: #EBEBEB; 
-    padding: 50px 40px;
-    margin-top: 50px;
-    margin-left: 82px;
-}
-
-main .container{
-    max-width: 1440px;
-    margin: 0 auto;
-}
-
-/* Estilo do conteudo */
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Cria duas colunas de tamanhos iguais */
-    gap: 20px; /* Espaçamento entre os cards */
-    max-width: 1200px; /* Largura máxima */
-    margin: 0 auto; /* Centraliza o grid */
-}
-  
-.informacoes-pessoais {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Cria duas colunas de tamanhos iguais */
-    gap: 50px; /* Espaçamento entre os cards */
-    padding: 20px;
-    max-width: 1200px; /* Largura máxima */
-    margin: 0 auto; /* Centraliza o grid */
-}
-
-
-
-
-
-  /* Estilo dos cards */
-.card-info {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    margin: 20px 0;
- 
-}
-
-.card-up {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    margin: 20px 0;
- 
-}
-
-
-.foto-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.foto-placeholder {
-    width: 90px;
-    height: 90px;
-    background-color: #ddd;
-    border-radius: 50%;
-    margin-bottom: 10px;
-
-}
-
-.file-input {
-    margin-bottom: 10px;
-}
-
-.mudar-btn {
-    background-color: #6a4c93;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-
-/* Estilo para títulos */
 h3 {
-    color: #6a4c93;
-    margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #341e4e; /* Cor do título */
+  margin-bottom: 10px;
 }
 
-/* Estilo para inputs e botões */
+.profile-picture img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background-color: #ddd;
+}
 
-/* Estilos específicos para inputs e botões dentro dos cards */
-.cards-container .form-row input, 
-.cards-container .form-row select, 
-.cards-container button {
-    background-color: #f5f5f5;
+.upload-button {
+  display: flex;
+  width: 50%;
+  padding: 10px;
+  margin: 10px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #38095a; /* Cor primária suavizada */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  justify-content: center;
+}
+
+.upload-button:hover {
+  background-color: #4b3767; /* Cor ao passar o mouse suavizada */
+}
+
+.upload-button::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.input {
+  display: none;
+}
+
+.profile-picture h3 {
+  font-size: 15px;
+  margin-bottom: 15px;
+  align-items: right;
+}
+
+/* Notificações */
+.notifications {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.notifications h3 {
+  margin-bottom: 15px;
+  color: #341e4e; /* Cor do título */
+}
+
+.notifications label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.notifications select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #edeef7;
+  margin-bottom: 10px;
+}
+
+/* Segurança e Privacidade */
+.security {
+  background-color: #fff;
+  border-radius: 8px;
+  color: black;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.security h3 {
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.security .toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.security .toggle-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #6a4c93; /* Cor do ícone */
+}
+
+/* Lado direito: Informações pessoais e atualização de senha */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.personal-info,
+.password-update {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+.personal-info h3,
+.password-update h3 {
+  color: #341e4e;
+  margin-bottom: 15px;
+}
+
+.personal-info label,
+.password-update label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.personal-info input,
+.personal-info select,
+.password-update input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #edeef7;
+  margin-bottom: 10px;
+}
+
+/* Botões padrão */
+.btn-padrao {
+  display: inline-block;
+  background: linear-gradient(135deg, #1e0442, #4b0082); /* Gradiente de cor */
+  color: #fff;
+  padding: 12px 100px; /* Aumenta o padding para um botão maior */
+  border: none;
+  border-radius: 8px; /* Bordas mais arredondadas */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px; /* Aumenta o tamanho da fonte */
+  margin-top: 20px;
+  text-align: center; /* Centraliza o texto dentro do botão */
+  margin-left: auto; /* Centraliza o botão horizontalmente */
+  margin-right: auto; /* Centraliza o botão horizontalmente */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra */
+  transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+.btn-padrao:hover {
+  background: linear-gradient(135deg, #4b0082, #1e0442); /* Inverte o gradiente no hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+  transform: translateY(-2px); /* Eleva o botão no hover */
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 1024px) {
+  main {
+    padding: 30px 20px;
+    margin-left: 0;
+  }
+  .cards-container {
+    grid-template-columns: 1fr; /* Uma coluna em telas menores */
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    margin-top: 5px;
+  }
+  .upload-button {
+    width: 70%;
+  }
 }
-
-.cards-container button {
-    background-color: #6a4c93;
-    color: white;
+@media (max-width: 768px) {
+  .upload-button {
+    width: 100%;
+  }
+  .btn-padrao {
+    padding: 12px 50px; /* Reduz o padding para botões menores */
+  }
+}
+@media (max-width: 480px) {
+  main {
+    padding: 20px 10px;
+  }
+  .cards-container {
     padding: 10px;
+  }
+  .upload-button {
     width: 100%;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Estilos específicos para o input de busca e o botão na sidebar */
-.sidebar-search input {
-    background-color: #fff; /* cor específica para o search */
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    margin: 0 10px;
-}
-
-.sidebar-search button {
-    background-color: #6a4c93; /* ou a cor específica */
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Garantindo que os elementos da sidebar não sejam afetados pelos estilos dos cards */
-.sidebar-search input, 
-.sidebar-search button {
-    box-shadow: none; /* removendo qualquer interferência de sombra */
-    margin: 0;
-}
-
-
-  /* Organizando inputs em colunas dentro do form */
-  .form-row {
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    gap: 15px;
+    padding: 10px;
+    margin: 10px;
   }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
+  .btn-padrao {
+    padding: 10px 20px; /* Reduz ainda mais o padding para botões menores */
+    font-size: 14px; /* Reduz o tamanho da fonte */
   }
-  
-  /* Espaçamento entre seções */
-  .section {
-    margin-bottom: 20px;
-  }
-  
+}/*# sourceMappingURL=configuracoes.css.map */

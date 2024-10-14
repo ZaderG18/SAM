@@ -1,0 +1,211 @@
+/* Conteudo da Pagina */
+.containerfx {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo geral das seções */
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section h2, .section h3, .section h4 {
+    color: #341E4E;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.section p {
+    color: #616161;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Indicador de progresso */
+.progress-bar {
+    background-color: #E0F2F1;
+    border-radius: 15px;
+    overflow: hidden;
+    height: 25px;
+    margin-top: 10px;
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar div {
+    height: 100%;
+    background-color: #26A69A;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 15px;
+}
+
+/* Atividades e Feedback */
+.activity-item, .feedback-item, .material-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-item:hover, .feedback-item:hover, .material-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.activity-item a, .feedback-item a, .material-item a {
+    background-color: #26A69A;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.activity-item a:hover, .feedback-item a:hover, .material-item a:hover {
+    background-color: #00796B;
+}
+
+/* Atividades não entregues */
+.pending-activities .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: black;
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pending-activities .item span:last-child {
+    font-weight: bold;
+    color: #D32F2F;
+}
+
+.pending-activities .item a {
+    background-color: #D32F2F;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.pending-activities .item a:hover {
+    background-color: #B71C1C;
+}
+
+/* Fórum de discussão */
+.forum textarea {
+    width: 100%;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.forum input[type="file"] {
+    display: none;
+}
+
+.forum .file-label {
+    padding: 10px 20px;
+    background-color: #26A69A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.forum .file-label:hover {
+    background-color: #00796B;
+    transform: translateY(-2px);
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #26A69A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn:hover {
+    background-color: #00796B;
+    transform: translateY(-2px);
+}
+
+/* Align buttons side by side below the textarea */
+.forum .button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Suporte de Tutores */
+.tutor-support ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tutor-support ul li {
+    color: black;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    main {
+        padding: 20px 10px;
+        margin: 20px 10px 0 10px;
+    }
+
+    .section {
+        padding: 10px;
+    }
+
+    .activity-item, .feedback-item, .material-item, .pending-activities .item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .activity-item a, .feedback-item a, .material-item a, .pending-activities .item a {
+        margin-top: 10px;
+    }
+
+    .forum .button-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .forum .file-label, .btn {
+        margin-top: 10px;
+    }
+}

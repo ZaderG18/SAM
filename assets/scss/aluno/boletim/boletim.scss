@@ -1,0 +1,250 @@
+/* Conteúdo da página */
+.student-info {
+    width: 85%;
+    margin: 30px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+.student-info h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #341e4e;
+    margin-bottom: 10px;
+}
+
+.student-info p {
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.module-selection {
+    width: 90%;
+    margin: 10px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+}
+
+.module-selection label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.module-selection select {
+    width: 30%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #edeef7;
+    margin-bottom: 30px;
+    margin-right: 20px;
+}
+
+.module-selection button {
+    display: inline-block;
+    background: linear-gradient(135deg, #1e0442, #4b0082); /* Gradiente de cor */
+    color: #fff;
+    padding: 10px 30px; /* Aumenta o padding para um botão maior */
+    border: none;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px; /* Aumenta o tamanho da fonte */
+    margin-top: 20px;
+    text-align: center; /* Centraliza o texto dentro do botão */
+    margin-left: 20px; /* Centraliza o botão horizontalmente */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra */
+    transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+.module-selection button:hover {
+    background: linear-gradient(135deg, #4b0082, #1e0442); /* Inverte o gradiente no hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
+    transform: translateY(-2px); /* Eleva o botão no hover */
+}
+
+/* Tabela */
+.module-selection table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+}
+
+.module-selection thead {
+    background-color: #4b0082;
+    color: white;
+}
+
+.module-selection th,
+.module-selection td {
+    padding: 5px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.module-selection th {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.module-selection td {
+    color: black;
+    font-size: 14px;
+}
+
+.module-selection a {
+    color: #0a0a0a;
+}
+
+/* Modal pop-up */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* Aumenta o z-index para garantir que o modal fique acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Remove a rolagem da página quando o modal está aberto */
+    background-color: rgba(0, 0, 0, 0.6); /* Aumenta a opacidade do fundo */
+    backdrop-filter: blur(5px); /* Adiciona um efeito de desfoque ao fundo */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* Ajusta a margem para centralizar melhor o modal */
+    padding: 30px; /* Aumenta o padding para mais espaço interno */
+    border: none; /* Remove a borda padrão */
+    width: 60%; /* Ajusta a largura do modal */
+    max-width: 600px; /* Define uma largura máxima */
+    border-radius: 12px; /* Bordas mais arredondadas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais suave */
+    animation: fadeIn 0.3s ease-out; /* Adiciona uma animação de fade-in */
+}
+
+.modal-content a {
+    color: #0a0a0a;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #391453;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.modal-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modal-content li {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    color: #adabab; /* Muda a cor para um cinza mais escuro */
+    float: right; /* Alinha o botão à direita */
+    font-size: 24px; /* Ajusta o tamanho da fonte */
+    font-weight: 400;
+    cursor: pointer;
+    transition: color 0.3s ease; /* Adiciona uma transição suave para a cor */
+}
+
+.close:hover,
+.close:focus {
+    color: #000; /* Muda a cor no hover e focus */
+    text-decoration: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .student-info, .module-selection {
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+    }
+
+    .module-selection select {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .module-selection button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .module-selection table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .module-selection th, .module-selection td {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .student-info h2 {
+        font-size: 18px;
+    }
+
+    .student-info p {
+        font-size: 10px;
+    }
+
+    .module-selection label {
+        font-size: 14px;
+    }
+
+    .module-selection th, .module-selection td {
+        font-size: 12px;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    .modal-content p, .modal-content li {
+        font-size: 14px;
+    }
+}
