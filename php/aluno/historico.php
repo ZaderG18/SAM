@@ -129,10 +129,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Consulta para pegar as informações de módulos, semestres e status do histórico acadêmico
-$sql = "SELECT semestre, modulo, status 
+$sql = "SELECT semestre, status 
         FROM historico_academico 
         WHERE aluno_id = ?
-        ORDER BY semestre ASC";
+        ORDER BY semestre ASC"; // Ordena por semestre em ordem ascendente
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $aluno_id);
 $stmt->execute();
@@ -142,7 +143,33 @@ $historico = [];
 while ($row = $result->fetch_assoc()) {
     $ano = explode('.', $row['semestre'])[0]; // Pega o ano a partir do semestre (ex: '2021.1' => '2021')
     $historico[$ano][] = [
-        'modulo' => $row['modulo'],
+        'semestre' => $row['semestre'], // Corrigir para usar 'semestre' ao invés de 'modulo'
         'status' => $row['status']
     ];
 }
+// Consulta para pegar os semestres únicos que o aluno estudou
+$sqlSemestres = "SELECT DISTINCT semestre FROM historico_academico WHERE aluno_id = ? ORDER BY semestre ASC";
+$stmtSemestres = $conn->prepare($sqlSemestres);
+$stmtSemestres->bind_param("i", $aluno_id);
+$stmtSemestres->execute();
+$resultSemestres = $stmtSemestres->get_result();
+
+$semestres = [];
+while ($row = $resultSemestres->fetch_assoc()) {
+    $semestres[] = $row['semestre']; // Adiciona o semestre ao array
+}
+$stmtSemestres->close();
+
+// Consulta para pegar os status únicos (aprovado, reprovado, pendente)
+$sqlStatus = "SELECT DISTINCT status FROM historico_academico WHERE aluno_id = ?";
+$stmtStatus = $conn->prepare($sqlStatus);
+$stmtStatus->bind_param("i", $aluno_id);
+$stmtStatus->execute();
+$resultStatus = $stmtStatus->get_result();
+
+$statusOptions = [];
+while ($row = $resultStatus->fetch_assoc()) {
+    $statusOptions[] = $row['status']; // Adiciona o status ao array
+}
+$stmtStatus->close();
+

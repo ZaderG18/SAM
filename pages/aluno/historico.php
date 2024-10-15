@@ -190,19 +190,18 @@ if (!empty($fotoNome)) {
                 <label for="semestre">Selecionar Semestre:</label>
                 <select id="semestre">
                     <option value="todos">Todos</option>
-                    <option value="2021.1">2021.1</option>
-                    <option value="2021.2">2021.2</option>
-                    <option value="2022.1">2022.1</option>
-                    <option value="2022.2">2022.2</option>
+                    <?php foreach ($semestres as $semestre): ?>
+                    <option value="<?php echo htmlspecialchars($semestre);?>"><?php echo htmlspecialchars($semestre);?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div>
                 <label for="status">Status da Disciplina:</label>
                 <select id="status">
                     <option value="todas">Todas</option>
-                    <option value="aprovado">Aprovadas</option>
-                    <option value="reprovado">Reprovadas</option>
-                    <option value="pendente">Pendentes</option>
+                    <?php foreach ($statusOptions as $status): ?>
+                    <option value="<?php echo htmlspecialchars($status)?>"><?php echo ucfirst(htmlspecialchars($status));?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
             <div>
@@ -258,14 +257,15 @@ if (!empty($fotoNome)) {
 
         <h2>Linha do Tempo Acadêmica</h2>
         <div class="timeline">
-            <?php foreach($historico as $ano => $modulos): ?>
+            <?php foreach($historico as $ano => $semestres): ?>
             <h3><?php echo $ano; ?></h3>
             <div class="timeline-content">
-                <?php foreach($modulos as $modulo): ?>
-                <p><strong>Módulo <?php echo htmlspecialchars($modulo['modulo']); ?>:</strong> 
-            <?php echo htmlspecialchars($modulo['status']); ?> <?php echo htmlspecialchars($modulo['status']); ?></p>
-<?php endforeach; ?>
+                <?php foreach($semestres as $semestre): ?>
+                <p><strong>Semestre <?php echo htmlspecialchars($semestre['semestre']); ?>:</strong> 
+            <?php echo htmlspecialchars($semestre['status']); ?> </p>
+            <?php endforeach; ?>
             </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </main>

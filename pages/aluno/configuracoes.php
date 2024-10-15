@@ -185,11 +185,13 @@ if (!empty($fotoNome)) {
         <!-- Lado esquerdo - Info Card -->
         <div class="info-card">
             <div class="profile-picture">
+                <form action="../../php/global/upload.php" method="post">
                 <h3>Upload Foto(150px X 150px)</h3>
                 <img src="profile-placeholder.png" id="profile-pic"/>
                 <label for="upload" class="upload-button">Escolher Arquivo</label>
                 <input type="file" id="upload" accept="image/*" class="input">
                 <button class="btn-padrao">Salvar</button>
+                </form>
             </div>
             <div class="notifications">
                 <h3>Notificações</h3>
@@ -228,58 +230,58 @@ if (!empty($fotoNome)) {
     
         <!-- Lado direito - Personal Info e Password Update -->
         <div class="main-content">
-            <form>
+            <form action="../../php/global/upload.php" method="post" enctype="multipart/form-data">
                 <div class="personal-info">
                     <h3>Informações Pessoais</h3>
                     <label>Nome Completo*</label>
-                    <input type="text" required>
+                    <input type="text" name="nome" value="<?= htmlspecialchars($user['nome']); ?>" required>
                     <label>Telefone*</label>
-                    <input type="tel" required>
+                    <input type="tel" name="telefone" value="<?= htmlspecialchars($user['telefone']); ?>" required>
                     <label>Email*</label>
-                    <input type="email" required>
+                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" required>
                     <label>Gênero*</label>
-                    <select required>
+                    <select name="genero" required>
                         <option>Selecione seu gênero</option>
-                        <option>Homem Cis</option>
-                        <option>Mulher cis</option>
-                        <option>Mulher Trans</option>
-                        <option>Homem Trans</option>
-                        <option>Não-Binário</option>
-                        <option>Prefiro Não Dizer</option>
+                        <option value="Homem">Homem Cis</option>
+                        <option value="Mulher_cis">Mulher cis</option>
+                        <option value="mulher_trans">Mulher Trans</option>
+                        <option value="homem_trans">Homem Trans</option>
+                        <option value="nao_binario">Não-Binário</option>
+                        <option value="prefiro_n_dizer">Prefiro Não Dizer</option>
                     </select>
                     <label>Estado Civil*</label>
-                    <select required>
+                    <select name="estado_civil" required>
                         <option>Selecione</option>
-                        <option>Solteiro</option>
-                        <option>Casado</option>
-                        <option>Divorciado</option>
-                        <option>Viúvo</option>
+                        <option value="solteiro">Solteiro</option>
+                        <option value="casado">Casado</option>
+                        <option value="divorciado">Divorciado</option>
+                        <option value="viuvo">Viúvo</option>
                     </select>
                     <label>Data de Nascimento*</label>
-                    <input type="date" required>
+                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars($user['data_nascimento']); ?>" required>
                     <label>Nacionalidade*</label>
-                    <input type="text" required>
+                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars($user['nacionalidade']); ?>" required>
                     <label>Endereço*</label>
-                    <input type="text" required>
+                    <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>" required>
                     <label>RM</label>
-                    <input type="text">
+                    <input type="text" name="RM" value="<?= htmlspecialchars($user['RM']); ?>">
                     <label>Curso*</label>
-                    <select required>
+                    <select name="curso" required>
                         <option>Selecione o curso</option>
-                        <option>Desenvolvimento de Sistemas</option>
-                        <option>Enfermagem</option>
-                        <option>Nutrição</option>
-                        <option>Gastronomia</option>
+                        <option value="desenvolvimento_de_sistemas">Desenvolvimento de Sistemas</option>
+                        <option value="enfermagem">Enfermagem</option>
+                        <option value="nutricao">Nutrição</option>
+                        <option value="gastronomia">Gastronomia</option>
                     </select>
                     <h3>Contato de Emergência</h3>
                     <label>Nome do Contato*</label>
-                    <input type="text" required>
+                    <input type="text" >
                     <label>Parentesco*</label>
-                    <input type="text" required>
+                    <input type="text">
                     <label>Telefone de Contato*</label>
-                    <input type="text" required>
+                    <input type="text" >
                     <label>Email de Contato*</label>
-                    <input type="text" required>
+                    <input type="text">
                     <button class="btn-padrao">Editar</button>
                     <button class="btn-padrao">Salvar</button>
                 </div>
@@ -287,11 +289,11 @@ if (!empty($fotoNome)) {
                 <div class="password-update">
                     <h3>Atualizar Senha</h3>
                     <label>Senha Atual</label>
-                    <input type="password" required>
+                    <input type="password" >
                     <label>Nova Senha*</label>
-                    <input type="password" required>
+                    <input type="password" >
                     <label>Confirmar Nova Senha*</label>
-                    <input type="password" required>
+                    <input type="password" >
                     <button class="btn-padrao">Salvar</button>
                 </div>
             </form>
@@ -301,6 +303,6 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/configuracoes/configuracoes.js"></script>
+    <script src="../../assets/js/aluno/configuracoes/configuracoes.js"></script>
 </body>
 </html>
