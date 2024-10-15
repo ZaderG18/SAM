@@ -8,6 +8,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
 require_once '../../php/login/validar.php';
+require '../../php/aluno/historico.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 
@@ -25,7 +26,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
@@ -173,14 +173,15 @@ if (!empty($fotoNome)) {
 
         <div class="summary">
             <p><strong>Nome do Aluno:</strong> <?php echo htmlspecialchars($user['nome']) ?></p>
-            <p><strong>RM:</strong> 202312345</p>
-            <p><strong>Média Geral:</strong> 8.2</p>
-            <p><strong>Disciplinas Pendentes:</strong> 6</p>
-            <p><strong>Prazo Estimado de Conclusão:</strong> Dezembro de 2024</p>
+            <p><strong>RM:</strong> <?php echo htmlspecialchars($user['RM'])?></p>
+            <p><strong>Média Geral:</strong> <?php echo htmlspecialchars($mediaGeral)?></p>
+            <p><strong>Disciplinas Pendentes:</strong> <?php echo htmlspecialchars($disciplinas_pendentes)?></p>
+            <p><strong>Prazo Estimado de Conclusão:</strong> <?php echo htmlspecialchars($prazo_conclusao)?></p>
 
-            <div class="progress-bar">
-                <div class="progress" style="width: 67%;">67% Concluído</div>
-            </div>
+        <?php echo '<div class="progress-bar">';
+            echo '<div class="progress" style="width: ' . round($progresso) . '%;">' . round($progresso) . '% Concluído</div>';
+            echo '</div>'; ?>
+
         </div>
 
         <h2>Filtros de Semestre</h2>
@@ -208,6 +209,7 @@ if (!empty($fotoNome)) {
                 <input type="text" id="busca" placeholder="Buscar disciplina...">
             </div>
         </div>
+        <div id="resultado"></div>
 
         <h2>Disciplinas Concluídas</h2>
         <table>
@@ -221,14 +223,15 @@ if (!empty($fotoNome)) {
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($disciplinas as $disciplina): ?>
                 <tr>
-                    <td>Algoritmos e Programação</td>
-                    <td>2021.1</td>
-                    <td>4</td>
-                    <td>8.7</td>
-                    <td class="approved">Aprovado</td>
+                    <td><?php echo htmlspecialchars($disciplina['disciplina_id'])?></td>
+                    <td><?php echo htmlspecialchars($disciplina['semestre'])?></td>
+                    <td><?php echo htmlspecialchars($disciplina['faltas'])?></td>
+                    <td><?php echo htmlspecialchars($disciplina['nota'])?></td>
+                    <td class="<?php echo strtolower($disciplina['status'])?>"><?php echo htmlspecialchars($disciplina['status'])?></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Banco de dados</td>
                     <td>2021.1</td>
                     <td>4</td>
@@ -248,22 +251,20 @@ if (!empty($fotoNome)) {
                     <td>4</td>
                     <td>5.0</td>
                     <td class="failed">Reprovado</td>
-                </tr>
+                </tr> -->
+                <?php endforeach; ?>
             </tbody>
         </table>
 
         <h2>Linha do Tempo Acadêmica</h2>
         <div class="timeline">
-            <h3>2021</h3>
+            <?php foreach($historico as $ano => $modulos): ?>
+            <h3><?php echo $ano; ?></h3>
             <div class="timeline-content">
-                <p><strong>Módulo 1:</strong> Aprovado em todas as Matérias </p>
-                <p><strong>Módulo 2:</strong> Aprovado em todas as Matérias</p>
-            </div>
-
-            <h3>2022</h3>
-            <div class="timeline-content">
-                <p><strong>Módulo 1:</strong> Aprovado em todas as Matérias </p>
-                <p><strong>Módulo 2:</strong> Aprovado em todas as Matérias</p>
+                <?php foreach($modulos as $modulo): ?>
+                <p><strong>Módulo <?php echo htmlspecialchars($modulo['modulo']); ?>:</strong> 
+            <?php echo htmlspecialchars($modulo['status']); ?> <?php echo htmlspecialchars($modulo['status']); ?></p>
+<?php endforeach; ?>
             </div>
         </div>
     </div>

@@ -232,7 +232,19 @@ $tableQueries = [
     nome VARCHAR(50) NOT NULL UNIQUE,
     descricao TEXT,
     carga_horaria INT NOT NULL
-    )"
+    )",
+    "historico_academico" => "CREATE TABLE IF NOT EXISTS historico_academico (
+    id INT AUTO_INCREMENT PRIMARY KEY,           
+    aluno_id INT NOT NULL,                       
+    disciplina_id INT NOT NULL,                  
+    semestre VARCHAR(10) NOT NULL,  
+    faltas INT DEFAULT 0,                        
+    nota DECIMAL(4,2) DEFAULT NULL,              
+    status ENUM('aprovado', 'reprovado', 'pendente') NOT NULL DEFAULT 'pendente',
+    data_conclusao DATE DEFAULT NULL,
+    CONSTRAINT fk_aluno_id FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    CONSTRAINT fk_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
+)"
 ];
 
 // Executando as consultas para criar as tabelas
