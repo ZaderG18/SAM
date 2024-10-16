@@ -1,0 +1,146 @@
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  color: #333;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.filters {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select, .filters input {
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;
+  background-color: #edeef7;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-height: 400px; /* Limita a altura da tabela */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.actions button {
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #45a049;
+}
+
+.actions .edit {
+  background-color: #f39c12;
+}
+
+.actions .edit:hover {
+  background-color: #e67e22;
+}
+
+textarea {
+  width: 90%;
+  height: 50px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.save-button {
+  text-align: right;
+}
+
+.save-button button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-button button:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: center;
+  }
+  .filters select, .filters input {
+    width: 100%;
+  }
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  table, th, td {
+    font-size: 12px;
+  }
+  .actions button {
+    margin: 10px;
+    padding: 6px 10px;
+  }
+  .save-button {
+    text-align: center;
+  }
+  .save-button button {
+    width: 100%;
+  }
+}
+@media (max-width: 400px) {
+  .container {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+  th, td {
+    padding: 6px;
+  }
+  .actions button {
+    margin: 5px;
+    padding: 5px 8px;
+  }
+}/*# sourceMappingURL=frequencia.css.map */

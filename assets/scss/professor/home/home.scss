@@ -1,0 +1,384 @@
+/* CONTEUDO DA PAGINA */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Banner de saudação */
+.banner {
+    background-color: #d8eaf0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.banner h1 {
+    font-size: 40px;
+    color: #104061;
+}
+
+.banner p {
+    font-size: 16px;
+    color: #34495E;
+}
+
+.banner img {
+    position: relative;
+    left: -5%;
+    width: 20%;
+    height: 20%;
+}
+
+/* Estilos dos cards principais */
+.cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    flex: 1;
+    background-color: #fff;
+    color: #666;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #341e4e;
+}
+
+.card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Seções abaixo dos cards */
+.sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    gap: 20px;
+}
+
+.section {
+    background-color: #fff;
+    padding: 20px;
+    color: #666;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.media {
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.maior {
+    color: #178b20;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.menor {
+    color: #ff0000;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #341e4e;
+}
+
+.section h4 {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: #341e4e;
+}
+
+.section p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Perfil do Aluno */
+.profile {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #341e4e;
+    text-align: left;
+}
+
+.profile h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #341e4e;
+}
+
+.profile p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Feed de atualizações recentes */
+.feed {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feed h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #341e4e;
+}
+
+.feed ul {
+    list-style: none;
+}
+
+.feed li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.feed span {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Calendário */
+.calendar {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendar h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #341e4e;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    background-color: #5e3ea1;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-header button:hover {
+    background-color: #4b2d7e;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.calendar-day.today {
+    background-color: #5e3ea1;
+    color: #fff;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #341e4e;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .banner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .banner img {
+        width: 50%;
+        height: auto;
+        left: 0;
+        margin-top: 20px;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .sections {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px 10px;
+    }
+
+    .banner h1 {
+        font-size: 30px;
+    }
+
+    .banner p {
+        font-size: 14px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .section h3, .section h4 {
+        font-size: 16px;
+    }
+
+    .section p {
+        font-size: 14px;
+    }
+
+    .profile h3, .profile h2 {
+        font-size: 16px;
+    }
+
+    .profile p {
+        font-size: 12px;
+    }
+
+    .feed h3 {
+        font-size: 16px;
+    }
+
+    .feed li {
+        font-size: 14px;
+    }
+
+    .feed span {
+        font-size: 12px;
+    }
+
+    .calendar h3 {
+        font-size: 16px;
+    }
+
+    .calendar-header button {
+        padding: 5px;
+    }
+
+    .calendar-day {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 24px;
+    }
+
+    .banner p {
+        font-size: 12px;
+    }
+
+    .card h3 {
+        font-size: 14px;
+    }
+
+    .section h3, .section h4 {
+        font-size: 14px;
+    }
+
+    .section p {
+        font-size: 12px;
+    }
+
+    .profile h3, .profile h2 {
+        font-size: 14px;
+    }
+
+    .profile p {
+        font-size: 10px;
+    }
+
+    .feed h3 {
+        font-size: 14px;
+    }
+
+    .feed li {
+        font-size: 12px;
+    }
+
+    .feed span {
+        font-size: 10px;
+    }
+
+    .calendar h3 {
+        font-size: 14px;
+    }
+
+    .calendar-header button {
+        padding: 3px;
+    }
+
+    .calendar-day {
+        padding: 3px;
+    }
+}

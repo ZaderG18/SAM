@@ -1,0 +1,164 @@
+/* Reset de estilo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Links gerais */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Layout principal */
+.activity-page {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Botão de voltar */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    color: #341e4e;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+}
+
+.back-button i {
+    margin-right: 5px;
+}
+
+.back-button:hover {
+    color: #6a4c93;
+}
+
+/* Título da página */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #341e4e;
+    margin-bottom: 20px;
+    color: #341e4e;
+    text-align: center;
+}
+
+/* Labels e campos de edição */
+label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #341e4e;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Campo de edição da atividade (textarea) */
+textarea#edit-activity {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    resize: vertical;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+textarea#edit-activity:focus {
+    border-color: #6a4c93;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(106, 76, 147, 0.5);
+}
+
+/* Campo de edição da data */
+input#edit-due-date {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input#edit-due-date:focus {
+    border-color: #6a4c93;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(106, 76, 147, 0.5);
+}
+
+/* Botão de envio */
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #1e0442, #4b0082);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+    background: linear-gradient(135deg, #4b0082, #1e0442);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Media Queries para responsividade */
+@media (min-width: 1024px) {
+    main {
+        padding: 50px 40px;
+    }
+
+    .activity-page {
+        margin: 20px auto;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    textarea#edit-activity, input#edit-due-date {
+        font-size: 18px;
+        padding: 14px;
+    }
+
+    .submit-button {
+        padding: 15px 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    main {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    textarea#edit-activity, input#edit-due-date {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 15px;
+    }
+}

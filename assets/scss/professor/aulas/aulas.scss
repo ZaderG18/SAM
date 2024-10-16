@@ -1,0 +1,342 @@
+/* Conteudo da Pagina */
+.containerfx {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Estilo geral das seções */
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section h2, .section h3, .section h4 {
+    color: #341E4E;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.section p, .section ul, .section select, .section textarea {
+    color: #616161;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Lista de Alunos Inscritos */
+.students-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.students-list ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.student-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.student-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Status das Atividades */
+.activities-status .sub-section {
+    margin-bottom: 20px;
+}
+
+.activities-status ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.activities-status ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.activities-status ul li a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-link {
+    background-color: #26A69A;
+}
+
+.feedback-link:hover {
+    background-color: #00796B;
+}
+
+.edit-link {
+    background-color: #FFA726;
+}
+
+.edit-link:hover {
+    background-color: #FB8C00;
+}
+
+.delete-link {
+    background-color: #EF5350;
+}
+
+.delete-link:hover {
+    background-color: #E53935;
+}
+
+/* Tarefas Atribuídas e Pendentes */
+.assigned-ttasks ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.assigned-tasks ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-buttons a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+/* Enviar Materiais Complementares */
+.additional-materials textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.additional-materials input[type="file"] {
+    display: none;
+}
+
+/* Comunicação Individual */
+.individual-communication .forum {
+    display: flex;
+    flex-direction: column;
+}
+
+.individual-communication select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background-color: white;
+    color: #616161;
+}
+
+.individual-communication .forum-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.individual-communication .forum-messages .message {
+    margin-bottom: 10px;
+}
+
+.individual-communication textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+/* Lançar Atividades */
+.launch-activities textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #26A69A;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+/* Botões */
+.btn, .btnarq {
+    padding: 10px 20px;
+    background-color: #26A69A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn:hover, .btnarq:hover {
+    background-color: #00796B;
+    transform: translateY(-2px);
+}
+
+#activity-file-name, #file-name {
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#activity-file-name:hover, #file-name:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    color: black;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .containerfx {
+        padding: 0 10px;
+    }
+
+    .section {
+        padding: 10px;
+    }
+
+    .activities-status ul li, .assigned-tasks ul li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .activities-status ul li a, .assigned-tasks ul li a {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section {
+        margin-bottom: 15px;
+        padding: 8px;
+    }
+
+    .activities-status ul li, .assigned-tasks ul li {
+        padding: 8px;
+    }
+
+    .activities-status ul li a, .assigned-tasks ul li a {
+        margin-top: 8px;
+        padding: 4px 8px;
+    }
+
+    activity-file-name
+
+    .btn, .btnarq {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 400px) {
+    .section h2, .section h3, .section h4 {
+        font-size: 1.2rem;
+    }
+
+    .section p, .section ul, .section select, .section textarea {
+        font-size: 0.8rem;
+    }
+
+    .activities-status ul li, .assigned-tasks ul li {
+        padding: 6px;
+    }
+
+    .activities-status ul li a, .assigned-tasks ul li a {
+        margin-top: 6px;
+        padding: 3px 6px;
+    }
+
+    .btn, .btnarq {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+}

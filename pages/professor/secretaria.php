@@ -1,31 +1,12 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
-    
+    <title>Secretaria</title>
+
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/secretaria/secretaria.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
@@ -101,8 +82,6 @@ if ($conn->connect_error) {
     </div>
 </header>
 
-
-
 <!--========== NAV ==========-->
 <div class="nav" id="navbar">
     <nav class="nav__container">
@@ -153,130 +132,102 @@ if ($conn->connect_error) {
     </nav>
 </div>
 
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
-        <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
-                </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
-            </div>
-
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
-                </div>
-            </div>
-
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
-                    </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
-                </div>
-
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
-
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
-
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
-            </div>
+<main>
+    <div class="containerpx">
+        <h2>Secretaria Acadêmica - Professores</h2>
+    
+        <!-- Sobre a Escola e a Equipe da Secretaria -->
+        <div class="section">
+            <h3>Sobre a Secretaria e Suporte ao Professor</h3>
+            <p>A Secretaria Acadêmica oferece suporte especializado aos professores para facilitar a gestão acadêmica e administrativa. Nossa equipe está disponível para atender demandas relacionadas a relatórios de desempenho, solicitação de documentos, e apoio ao planejamento de aulas. Estamos comprometidos em garantir que o corpo docente tenha os recursos necessários para uma experiência educacional eficiente e organizada.</p>
         </div>
-    </main>
+    
+        <!-- Horário de Atendimento -->
+        <div class="section">
+            <h3>Horário de Atendimento Exclusivo</h3>
+            <p>Segunda a Sexta-feira: 9h às 13h e 15h às 20h</p>
+            <p>Atendimento prioritário aos professores pelo email exclusivo: <strong>suporteprofessores@escola.com</strong></p>
+        </div>
+    
+        <!-- Prazo para Entrega de Documentos -->
+        <div class="section">
+            <h3>Prazo para Solicitação de Documentos</h3>
+            <p>Relatórios de Desempenho de Turmas: 3 dias úteis</p>
+            <p>Certificados de Participação em Eventos: 5 dias úteis</p>
+            <p>Solicitação de Documentos Administrativos: 7 dias úteis</p>
+        </div>
+    
+        <!-- Comunicados Gerais -->
+        <div class="section">
+            <h3>Comunicados Importantes</h3>
+            <p>
+            Prezados Professores,
+            <br><br>
+            Lembramos que o prazo para lançamento das notas do semestre é até (data de término). Pedimos que façam o envio dos relatórios de desempenho dos alunos dentro do prazo para evitar atrasos no processamento de informações.
+            <br><br>
+            Em caso de dúvidas, entrem em contato com a secretaria através do email <strong>suporteprofessores@escola.com</strong>.
+            <br><br>
+            Atenciosamente,
+            <br>
+            [Nome da Escola]
+            </p>
+        </div>
+    
+        <!-- Equipe da Secretaria -->
+        <div class="section">
+            <h3>Equipe de Suporte ao Professor</h3>
+            <p>Equipe responsável por atender os professores:</p>
+            <ul>
+            <li><strong>Maria Silva</strong> - Coordenadora de Suporte ao Professor | Email: maria@escola.com</li>
+            <li><strong>João Pereira</strong> - Atendimento de Demandas Acadêmicas | Email: joao@escola.com</li>
+            <li><strong>Ana Costa</strong> - Gestão de Documentos e Relatórios | Email: ana@escola.com</li>
+            </ul>
+        </div>
+    
+        <!-- Documentos Necessários -->
+        <div class="section">
+            <h3>Documentos Necessários para Solicitações</h3>
+            <p>Para solicitar documentos específicos, tenha os seguintes itens prontos:</p>
+            <ul>
+            <li>Relatórios de Desempenho: Solicitação formal via sistema.</li>
+            <li>Certificados de Eventos: Comprovante de participação no evento.</li>
+            <li>Documentação Administrativa: Documento de identificação (RG, CPF).</li>
+            </ul>
+        </div>
+    
+        <!-- Próximos Eventos -->
+        <div class="section">
+            <h3>Próximos Eventos para Professores</h3>
+            <ul>
+            <li>Workshop de Metodologias Ativas: 18/10/2024 às 14h.</li>
+            <li>Treinamento de Ferramentas Digitais: 25/10/2024 às 16h.</li>
+            <li>Encontro de Planejamento Semestral: 01/11/2024.</li>
+            </ul>
+        </div>
+    
+        <!-- FAQ -->
+        <div class="section">
+            <h3>Perguntas Frequentes (FAQ)</h3>
+            <ul>
+            <li><strong>Como solicito um relatório de desempenho da turma?</strong> <br> A solicitação deve ser feita através do sistema de gestão acadêmica.</li>
+            <li><strong>Como altero meu horário de aulas?</strong> <br> Entre em contato com a coordenação pelo email de suporte.</li>
+            <li><strong>Qual o prazo para envio de certificados de eventos?</strong> <br> O prazo é de 5 dias úteis após a solicitação.</li>
+            </ul>
+        </div>
+    
+        <!-- Link para Formulário de Suporte -->
+        <div class="section">
+            <h3>Formulário de Suporte</h3>
+            <a href="../../html/suporte/index.html" class="btn">Acessar Formulário de Suporte ao Professor</a>
+        </div>
+    </div>
+    
+</main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/secretaria/secretaria.js"></script>
 </body>
 </html>

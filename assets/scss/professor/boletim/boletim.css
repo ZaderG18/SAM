@@ -1,0 +1,173 @@
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select, .filters input {
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;
+  background-color: #edeef7;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-height: 400px; /* Limita a altura da tabela */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  color: #333;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+input[type=number], textarea {
+  width: 80px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  width: 120px;
+}
+
+.actions button {
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #45a049;
+}
+
+.actions .edit {
+  background-color: #f39c12;
+}
+
+.actions .edit:hover {
+  background-color: #e67e22;
+}
+
+.save-button, .send-button {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.save-button button, .send-button button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-button button:hover, .send-button button:hover {
+  background-color: #2980b9;
+}
+
+.send-button button {
+  background-color: #e74c3c;
+}
+
+.send-button button:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 95%;
+  }
+  .filters select, .filters input {
+    width: 180px;
+  }
+  input[type=number], textarea {
+    width: 70px;
+  }
+  textarea {
+    width: 110px;
+  }
+}
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filters select, .filters input {
+    width: 100%;
+  }
+  table, th, td {
+    font-size: 12px;
+  }
+  input[type=number], textarea {
+    width: 60px;
+  }
+  textarea {
+    width: 100px;
+  }
+  .save-button, .send-button {
+    text-align: center;
+    width: 100%;
+  }
+  .save-button button, .send-button button {
+    width: 100%;
+    padding: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+  th, td {
+    padding: 8px;
+  }
+  .actions button {
+    padding: 6px 10px;
+  }
+  .save-button button, .send-button button {
+    padding: 8px 16px;
+    width: 100%;
+  }
+}/*# sourceMappingURL=boletim.css.map */

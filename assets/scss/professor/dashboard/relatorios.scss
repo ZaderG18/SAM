@@ -1,0 +1,190 @@
+.main-content {
+    padding: 20px;
+    margin: auto;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-table th, .report-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.report-table td {
+    text-align: center;
+    color: #333;
+}
+
+.report-table th {
+    background-color: #4B0082; /* Dark purple color */
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.report-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.report-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4B0082; /* Dark purple color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: #3A0066; /* Darker purple */
+}
+
+.create-report {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.create-report button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4B0082; /* Dark purple color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-report button:hover {
+    background-color: #3A0066; /* Darker purple */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    text-align: right;
+}
+
+.form-actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4B0082; /* Dark purple color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-actions button:hover {
+    background-color: #3A0066; /* Darker purple */
+}
+
+.report-view {
+    display: none;
+}
+
+.report-view h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.report-view p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.report-view .close {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px;
+    }
+
+    .report-table th, .report-table td {
+        padding: 8px;
+    }
+
+    .actions button, .create-report button, .form-actions button {
+        padding: 8px 10px;
+        margin: 5px 0;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}

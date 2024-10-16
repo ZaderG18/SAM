@@ -1,0 +1,171 @@
+/* Conteudo da Pagina */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.activity-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 5px auto;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none; /* Remove o sublinhado */
+    color: #341e4e; /* Cor do texto */
+    font-size: 16px; /* Tamanho da fonte */
+    padding: 10px; /* Espaçamento interno */
+    transition: color 0.3s; /* Transição suave de cor */
+}
+
+.back-button:hover {
+    color: #6a4c93; /* Muda a cor ao passar o mouse */
+}
+
+.back-button i {
+    margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #341e4e;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #341e4e;
+}
+
+.due-date {
+    color: #888;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.activity-description p, .feedback-section p {
+    line-height: 1.6;
+    color: #000;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.file-upload-label {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #38095a; /* Cor primária suavizada */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-upload-label:hover {
+    background-color: #4b3767; /* Cor ao passar o mouse suavizada */
+}
+
+.file-upload-label i {
+    margin-right: 8px;
+}
+
+#file-upload {
+    display: none;
+}
+
+/* Seção de arquivo enviado */
+.uploaded-file-section input {
+    display: block;
+    width: 100%;
+    padding: 14px; /* Increased padding for better touch targets */
+    margin-top: 14px; /* Increased margin for better spacing */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    background-color: #f9f9f9; /* Light background color */
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition for border and background color */
+}
+
+.uploaded-file-section input:focus {
+    border-color: #6a4c93; /* Highlight border color on focus */
+    background-color: #fff; /* Change background color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(106, 76, 147, 0.5); /* Add subtle shadow on focus */
+}
+
+/* Estilos para textarea de feedback */
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #411c7c;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    resize: vertical;
+}
+
+/* Botão de feedback */
+#send-feedback {
+    margin-bottom: 20px;
+}
+
+/* Botão de download */
+#download-file {
+    margin-top: 10px;
+}
+
+/* Media Queries para responsividade */
+@media (min-width: 768px) {
+    .global-container {
+        flex-direction: row;
+    }
+
+    main {
+        padding: 50px 40px;
+        margin-left: 82px;
+    }
+
+    .activity-page {
+        margin: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    main {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .file-upload-label {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .uploaded-file-section input {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

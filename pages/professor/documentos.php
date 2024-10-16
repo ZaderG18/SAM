@@ -1,31 +1,12 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
-    
+    <title>Solicitação de Documentos</title>
+
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/documentos/documentos.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
@@ -101,8 +82,6 @@ if ($conn->connect_error) {
     </div>
 </header>
 
-
-
 <!--========== NAV ==========-->
 <div class="nav" id="navbar">
     <nav class="nav__container">
@@ -153,130 +132,66 @@ if ($conn->connect_error) {
     </nav>
 </div>
 
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
-        <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
-                </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
-            </div>
-
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
+<main>
+    <div class="form-container">
+        <!-- Coluna Esquerda -->
+        <div class="left-column">
+            <div class="box">
+                <h2>Solicitação de Documentos</h2>
+                <label for="documento">Selecione o Documento:</label>
+                <select id="documento" name="documento" class="caixa" required>
+                    <option value="">Selecione o tipo de documento</option>
+                    <option value="atestado">Atestado de Frequência</option>
+                    <option value="historico">Histórico Escolar</option>
+                    <option value="plano">Plano de Ensino</option>
+                    <option value="relatorio">Relatório de Desempenho</option>
+                </select>
+    
+                <label for="motivo">Motivo da Solicitação:</label>
+                <input type="text" id="motivo" name="motivo" class="caixa" required>
+    
+                <label for="protocolo">Consulta de Protocolo:</label>
+                <input type="text" id="protocolo" name="protocolo" class="caixa" required>
+                <p>Prazo para retirada dos documentos: até 3 dias úteis.</p>
+    
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="button" onclick="buscarProtocolo()">Buscar</button>
+                    <button type="submit">Enviar</button>
                 </div>
             </div>
-
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
-                    </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
-                </div>
-
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
-
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
-
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
+    
+            <div class="box">
+                <h2>Documentos Disponíveis</h2>
+                <label for="tipo-documento">Selecione o Tipo de Documento:</label>
+                <select id="tipo-documento" name="tipo-documento" class="caixa" required>
+                    <option value="">Selecione o tipo de documento</option>
+                    <option value="atestado">Atestado de Frequência</option>
+                    <option value="historico">Histórico Escolar</option>
+                    <option value="plano">Plano de Ensino</option>
+                    <option value="relatorio">Relatório de Desempenho</option>
+                </select>
+                <button type="button" onclick="gerarDocumento()">Gerar Documento</button>
             </div>
         </div>
-    </main>
+    
+        <!-- Coluna Direita -->
+        <div class="right-column">
+            <div class="box">
+                <h2>Informações Importantes</h2>
+                <p>Prazo para solicitação de documentos: 01/01/2024 a 31/12/2024.</p>
+                <p>Prazo para retirada dos documentos: até 3 dias úteis após a solicitação.</p>
+                <p>Para mais informações, consulte o guia disponível abaixo:</p>
+                <button onclick="window.location.href='#'" type="button">Guia de Solicitação de Documentos</button>
+            </div>
+        </div>
+    </div>
+    
+</main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/documentos/documentos.js"></script>
 </body>
 </html>

@@ -1,0 +1,98 @@
+.main-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 1 1 calc(33.333% - 20px);
+  background-color: #fff;
+  color: #666;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #341e4e;
+}
+
+.card .count {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666;
+}
+
+.events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.events-list li {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.events-list span {
+  font-weight: bold;
+  color: #341e4e;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 100%;
+  }
+  .card h3 {
+    font-size: 16px;
+  }
+  .card .count {
+    font-size: 20px;
+  }
+  .card p {
+    font-size: 12px;
+  }
+  .events-list li {
+    font-size: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .card h3 {
+    font-size: 14px;
+  }
+  .card .count {
+    font-size: 18px;
+  }
+  .card p {
+    font-size: 10px;
+  }
+  .events-list li {
+    font-size: 10px;
+  }
+}
+/* Responsiveness for charts */
+.card canvas {
+  width: 100% !important;
+  height: auto !important;
+}/*# sourceMappingURL=dashboard.css.map */

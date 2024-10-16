@@ -1,31 +1,12 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
-    
+    <title>FAQ - SAM</title>
+
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/faq/faq.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
@@ -101,8 +82,6 @@ if ($conn->connect_error) {
     </div>
 </header>
 
-
-
 <!--========== NAV ==========-->
 <div class="nav" id="navbar">
     <nav class="nav__container">
@@ -153,130 +132,61 @@ if ($conn->connect_error) {
     </nav>
 </div>
 
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
-        <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
+<main>
+    <div class="containerxx">
+        <h1 class="headerpx">FAQ - Perguntas Frequentes</h1>
+        <h2>Respostas para dúvidas comuns</h2>
+        
+        <ul class="faq-list">
+      
+            <!-- Pergunta 1 -->
+            <li class="faq-item">
+                <div class="faq-question">Como posso alterar meus dados pessoais?</div>
+                <div class="faq-answer">
+                    Para alterar seus dados pessoais, vá até o perfil de usuário clicando no ícone de perfil no topo da página. Lá, você pode atualizar suas informações como endereço, telefone e outros dados pessoais.
                 </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
-            </div>
-
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
+            </li>
+    
+            <!-- Pergunta 2 -->
+            <li class="faq-item">
+                <div class="faq-question">Onde encontro o feedback das minhas atividades?</div>
+                <div class="faq-answer">
+                    O feedback das suas atividades está disponível na aba "Feedback", onde você pode visualizar os comentários e notas dados pelos professores em relação às suas tarefas enviadas.
                 </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
+            </li>
+    
+            <!-- Pergunta 3 -->
+            <li class="faq-item">
+                <div class="faq-question">Como faço uma solicitação de documentos?</div>
+                <div class="faq-answer">
+                    Para solicitar documentos, vá até a aba "Documentos" no menu lateral e preencha o formulário de solicitação com o tipo de documento necessário. O status do seu pedido poderá ser acompanhado na mesma seção.
                 </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
+            </li>
+    
+            <!-- Pergunta 4 -->
+            <li class="faq-item">
+                <div class="faq-question">O que devo fazer se esquecer minha senha?</div>
+                <div class="faq-answer">
+                    Se você esquecer sua senha, clique na opção "Esqueci minha senha" na tela de login. Você receberá um e-mail com as instruções para redefini-la.
                 </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
+            </li>
+    
+            <!-- Pergunta 5 -->
+            <li class="faq-item">
+                <div class="faq-question">Como entro em contato com a secretaria?</div>
+                <div class="faq-answer">
+                    Para entrar em contato com a secretaria, utilize o formulário de suporte disponível na aba "Suporte" ou envie um e-mail diretamente para secretaria@escola.com.br.
                 </div>
-            </div>
-
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
-                    </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
-                </div>
-
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
-
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
-
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </main>
+            </li>
+        </ul>
+    </div>
+    
+</main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/faq/faq.js"></script>
 </body>
 </html>

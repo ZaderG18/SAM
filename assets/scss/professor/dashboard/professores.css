@@ -1,0 +1,200 @@
+@charset "UTF-8";
+.main-content {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #f4f4f9;
+  max-width: 1200px; /* Limita a largura máxima para melhor responsividade */
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+/* Responsividade para a barra de pesquisa */
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+/* Estilo do campo de pesquisa */
+.search-bar input[type=text] {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  padding-right: 40px; /* Espaço para o ícone */
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+/* Efeito de foco no campo de pesquisa */
+.search-bar input[type=text]:focus {
+  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+  outline: none;
+}
+
+/* Estilo do seletor de turma */
+.search-bar select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 200px;
+  box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+/* Responsividade para listas de alunos */
+.teacher-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Estilo dos cartões de alunos */
+.teacher-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+/* Efeito de hover nos cartões */
+.teacher-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo das imagens dos alunos */
+.teacher-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #6a0dad;
+}
+
+/* Estilo dos nomes dos alunos */
+.teacher-card h3 {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Estilo das informações adicionais */
+.teacher-card p {
+  color: #555;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+/* Estilo do botão "Ver Detalhes" */
+.teacher-card a {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #6a0dad;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+  box-shadow: 0 3px 6px rgba(106, 13, 173, 0.3);
+}
+
+.teacher-card a:hover {
+  background-color: #4b0082;
+}
+
+/* Estilo da paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.pagination button {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: #4b0082;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsividade geral */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch; /* Alinha os itens ao longo do eixo principal */
+    gap: 15px;
+  }
+  .teacher-card {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .teacher-card h3 {
+    font-size: 16px;
+  }
+  .teacher-card p {
+    font-size: 12px;
+  }
+  .pagination button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+/* Adicionando mais pontos de interrupção para melhor responsividade */
+@media (max-width: 480px) {
+  .teacher-card {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .teacher-card h3 {
+    font-size: 14px;
+  }
+  .teacher-card p {
+    font-size: 10px;
+  }
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+/* Adicionando ponto de interrupção para telas muito pequenas */
+@media (max-width: 320px) {
+  .teacher-card {
+    padding: 6px;
+    font-size: 10px;
+  }
+  .teacher-card h3 {
+    font-size: 12px;
+  }
+  .teacher-card p {
+    font-size: 8px;
+  }
+  .pagination button {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}/*# sourceMappingURL=professores.css.map */

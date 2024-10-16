@@ -1,36 +1,20 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
+    <title>Detalhes - Materias</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/detalhes/detalhes_materias.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -153,130 +137,149 @@ if ($conn->connect_error) {
     </nav>
 </div>
 
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
+
+<main>
         <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
-                </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
-            </div>
+            <h1>Detalhes da Matéria</h1>
 
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
+            <div class="info-section">
+                <div class="info-header">
+                    <div>
+                        <p>Nome: <strong>Programação Avançada</strong></p>
+                    </div>
+                    <div>
+                        <p>Código: <strong>CS201</strong></p>
+                    </div>
+                    <div>
+                        <p>Semestre: <strong>2º Semestre - 2024</strong>
+                    </div>
+                    <div>
+                        <p>Professor: <strong>Maria Silva</strong></p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
-                    </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
-                </div>
+            <div class="evaluations">
+                <h2 class="section-title">Avaliações</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Data de Entrega</th>
+                            <th>Peso</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prova 1</td>
+                            <td>2024-05-10</td>
+                            <td>30%</td>
+                            <td><button class="btn secondary" onclick="openModal('editEvaluationModal')">Editar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Projeto Final</td>
+                            <td>2024-06-15</td>
+                            <td>50%</td>
+                            <td><button class="btn secondary" onclick="openModal('editEvaluationModal')">Editar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn" onclick="openModal('addEvaluationModal')">Adicionar Avaliação</button>
+            </div>
 
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
+            <div class="resources">
+                <h2 class="section-title">Material Complementar</h2>
+                <p>Recursos disponíveis: <em>Slides, Vídeos, Apostilas</em></p>
+                <button class="btn" onclick="openModal('addResourceModal')">Adicionar Novo Material</button>
+            </div>
 
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
-
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
+            <div class="classes">
+                <h2 class="section-title">Turmas Associadas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Turma</th>
+                            <th>Número de Alunos</th>
+                            <th>Horário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Turma A</td>
+                            <td>25</td>
+                            <td>Segunda - 14:00</td>
+                            <td><button class="btn secondary" onclick="openModal('detailsClassModal', 'Turma A', 25, 'Segunda - 14:00')">Ver Detalhes</button></td>
+                        </tr>
+                        <tr>
+                            <td>Turma B</td>
+                            <td>30</td>
+                            <td>Quarta - 10:00</td>
+                            <td><button class="btn secondary" onclick="openModal('detailsClassModal', 'Turma B', 30, 'Quarta - 10:00')">Ver Detalhes</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </main>
+
+        <!-- Modal para Adicionar Avaliação -->
+        <div id="addEvaluationModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('addEvaluationModal')">&times;</span>
+                <h2>Adicionar Avaliação</h2>
+                <input type="text" id="evaluationTitle" placeholder="Título da Avaliação" required>
+                <input type="date" id="evaluationDate" placeholder="Data de Entrega" required>
+                <input type="number" id="evaluationWeight" placeholder="Peso (%)" required>
+                <button class="btn" onclick="addEvaluation()">Salvar Avaliação</button>
+            </div>
+        </div>
+
+        <!-- Modal para Editar Avaliação -->
+        <div id="editEvaluationModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editEvaluationModal')">&times;</span>
+                <h2>Editar Avaliação</h2>
+                <input type="text" id="editEvaluationTitle" placeholder="Título da Avaliação" required>
+                <input type="date" id="editEvaluationDate" placeholder="Data de Entrega" required>
+                <input type="number" id="editEvaluationWeight" placeholder="Peso (%)" required>
+                <button class="btn" onclick="saveEditedEvaluation()">Salvar Alterações</button>
+            </div>
+        </div>
+
+        <!-- Modal para Adicionar Novo Material -->
+        <div id="addResourceModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('addResourceModal')">&times;</span>
+                <h2>Adicionar Novo Material</h2>
+                <input type="text" id="resourceTitle" placeholder="Título do Material" required>
+                <input type="text" id="resourceLink" placeholder="Link do Material" required>
+                <button class="btn" onclick="addResource()">Salvar Material</button>
+            </div>
+        </div>
+
+        <!-- Modal para Ver Detalhes da Turma -->
+        <div id="detailsClassModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('detailsClassModal')">&times;</span>
+                <h2>Detalhes da Turma</h2>
+                <p><strong>Nome da Turma:</strong> <span id="className"></span></p>
+                <p><strong>Número de Alunos:</strong> <span id="studentCount"></span></p>
+                <p><strong>Horário:</strong> <span id="classSchedule"></span></p>
+                <p><strong>Professor:</strong> <span id="classTeacher">Maria Silva</span></p>
+                
+            </div>
+        </div>
+
+
+</main>
+
+
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/detalhes/detalhes_materias.js"></script>
 </body>
 </html>

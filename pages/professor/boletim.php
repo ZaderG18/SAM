@@ -1,31 +1,12 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
+    <title>Boletim</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/boletim/boletim.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
@@ -101,8 +82,6 @@ if ($conn->connect_error) {
     </div>
 </header>
 
-
-
 <!--========== NAV ==========-->
 <div class="nav" id="navbar">
     <nav class="nav__container">
@@ -152,131 +131,139 @@ if ($conn->connect_error) {
         </a>
     </nav>
 </div>
-
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
-        <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
-                </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
-            </div>
+<main>
 
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
-                </div>
-            </div>
+    <div class="container">
+        <h1>Lançamento de Notas</h1>
 
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
-                    </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
-                </div>
+        <!-- Filtros -->
+        <div class="filters">
+            <select id="modulo">
+                <option value="">Selecione o Módulo</option>
+                <option value="modulo1">Módulo 1</option>
+                <option value="modulo2">Módulo 2</option>
+            </select>
 
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
+            <select id="turma">
+                <option value="">Selecione a Turma</option>
+                <option value="turma1">Turma 1</option>
+                <option value="turma2">Turma 2</option>
+            </select>
 
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
+            <select id="materia">
+                <option value="">Selecione a Matéria</option>
+                <option value="matematica">Banco de dados</option>
+                <option value="portugues">Programação</option>
+            </select>
 
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
+            <select id="turno">
+                <option value="">Selecione o Turno</option>
+                <option value="manha">Manhã</option>
+                <option value="tarde">Tarde</option>
+            </select>
 
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
+            <select id="semestre">
+                <option value="">Selecione o Semestre</option>
+                <option value="1sem">1º Semestre</option>
+                <option value="2sem">2º Semestre</option>
+            </select>
 
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
-            </div>
+            <input type="date" id="filtro-dia">
         </div>
-    </main>
+
+        <!-- Tabela de Notas -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Nome do Aluno</th>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Média Final</th>
+                        <th>Recuperação</th>
+                        <th>Média com Recuperação</th>
+                        <th>Observações</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>João Silva</td>
+                        <td><input type="number" id="nota1-1" min="0" max="10"></td>
+                        <td><input type="number" id="nota2-1" min="0" max="10"></td>
+                        <td><input type="number" id="media-1" readonly></td>
+                        <td><input type="number" id="recuperacao-1" min="0" max="10"></td>
+                        <td><input type="number" id="media-rec-1" readonly></td>
+                        <td><textarea id="observacoes-1" placeholder="Observações"></textarea></td>
+                        <td class="actions">
+                            <button class="edit" onclick="calcularMedia(1)">Calcular Média</button>
+                            <button class="edit" onclick="editarNota(1)">Editar Nota</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Souza</td>
+                        <td><input type="number" id="nota1-2" min="0" max="10"></td>
+                        <td><input type="number" id="nota2-2" min="0" max="10"></td>
+                        <td><input type="number" id="media-2" readonly></td>
+                        <td><input type="number" id="recuperacao-2" min="0" max="10"></td>
+                        <td><input type="number" id="media-rec-2" readonly></td>
+                        <td><textarea id="observacoes-2" placeholder="Observações"></textarea></td>
+                        <td class="actions">
+                            <button class="edit" onclick="calcularMedia(2)">Calcular Média</button>
+                            <button class="edit" onclick="editarNota(2)">Editar Nota</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Pedro Lima</td>
+                        <td><input type="number" id="nota1-3" min="0" max="10"></td>
+                        <td><input type="number" id="nota2-3" min="0" max="10"></td>
+                        <td><input type="number" id="media-3" readonly></td>
+                        <td><input type="number" id="recuperacao-3" min="0" max="10"></td>
+                        <td><input type="number" id="media-rec-3" readonly></td>
+                        <td><textarea id="observacoes-3" placeholder="Observações"></textarea></td>
+                        <td class="actions">
+                            <button class="edit" onclick="calcularMedia(3)">Calcular Média</button>
+                            <button class="edit" onclick="editarNota(3)">Editar Nota</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Maria Oliveira</td>
+                        <td><input type="number" id="nota1-4" min="0" max="10"></td>
+                        <td><input type="number" id="nota2-4" min="0" max="10"></td>
+                        <td><input type="number" id="media-4" readonly></td>
+                        <td><input type="number" id="recuperacao-4" min="0" max="10"></td>
+                        <td><input type="number" id="media-rec-4" readonly></td>
+                        <td><textarea id="observacoes-4" placeholder="Observações"></textarea></td>
+                        <td class="actions">
+                            <button class="edit" onclick="calcularMedia(4)">Calcular Média</button>
+                            <button class="edit" onclick="editarNota(4)">Editar Nota</button>
+                        </td>
+                    </tr>
+                    <!-- Adicione mais alunos conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botões de Ações -->
+        <div class="save-button">
+            <button onclick="salvarNotas()">Salvar Notas</button>
+        </div>
+
+        <div class="send-button">
+            <button onclick="enviarParaCoordenacao()">Enviar para Coordenação/Diretoria</button>
+        </div>
+    </div>
+</main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/boletim/boletim.js"></script>
 </body>
 </html>

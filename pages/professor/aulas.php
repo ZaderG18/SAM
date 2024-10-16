@@ -1,31 +1,12 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao SAM</title>
+    <title>Aulas</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/home/style.css">
+    <link rel="stylesheet" href="../../assets/css/aulas/aulas.css">
     <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
  
@@ -101,8 +82,6 @@ if ($conn->connect_error) {
     </div>
 </header>
 
-
-
 <!--========== NAV ==========-->
 <div class="nav" id="navbar">
     <nav class="nav__container">
@@ -153,130 +132,141 @@ if ($conn->connect_error) {
     </nav>
 </div>
 
-
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
     <main>
-        <div class="container">
-            <!-- Banner de saudação -->
-            <div class="banner">
-                <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
-                </div>
-                <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
+        <div class="containerfx">
+            <!-- Lista de Alunos Inscritos -->
+            <div class="section students-list">
+                <h2>Alunos Inscritos</h2>
+                <ul>
+                    <li>
+                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 1" class="student-img">
+                        <div class="student-info">
+                            <span>Aluno 1</span>
+                            <span>aluno1@example.com</span>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 2" class="student-img">
+                        <div class="student-info">
+                            <span>Aluno 2</span>
+                            <span>aluno2@example.com</span>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 3" class="student-img">
+                        <div class="student-info">
+                            <span>Aluno 3</span>
+                            <span>aluno3@example.com</span>
+                        </div>
+                    </li>
+                    <!-- Adicione mais alunos conforme necessário -->
+                </ul>
             </div>
 
-            <!-- Cards principais -->
-            <div class="cards">
-                <div class="card">
-                    <a href="../../html/frequencia/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_verde.png" alt="Chamada">
-                    </a>
-                    <h3>Chamada</h3>
-                    <p>Gerencie a chamada dos alunos.</p>
+            <!-- Alunos que Fizeram e Não Fizeram Atividades -->
+            <div class="section activities-status">
+                <h3>Status das Atividades</h3>
+                <div class="sub-section">
+                    <h4>Alunos que Fizeram</h4>
+                    <ul>
+                        <li>Aluno 1 <a href="../../html/feedback/index.html" class="feedback-link">Enviar Feedback</a></li>
+                        <li>Aluno 2 <a href="../../html/feedback/index.html" class="feedback-link">Enviar Feedback</a></li>
+                        <!-- Adicione mais alunos conforme necessário -->
+                    </ul>
                 </div>
-                <div class="card">
-                    <a href="../../html/boletim/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_azul.png" alt="Lançamento de Notas">
-                    </a>
-                    <h3>Lançamento de Notas</h3>
-                    <p>Registre as notas dos alunos.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/materias/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_amarelo.png" alt="Disciplinas">
-                    </a>
-                    <h3>Disciplinas</h3>
-                    <p>Gerencie suas disciplinas.</p>
-                </div>
-                <div class="card">
-                    <a href="../../html/secretaria/index.html">
-                        <img src="../../assets/img/home/fotos/circulo_rosa.png" alt="Secretaria">
-                    </a>
-                    <h3>Secretaria</h3>
-                    <p>Acesse informações da secretaria.</p>
+                <div class="sub-section">
+                    <h4>Alunos que Não Fizeram</h4>
+                    <ul>
+                        <li>Aluno 3</li>
+                        <li>Aluno 4</li>
+                        <!-- Adicione mais alunos conforme necessário -->
+                    </ul>
                 </div>
             </div>
 
-            <!-- Calendário -->
-            <div class="sections">
-                <div class="calendar">
-                    <h3>Calendário</h3>
-                    <div class="calendar-header">
-                        <button id="prevMonth">Anterior</button>
-                        <h3 id="monthYear"></h3>
-                        <button id="nextMonth">Próximo</button>
+            <!-- Tarefas Atribuídas e Pendentes -->
+            <div class="section assigned-tasks">
+                <h4>Tarefas Atribuídas e Pendentes</h4>
+                <ul>
+                    <li>
+                        <span>Atividade 1</span>
+                        <div class="task-buttons">
+                            <a href="../../html/atividade/index.html" class="edit-link">Editar</a>
+                            <a href="#" class="delete-link">Excluir</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span>Atividade 2</span>
+                        <div class="task-buttons">
+                            <a href="../../html/atividade/index.html" class="edit-link">Editar</a>
+                            <a href="#" class="delete-link">Excluir</a>
+                        </div>
+                    </li>
+                    <!-- Adicione mais atividades conforme necessário -->
+                </ul>
+            </div>
+
+            <!-- Enviar Materiais Complementares -->
+            <div class="section additional-materials">
+                <h4>Enviar Materiais Complementares</h4>
+                <textarea rows="2" placeholder="Nome do arquivo..."></textarea>
+                <input type="file" id="material-file" style="display: none;">
+                <button class="btn" id="send-material-btn">Enviar Material</button>
+                <label for="material-file" class="btnarq">Escolher Arquivo</label>
+                <span id="file-name" ></span>
+            </div>
+
+            <!-- Comunicação Individual -->
+            <div class="section individual-communication">
+                <h4>Comunicação Individual</h4>
+                <div class="forum">
+                    <select>
+                        <option value="aluno1">Aluno 1</option>
+                        <option value="aluno2">Aluno 2</option>
+                        <option value="aluno3">Aluno 3</option>
+                        <!-- Adicione mais alunos conforme necessário -->
+                    </select>
+                    <div class="forum-messages">
+                        <div class="message">
+                            <p><strong>Aluno 1:</strong> Mensagem do aluno 1</p>
+                        </div>
+                        <div class="message">
+                            <p><strong>Aluno 2:</strong> Mensagem do aluno 2</p>
+                        </div>
+                        <!-- Adicione mais mensagens conforme necessário -->
                     </div>
-                    <div class="calendar-weekdays">
-                        <div>Dom</div>
-                        <div>Seg</div>
-                        <div>Ter</div>
-                        <div>Qua</div>
-                        <div>Qui</div>
-                        <div>Sex</div>
-                        <div>Sáb</div>
-                    </div>
-                    <div class="calendar-days" id="calendarDays"></div>
+                    <textarea rows="4" placeholder="Digite sua resposta..."></textarea>
+                    <button class="btn" id="send-reply-btn">Enviar Resposta</button>
                 </div>
+            </div>
 
-                <!-- Perfil da professora -->
-                <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
-                    <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
-                </div>
-
-                <!-- Tarefas Pendentes -->
-                <div class="section">
-                    <h3>Tarefas Pendentes</h3>
-                    <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Horário de Aula -->
-                <div class="section">
-                    <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
-                </div>
-
-                <!-- Chamadas Pendentes -->
-                <div class="section">
-                    <h3>Chamadas Pendentes</h3>
-                    <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Feed de atualizações recentes -->
-                <div class="feed">
-                    <h3>Atualizações Recentes</h3>
-                    <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
-                    </ul>
-                </div>
+            <!-- Lançar Atividades -->
+            <div class="section launch-activities">
+                <h4>Lançar Atividades</h4>
+                <textarea rows="2" placeholder="Nome da atividade..."></textarea>
+                <textarea rows="4" placeholder="Descrição da atividade..."></textarea>
+                <input type="file" id="activity-file" style="display: none;">
+                <button class="btn" id="launch-activity-btn">Lançar Atividade</button>
+                <label for="activity-file" class="btnarq">Escolher Arquivo</label>
+                <span id="activity-file-name"></span>
             </div>
         </div>
+
+        <div id="delete-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h4>Tem certeza que deseja excluir a atividade?</h4>
+                <button class="btn" id="confirm-delete-btn">Excluir</button>
+                <button class="btn" id="cancel-delete-btn">Cancelar</button>
+            </div>
+        </div>
+       
     </main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/home.js"></script>
+    <script src="../../assets/js/aulas/aulas.js"></script>
 </body>
 </html>
