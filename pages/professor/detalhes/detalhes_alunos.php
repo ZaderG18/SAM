@@ -6,12 +6,12 @@
     <title>Detalhes - Alunos</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/detalhes/detalhes_alunos.css">
-    <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
+    <link rel="stylesheet" href="../../../assets/scss/professor/detalhes/detalhes_alunos.css">
+    <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../../assets/scss/global/estilogeral.css">
  
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
+    <link rel="icon" href="../../../assets/img/Group 4.png" type="image/png">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -38,7 +38,7 @@
             <div class="header__dropdown-content">
                 <a href="#" class="header__dropdown-item">
                     <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Notificação 1">
+                        <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Notificação 1">
                         <div>
                             <h4>Notificação 1</h4>
                             <p>Descrição da notificação 1</p>
@@ -47,7 +47,7 @@
                 </a>
                 <a href="#" class="header__dropdown-item">
                     <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_enrico.png" alt="Notificação 2">
+                        <img src="../../../assets/img/home/fotos/img_enrico.png" alt="Notificação 2">
                         <div>
                             <h4>Notificação 2</h4>
                             <p>Descrição da notificação 2</p>
@@ -56,7 +56,7 @@
                 </a>
                 <a href="#" class="header__dropdown-item">
                     <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_neide.png" alt="Notificação 3">
+                        <img src="../../../assets/img/home/fotos/img_neide.png" alt="Notificação 3">
                         <div>
                             <h4>Notificação 3</h4>
                             <p>Descrição da notificação 3</p>
@@ -66,15 +66,15 @@
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
+            <img src="../../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
             <div class="header__dropdown-content">
-                <a href="../../html/perfil/index.html" class="header__dropdown-item">
+                <a href="perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
                 </a>
-                <a href="../../html/configuracoes/index.html" class="header__dropdown-item">
+                <a href="configuracoes.php" class="header__dropdown-item">
                     <i class='bx bx-cog'></i> Configurações
                 </a>
-                <a href="../../html/faq/index.html" class="header__dropdown-item">
+                <a href="faq.php" class="header__dropdown-item">
                     <i class='bx bx-help-circle'></i> Ajuda
                 </a>
             </div>
@@ -92,45 +92,45 @@
     <nav class="nav__container">
         <div>
             <a href="#" class="nav__link nav__logo">
-                <img src="../../assets/img/Group 4.png" alt="Logo SAM" class="nav__logo-img">
+                <img src="../../../assets/img/Group 4.png" alt="Logo SAM" class="nav__logo-img">
                 <span class="nav__logo-name">SAM</span>
             </a>
             <div class="nav__list">
                 <div class="nav__items">
                     <h3 class="nav__subtitle">Home</h3>
-                    <a href="../../html/home/home.html" class="nav__link">
+                    <a href="home_professor.php" class="nav__link">
                         <i class='bx bx-home nav__icon'></i>
                         <span class="nav__name">Home</span>
                     </a>
-                    <a href="../../html/historico/index.html" class="nav__link active">
+                    <a href="historico.php" class="nav__link active">
                         <i class='bx bx-history nav__icon'></i>
                         <span class="nav__name">Histórico</span>
                     </a>
-                    <a href="../../html/documentos/index.html" class="nav__link">
+                    <a href="documentos.php" class="nav__link">
                         <i class='bx bx-file nav__icon'></i>
                         <span class="nav__name">Documentos</span>
                     </a>
-                    <a href="../../html/calendario/index.html" class="nav__link">
+                    <a href="calendario.php" class="nav__link">
                         <i class='bx bx-calendar nav__icon'></i>
                         <span class="nav__name">Cronograma</span>
                     </a>
-                    <a href="../../html/enquetes/index.html" class="nav__link">
+                    <a href="enquetes.php" class="nav__link">
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
-                    <a href="../../html/chat/index.html" class="nav__link">
+                    <a href="chat.php" class="nav__link">
                         <i class='bx bx-chat nav__icon'></i>
                         <span class="nav__name">Chat</span>
                     </a>
                     <h2 class="nav__subtitle">Orientador</h2>
-                    <a href="../../html/dashboard/index.html" class="nav__link">
+                    <a href="dashboard/dashboard.php" class="nav__link">
                         <i class='bx bx-bar-chart-alt-2 nav__icon'></i>
                         <span class="nav__name">Dashboard</span>
                     </a>
                 </div>
             </div>
         </div>
-        <a href="../../html/login/login.html" class="nav__link nav__logout">
+        <a href="../../php/login/logout.php" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon'></i>
             <span class="nav__name">Sair</span>
         </a>
@@ -249,7 +249,7 @@
 </main>
 
     <!-- Scripts -->
-    <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/detalhes/detalhes_aluno.js"></script>
+    <script src="../../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../../assets/js/professor/detalhes/detalhes_aluno.js"></script>
 </body>
 </html>

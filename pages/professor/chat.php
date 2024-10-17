@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <!--CSS-->
-    <link rel="stylesheet" href="../../assets/css/chat/tailwindcss-colors.css">
-    <link rel="stylesheet" href="../../assets/css/chat/style.css">
+    <link rel="stylesheet" href="../../assets/scss/professor/chat/tailwindcss-colors.css">
+    <link rel="stylesheet" href="../../assets/scss/professor/chat/style.css">
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
     
@@ -30,7 +30,7 @@
                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
                         </button>
                         <ul class="chat-sidebar-profile-dropdown">
-                            <li><a href="../../html/home/home.html"><i class="ri-logout-box-line"></i> Sair</a></li>
+                            <li><a href="home_professor.php"><i class="ri-logout-box-line"></i> Sair</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -550,6 +550,6 @@
     </section>
     <!-- Final: Chat -->
     
-    <script src="../../assets/js/chat/script.js"></script>
+    <script src="../../assets/js/professor/chat/script.js"></script>
 </body>
 </html>

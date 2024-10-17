@@ -195,11 +195,11 @@ if (!empty($fotoNome)) {
                     <h4>Atividades</h4>
                     <div class="item activity-item">
                         <span>Exercício 1: Resolver equações lineares</span>
-                        <a href="../../html/atividade/index.html">Fazer</a>
+                        <a href="atividade.php">Fazer</a>
                     </div>
                     <div class="item activity-item">
                         <span>Exercício 2: Análise de figuras geométricas</span>
-                        <a href="../../html/atividade/index.html">Fazer</a>
+                        <a href="atividade.php">Fazer</a>
                     </div>
                 </div>
 
@@ -208,11 +208,11 @@ if (!empty($fotoNome)) {
                     <h4>Atividades Não Entregues e Pendentes</h4>
                     <div class="item">
                         <span>Exercício 3: Problemas de proporções</span>
-                        <a href="../../html/atividade/index.html">Fazer</a>
+                        <a href="atividade.php">Fazer</a>
                     </div>
                     <div class="item">
                         <span>Exercício 4: Teorema de Pitágoras</span>
-                        <a href="../../html/atividade/index.html">Fazer</a>
+                        <a href="atividade.php">Fazer</a>
                     </div>
                 </div>
 
@@ -221,11 +221,11 @@ if (!empty($fotoNome)) {
                     <h4>Feedback do Professor</h4>
                     <div class="item feedback-item">
                         <span>Exercício 1: Resolver equações lineares</span>
-                        <a href="../../html/feedback/index.html">Ver Feedback</a>
+                        <a href="feedback.php">Ver Feedback</a>
                     </div>
                     <div class="item feedback-item">
                         <span>Exercício 2: Análise de figuras geométricas</span>
-                        <a href="../../html/feedback/index.html">Ver Feedback</a>
+                        <a href="feedback.php">Ver Feedback</a>
                     </div>
                 </div>
 

@@ -6,9 +6,9 @@
     <title>Matérias</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/materias/materias.css">
-    <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/css/global/estilogeral.css">
+    <link rel="stylesheet" href="../../assets/scss/professor/materias/materias.css">
+    <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
  
     <!-- Favicon -->
     <link rel="icon" href="../../assets/img/Group 4.png" type="image/png">
@@ -65,13 +65,13 @@
         <div class="header__dropdown">
             <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
             <div class="header__dropdown-content">
-                <a href="../../html/perfil/index.html" class="header__dropdown-item">
+                <a href="perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
                 </a>
-                <a href="../../html/configuracoes/index.html" class="header__dropdown-item">
+                <a href="configuracoes.php" class="header__dropdown-item">
                     <i class='bx bx-cog'></i> Configurações
                 </a>
-                <a href="../../html/faq/index.html" class="header__dropdown-item">
+                <a href="faq.php" class="header__dropdown-item">
                     <i class='bx bx-help-circle'></i> Ajuda
                 </a>
             </div>
@@ -93,39 +93,39 @@
             <div class="nav__list">
                 <div class="nav__items">
                     <h3 class="nav__subtitle">Home</h3>
-                    <a href="../../html/home/home.html" class="nav__link">
+                    <a href="home_professor.php" class="nav__link">
                         <i class='bx bx-home nav__icon'></i>
                         <span class="nav__name">Home</span>
                     </a>
-                    <a href="../../html/historico/index.html" class="nav__link active">
+                    <a href="historico.php" class="nav__link active">
                         <i class='bx bx-history nav__icon'></i>
                         <span class="nav__name">Histórico</span>
                     </a>
-                    <a href="../../html/documentos/index.html" class="nav__link">
+                    <a href="documentos.php" class="nav__link">
                         <i class='bx bx-file nav__icon'></i>
                         <span class="nav__name">Documentos</span>
                     </a>
-                    <a href="../../html/calendario/index.html" class="nav__link">
+                    <a href="calendario.php" class="nav__link">
                         <i class='bx bx-calendar nav__icon'></i>
                         <span class="nav__name">Cronograma</span>
                     </a>
-                    <a href="../../html/enquetes/index.html" class="nav__link">
+                    <a href="enquetes.php" class="nav__link">
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
-                    <a href="../../html/chat/index.html" class="nav__link">
+                    <a href="chat.php" class="nav__link">
                         <i class='bx bx-chat nav__icon'></i>
                         <span class="nav__name">Chat</span>
                     </a>
                     <h2 class="nav__subtitle">Orientador</h2>
-                    <a href="../../html/dashboard/index.html" class="nav__link">
+                    <a href="dashboard/dashboard.php" class="nav__link">
                         <i class='bx bx-bar-chart-alt-2 nav__icon'></i>
                         <span class="nav__name">Dashboard</span>
                     </a>
                 </div>
             </div>
         </div>
-        <a href="../../html/login/login.html" class="nav__link nav__logout">
+        <a href="../../php/login/logout.php" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon'></i>
             <span class="nav__name">Sair</span>
         </a>
@@ -140,7 +140,7 @@
             <img src="../../assets/img/home/cards/aula_01.jpg" alt="Matéria 1">
             <h3>Matemática na programação</h3>
             <p>Professores: João, Maria</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------- Card 2 ---------------------------------->
@@ -148,7 +148,7 @@
             <img src="../../assets/img/home/cards/aula_02.jpg" alt="Matéria 2">
             <h3>Redes de Internet</h3>
             <p>Professores: Carla, Pedro</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
 
         <!-------------------------- Card 3 --------------------------------->
@@ -156,7 +156,7 @@
             <img src="../../assets/img/home/cards/aula_03.jpg" alt="Matéria 3">
             <h3>Algoritmos Avançados</h3>
             <p>Professores: Lucas, Ana</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
 
         <!---------------------------- Card 4 -------------------------------->
@@ -164,7 +164,7 @@
             <img src="../../assets/img/home/cards/aula_04.jpg" alt="Matéria 4">
             <h3>Desenvolvimento Web</h3>
             <p>Professores: Fernanda, Paulo</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------------- Card 5 ------------------------------>
@@ -172,7 +172,7 @@
             <img src="../../assets/img/home/cards/aula_05.jpg" alt="Matéria 5">
             <h3>Banco de Dados</h3>
             <p>Professores: Beatriz, Carlos</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
 
         <!------------------------------ Card 6 ----------------------------->
@@ -180,7 +180,7 @@
             <img src="../../assets/img/home/cards/aula_06.jpg" alt="Matéria 6">
             <h3>Análises de Projetos</h3>
             <p>Professores: Rafael, Juliana</p>
-            <a href="../../html/aulas/index.html" class="start-btn">Entrar</a>
+            <a href="aula.php" class="start-btn">Entrar</a>
         </div>
     </div>
     
@@ -188,6 +188,6 @@
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/materias/materias.js"></script>
+    <script src="../../assets/js/professor/materias/materias.js"></script>
 </body>
 </html>
