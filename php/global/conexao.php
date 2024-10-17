@@ -244,6 +244,21 @@ $tableQueries = [
     data_conclusao DATE DEFAULT NULL,
     CONSTRAINT fk_aluno_id FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
     CONSTRAINT fk_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
+)",
+    "rematricula" => "CREATE TABLE rematricula (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    aluno_id INT NOT NULL,
+    data_rematricula DATE NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'pendente',
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id)
+)",
+    "declaracao" => "CREATE TABLE declaracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_declaracao VARCHAR(50),
+    motivo TEXT,
+    protocolo VARCHAR(50) UNIQUE,
+    data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pendente', 'pronto') DEFAULT 'pendente'
 )"
 ];
 

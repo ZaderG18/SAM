@@ -4,6 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: validar.php');
     exit();
 }
+require_once '../../php/professor/home.php';
 $user = $_SESSION['user'];
 
 $host = "localhost";
@@ -160,7 +161,7 @@ if ($conn->connect_error) {
             <!-- Banner de saudação -->
             <div class="banner">
                 <div>
-                    <h1>Bem-vindo, Professora Luana!</h1>
+                    <h1>Bem-vindo, <?php echo $denominacao. " " . htmlspecialchars($user['nome'])?>!</h1>
                     <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
                 </div>
                 <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
@@ -223,11 +224,11 @@ if ($conn->connect_error) {
                 <div class="profile">
                     <h3>Dados da Professora</h3>
                     <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Perfil da Professora">
-                    <h2>Luana Silva</h2>
+                    <h2><?php echo htmlspecialchars($user['nome']);?></h2>
                     <p>Professora de Matemática</p>
-                    <p>Matrícula: 67890</p>
-                    <p>Email: luana@example.com</p>
-                    <p>Telefone: (11) 98765-4321</p>
+                    <p>Matrícula:<?php echo htmlspecialchars($user['RM']);?></p>
+                    <p>Email: <?php echo htmlspecialchars($user['email']);?></p>
+                    <p>Telefone: <?php echo htmlspecialchars($user['Telefone']);?></p>
                 </div>
 
                 <!-- Tarefas Pendentes -->

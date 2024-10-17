@@ -8,7 +8,7 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
-require '../../php/login/validar.php';
+require_once '../../php/login/validar.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
@@ -27,7 +27,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
@@ -173,6 +172,7 @@ if (!empty($fotoNome)) {
         <div class="left-column">
             <div class="box">
                 <h2>Declarações para retirada</h2>
+                <form action="" method="post">
                 <label for="declaração">Selecione a Declaração:</label>
                 <select id="declaração" name="declaração" class="caixa" required>
                     <option value="">Selecione o tipo de declaração</option>
@@ -194,7 +194,7 @@ if (!empty($fotoNome)) {
                 <button type="submit">Enviar</button>
                 
             </div>
-
+            </form>
             <div class="box">
                 <h2>Documentos Escolares</h2>
                 <label for="tipo-declaracao">Selecione o Tipo de Declaração:</label>
@@ -214,7 +214,7 @@ if (!empty($fotoNome)) {
             <div class="box">
                 <h2>Rematrícula</h2>
                 <p>Prazo para rematricula: 09/12/2024 a 16/12/24 - Atualmente Fora do Prazo.</p>
-                <form>
+                <form action="../../php/aluno/documentos.php" method="post" id="rematriculaForm">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" class="caixa" required>
 
@@ -230,6 +230,6 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/documentos/documentos.js"></script>
+    <script src="../../assets/js/aluno/documentos/documentos.js"></script>
 </body>
 </html>

@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($tables as $table) {
         if ($table === 'aluno') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso, frequencia, endereco, telefone, FROM aluno WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso, frequencia, endereco, telefone FROM aluno WHERE email = ?");
         } elseif ($table === 'professor') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM professor WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, disciplina, genero FROM professor WHERE email = ?");
         } elseif ($table === 'coordenador') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM coordenador WHERE email = ?");
         } else {
@@ -57,7 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             if ($table === 'aluno') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $frequencia);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $frequencia, $endereco, $telefone);
+            } elseif($table === 'professor') {
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf, $disciplina, $genero);
             } else {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf);
             }
@@ -77,7 +79,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'status' => $status,
                         'curso' => $curso_id,
                         'frequencia' => $frequencia,
+                        'telefone' => $telefone,
+                        'endereco' => $endereco,
                         'role' => $table
+                    ];
+                } elseif ($table === 'professor') {
+                    // Determina o título com base no gênero
+                    $titulo = ($genero === 'F') ? 'Professora' : 'Professor';
+
+                    $_SESSION['user'] = [
+                        'id' => $id,
+                        'nome' => $titulo . ' ' . $nome,
+                        'foto' => $foto,
+                        'email' => $emailBD,
+                        'RM' => $RM,
+                        'disciplina' => $disciplina,
+                        'cpf' => $cpf,
+                        'genero' => $genero,
+                        'status' => $status,
+                        'role' => $table    
                     ];
                 } else {
                     $_SESSION['user'] = [

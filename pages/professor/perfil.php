@@ -140,7 +140,7 @@
         <div class="headerpx">
             <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="Foto da Professora">
             <div class="info">
-                <h2>Prof. Luana Silva</h2>
+                <h2>Prof. <?php echo htmlspecialchars($user['nome']);?></h2>
                 <p>ID: 987654</p>
                 <p>Email: luana.silva@exemplo.com</p>
                 <p>Departamento: Engenharia de Computação</p>
@@ -154,7 +154,7 @@
             <div class="details">
                 <div class="detail-item">
                     <label>Nome Completo:</label>
-                    <p>Prof. Luana Silva</p>
+                    <p>Prof. <?php echo htmlspecialchars($user['nome']);?></p>
                 </div>
                 <div class="detail-item">
                     <label>Data de Nascimento:</label>
