@@ -47,7 +47,7 @@ $tableQueries = [
     data_nascimento DATE NOT NULL,
     genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
     endereco TEXT,
-    curso_id INT NOT NULL,  -- Relacionando o aluno com o curso
+    curso_id INT NOT NULL, 
     nota_id INT NOT NULL,
     cargo VARCHAR(30) NOT NULL,
     situacao ENUM('aprovado', 'reprovado', 'recuperacao') DEFAULT 'recuperacao',
@@ -259,6 +259,14 @@ $tableQueries = [
     protocolo VARCHAR(50) UNIQUE,
     data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pendente', 'pronto') DEFAULT 'pendente'
+)",
+"imagem" => "CREATE TABLE IF NOT EXISTS imagem (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    caminho VARCHAR(255) NOT NULL,  -- Caminho da imagem no servidor
+    nome_arquivo VARCHAR(255),      -- Nome original do arquivo (opcional)
+    tipo VARCHAR(50),               -- Tipo de arquivo (JPG, PNG, etc.)
+    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tamanho INT                       -- Tamanho do arquivo em bytes (opcional)
 )"
 ];
 

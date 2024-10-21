@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($tables as $table) {
         if ($table === 'aluno') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso, frequencia, endereco, telefone FROM aluno WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso, frequencia, endereco, nacionalidade, telefone FROM aluno WHERE email = ?");
         } elseif ($table === 'professor') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, disciplina, genero FROM professor WHERE email = ?");
         } elseif ($table === 'coordenador') {
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             if ($table === 'aluno') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $frequencia, $endereco, $telefone);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $nacionalidade, $frequencia, $endereco, $telefone);
             } elseif($table === 'professor') {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf, $disciplina, $genero);
             } else {
@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'frequencia' => $frequencia,
                         'telefone' => $telefone,
                         'endereco' => $endereco,
+                        'nacionalidade' => $nacionalidade,
                         'role' => $table
                     ];
                 } elseif ($table === 'professor') {

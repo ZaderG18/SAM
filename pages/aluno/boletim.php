@@ -9,10 +9,12 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 require '../../php/login/validar.php';
+require '../../php/aluno/boletim.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
-
+$notas = getNotas($id);
+$moduloId = isset($_GET['modulo']) ? $_GET['modulo'] : 1;
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -172,7 +174,7 @@ if (!empty($fotoNome)) {
         <h2>Dados do Aluno</h2>
         <p>Nome: <?php echo htmlspecialchars($user['nome']) ?></p>
         <p>Turma: 3º Módulo</p>
-        <p>Curso: Desenvolvimento de sistemas</p>
+        <p>Curso: <?php echo htmlspecialchars($user['curso'])?></p>
         <p>Turma: A</p>
         <p>Inicio Curso: Jan de 2024</p>
         <p>Final Curso: Dez de 2025</p>
@@ -205,17 +207,26 @@ if (!empty($fotoNome)) {
                     </tr>
                 </thead>
                 <tbody>
+                <?php
+                    foreach ($notas as $nota) {
+                        // Calcular a média das notas
+                        $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+
+                        // Definindo a situação com base na média
+                        $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
+                    ?>
                     <tr>
-                        <td>Programação Mobile</td>
-                        <td>2</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-mobile')">Bom desempenho</a></td>
+                        <td><?php echo htmlspecialchars($nota['disciplina']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                        <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
+                        <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                     </tr>
-                    <tr>
+                    <?php }?>
+                    <!-- <tr>
                         <td>Banco de dados</td>
                         <td>1</td>
                         <td>7.0</td>
@@ -264,7 +275,7 @@ if (!empty($fotoNome)) {
                         <td>8.5</td>
                         <td><a href="#" onclick="showModal('modal-aprovado-poo')">Aprovado</a></td>
                         <td><a href="#" onclick="showModal('modal-bom-poo')">Bom desempenho</a></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

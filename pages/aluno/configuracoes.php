@@ -1,5 +1,5 @@
 <?php
-session_start(); // Ensure session is started
+session_start();
 
 // Database connection
 $host = "localhost";
@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco: " . $conn->connect_error);
 }
 
-// Include required files for upload and validation
+// Include d files for upload and validation
 require_once '../../php/global/upload.php';
 require_once '../../php/login/validar.php';
 
@@ -21,12 +21,11 @@ require_once '../../php/login/validar.php';
 if (!isset($_SESSION['user'])) {
     die("Usuário não autenticado.");
 }
-
-// Get user data from session
+// Obtém os dados do usuário da sessão
 $user = $_SESSION['user'];
 $id = $user['id'];
 
-// Prepare SQL statement to retrieve photo
+// Prepara SQL statement para recuperar a foto
 $sql = "SELECT foto FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
@@ -42,13 +41,12 @@ $stmt->fetch();
 $stmt->close();
 $conn->close();
 
-// Check if there is a photo for the user
+// Verifica se há uma foto para o usuário
 if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
 } else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão se nenhuma foto for carregada
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -185,12 +183,12 @@ if (!empty($fotoNome)) {
         <!-- Lado esquerdo - Info Card -->
         <div class="info-card">
             <div class="profile-picture">
-                <form action="../../php/global/upload.php" method="post">
+                <form action="../../php/global/upload.php" method="post" enctype="multipart/form-data">
                 <h3>Upload Foto(150px X 150px)</h3>
-                <img src="profile-placeholder.png" id="profile-pic"/>
+                <img src="<?php echo $fotoCaminho ?>" id="profile-pic"/>
                 <label for="upload" class="upload-button">Escolher Arquivo</label>
-                <input type="file" id="upload" accept="image/*" class="input">
-                <button class="btn-padrao">Salvar</button>
+                <input type="file" id="upload" accept="image/*" class="input" name="foto">
+                <button type="submit" class="btn-padrao" name="submit_foto">Salvar</button>
                 </form>
             </div>
             <div class="notifications">
@@ -198,14 +196,14 @@ if (!empty($fotoNome)) {
                 <label>Email</label>
                 <select>
                     <option>Selecione</option>
-                    <option>Sim</option>
-                    <option>Não</option>
+                    <option value="1" <?= $user['notificacao_email'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= $user['notificacao_email'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <label>Telefone</label>
                 <select>
                     <option>Selecione</option>
-                    <option>Sim</option>
-                    <option>Não</option>
+                    <option value="1" <?= $user['notificacao_telefone'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= $user['notificacao_telefone'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <button class="btn-padrao">Salvar</button>
             </div>
@@ -234,23 +232,23 @@ if (!empty($fotoNome)) {
                 <div class="personal-info">
                     <h3>Informações Pessoais</h3>
                     <label>Nome Completo*</label>
-                    <input type="text" name="nome" value="<?= htmlspecialchars($user['nome']); ?>" required>
+                    <input type="text" name="nome" value="<?= htmlspecialchars($user['nome']); ?>">
                     <label>Telefone*</label>
-                    <input type="tel" name="telefone" value="<?= htmlspecialchars($user['telefone']); ?>" required>
+                    <input type="tel" name="telefone" value="<?= htmlspecialchars($user['telefone']); ?>">
                     <label>Email*</label>
-                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" required>
+                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>">
                     <label>Gênero*</label>
-                    <select name="genero" required>
+                    <select name="genero">
                         <option>Selecione seu gênero</option>
-                        <option value="Homem">Homem Cis</option>
-                        <option value="Mulher_cis">Mulher cis</option>
+                        <option value="masculino">Homem Cis</option>
+                        <option value="feminino">Mulher cis</option>
                         <option value="mulher_trans">Mulher Trans</option>
                         <option value="homem_trans">Homem Trans</option>
                         <option value="nao_binario">Não-Binário</option>
                         <option value="prefiro_n_dizer">Prefiro Não Dizer</option>
                     </select>
                     <label>Estado Civil*</label>
-                    <select name="estado_civil" required>
+                    <select name="estado_civil">
                         <option>Selecione</option>
                         <option value="solteiro">Solteiro</option>
                         <option value="casado">Casado</option>
@@ -258,15 +256,15 @@ if (!empty($fotoNome)) {
                         <option value="viuvo">Viúvo</option>
                     </select>
                     <label>Data de Nascimento*</label>
-                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars($user['data_nascimento']); ?>" required>
+                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars($user['data_nascimento']); ?>">
                     <label>Nacionalidade*</label>
-                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars($user['nacionalidade']); ?>" required>
+                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars($user['nacionalidade']); ?>">
                     <label>Endereço*</label>
-                    <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>" required>
+                    <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>">
                     <label>RM</label>
                     <input type="text" name="RM" value="<?= htmlspecialchars($user['RM']); ?>">
                     <label>Curso*</label>
-                    <select name="curso" required>
+                    <select name="curso">
                         <option>Selecione o curso</option>
                         <option value="desenvolvimento_de_sistemas">Desenvolvimento de Sistemas</option>
                         <option value="enfermagem">Enfermagem</option>
@@ -275,26 +273,26 @@ if (!empty($fotoNome)) {
                     </select>
                     <h3>Contato de Emergência</h3>
                     <label>Nome do Contato*</label>
-                    <input type="text" >
+                    <input type="text" name="nome_emergencia">
                     <label>Parentesco*</label>
-                    <input type="text">
+                    <input type="text" name="parentesco_emergencia">
                     <label>Telefone de Contato*</label>
-                    <input type="text" >
+                    <input type="text" name="telefone_emergencia">
                     <label>Email de Contato*</label>
-                    <input type="text">
+                    <input type="text" name="email_emergencia">
                     <button class="btn-padrao">Editar</button>
-                    <button class="btn-padrao">Salvar</button>
+                    <button class="btn-padrao" name="submit_informacoes">Salvar</button>
                 </div>
     
                 <div class="password-update">
                     <h3>Atualizar Senha</h3>
                     <label>Senha Atual</label>
-                    <input type="password" >
+                    <input type="password" name="senha_atual">
                     <label>Nova Senha*</label>
-                    <input type="password" >
+                    <input type="password" name="nova_senha">
                     <label>Confirmar Nova Senha*</label>
-                    <input type="password" >
-                    <button class="btn-padrao">Salvar</button>
+                    <input type="password" name="confirmar_senha">
+                    <button class="btn-padrao" name="submit_senha">Salvar</button>
                 </div>
             </form>
         </div>
