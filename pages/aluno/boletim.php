@@ -1,4 +1,8 @@
 <?php
+// Verifica se a sessão já foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Inicie a sessão apenas se ainda não estiver ativa
+}
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -12,9 +16,17 @@ require '../../php/login/validar.php';
 require '../../php/aluno/boletim.php';
 
 $user = $_SESSION['user'];
-$id = $user['id'];
-$notas = getNotas($id);
-$moduloId = isset($_GET['modulo']) ? $_GET['modulo'] : 1;
+$alunoId = $user['id'];
+// Verificar se um módulo foi selecionado e se é numérico
+if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
+    $moduloId = intval($_GET['modulo']); // Converte para inteiro
+} else {
+    $moduloId = 1; // Definindo um módulo padrão
+}
+
+// Chame a função para obter as notas
+$notas = getNotas($alunoId, $moduloId);
+
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -24,7 +36,7 @@ if (!$stmt) {
 }
 
 // Bind parameters and execute
-$stmt->bind_param("i", $id);
+$stmt->bind_param("i", $alunoId);
 $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
@@ -182,17 +194,59 @@ if (!empty($fotoNome)) {
     </div>
     <!---------------------------------------------------------------------Modulo 1-------------------------------------------------------->
     <div id="tabelamodulo1" class="module-selection">
-        <div>
-            <label for="module-select">Selecione o Módulo:</label>
-            <select id="module-select">
-                <option value="modulo1">Módulo 1</option>
-                <option value="modulo2">Módulo 2</option>
-                <option value="modulo3">Módulo 3</option>
-            </select>
-            <button id="downloadbtn" class="button">Baixar Boletim</button>
-        </div>
+    <div>
+        <label for="module-select">Selecione o Módulo:</label>
+        <select id="module-select">
+        <?php foreach ($modulos as $modulo): ?>
+            <option value="<?php echo $modulo['id']; ?>" <?php echo ($modulo['id'] == $selectedModule) ? 'selected' : ''; ?>>
+                Módulo <?php echo $modulo['id']; ?>
+            </option>
+        <?php endforeach; ?>
+        </select>
+        <button id="downloadbtn" class="button">Baixar Boletim</button>
+    </div>
 
-        <div id="modulo1" class="module-table">
+    <div id="modulo<?php echo $selectedModule; ?>" class="module-table">
+        <table class="module-selection">
+            <thead>
+                <tr>
+                    <th>Disciplinas</th>
+                    <th>Faltas</th>
+                    <th>Nota 1</th>
+                    <th>Nota 2</th>
+                    <th>Nota 3</th>
+                    <th>Nota 4</th>
+                    <th>Critérios</th>
+                    <th>Observações</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+                foreach ($notas as $nota) {
+                    // Calcular a média das notas
+                    $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+
+                    // Definindo a situação com base na média
+                    $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($nota['disciplina']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                    <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
+                    <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!---------------------------------------------------------------------Modulo 2-------------------------------------------------------->
+        <div id="modulo2" class="module-table" style="display:none;">
             <table class="module-selection">
                 <thead>
                     <tr>
@@ -226,135 +280,6 @@ if (!empty($fotoNome)) {
                         <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                     </tr>
                     <?php }?>
-                    <!-- <tr>
-                        <td>Banco de dados</td>
-                        <td>1</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-banco')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Internet e Protocolos</td>
-                        <td>3</td>
-                        <td>6.0</td>
-                        <td>5.5</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Reprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-insatisfatorio-internet')">Desempenho insatisfatório</a></td>
-                    </tr>
-                    <tr>
-                        <td>Desenvolvimento de sistemas</td>
-                        <td>0</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td>10.0</td>
-                        <td>9.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-sistemas')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Web</td>
-                        <td>1</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-web')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Orientada a Objetos</td>
-                        <td>2</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-poo')">Bom desempenho</a></td>
-                    </tr> -->
-                </tbody>
-            </table>
-        </div>
-<!---------------------------------------------------------------------Modulo 2-------------------------------------------------------->
-        <div id="modulo2" class="module-table" style="display:none;">
-            <table class="module-selection">
-                <thead>
-                    <tr>
-                        <th>Disciplinas</th>
-                        <th>Faltas</th>
-                        <th>Nota 1</th>
-                        <th>Nota 2</th>
-                        <th>Nota 3</th>
-                        <th>Nota 4</th>
-                        <th>Critérios</th>
-                        <th>Observações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Programação Mobile</td>
-                        <td>0</td>
-                        <td>10.0</td>
-                        <td>9.0</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-mobile')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Banco de dados</td>
-                        <td>2</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-banco')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Internet e Protocolos</td>
-                        <td>6</td>
-                        <td>6.0</td>
-                        <td>5.5</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Reprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-insatisfatorio-internet')">Desempenho insatisfatório</a></td>
-                    </tr>
-                    <tr>
-                        <td>Desenvolvimento de sistemas</td>
-                        <td>0</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td>10.0</td>
-                        <td>9.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-sistemas')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Web</td>
-                        <td>1</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-web')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Orientada a Objetos</td>
-                        <td>2</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-poo')">Bom desempenho</a></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -374,66 +299,25 @@ if (!empty($fotoNome)) {
                     </tr>
                 </thead>
                 <tbody>
+                <?php
+                    foreach ($notas as $nota) {
+                        // Calcular a média das notas
+                        $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+
+                        // Definindo a situação com base na média
+                        $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
+                    ?>
                     <tr>
-                        <td>Programação Mobile</td>
-                        <td>2</td>
-                        <td>10.0</td>
-                        <td>10.0</td>
-                        <td>10.0</td>
-                        <td>10.0</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-mobile')">Bom desempenho</a></td>
+                        <td><?php echo htmlspecialchars($nota['disciplina']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                        <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
+                        <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                     </tr>
-                    <tr>
-                        <td>Banco de dados</td>
-                        <td>1</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-banco')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Internet e Protocolos</td>
-                        <td>5</td>
-                        <td>6.0</td>
-                        <td>5.5</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Reprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-insatisfatorio-internet')">Desempenho insatisfatório</a></td>
-                    </tr>
-                    <tr>
-                        <td>Desenvolvimento de sistemas</td>
-                        <td>0</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td>10.0</td>
-                        <td>9.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-sistemas')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Web</td>
-                        <td>1</td>
-                        <td>7.0</td>
-                        <td>6.5</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-web')">Bom desempenho</a></td>
-                    </tr>
-                    <tr>
-                        <td>Programação Orientada a Objetos</td>
-                        <td>2</td>
-                        <td>8.0</td>
-                        <td>7.5</td>
-                        <td>9.0</td>
-                        <td>8.5</td>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Aprovado</a></td>
-                        <td><a href="#" onclick="showModal('modal-bom-poo')">Bom desempenho</a></td>
-                    </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
@@ -569,6 +453,6 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/boletim/boletim.js"></script>
+    <script src="../../assets/js/aluno/boletim/boletim.js"></script>
 </body>
 </html>

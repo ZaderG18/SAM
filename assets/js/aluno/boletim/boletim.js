@@ -1,17 +1,17 @@
-// modal pop up
+// Função para exibir o modal pop-up
 function showModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'block';
 }
 
+// Função para fechar o modal pop-up
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
 }
 
-// Selecionar o modulo de boletim
-
-   // Função para exibir a tabela correspondente ao módulo selecionado
-   document.getElementById("module-select").addEventListener("change", function() {
-    var selectedModule = this.value; // Pega o valor do módulo selecionado
+document.getElementById("module-select").addEventListener("change", function() {
+    var selectedModule = this.value; // Obtemos o valor do módulo selecionado
 
     // Esconde todas as tabelas
     var tables = document.querySelectorAll(".module-table");
@@ -19,22 +19,31 @@ function closeModal(modalId) {
         table.style.display = "none";
     });
 
-    // Exibe apenas a tabela correspondente ao módulo selecionado
-    document.getElementById(selectedModule).style.display = "block";
+    // Exibe a tabela correspondente ao módulo selecionado
+    fetch(`../../php/aluno/boletim.php?modulo=${selectedModule}`)
+        .then(response => response.text())
+        .then(data => {
+            // Atualiza o conteúdo da tabela do módulo selecionado
+            document.getElementById(`modulo${selectedModule}`).innerHTML = data;
+            document.getElementById(`modulo${selectedModule}`).style.display = "block"; // Exibe a tabela do módulo selecionado
+        })
+        .catch(error => {
+            console.error('Erro ao carregar as notas:', error);
+            alert('Ocorreu um erro ao carregar as notas. Tente novamente mais tarde.'); // Mensagem amigável ao usuário
+        });
 });
 
-// Exibe a tabela do primeiro módulo por padrão
-document.getElementById("modulo1").style.display = "block";
+// Inicializar o primeiro módulo
+document.getElementById("modulo1").style.display = "block"; // Mostra a tabela do primeiro módulo por padrão
 
-// Botão baixar boletim 
-
+// Função para baixar o boletim em PDF
 document.getElementById('downloadbtn').addEventListener('click', function() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     const moduleSelect = document.getElementById('module-select');
-    const selectedModule = moduleSelect.options[moduleSelect.selectedIndex].text;
-    const table = document.querySelector(`#${moduleSelect.value} .module-table`);
+    const selectedModule = moduleSelect.options[moduleSelect.selectedIndex].text; // Texto do módulo selecionado
+    const table = document.querySelector(`#modulo${moduleSelect.value} .module-table tbody`);
 
     if (!table) {
         alert('Tabela não encontrada para o módulo selecionado.');
@@ -44,11 +53,14 @@ document.getElementById('downloadbtn').addEventListener('click', function() {
     let content = `Boletim - ${selectedModule}\n\n`;
     content += 'Disciplinas\tFaltas\tNota 1\tNota 2\tNota 3\tNota 4\tCritérios\tObservações\n';
 
-    table.querySelectorAll('tbody tr').forEach(row => {
-        row.querySelectorAll('td').forEach(cell => {
+    // Itera pelas linhas da tabela e adiciona os dados ao conteúdo do PDF
+    table.querySelectorAll('tr').forEach(row => {
+        row.querySelectorAll('td').forEach((cell, index) => {
             content += `${cell.innerText}\t`;
+            if (index === row.querySelectorAll('td').length - 1) {
+                content += '\n'; // Adiciona uma nova linha após cada linha de células
+            }
         });
-        content += '\n';
     });
 
     doc.text(content, 10, 10);

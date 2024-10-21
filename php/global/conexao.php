@@ -57,7 +57,9 @@ $tableQueries = [
     frequencia INT DEFAULT 0,
     status ENUM('ativo', 'inativo') DEFAULT 'ativo',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     modulo_id INT,
+    FOREIGN KEY (modulo_id) REFERENCES modulos(id)
     -- FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE CASCADE
 )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
@@ -126,6 +128,8 @@ $tableQueries = [
         data_inicio DATE NOT NULL,
         data_fim DATE NOT NULL,
         status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
+        modulo_id INT, -- Relação com a tabela modulos
+        FOREIGN KEY (modulo_id) REFERENCES modulos(id),
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
@@ -138,6 +142,8 @@ $tableQueries = [
     professor_id INT NOT NULL,
     coordenador_id INT NOT NULL,
     curso_id INT NOT NULL,  
+     modulo_id INT, 
+    FOREIGN KEY (modulo_id) REFERENCES modulos(id),
     FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
     FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
     FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE CASCADE
@@ -162,6 +168,11 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
+    "modulo" => "CREATE TABLE modulos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_modulo VARCHAR(255) NOT NULL,
+    descricao_modulo TEXT
+)",
     "notas" => "CREATE TABLE IF NOT EXISTS notas (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -231,7 +242,9 @@ $tableQueries = [
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE,
     descricao TEXT,
-    carga_horaria INT NOT NULL
+    carga_horaria INT NOT NULL,
+     modulo_id INT, -- Relação com a tabela modulos
+    FOREIGN KEY (modulo_id) REFERENCES modulos(id)
     )",
     "historico_academico" => "CREATE TABLE IF NOT EXISTS historico_academico (
     id INT AUTO_INCREMENT PRIMARY KEY,           
