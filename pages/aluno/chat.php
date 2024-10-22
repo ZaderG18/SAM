@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -9,6 +12,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 require '../../php/login/validar.php';
+require_once '../../php/global/chat.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];

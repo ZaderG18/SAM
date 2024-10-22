@@ -229,6 +229,21 @@ $tableQueries = [
     FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
     FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
+    "mensagens_chat" =>"CREATE TABLE mensagens_chat (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    receptor_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES diretor(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES diretor(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES coordenador(id) ON DELETE CASCADE
+)",
     "mensao" => "CREATE TABLE IF NOT EXISTS mensao (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
