@@ -35,32 +35,30 @@ function atualizarBanco($conn){
 // Consultas para criar as tabelas, se não existirem.
 $tableQueries = [
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    RM VARCHAR(10) NOT NULL UNIQUE,
-    foto VARCHAR(255) DEFAULT NULL,
-    email VARCHAR(40) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    reset_token VARCHAR(255) DEFAULT NULL,
-    reset_expires DATETIME DEFAULT NULL,
-    nome VARCHAR(40) NOT NULL,
-    telefone VARCHAR(15),
-    data_nascimento DATE NOT NULL,
-    genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
-    endereco TEXT,
-    curso_id INT NOT NULL, 
-    nota_id INT NOT NULL,
-    cargo VARCHAR(30) NOT NULL,
-    situacao ENUM('aprovado', 'reprovado', 'recuperacao') DEFAULT 'recuperacao',
-    data_matricula DATE NOT NULL,
-    data_rematricula DATE DEFAULT NULL,
-    data_saida DATE DEFAULT NULL,
-    frequencia INT DEFAULT 0,
-    status ENUM('ativo', 'inativo') DEFAULT 'ativo',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-     modulo_id INT,
-    FOREIGN KEY (modulo_id) REFERENCES modulos(id)
-    -- FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE CASCADE
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        RM VARCHAR(10) NOT NULL UNIQUE,
+        foto VARCHAR(255) DEFAULT NULL,
+        email VARCHAR(40) NOT NULL UNIQUE,
+        senha VARCHAR(255) NOT NULL,
+        reset_token VARCHAR(255) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
+        nome VARCHAR(40) NOT NULL,
+        telefone VARCHAR(15),
+        data_nascimento DATE NOT NULL,
+        genero ENUM('masculino', 'feminino', 'nao-binario', 'prefiro-nao-dizer') NOT NULL,
+        endereco TEXT,
+        curso_id INT NOT NULL, 
+        nota_id INT NOT NULL,
+        cargo VARCHAR(30) NOT NULL,
+        situacao ENUM('aprovado', 'reprovado', 'recuperacao') DEFAULT 'recuperacao',
+        data_matricula DATE NOT NULL,
+        data_rematricula DATE DEFAULT NULL,
+        nacionalidade VARCHAR(50),
+        data_saida DATE DEFAULT NULL,
+        frequencia INT DEFAULT 0,
+        status ENUM('ativo', 'inativo') DEFAULT 'ativo',
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -128,36 +126,28 @@ $tableQueries = [
         data_inicio DATE NOT NULL,
         data_fim DATE NOT NULL,
         status ENUM('ativa', 'concluida', 'cancelada') DEFAULT 'ativa',
-        modulo_id INT, -- Relação com a tabela modulos
-        FOREIGN KEY (modulo_id) REFERENCES modulos(id),
         FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
         FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
     )",
     "disciplina" => "CREATE TABLE IF NOT EXISTS disciplina (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_disciplina VARCHAR(30) NOT NULL,
-    carga_horaria INT NOT NULL,
-    semestre INT NOT NULL,
-    ano INT NOT NULL,
-    professor_id INT NOT NULL,
-    coordenador_id INT NOT NULL,
-    curso_id INT NOT NULL,  
-     modulo_id INT, 
-    FOREIGN KEY (modulo_id) REFERENCES modulos(id),
-    FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
-    FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE,
-    FOREIGN KEY (curso_id) REFERENCES curso(id) ON DELETE CASCADE
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome_disciplina VARCHAR(30) NOT NULL,
+        carga_horaria INT NOT NULL,
+        semestre INT NOT NULL,
+        ano INT NOT NULL,
+        professor_id INT NOT NULL,
+        coordenador_id INT NOT NULL,
+        FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE,
+        FOREIGN KEY (coordenador_id) REFERENCES coordenador(id) ON DELETE CASCADE
 )",
     "matricula" => "CREATE TABLE if NOT EXISTS matricula (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
-        modulo_id INT NOT NULL,
         data_matricula DATE NOT NULL,
         status ENUM('ativo', 'inativo', 'concluido') DEFAULT 'ativo',
         FOREIGN KEY (aluno_id) REFERENCES aluno(id),
-        FOREIGN KEY (turma_id) REFERENCES turma(id),
-        FOREIGN KEY (modulo_id) REFERENCES modulo(id)    
+        FOREIGN KEY (turma_id) REFERENCES turma(id)
     )",
     "avaliacao" => "CREATE TABLE IF NOT EXISTS avaliacao (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -168,10 +158,18 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "modulo" => "CREATE TABLE modulos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_modulo VARCHAR(255) NOT NULL,
-    descricao_modulo TEXT
+    "modulo" => "CREATE TABLE modulos ( 
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    nome_modulo VARCHAR(255) NOT NULL, 
+    descricao_modulo TEXT, 
+    aluno_id INT, 
+    turma_id INT, 
+    disciplina_id INT, 
+    matricula_id INT, 
+    FOREIGN KEY (turma_id) REFERENCES turma(id), 
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id), 
+    FOREIGN KEY (disciplina_id) REFERENCES disciplina(id), 
+    FOREIGN KEY (matricula_id) REFERENCES matricula(id) );
 )",
     "notas" => "CREATE TABLE IF NOT EXISTS notas (
         id INT AUTO_INCREMENT PRIMARY KEY,

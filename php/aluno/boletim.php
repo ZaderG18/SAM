@@ -19,14 +19,14 @@ function getNotas($alunoId, $moduloId) {
         SELECT n.*, d.nome_disciplina AS disciplina
         FROM notas n
         JOIN disciplina d ON n.disciplina_id = d.id
-        WHERE n.aluno_id = ? AND n.modulo_id = ?
+        WHERE n.aluno_id = ?
     ";
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         die("Erro ao preparar a consulta: " . $conn->error);
     }
     
-    $stmt->bind_param("ii", $alunoId, $moduloId);
+    $stmt->bind_param("i", $alunoId);
     $stmt->execute();
     $result = $stmt->get_result();
     

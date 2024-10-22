@@ -65,7 +65,8 @@ if (!empty($fotoNome)) {
 
                     <li class="chat-sidebar-profile">
                         <button type="button" class="chat-sidebar-profile-toggle">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+                            <img src="<?php  echo $fotoCaminho; ?>" alt="Foto do Usuário">
+
                         </button>
                         <ul class="chat-sidebar-profile-dropdown">
                             <li><a href="home_aluno.php"><i class="ri-logout-box-line"></i> Sair</a></li>
@@ -588,6 +589,6 @@ if (!empty($fotoNome)) {
     </section>
     <!-- Final: Chat -->
     
-    <script src="../../assets/js/chat/script.js"></script>
+    <script src="../../assets/js/aluno/chat/chat.js"></script>
 </body>
 </html>

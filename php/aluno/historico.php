@@ -23,9 +23,25 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Código de início da sessão e verificação de login...
+
+// Conexão com o banco de dados
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "sam";
+$conn = new mysqli($host, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // Consulta para pegar as informações gerais do aluno
-$sqlAluno = "SELECT nome, RM, nota_media FROM aluno WHERE id = ?";
+$sqlAluno = "SELECT nome, RM, nota_id FROM aluno WHERE id = ?";
 $stmt = $conn->prepare($sqlAluno);
+if (!$stmt) {
+    die("Erro na preparação da consulta de aluno: " . $conn->error);
+}
 $stmt->bind_param("i", $aluno_id);
 $stmt->execute();
 $stmt->bind_result($nomeAluno, $RM, $mediaGeral);
@@ -35,6 +51,9 @@ $stmt->close();
 // Consulta para pegar as disciplinas, faltas, notas e status
 $sqlDisciplinas = "SELECT disciplina_id, semestre, faltas, nota, status FROM historico_academico WHERE aluno_id = ?";
 $stmtDisciplinas = $conn->prepare($sqlDisciplinas);
+if (!$stmtDisciplinas) {
+    die("Erro na preparação da consulta de disciplinas: " . $conn->error);
+}
 $stmtDisciplinas->bind_param("i", $aluno_id);
 $stmtDisciplinas->execute();
 $resultDisciplinas = $stmtDisciplinas->get_result();
@@ -46,7 +65,6 @@ while ($row = $resultDisciplinas->fetch_assoc()) {
 }
 
 $stmtDisciplinas->close();
-
 // Consulta para contar as disciplinas concluídas (aprovadas ou reprovadas) e o total de disciplinas
 $query_total = "SELECT COUNT(*) AS total FROM historico_academico WHERE aluno_id = ?";
 $query_concluidas = "SELECT COUNT(*) AS concluidas 

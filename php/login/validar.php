@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             if ($table === 'aluno') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso_id, $nacionalidade, $frequencia, $endereco, $telefone);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso, $nacionalidade, $frequencia, $endereco, $telefone);
             } elseif($table === 'professor') {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf, $disciplina, $genero);
             } else {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'email' => $emailBD,
                         'RM' => $RM,
                         'status' => $status,
-                        'curso' => $curso_id,
+                        'curso' => $curso,
                         'frequencia' => $frequencia,
                         'telefone' => $telefone,
                         'endereco' => $endereco,
