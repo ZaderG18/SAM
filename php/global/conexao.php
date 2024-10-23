@@ -158,7 +158,7 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "modulo" => "CREATE TABLE modulos ( 
+    "modulos" => "CREATE TABLE IF NOT EXISTS modulos ( 
     id INT AUTO_INCREMENT PRIMARY KEY, 
     nome_modulo VARCHAR(255) NOT NULL, 
     descricao_modulo TEXT, 
@@ -169,7 +169,7 @@ $tableQueries = [
     FOREIGN KEY (turma_id) REFERENCES turma(id), 
     FOREIGN KEY (aluno_id) REFERENCES aluno(id), 
     FOREIGN KEY (disciplina_id) REFERENCES disciplina(id), 
-    FOREIGN KEY (matricula_id) REFERENCES matricula(id) );
+    FOREIGN KEY (matricula_id) REFERENCES matricula(id)
 )",
     "notas" => "CREATE TABLE IF NOT EXISTS notas (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -229,7 +229,7 @@ $tableQueries = [
     FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
     FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
-    "mensagens_chat" =>"CREATE TABLE mensagens_chat (
+    "mensagens_chat" =>"CREATE TABLE IF NOT EXISTS mensagens_chat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     receptor_id INT NOT NULL,
@@ -271,7 +271,7 @@ $tableQueries = [
     CONSTRAINT fk_aluno_id FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
     CONSTRAINT fk_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
 )",
-    "secretaria" => "CREATE TABLE secretaria (
+    "secretaria" => "CREATE TABLE IF NOT EXISTS secretaria (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('horario', 'prazo_documentos', 'comunicado_rematricula', 'equipe', 'documentos_necessarios', 'eventos', 'faq', 'formulario_suporte') NOT NULL,
     titulo VARCHAR(255),         -- Usado para 'comunicado', 'evento', 'faq'
@@ -283,7 +283,6 @@ $tableQueries = [
     pergunta TEXT,               -- Usado para 'faq'
     resposta TEXT,               -- Usado para 'faq'
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Para controle
-    id INT PRIMARY KEY AUTO_INCREMENT,
     diretor_id INT,
     coordenador_id INT,
     professor_id INT,
@@ -291,14 +290,14 @@ $tableQueries = [
     FOREIGN KEY (coordenador_id) REFERENCES coordenador(id),
     FOREIGN KEY (professor_id) REFERENCES professor(id)
 )",
-    "rematricula" => "CREATE TABLE rematricula (
+    "rematricula" => "CREATE TABLE IF NOT EXISTS rematricula (
     id INT PRIMARY KEY AUTO_INCREMENT,
     aluno_id INT NOT NULL,
     data_rematricula DATE NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'pendente',
     FOREIGN KEY (aluno_id) REFERENCES aluno(id)
 )",
-    "declaracao" => "CREATE TABLE declaracoes (
+    "declaracao" => "CREATE TABLE IF NOT EXISTS declaracoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo_declaracao VARCHAR(50),
     motivo TEXT,
