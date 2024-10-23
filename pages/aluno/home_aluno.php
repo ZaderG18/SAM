@@ -256,7 +256,7 @@ if (!empty($fotoNome)) {
                         <h3>Dados Aluno</h3>
                         <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno">
                         <h2><?php echo htmlspecialchars($_SESSION['user']['nome']);?></h2>
-                        <p>Curso: <?php echo htmlspecialchars($user['curso']);?></p>
+                        <p>Curso: <?php echo htmlspecialchars($user['curso_id']);?></p>
                         <p>Matrícula: <?php echo htmlspecialchars($user['RM']);?></p>
                         <p>3º Semestre</p>
                         <p>Situação: <?php echo htmlspecialchars($_SESSION['user']['status'])?></p>

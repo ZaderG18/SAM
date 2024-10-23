@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($tables as $table) {
         if ($table === 'aluno') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso, frequencia, endereco, nacionalidade, telefone FROM aluno WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso_id, frequencia, endereco, nacionalidade, telefone FROM aluno WHERE email = ?");
         } elseif ($table === 'professor') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, disciplina, genero FROM professor WHERE email = ?");
         } elseif ($table === 'coordenador') {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'email' => $emailBD,
                         'RM' => $RM,
                         'status' => $status,
-                        'curso' => $curso,
+                        'curso_id' => $curso,
                         'frequencia' => $frequencia,
                         'telefone' => $telefone,
                         'endereco' => $endereco,

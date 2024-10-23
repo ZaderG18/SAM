@@ -30,7 +30,7 @@ main .container .flex-elements{
 
 main .container .flex-elements .left-img{
     width: 50%;
-    min-height: 781px;
+    min-height: 790px;
     height: 100vh;
     background-image: url(../../img/fundo.png);
     background-size: cover;
@@ -162,9 +162,23 @@ main .container .flex-elements .right-reset form .element-senha a:hover{
 .inputbx i {
     color: #a7a1a1; 
     font-size: 20px; 
-    cursor: pointer;
     position: relative;
     left: -20px;
+}
+
+/* Oculta o botão de mostrar senha em Chrome, Edge e Opera */
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+}
+
+/* Oculta o botão de mostrar senha no Firefox */
+input[type="password"]::-moz-password-toggle {
+    display: none;
+}
+
+/* Oculta o botão de mostrar senha no IE e Edge antigos */
+input[type="password"]::-ms-reveal {
+    display: none;
 }
 
 
@@ -238,8 +252,8 @@ main .container .flex-elements .right-reset form .criar-conta a{
 
     main .container .flex-elements .left-img{
         width: 100%;
-        min-height: 300px;
-        height: 300px;
+        min-height: 560px;
+        height: 560px;
         background-position: center;
     }
 

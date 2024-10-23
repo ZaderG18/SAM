@@ -18,6 +18,13 @@ $stmt = $conn->prepare($sql);
 if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
+function obterDadosPorTipo($conn, $tipo) {
+    $sql = "SELECT * FROM secretaria WHERE tipo = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $tipo);
+    $stmt->execute();
+    return $stmt->get_result();
+}
 
 // Bind parameters and execute
 $stmt->bind_param("i", $id);
@@ -25,7 +32,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
@@ -177,33 +183,39 @@ if (!empty($fotoNome)) {
         <!-- Horário de Atendimento -->
         <div class="section">
             <h3>Horário de Atendimento</h3>
-            <p>Segunda-feira a sexta-feira das 9h às 13h e das 15h às 20h</p>
+            <?php 
+            $result = obterDadosPorTipo($conn, 'horario');
+            if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    echo "<p>Segunda a Sexta: {$row['descricao']}</p>";
+                    }
+            } else{
+                echo "<p>Não há horarios disponíveis.</p>";
+            } ?>
         </div>
 
         <!-- Prazo para Entrega de Documentos -->
         <div class="section">
             <h3>Prazo para Entrega de Documentos</h3>
-            <p>Declarações: 48 horas</p>
-            <p>Transferências: 48 horas</p>
-            <p>Históricos: 15 dias</p>
+            <?php
+            $result = obterDadosPorTipo($conn, 'documento');
+            if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    echo "<p> {$row['descricao']}: {$row['prazo']} horas</p>";
+                    }
+                    } else {echo "<p>Não há prazos disponíveis.</p>";}?>
         </div>
 
         <!-- Comunicados Gerais -->
         <div class="section">
             <h3>Comunicados de Rematrícula</h3>
-            <p>
-            Prezados Pais, Responsáveis e Alunos,
-            <br><br>
-            Informamos que o período de Rematrícula para 2024 acontecerá de (data de início) a (data de término). As rematrículas podem ser feitas online por aqui ou presencialmente na secretaria da escola.
-            <br><br>
-            Não deixe para a última hora! Garanta sua vaga e atualize seus dados dentro do prazo.
-            <br><br>
-            Para mais informações, entre em contato pelo e-mail [e-mail da escola] ou telefone [número de contato].
-            <br><br>
-            Atenciosamente,
-            <br>
-            [Nome da Escola]
-            </p>
+            <?php
+            $result = obterDadosPorTipo($conn, 'comunicado');
+            if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    echo "<p> {$row['descricao']}</p>";
+                    }
+                    } else {echo "<p>Não há comunicados disponíveis.</p>";}?>
         </div>
 
         <!-- Equipe da Secretaria -->
@@ -211,9 +223,13 @@ if (!empty($fotoNome)) {
             <h3>Equipe da Secretaria</h3>
             <p>Conheça nossa equipe:</p>
             <ul>
-            <li><strong>Maria Silva</strong> - Coordenadora da Secretaria | Email: maria@escola.com</li>
-            <li><strong>João Pereira</strong> - Atendimento ao Aluno | Email: joao@escola.com</li>
-            <li><strong>Ana Costa</strong> - Suporte Administrativo | Email: ana@escola.com</li>
+            <?php
+            $result = obterDadosPorTipo($conn, 'equipe');
+            if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    echo "<li> {$row['nome']} - {$row['cargo']} | Email: {$row['email']}</li>";
+                    }
+                    } else {echo "<p>Não há equipe disponível.</p>";}?>
             </ul>
         </div>
 
@@ -222,9 +238,13 @@ if (!empty($fotoNome)) {
             <h3>Documentos Necessários</h3>
             <p>Para diferentes tipos de solicitações, os seguintes documentos são necessários:</p>
             <ul>
-            <li>Histórico Escolar: Cópia do RG e CPF.</li>
-            <li>Declaração de Matrícula: Cópia do RG e comprovante de matrícula.</li>
-            <li>Transferência: Cópia do histórico escolar e declaração de transferência.</li>
+                <?php
+                $result = obterDadosPorTipo($conn, 'documentos_necessarios');
+                if ($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()){
+                        echo "<li> {$row['descricao']}</li>";
+                        }
+                        } else {echo "<p>Não há documentos necessários disponíveis.</p>";}?>
             </ul>
         </div>
 
@@ -232,9 +252,13 @@ if (!empty($fotoNome)) {
         <div class="section">
             <h3>Próximos Eventos</h3>
             <ul>
-            <li>Reunião de Pais: 15/10/2024 às 18h.</li>
-            <li>Palestra sobre Orientação Vocacional: 20/10/2024 às 19h.</li>
-            <li>Festival Cultural da Escola: 30/10/2024.</li>
+                <?php
+                $result = obterDadosPorTipo($conn, 'evento');
+                if ($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()){
+                        echo "<li> {$row['descricao']} - Data: {$row['data_inicio']} às {$row['hora']}</li>";
+                        }
+                        } else {echo "<p>Não há eventos disponíveis.</p>";}?>
             </ul>
         </div>
 
@@ -242,9 +266,13 @@ if (!empty($fotoNome)) {
         <div class="section">
             <h3>Perguntas Frequentes (FAQ)</h3>
             <ul>
-            <li><strong>Qual o prazo para solicitar um histórico escolar?</strong> <br> O prazo é de 15 dias.</li>
-            <li><strong>Como posso solicitar uma declaração de matrícula?</strong> <br> Você pode solicitar online ou presencialmente.</li>
-            <li><strong>Quais documentos são necessários para a rematrícula?</strong> <br> É necessário apresentar RG, CPF e comprovante de residência.</li>
+                <?php
+                $result = obterDadosPorTipo($conn, 'faq');
+                if ($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()){
+                        echo "<li><strong>{$row['pergunta']}</strong> - Resposta: {$row['resposta']}</li>";
+                        }
+                        } else {echo "<p>Não há perguntas frequentes disponíveis.</p>";}?>
             </ul>
         </div>
 

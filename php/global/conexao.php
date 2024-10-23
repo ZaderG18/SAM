@@ -271,6 +271,26 @@ $tableQueries = [
     CONSTRAINT fk_aluno_id FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
     CONSTRAINT fk_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE
 )",
+    "secretaria" => "CREATE TABLE secretaria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo ENUM('horario', 'prazo_documentos', 'comunicado_rematricula', 'equipe', 'documentos_necessarios', 'eventos', 'faq', 'formulario_suporte') NOT NULL,
+    titulo VARCHAR(255),         -- Usado para 'comunicado', 'evento', 'faq'
+    descricao TEXT,              -- Usado para 'documento', 'comunicado', 'evento', 'faq'
+    prazo INT,                   -- Usado para 'documento'
+    data_inicio DATE,            -- Usado para 'comunicado', 'evento'
+    data_fim DATE,               -- Usado para 'comunicado'
+    hora TIME,                   -- Usado para 'evento'
+    pergunta TEXT,               -- Usado para 'faq'
+    resposta TEXT,               -- Usado para 'faq'
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Para controle
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    diretor_id INT,
+    coordenador_id INT,
+    professor_id INT,
+    FOREIGN KEY (diretor_id) REFERENCES diretor(id),
+    FOREIGN KEY (coordenador_id) REFERENCES coordenador(id),
+    FOREIGN KEY (professor_id) REFERENCES professor(id)
+)",
     "rematricula" => "CREATE TABLE rematricula (
     id INT PRIMARY KEY AUTO_INCREMENT,
     aluno_id INT NOT NULL,

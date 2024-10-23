@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 require '../../php/login/validar.php';
-require_once '../../php/global/chat.php';
+// require_once '../../php/global/chat.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
