@@ -11,6 +11,9 @@ $conn = new mysqli($host, $username, $password, $dbname);
 // Obtém os dados do usuário da sessão
 $user = $_SESSION['user'];
 $id = $user['id'];
+$nome = $user['nome'];
+$curso = $user['curso'];
+$data_conclusao = $user['data_conclusao'];
 
 // Incluir a biblioteca DomPDF
 require 'vendor/autoload.php'; // Use isso se instalou com Composer
@@ -31,8 +34,6 @@ $html = "
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' href='../css/style.css'>
-    <link rel='shortcut icon' href=''../css/img/Group 4.png' type='image/x-icon'>
     <title>Certificado</title>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -187,10 +188,10 @@ body {
             <h1 class='institution-name'>Instituição[Nome]</h1>
             <h2 class='certificate-title'>Certificado de Conclusão</h2>
             <p class='certificate-text'>Este certificado é concedido a</p>
-            <h3 class='student-name'>[Nome do Aluno]</h3>
+            <h3 class='student-name'>$nome</h3>
             <p class='certificate-text'>por concluir com sucesso o curso de</p>
-            <h3 class='course-name'>[Nome do Curso]</h3>
-            <p class='certificate-text'>em [Data de Conclusão]</p>
+            <h3 class='course-name'>$curso</h3>
+            <p class='certificate-text'>em $data_conclusao</p>
         </div>
         <div class='signature-section'>
             <div class='signature'>
@@ -218,5 +219,3 @@ $dompdf->render();
 
 // Envia o PDF para o navegador
 $dompdf->stream("certificado.pdf", ["Attachment" => false]); // Attachment => false para abrir no navegador
-
-?>

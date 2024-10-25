@@ -103,35 +103,35 @@ if ($atualizacoes_result->num_rows > 0) {
     }
 }
 
-// Adicionar evento
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['titulo'], $_POST['descricao'], $_POST['data'])) {
-    $titulo = $_POST['titulo'];
-    $descricao = $_POST['descricao'];
-    $data = $_POST['data'];
+// // Adicionar evento
+// if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['titulo'], $_POST['descricao'], $_POST['data'])) {
+//     $titulo = $_POST['titulo'];
+//     $descricao = $_POST['descricao'];
+//     $data = $_POST['data'];
 
-    // Ajuste aqui para usar aluno_id em vez de usuario_id
-    $inserir_evento_sql = "INSERT INTO eventos (aluno_id, data, titulo, descricao) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($inserir_evento_sql);
-    if (!$stmt) {
-        die("Erro ao preparar inserção: " . $conn->error);
-    }
-    $stmt->bind_param("isss", $usuario_id, $data, $titulo, $descricao);
-    $stmt->execute();
-    $stmt->close();
-}
+//     // Ajuste aqui para usar aluno_id em vez de usuario_id
+//     $inserir_evento_sql = "INSERT INTO eventos (aluno_id, data, titulo, descricao) VALUES (?, ?, ?, ?)";
+//     $stmt = $conn->prepare($inserir_evento_sql);
+//     if (!$stmt) {
+//         die("Erro ao preparar inserção: " . $conn->error);
+//     }
+//     $stmt->bind_param("isss", $usuario_id, $data, $titulo, $descricao);
+//     $stmt->execute();
+//     $stmt->close();
+// }
 
-// Buscar eventos do aluno
-$eventos_sql = "SELECT data, titulo, descricao FROM eventos WHERE aluno_id = ?";
-$eventos_result = consultarBanco($conn, $eventos_sql, $usuario_id);
+// // Buscar eventos do aluno
+// $eventos_sql = "SELECT data, titulo, descricao FROM eventos WHERE aluno_id = ?";
+// $eventos_result = consultarBanco($conn, $eventos_sql, $usuario_id);
 
-$eventos = [];
-if ($eventos_result->num_rows > 0) {
-    while ($row = $eventos_result->fetch_assoc()) {
-        $eventos[] = [
-            "data" => $row['data'],
-            "titulo" => $row['titulo'],
-            "descricao" => $row['descricao']
-        ];
-    }
-}
+// $eventos = [];
+// if ($eventos_result->num_rows > 0) {
+//     while ($row = $eventos_result->fetch_assoc()) {
+//         $eventos[] = [
+//             "data" => $row['data'],
+//             "titulo" => $row['titulo'],
+//             "descricao" => $row['descricao']
+//         ];
+//     }
+// }
 ?>

@@ -9,6 +9,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 require_once '../../php/login/validar.php';
+require_once '../../php/aluno/documentos.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
@@ -184,9 +185,6 @@ if (!empty($fotoNome)) {
 
                 <label for="motivo">Para qual finalidade será a declaração?</label>
                 <input type="text" id="motivo" name="motivo" class="caixa" required>
-               
-
-
                 <label for="protocolo">Consulta de Protocolo:</label>
                 <input type="text" id="protocolo" name="protocolo" class="caixa" required>
                 <p>Prazo para retirada das declarações acontece em até 2 dias úteis</p>
@@ -195,6 +193,9 @@ if (!empty($fotoNome)) {
                 
             </div>
             </form>
+            <?php if (!empty($mensagem)) : ?>
+                <p><?= $mensagem?></p>
+                <?php endif; ?>
             <div class="box">
                 <h2>Documentos Escolares</h2>
                 <label for="tipo-declaracao">Selecione o Tipo de Declaração:</label>
