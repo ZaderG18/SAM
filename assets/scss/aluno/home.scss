@@ -247,6 +247,72 @@
     font-weight: bold;
     color: #341e4e;
 }
+/* Estilos da Modal */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica em cima da página */
+    z-index: 1000; /* Fica acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    overflow: auto; /* Adiciona rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com opacidade */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 400px;
+    text-align: left;
+    font-family: 'Arial', sans-serif;
+}
+
+.modal-content h4 {
+    font-size: 20px;
+    color: #341e4e; /* Mesma cor do calendário */
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 16px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content button {
+    background-color: #5e3ea1; /* Cor dos botões */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.modal-content button:hover {
+    background-color: #4b2d7e; /* Efeito hover */
+}
+
 
 /* Responsividade */
 @media (max-width: 1024px) {
@@ -327,6 +393,27 @@
     .calendar-day {
         padding: 5px;
     }
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modal-content h4 {
+        font-size: 18px;
+    }
+
+    .modal-content p {
+        font-size: 14px;
+    }
+
+    .modal-content button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .close {
+        font-size: 24px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -380,5 +467,26 @@
 
     .calendar-day {
         padding: 3px;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .modal-content h4 {
+        font-size: 16px;
+    }
+
+    .modal-content p {
+        font-size: 12px;
+    }
+
+    .modal-content button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .close {
+        font-size: 20px;
     }
 }

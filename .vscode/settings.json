@@ -42,5 +42,6 @@
             "name": "sam",
             "password": ""
         }
-    ]
+    ],
+    "php.version": "8.4"
 }

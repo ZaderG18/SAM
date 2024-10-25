@@ -57,11 +57,6 @@ if ($notas_result->num_rows > 0) {
 $atividades_sql = "SELECT descricao, data_entrega FROM atividade WHERE aluno_id = ? AND status = 'pendente'";
 $atividades_result = consultarBanco($conn, $atividades_sql, $usuario_id);
 
-// Verifique se a consulta retornou um resultado válido
-if ($atividades_result === false) {
-    die("Erro ao consultar atividades: " . $conn->error);
-}
-
 $atividades = [];
 $tarefas_pendentes = 0; // Contador para tarefas pendentes
 
@@ -72,7 +67,6 @@ if ($atividades_result->num_rows > 0) {
             "data_entrega" => $row['data_entrega'] // Certifique-se de que 'data_entrega' é o nome correto
         ];
         $tarefas_pendentes++; // Incrementa o contador
-
     }
 } 
 
@@ -106,6 +100,38 @@ if ($atualizacoes_result->num_rows > 0) {
             "data_atualizacao" => $row['data_atualizacao']
         ];
         $atualizacoes_importantes++; // Incrementa o contador
-
     }
 }
+
+// Adicionar evento
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['titulo'], $_POST['descricao'], $_POST['data'])) {
+    $titulo = $_POST['titulo'];
+    $descricao = $_POST['descricao'];
+    $data = $_POST['data'];
+
+    // Ajuste aqui para usar aluno_id em vez de usuario_id
+    $inserir_evento_sql = "INSERT INTO eventos (aluno_id, data, titulo, descricao) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($inserir_evento_sql);
+    if (!$stmt) {
+        die("Erro ao preparar inserção: " . $conn->error);
+    }
+    $stmt->bind_param("isss", $usuario_id, $data, $titulo, $descricao);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Buscar eventos do aluno
+$eventos_sql = "SELECT data, titulo, descricao FROM eventos WHERE aluno_id = ?";
+$eventos_result = consultarBanco($conn, $eventos_sql, $usuario_id);
+
+$eventos = [];
+if ($eventos_result->num_rows > 0) {
+    while ($row = $eventos_result->fetch_assoc()) {
+        $eventos[] = [
+            "data" => $row['data'],
+            "titulo" => $row['titulo'],
+            "descricao" => $row['descricao']
+        ];
+    }
+}
+?>

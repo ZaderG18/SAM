@@ -248,7 +248,17 @@ if (!empty($fotoNome)) {
                             <div>Sáb</div>
                         </div>
                         <div class="calendar-days" id="calendarDays"></div>
+                        
+                    <!-- Modal para exibir detalhes do evento -->
+                    <div id="eventModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h4 id="modalTitle"></h4>
+                            <p id="modalDescription"></p>
+                        </div>
                     </div>
+                    </div>
+                    
 
                     <!-- Perfil do aluno -->
                

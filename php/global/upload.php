@@ -15,69 +15,13 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Função para processar o upload da foto
-function uploadFoto($conn) {
-    // Verifica se foi enviado um arquivo
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $foto = $_FILES['foto'];
-        $fotoNome = basename($foto['name']);
-        $fotoTemp = $foto['tmp_name'];
-        $fotoPasta = '../../assets/img/uploads/';
-
-        // Verifica se o diretório existe, caso contrário, cria
-        if (!is_dir($fotoPasta)) {
-            mkdir($fotoPasta, 0777, true);
-        }
-
-        // Valida o tipo de arquivo (apenas imagens)
-        $fotoTipo = mime_content_type($fotoTemp);
-        $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
-
-        if (in_array($fotoTipo, $tiposPermitidos)) {
-            // Gera um nome único para a foto
-            $fotoNovoNome = uniqid() . '_' . $fotoNome;
-            $fotoCaminhoCompleto = $fotoPasta . $fotoNovoNome;
-
-            // Move a foto para o diretório
-            if (move_uploaded_file($fotoTemp, $fotoCaminhoCompleto)) {
-                // Atualiza o campo 'foto' no banco de dados
-                $sqlFoto = "UPDATE aluno SET foto = ? WHERE id = ?";
-                
-                // Supondo que o id do aluno está na sessão
-                $id = $_SESSION['user']['id'];
-                
-                $stmtFoto = $conn->prepare($sqlFoto);
-                $stmtFoto->bind_param("si", $fotoNovoNome, $id);
-
-                if ($stmtFoto->execute()) {
-                    echo "<script> alert('Foto do aluno atualizada com sucesso!');</script>";
-                } else {
-                    echo "<script> alert('Erro ao atualizar a foto do aluno: " . $stmtFoto->error . "');</script>";
-                }
-                $stmtFoto->close();
-            } else {
-                echo "<script> alert('Erro no upload da foto.');</script>";
-            }
-        } else {
-            echo "<script> alert('Formato de arquivo não permitido. Apenas JPEG, PNG e GIF são aceitos.');</script>";
-        }
-    } else {
-        echo "<script> alert('Nenhum arquivo foi enviado ou ocorreu um erro no upload.');</script>";
-    }
-
-    // Redireciona após todo o processamento
-    echo "<script> window.location.href = '../../pages/aluno/configuracoes.php'; </script>";
-}
-
-
-// Função auxiliar para redirecionamento com mensagem
-function redirecionarComMensagem($mensagem, $url) {
-    echo "<script>alert('$mensagem'); window.location.href = '$url';</script>";
-}
-
-
 // Função para atualizar informações pessoais
 function atualizarInformacoes($conn) {
+    // Verificar se o tipo do usuário está definido na sessão
+    if (!isset($_SESSION['user']['tipo'])) {
+        die("Erro: tipo de usuário não definido.");
+    }
+
     $nome = filter_var($_POST['nome'], FILTER_SANITIZE_SPECIAL_CHARS);
     $telefone = filter_var($_POST['telefone'], FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -86,82 +30,51 @@ function atualizarInformacoes($conn) {
     $data_nascimento = $_POST['data_nascimento'];
     $nacionalidade = filter_var($_POST['nacionalidade'], FILTER_SANITIZE_SPECIAL_CHARS);
     $endereco = filter_var($_POST['endereco'], FILTER_SANITIZE_SPECIAL_CHARS);
-    $RM = filter_var($_POST['RM'], FILTER_SANITIZE_SPECIAL_CHARS);
-    $curso = $_POST['curso'];
 
-    // Atualizar no banco de dados
-    $sql = "UPDATE aluno SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=?, curso=? WHERE id=?";
+    // Definindo o tipo de usuário (aluno ou professor)
+    $tipoUsuario = $_SESSION['user']['tipo']; // 'aluno' ou 'professor'
+
+    // Montar a query de acordo com o tipo de usuário
+    if ($tipoUsuario === 'aluno') {
+        $sql = "UPDATE aluno SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=? WHERE id=?";
+    } elseif ($tipoUsuario === 'professor') {
+        $sql = "UPDATE professor SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=? WHERE id=?";
+    } else {
+        die("Tipo de usuário inválido.");
+    }
+
+    // Preparando a query
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $curso, $_SESSION['user_id']);
 
+    if ($stmt === false) {
+        // Se houver erro na preparação da query, exiba a mensagem de erro
+        die("Erro ao preparar a query: " . $conn->error);
+    }
+
+    // Bind dos parâmetros
+    $stmt->bind_param("ssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $_SESSION['user_id']);
+
+    // Executando a query
     if ($stmt->execute()) {
+        // Redireciona com mensagem de sucesso
         redirecionarComMensagem('Informações pessoais atualizadas com sucesso!', '../../pages/aluno/configuracoes.php');
     } else {
+        // Redireciona com mensagem de erro
         redirecionarComMensagem('Erro ao atualizar as informações pessoais.', '../../pages/aluno/configuracoes.php');
     }
     $stmt->close();
 }
 
-// Função para atualizar a senha
-function atualizarSenha($conn) {
-    $senha_atual = $_POST['senha_atual'];
-    $nova_senha = $_POST['nova_senha'];
-    $confirmar_senha = $_POST['confirmar_senha'];
-
-    // Verificar se as senhas coincidem
-    if ($nova_senha === $confirmar_senha) {
-        // Consultar a senha atual no banco
-        $sql = "SELECT senha FROM aluno WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $_SESSION['user_id']);
-        $stmt->execute();
-
-        // Obter o resultado da consulta
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $senha_db = $row['senha'];
-
-            // Verificar se a senha atual está correta
-            if (password_verify($senha_atual, $senha_db)) {
-                // Atualizar para a nova senha (criptografada)
-                $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-                $sql_update = "UPDATE aluno SET senha = ? WHERE id = ?";
-                $stmt_update = $conn->prepare($sql_update);
-                $stmt_update->bind_param("si", $nova_senha_hash, $_SESSION['user_id']);
-
-                if ($stmt_update->execute()) {
-                    redirecionarComMensagem('Senha atualizada com sucesso!', '../../pages/aluno/configuracoes.php');
-                } else {
-                    redirecionarComMensagem('Erro ao atualizar a senha.', '../../pages/aluno/configuracoes.php');
-                }
-                $stmt_update->close();
-            } else {
-                redirecionarComMensagem('Senha atual incorreta!', '../../pages/aluno/configuracoes.php');
-            }
-        } else {
-            redirecionarComMensagem('Usuário não encontrado.', '../../pages/aluno/configuracoes.php');
-        }
-        $stmt->close();
-    } else {
-        redirecionarComMensagem('As novas senhas não coincidem!', '../../pages/aluno/configuracoes.php');
-    }
+// Função auxiliar para redirecionamento com mensagem
+function redirecionarComMensagem($mensagem, $url) {
+    echo "<script>alert('$mensagem'); window.location.href = '$url';</script>";
 }
 
 // Verifica qual formulário foi submetido
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Upload de foto
-    if (isset($_POST['submit_foto'])) {
-        uploadFoto($conn);
-    }
-
     // Atualizar informações pessoais
     if (isset($_POST['submit_informacoes'])) {
         atualizarInformacoes($conn);
     }
-
-    // Atualizar senha
-    if (isset($_POST['submit_senha'])) {
-        atualizarSenha($conn);
-    }
 }
+?>

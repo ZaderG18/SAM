@@ -185,7 +185,7 @@ if (!empty($fotoNome)) {
         
         <div class="form-container">
             <h2>Formulário de ajuda</h2>
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form action="../../php/aluno/envioEmail.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nome-completo">Nome Completo:</label>
                     <input type="text" id="nome-completo" name="nome-completo" class = "caixa" required>
@@ -206,10 +206,10 @@ if (!empty($fotoNome)) {
                     <label for="curso">Curso:</label>
                     <select id="curso" name="curso" class = "caixa" required>
                         <option value="">Selecione o curso</option>
-                        <option value="curso1">Desenvolvimento de sistemas</option>
-                        <option value="curso2">Nutrição</option>
-                        <option value="curso3">Gastronomia</option>
-                        <option value="curso4">Enfermagem</option>
+                        <option value="Desenvolvimento_de_sistemas">Desenvolvimento de sistemas</option>
+                        <option value="Nutricao">Nutrição</option>
+                        <option value="Gastronomia">Gastronomia</option>
+                        <option value="Enfermagem">Enfermagem</option>
                     </select>
                 </div>
                 <div class="form-group">
