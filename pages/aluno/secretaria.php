@@ -19,12 +19,42 @@ if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 function obterDadosPorTipo($conn, $tipo) {
-    $sql = "SELECT * FROM secretaria WHERE tipo = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $tipo);
-    $stmt->execute();
+    // Mapeamento dos tipos para as colunas da tabela
+    $columnMap = [
+        'horario' => 'horario_atendimento',
+        'documento' => 'prazo_documentos',
+        'comunicado' => 'comunicado_rematricula',
+        'equipe' => 'equipe',
+        'documentos_necessarios' => 'documentos_necessarios',
+        'evento' => 'eventos',
+        'faq' => 'faq'
+    ];
+
+    // Verifica se o tipo existe no mapeamento
+    if (!array_key_exists($tipo, $columnMap)) {
+        echo "Tipo inválido: $tipo";
+        return false;
+    }
+
+    $columnName = $columnMap[$tipo];
+
+    // Prepara a consulta
+    $stmt = $conn->prepare("SELECT $columnName AS descricao FROM secretaria");
+    if ($stmt === false) {
+        echo "Erro ao preparar a consulta: " . $conn->error;
+        return false;
+    }
+
+    // Executa a consulta
+    if (!$stmt->execute()) {
+        echo "Erro ao executar a consulta: " . $stmt->error;
+        return false;
+    }
+
     return $stmt->get_result();
 }
+
+
 
 // Bind parameters and execute
 $stmt->bind_param("i", $id);
@@ -184,10 +214,10 @@ if (!empty($fotoNome)) {
         <div class="section">
             <h3>Horário de Atendimento</h3>
             <?php 
-            $result = obterDadosPorTipo($conn, 'horario');
+            $result = obterDadosPorTipo($conn, 'horario_atendimento');
             if ($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
-                    echo "<p>Segunda a Sexta: {$row['descricao']}</p>";
+                    echo "<p>Segunda a Sexta: {$row['horario_atendimento']}</p>";
                     }
             } else{
                 echo "<p>Não há horarios disponíveis.</p>";
@@ -198,7 +228,7 @@ if (!empty($fotoNome)) {
         <div class="section">
             <h3>Prazo para Entrega de Documentos</h3>
             <?php
-            $result = obterDadosPorTipo($conn, 'documento');
+            $result = obterDadosPorTipo($conn, 'prazo_documentos');
             if ($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
                     echo "<p> {$row['descricao']}: {$row['prazo']} horas</p>";

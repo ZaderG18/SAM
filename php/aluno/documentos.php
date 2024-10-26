@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Validar se estamos no prazo de rematrícula
         $dataAtual = date('Y-m-d');
-        $inicioRematricula = '2024-12-09';
+        $inicioRematricula = '2024-10-09';
         $fimRematricula = '2024-12-16';
 
         if ($dataAtual < $inicioRematricula || $dataAtual > $fimRematricula) {
