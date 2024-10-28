@@ -305,13 +305,20 @@ $tableQueries = [
     data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pendente', 'pronto') DEFAULT 'pendente'
 )",
-"imagem" => "CREATE TABLE IF NOT EXISTS imagem (
+"notificacoes" => "CREATE TABLE IF NOT EXISTS notificacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    caminho VARCHAR(255) NOT NULL,  -- Caminho da imagem no servidor
-    nome_arquivo VARCHAR(255),      -- Nome original do arquivo (opcional)
-    tipo VARCHAR(50),               -- Tipo de arquivo (JPG, PNG, etc.)
-    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    tamanho INT                       -- Tamanho do arquivo em bytes (opcional)
+    user_id INT NOT NULL,
+    tipo_usuario ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    mensagem TEXT NOT NULL,
+    imagem VARCHAR(255) DEFAULT NULL,
+    link VARCHAR(255) DEFAULT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lida TINYINT(1) DEFAULT 0, -- 0 para não lida, 1 para lida
+    FOREIGN KEY (user_id) REFERENCES aluno(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES coordenador(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES diretor(id) ON DELETE CASCADE
 )"
 ];
 

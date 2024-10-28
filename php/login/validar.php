@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($table === 'professor') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, genero FROM professor WHERE email = ?");
         } elseif ($table === 'coordenador') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM coordenador WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, cargo FROM coordenador WHERE email = ?");
         } else {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf FROM diretor WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, cargo FROM diretor WHERE email = ?");
         }
 
         if (!$stmt) {
@@ -57,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             if ($table === 'aluno') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $curso, $nacionalidade, $frequencia, $endereco, $telefone);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $curso, $nacionalidade, $frequencia, $endereco, $telefone);
             } elseif($table === 'professor') {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf, $genero);
             } else {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $cpf);
             }
             
             $stmt->fetch();
@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'foto' => $foto,
                         'email' => $emailBD,
                         'RM' => $RM,
+                        'cargo' => $cargo,
                         'status' => $status,
                         'curso_id' => $curso,
                         'frequencia' => $frequencia,
@@ -104,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'id' => $id,
                         'nome' => $nome,
                         'foto' => $foto,
+                        'cargo' => $cargo,
                         'email' => $emailBD,
                         'RM' => $RM,
                         'status' => $status,

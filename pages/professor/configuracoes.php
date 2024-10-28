@@ -1,3 +1,40 @@
+<?php 
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "sam";
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Erro ao conectar ao banco". $conn->connect_error);
+}
+require_once '../../php/login/validar.php';
+include '../../php/global/notificacao.php';
+
+$user = $_SESSION['user'];
+$id = $user['id'];
+
+// Prepare SQL statement to retrieve photo
+$sql = "SELECT foto FROM professor WHERE id = ?";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+
+// Bind parameters and execute
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($fotoNome);
+$stmt->fetch();
+$stmt->close();
+
+// Check if there is a photo for the user
+if (!empty($fotoNome)) {
+    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
+} else {
+    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -33,37 +70,28 @@
         <div class="header__dropdown">
             <i class='bx bx-bell header__notification'></i>
             <div class="header__dropdown-content">
-                <a href="#" class="header__dropdown-item">
+                    <?php $notificacoes = obterNotificacoes($conn, $id, true);
+                if (!empty($notificacoes)) { 
+                    echo "<p> Nenhuma notificação no momento.</p>";
+                } else{
+                    foreach ($notificacoes as $notificacao){?>
+                <a href="<?php echo $notificacao['link'] ? $notificacao['link'] : '#'; ?>" class="header__dropdown-item">
                     <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Notificação 1">
+                        <?php if ($notificacao['imagem']){?>
+                        <img src="<?php echo $notificacao['imagem']; ?>" alt="Notificação 1">
+                        <?php } ?>
                         <div>
-                            <h4>Notificação 1</h4>
-                            <p>Descrição da notificação 1</p>
+                            <h4><?php echo htmlspecialchars($notificacao['titulo']); ?></h4>
+                            <p><?php echo htmlspecialchars($notificacao['mensagem']);?></p>
+                            <small><?php date("d/m/Y H:i", strtotime($notificacao['data_criacao']))?></small>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="header__dropdown-item">
-                    <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_enrico.png" alt="Notificação 2">
-                        <div>
-                            <h4>Notificação 2</h4>
-                            <p>Descrição da notificação 2</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="header__dropdown-item">
-                    <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_neide.png" alt="Notificação 3">
-                        <div>
-                            <h4>Notificação 3</h4>
-                            <p>Descrição da notificação 3</p>
-                        </div>
-                    </div>
-                </a>
+                <?php } }?>
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../../assets/img/home/fotos/Usuário_Header.png" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
                 <a href="perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
@@ -139,26 +167,29 @@
     <div class="cards-container">
         <!-- Lado esquerdo - Info Card -->
         <div class="info-card">
+        <form action="../../php/professor/upload.php" method="post" enctype="multipart/form-data">
             <div class="profile-picture">
                 <h3>Upload Foto(150px X 150px)</h3>
                 <img src="profile-placeholder.png" id="profile-pic"/>
                 <label for="upload" class="upload-button">Escolher Arquivo</label>
-                <input type="file" id="upload" accept="image/*" class="input">
-                <button class="btn-padrao">Salvar</button>
+                <input type="file" id="upload" name="foto" accept="image/*" class="input">
+                <button class="btn-padrao" type="submit" name="submit_foto">Salvar</button>
             </div>
+            </form>
+
             <div class="notifications">
                 <h3>Notificações</h3>
                 <label>Email</label>
                 <select>
                     <option>Selecione</option>
-                    <option>Sim</option>
-                    <option>Não</option>
+                    <option value="1" <?= $user['notificacao_email'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= $user['notificacao_email'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <label>Telefone</label>
                 <select>
                     <option>Selecione</option>
-                    <option>Sim</option>
-                    <option>Não</option>
+                    <option value="1" <?= $user['notificacao_telefone'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= $user['notificacao_telefone'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <button class="btn-padrao">Salvar</button>
             </div>
@@ -183,71 +214,71 @@
     
         <!-- Lado direito - Personal Info e Password Update -->
         <div class="main-content">
-            <form>
+            <form action="../../php/professor/upload.php" method="post" enctype="multipart/form-data">
                 <div class="personal-info">
                     <h3>Informações Pessoais</h3>
                     <label>Nome Completo*</label>
-                    <input type="text" required>
+                    <input type="text" name="nome" value="<?= htmlspecialchars($user['nome']); ?>">
                     <label>Telefone*</label>
-                    <input type="tel" required>
+                    <input type="tel" name="telefone" value="<?= htmlspecialchars($user['telefone']); ?>">
                     <label>Email*</label>
-                    <input type="email" required>
+                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>">
                     <label>Gênero*</label>
                     <select required>
                         <option>Selecione seu gênero</option>
-                        <option>Homem Cis</option>
-                        <option>Mulher cis</option>
-                        <option>Mulher Trans</option>
-                        <option>Homem Trans</option>
-                        <option>Não-Binário</option>
-                        <option>Prefiro Não Dizer</option>
+                        <option value="masculino">Homem Cis</option>
+                        <option value="feminino">Mulher cis</option>
+                        <option value="mulher_trans">Mulher Trans</option>
+                        <option value="homem_trans">Homem Trans</option>
+                        <option value="nao_binario">Não-Binário</option>
+                        <option value="prefiro_n_dizer">Prefiro Não Dizer</option>
                     </select>
                     <label>Estado Civil*</label>
-                    <select required>
+                    <select name="estado_civil">
                         <option>Selecione</option>
-                        <option>Solteiro</option>
-                        <option>Casado</option>
-                        <option>Divorciado</option>
-                        <option>Viúvo</option>
+                        <option value="solteiro">Solteiro</option>
+                        <option value="casado">Casado</option>
+                        <option value="divorciado">Divorciado</option>
+                        <option value="viuvo">Viúvo</option>
                     </select>
                     <label>Data de Nascimento*</label>
-                    <input type="date" required>
+                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars($user['data_nascimento']); ?>">
                     <label>Nacionalidade*</label>
-                    <input type="text" required>
+                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars($user['nacionalidade']); ?>">
                     <label>Endereço*</label>
-                    <input type="text" required>
+                    <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>">
                     <label>ID</label>
-                    <input type="text">
+                    <input type="text" name="id" value="<?= htmlspecialchars($user['id']); ?>">
                     <label>Curso*</label>
                     <select required>
                         <option>Selecione o curso</option>
-                        <option>Desenvolvimento de Sistemas</option>
-                        <option>Enfermagem</option>
-                        <option>Nutrição</option>
-                        <option>Gastronomia</option>
+                        <option value="desenvolvimento_de_sistemas">Desenvolvimento de Sistemas</option>
+                        <option value="enfermagem">Enfermagem</option>
+                        <option value="nutricao">Nutrição</option>
+                        <option value="gastronomia">Gastronomia</option>
                     </select>
                     <h3>Contato de Emergência</h3>
                     <label>Nome do Contato*</label>
-                    <input type="text" required>
+                    <input type="text" name="nome_emergencia">
                     <label>Parentesco*</label>
-                    <input type="text" required>
+                    <input type="text" name="parentesco_emergencia">
                     <label>Telefone de Contato*</label>
-                    <input type="text" required>
+                    <input type="text" name="telefone_emergencia">
                     <label>Email de Contato*</label>
-                    <input type="text" required>
+                    <input type="text" name="email_emergencia">
                     <button class="btn-padrao">Editar</button>
-                    <button class="btn-padrao">Salvar</button>
+                    <button class="btn-padrao" name="submit_informacoes">Salvar</button>
                 </div>
     
                 <div class="password-update">
                     <h3>Atualizar Senha</h3>
                     <label>Senha Atual</label>
-                    <input type="password" required>
+                    <input type="password" name="senha_atual">
                     <label>Nova Senha*</label>
-                    <input type="password" required>
+                    <input type="password" name="nova_senha">
                     <label>Confirmar Nova Senha*</label>
-                    <input type="password" required>
-                    <button class="btn-padrao">Salvar</button>
+                    <input type="password" name="confirmar_senha">
+                    <button class="btn-padrao" name="submit_senha">Salvar</button>
                 </div>
             </form>
         </div>

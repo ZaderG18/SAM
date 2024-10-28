@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 require '../../php/aluno/historico.php';
+include '../../php/global/notificacao.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 
@@ -69,33 +70,24 @@ if (!empty($fotoNome)) {
         <div class="header__dropdown">
             <i class='bx bx-bell header__notification'></i>
             <div class="header__dropdown-content">
-                <a href="#" class="header__dropdown-item">
+            <?php $notificacoes = obterNotificacoes($conn, $id, true);
+                if (!empty($notificacoes)) { 
+                    echo "<p> Nenhuma notificação no momento.</p>";
+                } else{
+                    foreach ($notificacoes as $notificacao){?>
+                <a href="<?php echo $notificacao['link'] ? $notificacao['link'] : '#'; ?>" class="header__dropdown-item">
                     <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Notificação 1">
+                        <?php if ($notificacao['imagem']){?>
+                        <img src="<?php echo $notificacao['imagem']; ?>" alt="Notificação 1">
+                        <?php } ?>
                         <div>
-                            <h4>Notificação 1</h4>
-                            <p>Descrição da notificação 1</p>
+                            <h4><?php echo htmlspecialchars($notificacao['titulo']); ?></h4>
+                            <p><?php echo htmlspecialchars($notificacao['mensagem']);?></p>
+                            <small><?php date("d/m/Y H:i", strtotime($notificacao['data_criacao']))?></small>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="header__dropdown-item">
-                    <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_enrico.png" alt="Notificação 2">
-                        <div>
-                            <h4>Notificação 2</h4>
-                            <p>Descrição da notificação 2</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="header__dropdown-item">
-                    <div class="header__notification-item">
-                        <img src="../../assets/img/home/fotos/img_neide.png" alt="Notificação 3">
-                        <div>
-                            <h4>Notificação 3</h4>
-                            <p>Descrição da notificação 3</p>
-                        </div>
-                    </div>
-                </a>
+                <?php } }?>
             </div>
         </div>
         <div class="header__dropdown">
