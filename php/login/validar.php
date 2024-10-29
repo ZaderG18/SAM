@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($table === 'aluno') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso_id, frequencia, endereco, nacionalidade, telefone FROM aluno WHERE email = ?");
         } elseif ($table === 'professor') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, genero FROM professor WHERE email = ?");
+            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, telefone, cpf, genero FROM professor WHERE email = ?");
         } elseif ($table === 'coordenador') {
             $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, cargo FROM coordenador WHERE email = ?");
         } else {
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($table === 'aluno') {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $curso, $nacionalidade, $frequencia, $endereco, $telefone);
             } elseif($table === 'professor') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cpf, $genero);
+                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $telefone, $hashed_password, $cpf, $genero);
             } else {
                 $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $cpf);
             }
@@ -95,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'foto' => $foto,
                         'email' => $emailBD,
                         'RM' => $RM,
+                        'telefone' => $telefone,
                         'cpf' => $cpf,
                         'genero' => $genero,
                         'status' => $status,

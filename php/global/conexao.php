@@ -219,6 +219,7 @@ $tableQueries = [
     status VARCHAR(50) NOT NULL,
     aulas_dadas INT,
     faltas INT,
+    professor_id INT,
     faltas_permitidas INT,
     frequencia_atual DECIMAL(5,2),
     frequencia_total INT,
@@ -227,7 +228,9 @@ $tableQueries = [
     disciplina_id INT,  -- Agora referenciando a tabela disciplina
     FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE,
-    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
+    FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE,
+    FOREIGN KEY (professor_id) REFERENCES professor(id) ON DELETE CASCADE
+
     )",
     "mensagens_chat" =>"CREATE TABLE IF NOT EXISTS mensagens_chat (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -319,6 +322,26 @@ $tableQueries = [
     FOREIGN KEY (user_id) REFERENCES professor(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES coordenador(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES diretor(id) ON DELETE CASCADE
+)",
+"tarefas" => "CREATE TABLE IF NOT EXISTS tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    professor_id INT NOT NULL,
+    tarefa VARCHAR(255) NOT NULL,
+    prazo DATE NOT NULL,
+    status ENUM('pendente', 'concluida') DEFAULT 'pendente',
+    FOREIGN KEY (professor_id) REFERENCES professor(id)
+)",
+"horario" => "CREATE TABLE horario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    professor_id INT NOT NULL,
+    hora_inicio TIME,
+    hora_fim TIME,
+    ,
+    dia_semana ENUM('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado') NOT NULL,
+    materia VARCHAR(100) NOT NULL,
+    horario_inicio TIME NOT NULL,
+    horario_fim TIME NOT NULL,
+    FOREIGN KEY (professor_id) REFERENCES professor(id)
 )"
 ];
 

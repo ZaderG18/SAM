@@ -174,8 +174,8 @@ if (!empty($fotoNome)) {
             <!-- Banner de saudação -->
             <div class="banner">
                 <div>
-                    <h1>Bem-vindo, <?php echo $denominacao. " " . htmlspecialchars($user['nome'])?>!</h1>
-                    <p>Você tem 5 novas mensagens e 2 tarefas para revisar.</p>
+                    <h1>Bem-vindo, <?php echo htmlspecialchars($user['nome'])?>!</h1>
+                    <p>Você tem <?php echo $totalAtualizacoes; ?> novas mensagens e <?php echo $totalTarefas; ?> tarefas para revisar.</p>
                 </div>
                 <img src="../../assets/img/home/fotos/imgprof.png" alt="Avatar">
             </div>
@@ -235,43 +235,45 @@ if (!empty($fotoNome)) {
 
                 <!-- Perfil da professora -->
                 <div class="profile">
-                    <h3>Dados da Professora</h3>
-                    <img src="<?php echo $fotoCaminho ?>" alt="Perfil da Professora">
+                    <h3>Dados do <?php $denominacao; ?></h3>
+                    <img src="<?php echo htmlspecialchars($fotoCaminho) ?>" alt="Perfil da Professora">
                     <h2><?php echo htmlspecialchars($user['nome']);?></h2>
                     <p>Professora de Matemática</p>
                     <p>Matrícula:<?php echo htmlspecialchars($user['RM']);?></p>
                     <p>Email: <?php echo htmlspecialchars($user['email']);?></p>
-                    <p>Telefone: <?php echo htmlspecialchars($user['Telefone']);?></p>
+                    <p>Telefone: <?php echo htmlspecialchars($user['telefone']);?></p>
                 </div>
 
                 <!-- Tarefas Pendentes -->
                 <div class="section">
                     <h3>Tarefas Pendentes</h3>
                     <ul>
-                        <li>Revisar prova de Álgebra <span>(entrega em 2 dias)</span></li>
-                        <li>Preparar aula de Geometria <span>(entrega em 3 dias)</span></li>
-                        <li>Corrigir trabalhos de Cálculo <span>(entrega em 1 semana)</span></li>
+                        <?php while ($tarefa = $resultTarefas->fetch_assoc()) : ?>
+                        <li><?php echo htmlspecialchars($tarefa['tarefa']); ?> <span>(entrega em <?php echo htmlspecialchars($tarefa['prazo']); ?>)</span></li>
+                        <?php endwhile; ?>
                     </ul>
                 </div>
 
                 <!-- Horário de Aula -->
                 <div class="section">
                     <h3>Horário de Aula</h3>
-                    <h4>Segunda-feira</h4>
-                    <p>Álgebra: 08:00 - 09:00</p>
-                    <p>Geometria: 10:00 - 11:00</p>
-                    <p>Intervalo: 12:00 - 13:00</p>
-                    <p>Cálculo: 14:00 - 16:00</p>
-                    <p>Cálculo: 17:00 - 18:00</p>
+                    <?php $diaAnterior = null; while ($horario = $resultHorario->fetch_assoc()) : 
+                        if ($diaAnterior !== $horario['dia_semana']) {
+                            if ($diaAnterior !== null) echo "<hr>";
+                            echo "<h4>" . htmlspecialchars($horario['dia_semana']) . "</h4>"; 
+                            $diaAnterior = $horario['dia_semana'];
+                        }?>
+                    <p><?php echo htmlspecialchars($horario['disciplina']); ?>: <?php echo htmlspecialchars($horario['hora_inicio']); ?> - <?php echo htmlspecialchars($horario['hora_fim']); ?></p>
+                    <?php endwhile; ?>
                 </div>
 
                 <!-- Chamadas Pendentes -->
                 <div class="section">
                     <h3>Chamadas Pendentes</h3>
                     <ul>
-                        <li>Chamada da turma de Álgebra <span>(pendente)</span></li>
-                        <li>Chamada da turma de Geometria <span>(pendente)</span></li>
-                        <li>Chamada da turma de Cálculo <span>(pendente)</span></li>
+                        <?php while ($chamada = $resultChamadas->fetch_assoc()) : ?>
+                        <li>Chamada da turma de <?php echo htmlspecialchars($chamada['disciplina']); ?> <span>(pendente)</span></li>
+                        <?php endwhile; ?>
                     </ul>
                 </div>
 
@@ -279,9 +281,9 @@ if (!empty($fotoNome)) {
                 <div class="feed">
                     <h3>Atualizações Recentes</h3>
                     <ul>
-                        <li>Nota de Álgebra lançada <span>(ontem)</span></li>
-                        <li>Nova atividade em Geometria <span>(2 dias atrás)</span></li>
-                        <li>Evento: Semana de Matemática <span>(5 dias atrás)</span></li>
+                        <?php while ($atualizacao = $resultAtualizacoes->fetch_assoc()) : ?>
+                        <li><?php echo htmlspecialchars($atualizacao['descricao'])?> <span>(<?php echo htmlspecialchars($atualizacao['data'])?>)</span></li>
+                        <?php endwhile; ?>
                     </ul>
                 </div>
             </div>
