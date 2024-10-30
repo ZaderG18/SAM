@@ -31,7 +31,7 @@ if ($conn->connect_error) {
 $id = $user['id']; // ID do usuário
 
 // Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -246,7 +246,7 @@ if (!empty($fotoNome)) {
                         <h3>Dados Aluno</h3>
                         <img src="<?php echo $fotoCaminho;?>" alt="Perfil do Aluno">
                         <h2><?php echo htmlspecialchars($_SESSION['user']['nome']);?></h2>
-                        <p>Curso: <?php echo htmlspecialchars($user['curso_id']);?></p>
+                        <p>Curso: <?php echo htmlspecialchars($user['curso']);?></p>
                         <p>Matrícula: <?php echo htmlspecialchars($user['RM']);?></p>
                         <p>3º Semestre</p>
                         <p>Situação: <?php echo htmlspecialchars($_SESSION['user']['status'])?></p>
@@ -269,8 +269,6 @@ if (!empty($fotoNome)) {
                                 <?php if(!empty($atividades)): ?>
                                     <?php foreach($atividades as $atividade): ?>
                                 <li><?= $atividade['descricao']?> <span>(entrega em <?= date('d/m/Y', strtotime($atividade['data'])) ?>)</span></li>
-                                <li>Projeto de Banco de Dados <span>(entrega em 5 dias)</span></li>
-                                <li>Revisão de Prova de Redes <span>(entrega em 1 semana)</span></li>
                                 <?php endforeach; ?>
                                 <?php else: ?>
                                     <li>Não há tarefas pendentes</li>

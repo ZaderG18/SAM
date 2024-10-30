@@ -56,7 +56,7 @@ $tableName = $tableMap[$usuarioCargo];
 $hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 
 // Prepara a consulta de inserção
-$sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
+$sqlInsert = "INSERT INTO usuarios (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
 
 if ($stmt === false) {

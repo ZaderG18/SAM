@@ -1,10 +1,7 @@
 <?php
-session_start([
-    'cookie_lifetime' => 86400,
-    'cookie_secure' => true,
-    'cookie_httponly' => true,
-    'cookie_samesite' => 'Strict'
-]);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Conexão ao banco de dados
@@ -22,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Prepara a consulta SQL para buscar o usuário na tabela 'usuarios'
-    $query = "SELECT id, nome, RM, status, foto, email, senha, cargo, curso_id, frequencia, endereco, nacionalidade, telefone, cpf, genero 
+    $query = "SELECT id, nome, RM, status, foto, email, senha, cargo, endereco, nacionalidade, telefone, cpf, genero 
               FROM usuarios WHERE email = ?";
     $stmt = $conn->prepare($query);
     if (!$stmt) {
@@ -35,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->num_rows > 0) {
         // Associa as variáveis aos resultados da consulta
-        $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cargo, $curso, $frequencia, $endereco, $nacionalidade, $telefone, $cpf, $genero);
+        $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cargo, $endereco, $nacionalidade, $telefone, $cpf, $genero);
         $stmt->fetch();
 
         // Verifica a senha
@@ -51,8 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'RM' => $RM,
                 'status' => $status,
                 'role' => $cargo,
-                'curso_id' => $cargo == 1 ? $curso : null,
-                'frequencia' => $cargo == 1 ? $frequencia : null,
                 'telefone' => $cargo == 1 ? $telefone : ($cargo == 2 ? $telefone : null),
                 'endereco' => $cargo == 1 ? $endereco : null,
                 'nacionalidade' => $cargo == 1 ? $nacionalidade : null,
@@ -71,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 4 => 'diretor'
             ];
             $role = $roleMap[$cargo];
-            header("Location: ../../pages/$role/home_$role.php");
+            header("Location: ../../pages/$cargo/home_$cargo.php");
             exit();
         }
     }

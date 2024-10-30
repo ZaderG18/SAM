@@ -28,7 +28,7 @@ $user = $_SESSION['user'];
 $id = $user['id'];
 
 // Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -41,7 +41,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Verifica se há uma foto para o usuário
 if (!empty($fotoNome)) {

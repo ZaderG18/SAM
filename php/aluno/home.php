@@ -22,6 +22,19 @@ if (!isset($_SESSION['user']['id'])) {
 
 $usuario_id = $_SESSION['user']['id'];
 
+// Verificar se o usuário é do tipo "aluno"
+$tipo_sql = "SELECT cargo FROM usuarios WHERE id = ?";
+$stmt = $conn->prepare($tipo_sql);
+$stmt->bind_param("i", $usuario_id);
+$stmt->execute();
+$stmt->bind_result($tipo);
+$stmt->fetch();
+$stmt->close();
+
+if ($tipo !== 'aluno') {
+    die("Acesso restrito para alunos.");
+}
+
 // Função para realizar consulta no banco
 function consultarBanco($conn, $sql, $usuario_id) {
     $stmt = $conn->prepare($sql);
@@ -44,7 +57,7 @@ $notas_result = consultarBanco($conn, $notas_sql, $usuario_id);
 $notas = [];
 if ($notas_result->num_rows > 0) {
     while ($row = $notas_result->fetch_assoc()) {
-        $notas[] = $row['nota_media']; // Usar a coluna correta
+        $notas[] = $row['nota_media'];
     }
     $media = array_sum($notas) / count($notas);
     $maior_nota = max($notas);
@@ -64,21 +77,21 @@ if ($atividades_result->num_rows > 0) {
     while ($row = $atividades_result->fetch_assoc()) {
         $atividades[] = [
             "descricao" => $row['descricao'],
-            "data_entrega" => $row['data_entrega'] // Certifique-se de que 'data_entrega' é o nome correto
+            "data_entrega" => $row['data_entrega']
         ];
-        $tarefas_pendentes++; // Incrementa o contador
+        $tarefas_pendentes++;
     }
-} 
+}
 
 // Buscar horários de aula
-$horarios_sql = "SELECT disciplina, dia_semana, hora_inicio, hora_fim FROM horarios WHERE aluno_id = ?";
+$horarios_sql = "SELECT disciplina_id, dia_semana, hora_inicio, hora_fim FROM horario WHERE aluno_id = ?";
 $horarios_result = consultarBanco($conn, $horarios_sql, $usuario_id);
 
 $horarios = [];
 if ($horarios_result->num_rows > 0) {
     while ($row = $horarios_result->fetch_assoc()) {
         $horarios[] = [
-            "disciplina" => $row['disciplina'],
+            "disciplina_id" => $row['disciplina_id'],
             "dia_semana" => $row['dia_semana'],
             "hora_inicio" => $row['hora_inicio'],
             "hora_fim" => $row['hora_fim']
@@ -99,39 +112,38 @@ if ($atualizacoes_result->num_rows > 0) {
             "descricao" => $row['descricao'],
             "data_atualizacao" => $row['data_atualizacao']
         ];
-        $atualizacoes_importantes++; // Incrementa o contador
+        $atualizacoes_importantes++;
     }
 }
 
-// // Adicionar evento
-// if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['titulo'], $_POST['descricao'], $_POST['data'])) {
-//     $titulo = $_POST['titulo'];
-//     $descricao = $_POST['descricao'];
-//     $data = $_POST['data'];
+// Adicionar evento
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['titulo'], $_POST['descricao'], $_POST['data'])) {
+    $titulo = $_POST['titulo'];
+    $descricao = $_POST['descricao'];
+    $data = $_POST['data'];
 
-//     // Ajuste aqui para usar aluno_id em vez de usuario_id
-//     $inserir_evento_sql = "INSERT INTO eventos (aluno_id, data, titulo, descricao) VALUES (?, ?, ?, ?)";
-//     $stmt = $conn->prepare($inserir_evento_sql);
-//     if (!$stmt) {
-//         die("Erro ao preparar inserção: " . $conn->error);
-//     }
-//     $stmt->bind_param("isss", $usuario_id, $data, $titulo, $descricao);
-//     $stmt->execute();
-//     $stmt->close();
-// }
+    $inserir_evento_sql = "INSERT INTO eventos (aluno_id, data, titulo, descricao) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($inserir_evento_sql);
+    if (!$stmt) {
+        die("Erro ao preparar inserção: " . $conn->error);
+    }
+    $stmt->bind_param("isss", $usuario_id, $data, $titulo, $descricao);
+    $stmt->execute();
+    $stmt->close();
+}
 
-// // Buscar eventos do aluno
-// $eventos_sql = "SELECT data, titulo, descricao FROM eventos WHERE aluno_id = ?";
-// $eventos_result = consultarBanco($conn, $eventos_sql, $usuario_id);
+// Buscar eventos do aluno
+$eventos_sql = "SELECT data, titulo, descricao FROM eventos WHERE aluno_id = ?";
+$eventos_result = consultarBanco($conn, $eventos_sql, $usuario_id);
 
-// $eventos = [];
-// if ($eventos_result->num_rows > 0) {
-//     while ($row = $eventos_result->fetch_assoc()) {
-//         $eventos[] = [
-//             "data" => $row['data'],
-//             "titulo" => $row['titulo'],
-//             "descricao" => $row['descricao']
-//         ];
-//     }
-// }
+$eventos = [];
+if ($eventos_result->num_rows > 0) {
+    while ($row = $eventos_result->fetch_assoc()) {
+        $eventos[] = [
+            "data" => $row['data'],
+            "titulo" => $row['titulo'],
+            "descricao" => $row['descricao']
+        ];
+    }
+}
 ?>
