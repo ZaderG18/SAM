@@ -1,6 +1,5 @@
 <?php
-
-include "../global/conexao.php"; // Assegure-se de que a conexão usa MySQLi
+include "../global/conexao.php"; // Certifique-se de que a conexão usa MySQLi
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -9,7 +8,7 @@ $usuarioRM = filter_input(INPUT_POST, 'RM', FILTER_SANITIZE_NUMBER_INT);
 $usuarioNome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 $usuarioCargo = filter_input(INPUT_POST, 'cargo', FILTER_SANITIZE_NUMBER_INT);
 
-// Verifica se todos os campos obrigatórios foram preenchidos.
+// Função para verificar campos obrigatórios
 function verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $usuarioNome, $usuarioCargo) {
     if (!$usuarioEmail || !$usuarioSenha || !$usuarioNome || !$usuarioRM || !$usuarioCargo) {
         echo "<script>
@@ -24,31 +23,46 @@ verificarCamposObrigatorios($usuarioEmail, $usuarioSenha, $usuarioRM, $usuarioNo
 
 // Validação do cargo
 if (!in_array($usuarioCargo, [1, 2, 3, 4])) {
-    die("Cargo inválido.");
+    echo "<script>
+            alert('Cargo inválido.');
+            window.location.href = '../../pages/login/cadastro.html';
+          </script>";
+    exit();
 }
 
-// Critérios para uma senha segura
-function ValidarSenha($senha){
+// Função para verificar critérios de segurança de senha
+function validarSenha($senha) {
     return preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/', $senha);
 }
 
-// Mapeia o cargo para o nome da tabela correspondente.
+if (!validarSenha($usuarioSenha)) {
+    echo "<script>
+            alert('A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.');
+            window.location.href = '../../pages/login/cadastro.html';
+          </script>";
+    exit();
+}
+
+// Mapeia o cargo para o nome da tabela correspondente
 $tableMap = [
     1 => 'aluno',
     2 => 'professor',
     3 => 'coordenador',
     4 => 'diretor'
 ];
-
-// Define o nome da tabela com base no cargo.
 $tableName = $tableMap[$usuarioCargo];
 
-// Gera o hash da senha.
+// Gera o hash da senha
 $hashedPassword = password_hash($usuarioSenha, PASSWORD_DEFAULT);
 
-// Prepara e executa a consulta de inserção dos dados na tabela apropriada.
+// Prepara a consulta de inserção
 $sqlInsert = "INSERT INTO $tableName (email, senha, RM, nome, cargo) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sqlInsert);
+
+if ($stmt === false) {
+    die("Erro na preparação da consulta: " . htmlspecialchars($conn->error));
+}
+
 $stmt->bind_param("ssisi", $usuarioEmail, $hashedPassword, $usuarioRM, $usuarioNome, $usuarioCargo);
 
 try {
@@ -64,8 +78,11 @@ try {
               </script>";
     }
 } catch (mysqli_sql_exception $e) {
-    echo "Erro: " . htmlspecialchars($e->getMessage());
+    echo "<script>
+            alert('Erro ao inserir os dados. Tente novamente mais tarde.');
+            window.location.href = '../../pages/login/cadastro.html';
+          </script>";
 }
 
-$stmt->close(); // Fecha a declaração
-
+// Fecha a declaração
+$stmt->close();

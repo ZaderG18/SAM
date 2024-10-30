@@ -1,132 +1,85 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$session_options = [
+session_start([
     'cookie_lifetime' => 86400,
     'cookie_secure' => true,
     'cookie_httponly' => true,
     'cookie_samesite' => 'Strict'
-];
+]);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "SAM";
-    $conn = new mysqli($host, $username, $password, $dbname);
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Conexão ao banco de dados
+    $conn = new mysqli("localhost", "root", "", "SAM");
     if ($conn->connect_error) {
         die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
     }
 
+    // Sanitização e validação de email
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
-
-    // Valida se o email é um formato válido
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>
-                alert('Por favor, insira um email válido.');
-                window.location.href = '../../index.html';
-              </script>";
+        echo "<script>alert('Por favor, insira um email válido.'); window.location.href = '../../index.html';</script>";
         exit();
     }
 
-    $tables = ['aluno', 'professor', 'coordenador', 'diretor'];
-    $userFound = false;
+    // Prepara a consulta SQL para buscar o usuário na tabela 'usuarios'
+    $query = "SELECT id, nome, RM, status, foto, email, senha, cargo, curso_id, frequencia, endereco, nacionalidade, telefone, cpf, genero 
+              FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        die("Erro ao preparar a consulta: " . $conn->error);
+    }
 
-    foreach ($tables as $table) {
-        if ($table === 'aluno') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, curso_id, frequencia, endereco, nacionalidade, telefone FROM aluno WHERE email = ?");
-        } elseif ($table === 'professor') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, telefone, cpf, genero FROM professor WHERE email = ?");
-        } elseif ($table === 'coordenador') {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, cargo FROM coordenador WHERE email = ?");
-        } else {
-            $stmt = $conn->prepare("SELECT id, nome, RM, status, foto, email, senha, cpf, cargo FROM diretor WHERE email = ?");
-        }
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-        if (!$stmt) {
-            die("Erro ao preparar a consulta: " . $conn->error);
-        }
+    if ($stmt->num_rows > 0) {
+        // Associa as variáveis aos resultados da consulta
+        $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $hashed_password, $cargo, $curso, $frequencia, $endereco, $nacionalidade, $telefone, $cpf, $genero);
+        $stmt->fetch();
 
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->store_result();
+        // Verifica a senha
+        if (password_verify($senha, $hashed_password)) {
+            session_regenerate_id(true);
 
-        if ($stmt->num_rows > 0) {
-            if ($table === 'aluno') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $curso, $nacionalidade, $frequencia, $endereco, $telefone);
-            } elseif($table === 'professor') {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD, $telefone, $hashed_password, $cpf, $genero);
-            } else {
-                $stmt->bind_result($id, $nome, $RM, $status, $foto, $emailBD,$cargo, $hashed_password, $cpf);
-            }
+            // Estrutura da sessão com base nas informações do usuário
+            $_SESSION['user'] = [
+                'id' => $id,
+                'nome' => ($cargo == 2 ? (($genero === 'F') ? 'Professora' : 'Professor') . ' ' : '') . $nome,
+                'foto' => $foto,
+                'email' => $emailBD,
+                'RM' => $RM,
+                'status' => $status,
+                'role' => $cargo,
+                'curso_id' => $cargo == 1 ? $curso : null,
+                'frequencia' => $cargo == 1 ? $frequencia : null,
+                'telefone' => $cargo == 1 ? $telefone : ($cargo == 2 ? $telefone : null),
+                'endereco' => $cargo == 1 ? $endereco : null,
+                'nacionalidade' => $cargo == 1 ? $nacionalidade : null,
+                'cpf' => in_array($cargo, [2, 3, 4]) ? $cpf : null,
+                'genero' => $cargo == 2 ? $genero : null
+            ];
+
+            $stmt->close();
+            $conn->close();
             
-            $stmt->fetch();
-
-            if (password_verify($senha, $hashed_password)) {
-                session_regenerate_id(true);
-
-                if ($table === 'aluno') {
-                    $_SESSION['user'] = [
-                        'id' => $id,
-                        'nome' => $nome,
-                        'foto' => $foto,
-                        'email' => $emailBD,
-                        'RM' => $RM,
-                        'cargo' => $cargo,
-                        'status' => $status,
-                        'curso_id' => $curso,
-                        'frequencia' => $frequencia,
-                        'telefone' => $telefone,
-                        'endereco' => $endereco,
-                        'nacionalidade' => $nacionalidade,
-                        'role' => $table
-                    ];
-                } elseif ($table === 'professor') {
-                    // Determina o título com base no gênero
-                    $titulo = ($genero === 'F') ? 'Professora' : 'Professor';
-
-                    $_SESSION['user'] = [
-                        'id' => $id,
-                        'nome' => $titulo . ' ' . $nome,
-                        'foto' => $foto,
-                        'email' => $emailBD,
-                        'RM' => $RM,
-                        'telefone' => $telefone,
-                        'cpf' => $cpf,
-                        'genero' => $genero,
-                        'status' => $status,
-                        'role' => $table    
-                    ];
-                } else {
-                    $_SESSION['user'] = [
-                        'id' => $id,
-                        'nome' => $nome,
-                        'foto' => $foto,
-                        'cargo' => $cargo,
-                        'email' => $emailBD,
-                        'RM' => $RM,
-                        'status' => $status,
-                        'cpf' => $cpf,
-                        'role' => $table
-                    ];
-                }
-
-                header("Location: ../../pages/$table/home_$table.php");
-                exit();
-            }
-            $userFound = true;
-            break;
+            // Redireciona o usuário para a página inicial com base no cargo
+            $roleMap = [
+                1 => 'aluno',
+                2 => 'professor',
+                3 => 'coordenador',
+                4 => 'diretor'
+            ];
+            $role = $roleMap[$cargo];
+            header("Location: ../../pages/$role/home_$role.php");
+            exit();
         }
     }
 
-    if (!$userFound) {
-        echo "<script>
-                alert('Email ou senha incorretos.');
-                window.location.href = '../../index.html';
-              </script>";
-    }
+    // Fecha a declaração e a conexão se a validação falhar
+    $stmt->close();
+    $conn->close();
+
+    // Mensagem de erro se o login falhar
+    echo "<script>alert('Email ou senha incorretos.'); window.location.href = '../../index.html';</script>";
 }
