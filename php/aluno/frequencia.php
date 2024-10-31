@@ -19,11 +19,12 @@ if (isset($_POST['modulo'])) {
     $user = $_SESSION['user'];
     $alunoId = $user['id'];
 
-    // Consulta para buscar as frequências do aluno para o módulo selecionado
-    $sql = "SELECT d.nome AS disciplina, f.frequencia AS frequencia 
-            FROM frequencia f
-            JOIN disciplina d ON f.disciplina_id = d.id
-            WHERE f.aluno_id = ? AND f.modulo = ?";
+    $sql = "SELECT d.nome AS disciplina, f.aulas_dadas AS aulasDadas, f.faltas AS faltas, 
+        f.frequencia AS frequencia, f.frequencia_total AS frequenciaTotal 
+        FROM frequencia f
+        JOIN disciplina d ON f.disciplina_id = d.id
+        WHERE f.aluno_id = ? AND f.modulo = ?";
+
     
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $alunoId, $modulo);

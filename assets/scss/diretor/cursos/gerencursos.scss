@@ -12,69 +12,18 @@ a{
     text-decoration: none;
 }
 
-.global-container{
-     display: flex;
-     min-height: 100vh;
-}
-
-header{
-    width: 100%;
-    height: auto;
-    background-color: #28163a;
-    z-index: 998;
-    display: flex;
-    align-items: center;
-    justify-content:space-around;
-    position: fixed;
-    padding: 5px 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-
-header .logo-sam{
-    display: none;
-    width: 40px;
-    height: 40px;
-}
-
-header .logo-sam img{
-    width: 40px;
-}
-
-header .box-search{
-    background-color: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;    
-    width: 500px;
-    min-width: 150px;
-    height: auto;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-}
-
-header .box-search i{
-    font-size: 20px;
-    padding: 5px 0 5px 5px;
-    margin-left: 10px;
-    color: #616161;
-}
-
-header .box-search input{
-    border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-}
-
-
 main{
     width: 100%; 
     height: auto; 
-    background-color: #EBEBEB; 
-    padding: 50px 40px;
-    margin-top: 50px;
-    margin-left: 82px;
+    min-height: 100vh;
+    background-color: #fafafa; 
+    padding: 30px 20px;
 }
+/* 
+body{
+    background-color: #fafafa; 
+    height: 100vh;
+} */
 
 main .container{
     max-width: 1440px;
@@ -111,7 +60,8 @@ main .container{
     border-radius: 10px;
 }
 
-.flex-gerenciamento-user{
+
+.flex-gerenciamento-curso{
     display: flex;
     /* flex-wrap: wrap; */
     width: 100%;
@@ -120,7 +70,7 @@ main .container{
 }
 
 .box-user{
-    width: 32%;
+    width: 28%;
     min-width: 200px;
     height: auto;
     border-radius: 20px;
@@ -135,8 +85,8 @@ main .container{
 
 .box-user a{
     width: 100%;
-    height: 250px;
-    background-color: #3E235C;
+    height: auto;
+    background-color: white;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -148,15 +98,92 @@ main .container{
     transition: 0.2s;
 }
 
-.box-user a:hover{
-    background-color: #2b183f;
+.box-user .box-criar:hover{
+    background-color: #d4f1f5;
 }
 
-.box-user img{
-    width: 100px;
+.box-user .box-editar:hover{
+    background-color: #fddfb1;
+}
+
+.box-user .box-deletar:hover{
+    background-color: #4947bb;
+}
+
+.box-user .img-criar{
+    width: 100%;
+    height: 250px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    background-image: url(../../img/cursos/criarcurso.webp);
+    background-position: center;
+    background-size: cover;
 }
 
+.box-user .img-editar{
+    width: 100%;
+    height: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-image: url(../../img/cursos/editar.png);
+    background-position: center;
+    background-size: cover;
+}
+
+
+.box-user .img-deletar{
+    width: 100%;
+    height: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-image: url(../../img/cursos/deletacurso.webp);
+    background-position: center;
+    background-size: cover;
+}
+
+
+@keyframes float{
+	0%,100%{
+		transform:translatey(0)
+	}
+	50%{
+		transform:translatey(-3px)
+	}
+}
+
+.box-user .img{
+     animation: float 2s ease-in-out infinite;
+}
+
+
+.box-descricao{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: -40px;
+    padding: 20px 10px;
+    color: rgb(156, 161, 159);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 2;
+}
+
+.box-descricao h5{
+    color: #3C2158;
+    font-size: 18px;
+}
+
+.box-descricao p{
+    font-size: 12px;
+    text-align: center;
+    text-transform: lowercase;
+    margin-top: 10px;
+    font-weight: 300;
+}
 .editar{
     margin: 0 20px;
 }
@@ -214,7 +241,7 @@ header .box-search{
 
 
 @media screen and (max-width:700px){
-    .flex-gerenciamento-user{
+    .flex-gerenciamento-curso{
         display: flex;
         flex-wrap: wrap; 
         justify-content: center;

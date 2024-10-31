@@ -224,12 +224,26 @@ $tableQueries = [
     FOREIGN KEY (chat_turma) REFERENCES turma(id) ON DELETE CASCADE
     )",
     "curso" => "CREATE TABLE IF NOT EXISTS curso (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL UNIQUE,
-    descricao TEXT,
-    carga_horaria INT NOT NULL,
-    modulo_id INT, -- Relação com a tabela modulos
-    FOREIGN KEY (modulo_id) REFERENCES modulo(id)
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome_curso VARCHAR(255) NOT NULL,
+    codigo VARCHAR(50) NOT NULL,
+    descricao TEXT NOT NULL,
+    departamento VARCHAR(100) NOT NULL,
+    carga_horaria INT(6) NOT NULL,
+    pre_requisitos VARCHAR(255),
+    tipo_curso VARCHAR(50) NOT NULL,
+    nivel_curso VARCHAR(50) NOT NULL,
+    periodo VARCHAR(100) NOT NULL,
+    status_curso VARCHAR(50) NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_termino DATE NOT NULL,
+    vagas INT(6) NOT NULL,
+    modalidade VARCHAR(100) NOT NULL,
+    material_recurso TEXT,
+    observacoes TEXT,
+    imagem_curso VARCHAR(255) NOT NULL,  -- Alterado para VARCHAR para armazenar o caminho da imagem
+    fk_professor_id INT NOT NULL,
+    FOREIGN KEY (fk_professor_id) REFERENCES professor(id) ON DELETE CASCADE
     )",
     "historico_academico" => "CREATE TABLE IF NOT EXISTS historico_academico (
     id INT AUTO_INCREMENT PRIMARY KEY,           

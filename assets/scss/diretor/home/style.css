@@ -1,0 +1,437 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header__search {
+  margin: 0 auto;
+}
+
+main {
+  width: 100%;
+  height: auto;
+  padding: 30px 20px;
+  background-color: #fafafa;
+}
+
+main .container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.container .box-welcome {
+  color: #3C2158;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-welcome h1 {
+  font-size: 45px;
+}
+
+.box-welcome span {
+  font-weight: normal;
+}
+
+.box-welcome .img-welcome {
+  background-image: url(../../img/home/coqui-chang-tnUp0OLSkDg-unsplash.jpg);
+  background-size: cover;
+  width: 125px;
+  height: 125px;
+  border-radius: 100%;
+}
+
+.container .box-visao-geral {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  margin: 70px auto 20px auto;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.box-visao-geral .box-visao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+#data-inicio {
+  color: white;
+}
+
+.box-visao h2 {
+  color: #3C2158;
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.flex-visao-geral {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-visao-geral .content-visao {
+  width: 33.3%;
+  /* min-width: 200px; */
+  height: auto;
+  background-color: #3C2158;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 10px;
+  text-align: center;
+  padding: 20px 10px 40px 10px;
+}
+
+.content-visao .box-menu {
+  padding: 0 10px;
+}
+
+.box-menu img:hover {
+  opacity: 0.6;
+}
+
+.content-visao .visao-elements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.visao-elements #img1 {
+  width: 35px;
+}
+
+.visao-elements #img2, #img3 {
+  width: 60px;
+}
+
+.visao-elements h4 {
+  color: white;
+  font-size: 55px;
+  margin-left: 10px;
+}
+
+.content-visao p {
+  font-size: 18px;
+  color: white;
+}
+
+main .box-registro {
+  width: 100%;
+  height: auto;
+}
+
+.box-registro .box-flex-registro {
+  display: flex;
+}
+
+.grafico {
+  width: 30%;
+  min-width: 300px;
+  height: auto;
+  background-color: white;
+  color: #3C2158;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.grafico h2 {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  position: relative;
+  top: -50px;
+}
+
+.grafico span {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  position: relative;
+  bottom: -50px;
+}
+
+.grafico img {
+  width: 60%;
+  position: relative;
+  right: -10px;
+}
+
+.registro {
+  width: 80%;
+  height: auto;
+  background-color: white;
+  margin-left: 20px;
+  border-radius: 10px;
+  color: #3C2158;
+  padding: 20px 20px 50px 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.registro h2 {
+  margin-bottom: 50px;
+  margin-left: 20px;
+}
+
+.box-flex-registro table {
+  width: 100%;
+}
+
+table, tr, th, td {
+  text-align: center;
+}
+
+table td {
+  padding: 30px 0;
+  color: #282649;
+}
+
+.box-registro .line {
+  border-bottom: 3px solid #E1E1E1;
+  position: relative;
+  bottom: -45px;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 1920px) {
+  main .container {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 970px) {
+  /* main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img1{
+      width: 25px;
+  }
+
+  main .box-visao-geral .flex-visao-geral .content-visao .visao-elements #img2,#img3{
+      width: 50px;
+  }
+
+  main .box-visao-geral .flex-visao-geral .content-visao .visao-elements h4{
+      color: white;
+      font-size: 40px;
+      margin-left: 10px;
+  }
+
+  main .box-visao-geral .flex-visao-geral .content-visao p{
+      font-size: 14px;
+      margin-top: 10px;
+  } */
+}
+@media screen and (max-width: 920px) {
+  main .box-visao-geral h2 {
+    margin-bottom: 0;
+  }
+  .box-visao-geral .flex-visao-geral {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .flex-visao-geral .content-visao {
+    width: 49%;
+    /* min-width: 100px; */
+    margin-top: 20px;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+  .flex-visao-geral #content-visao01 {
+    margin-left: 0;
+  }
+  .flex-visao-geral #content-visao02 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .flex-visao-geral #content-visao03 {
+    width: 100%;
+    margin: 10px 0 10px 0;
+  }
+  .box-flex-registro {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .grafico {
+    width: 100%;
+    min-width: 300px;
+    height: auto;
+    background-color: white;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .grafico h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+  }
+  .grafico span {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    bottom: 0;
+  }
+  .grafico img {
+    width: 50%;
+    position: relative;
+    top: -10px;
+  }
+  .registro {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-left: 0;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: #3C2158;
+    padding: 20px 20px 50px 20px;
+  }
+}
+@media screen and (max-width: 900px) {
+  header .logo-sam {
+    display: block;
+    margin-right: 30px;
+  }
+  header .box-search {
+    width: 70%;
+  }
+  aside {
+    display: none;
+  }
+  main {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  main .box-welcome h1 {
+    font-size: 30px;
+  }
+  .box-welcome .img-welcome {
+    background-image: url(../../img/home/coqui-chang-tnUp0OLSkDg-unsplash.jpg);
+    background-size: cover;
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+  }
+  main .box-visao-geral h2 {
+    font-size: 25px;
+  }
+  #img1 {
+    width: 25px;
+    height: 70px;
+  }
+  #img2 {
+    width: 50px;
+    height: 60px;
+  }
+  #img3 {
+    width: 55px;
+  }
+  .content-visao .visao-elements h4 {
+    font-size: 40px;
+  }
+  .content-visao p {
+    font-size: 14px;
+    color: white;
+  }
+  .grafico h2 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .grafico span {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .grafico img {
+    width: 50%;
+    position: relative;
+    right: -10px;
+  }
+  .registro h2 {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 25px;
+  }
+}
+@media screen and (max-width: 660px) {
+  .flex-visao-geral .content-visao {
+    width: 100%;
+  }
+  .flex-visao-geral #content-visao01 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .flex-visao-geral #content-visao02 {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    justify-content: space-between;
+  }
+  /* header .box-search{
+      width: 70%;
+      min-width: 150px;
+  } */
+  table, tr, th, td {
+    text-align: center;
+    font-size: 12px;
+  }
+  table td {
+    padding: 10px 0;
+  }
+  .box-registro .line {
+    border-bottom: 2px solid #E1E1E1;
+    position: relative;
+    bottom: -25px;
+    border-radius: 10px;
+  }
+  .grafico {
+    min-width: 200px;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    justify-content: space-around;
+  }
+  header .box-search {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 400px) {
+  main .box-welcome {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  main .box-welcome .img-welcome {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+  }
+}/*# sourceMappingURL=style.css.map */

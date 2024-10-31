@@ -1,27 +1,43 @@
-// modal pop up
+// Funções para exibir e fechar o modal
 function showModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+    }
 }
 
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
-// Selecionar o modulo de boletim
+// Função para exibir o módulo de boletim correspondente ao selecionado
+function handleModuleChange() {
+    const selectedModule = document.getElementById("module-select").value; // Pega o valor do módulo selecionado
+    const tables = document.querySelectorAll(".module-table"); // Todas as tabelas de módulos
 
-   // Função para exibir a tabela correspondente ao módulo selecionado
-   document.getElementById("module-select").addEventListener("change", function() {
-    var selectedModule = this.value; // Pega o valor do módulo selecionado
-
-    // Esconde todas as tabelas
-    var tables = document.querySelectorAll(".module-table");
-    tables.forEach(function(table) {
-        table.style.display = "none";
+    tables.forEach((table) => {
+        table.style.display = "none"; // Oculta todas as tabelas
     });
 
-    // Exibe apenas a tabela correspondente ao módulo selecionado
-    document.getElementById(selectedModule).style.display = "block";
-});
+    const selectedTable = document.getElementById(selectedModule);
+    if (selectedTable) {
+        selectedTable.style.display = "block"; // Exibe a tabela selecionada
+    }
+}
 
-// Exibe a tabela do primeiro módulo por padrão
-document.getElementById("modulo1").style.display = "block";
+// Função para inicializar a exibição padrão e adicionar o evento de seleção de módulo
+function init() {
+    document.getElementById("module-select").addEventListener("change", handleModuleChange);
+
+    // Exibe a tabela do primeiro módulo por padrão, se existir
+    const defaultTable = document.getElementById("modulo1");
+    if (defaultTable) {
+        defaultTable.style.display = "block";
+    }
+}
+
+// Inicializa as funções assim que o conteúdo da página for carregado
+document.addEventListener("DOMContentLoaded", init);

@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+main {
+  width: 100%;
+  height: auto;
+  background-color: #fafafa;
+  padding: 30px 20px;
+}
+
+main .container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.box-title {
+  margin-bottom: 50px;
+}
+
+.box-title .flex-title {
+  display: flex;
+  align-items: center;
+}
+
+.flex-title .box-img {
+  width: 50px;
+  height: 50px;
+}
+
+.flex-title h1 {
+  font-size: 45px;
+  color: #3C2158;
+  margin-right: 10px;
+}
+
+.flex-gerenciamento-user {
+  display: flex;
+  /* flex-wrap: wrap; */
+  width: 100%;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.box-user {
+  width: 28%;
+  min-width: 200px;
+  height: auto;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.box-user a {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.box-user .box-coordenador:hover {
+  background-color: #99a2d6;
+}
+
+.box-user .box-docente:hover {
+  background-color: #8aab3d;
+}
+
+.box-user .box-aluno:hover {
+  background-color: #fcb736;
+}
+
+.img-coordenador {
+  width: 100%;
+  height: 300px;
+  background-image: url(../../img/docente/coordination.webp);
+  background-size: cover;
+  background-position: center;
+}
+
+.img-docente {
+  width: 100%;
+  height: 300px;
+  background-image: url(../../img/docente/teacher.webp);
+  background-size: cover;
+  background-position: center;
+}
+
+.img-aluno {
+  width: 100%;
+  height: 300px;
+  background-image: url(../../img/docente/aluno02.webp);
+  background-size: cover;
+  background-position: center;
+}
+
+.box-user img {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translatey(0);
+  }
+  50% {
+    transform: translatey(-3px);
+  }
+}
+.box-user img {
+  animation: float 2s ease-in-out infinite;
+}
+
+.box-descricao {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: -40px;
+  padding: 20px 10px;
+  color: rgb(156, 161, 159);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 2;
+}
+
+.box-descricao h5 {
+  color: #3C2158;
+}
+
+.box-descricao p {
+  font-size: 12px;
+  text-align: center;
+  text-transform: lowercase;
+  margin-top: 10px;
+  font-weight: 300;
+}
+
+.editar {
+  margin: 0 20px;
+}
+
+@media screen and (min-width: 1920px) {
+  main .container {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 1100px) {
+  main {
+    padding: 50px 20px;
+  }
+}
+@media screen and (max-width: 900px) {
+  header .logo-sam {
+    display: block;
+    margin-right: 30px;
+  }
+  header .box-search {
+    width: 70%;
+  }
+  aside {
+    display: none;
+  }
+  main {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  .flex-title h1 {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .flex-gerenciamento-user {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .box-user {
+    width: 45%;
+    margin: 20px 10px;
+  }
+}
+@media screen and (max-width: 620px) {
+  .flex-title {
+    flex-direction: column-reverse;
+    justify-content: center;
+    text-align: center;
+  }
+  .flex-title .box-img {
+    background-color: rgba(60, 33, 88, 0.6901960784);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  .box-img img {
+    width: 70px;
+  }
+  @keyframes float {
+    0%, 100% {
+      transform: translatey(0);
+    }
+    50% {
+      transform: translatey(-3px);
+    }
+  }
+  .flex-title .box-img img {
+    animation: float 2s ease-in-out infinite;
+  }
+  form {
+    padding: 50px 10px;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    justify-content: space-around;
+  }
+  header .box-search {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .box-user {
+    width: 100%;
+    margin: 20px 0;
+  }
+  .container p {
+    font-size: 13px;
+  }
+  .box-user img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .flex-title h1 {
+    font-size: 25px;
+  }
+}/*# sourceMappingURL=gerenuser.css.map */

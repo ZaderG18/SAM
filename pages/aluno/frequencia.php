@@ -173,7 +173,7 @@ $stmt_frequencias->close();
     <div id="tabelamodulo1" class="module-selection">
         <div>
             <label for="module-select">Selecione o Módulo:</label>
-            <select id="module-select">
+            <select id="module-select" onchange="changeModule(this.value)">
                 <option value="modulo1">Módulo 1</option>
                 <option value="modulo2">Módulo 2</option>
                 <option value="modulo3">Módulo 3</option>
@@ -194,54 +194,25 @@ $stmt_frequencias->close();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                        <td>50</td>
-                        <td>1</td>
-                        <td>25</td>
-                        <td>99%</td>
-                      <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
-                        <td>30</td>
-                        <td>2</td>
-                        <td>15</td>
-                        <td>98%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Internet e Protocolos</a></td>
-                        <td>40</td>
-                        <td>3</td>
-                        <td>20</td>
-                        <td>97%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Desenvolvimento de sistemas</a></td> 
-                        <td>50</td>
-                        <td>4</td>
-                        <td>25</td>
-                        <td>96%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Programação Web</a></td>
-                        <td>26</td>
-                        <td>5</td>
-                        <td>13</td>
-                        <td>94%</td>
-                       <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Programação Orientada a Objetos</a></td>
-                        <td>33</td>
-                        <td>6</td>
-                        <td>16</td>
-                        <td>93%</td>
-                        <td>100%</td>
-                    </tr>
+                    <?php $modulo = 1;
+                    $sql = "SELECT * FROM disciplina WHERE modulo_id = $modulo";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td><a href='#' onclick=\"showModal('modal-{$row['nome']}')\">" . $row["nome"] . "</a></td>";
+                            echo "<td>" . $row["aulas_dadas"] . "</td>";
+                            echo "<td>" . $row["faltas"] . "</td>";
+                            echo "<td>" . $row["faltas_permitidas"] . "</td>";
+                            echo "<td>" . $row["freq_atual"] . "</td>";
+                            echo "<td>" . $row["freq_total"] . "</td>";
+                            echo "</tr>";
+                            }
+                        } else{
+                            echo "<tr><td colspan='6'>Nenhuma disciplina encontrada</td></tr>";
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
