@@ -18,7 +18,7 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 // Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM professor WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {

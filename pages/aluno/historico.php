@@ -14,7 +14,7 @@ $user = $_SESSION['user'];
 $id = $user['id'];
 
 // Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -166,7 +166,7 @@ if (!empty($fotoNome)) {
         <div class="summary">
             <p><strong>Nome do Aluno:</strong> <?php echo htmlspecialchars($user['nome']) ?></p>
             <p><strong>RM:</strong> <?php echo htmlspecialchars($user['RM'])?></p>
-            <p><strong>Média Geral:</strong> <?php echo htmlspecialchars($mediaGeral)?></p>
+            <p><strong>Média Geral:</strong> <?php echo htmlspecialchars($media_geral)?></p>
             <p><strong>Disciplinas Pendentes:</strong> <?php echo htmlspecialchars($disciplinas_pendentes)?></p>
             <p><strong>Prazo Estimado de Conclusão:</strong> <?php echo htmlspecialchars($prazo_conclusao)?></p>
 

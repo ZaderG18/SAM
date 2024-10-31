@@ -16,7 +16,7 @@ $user = $_SESSION['user'];
 $id = $user['id']; // ID do usuário
 
 // Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {

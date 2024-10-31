@@ -14,7 +14,7 @@ $user = $_SESSION['user'];
 $id = $user['id'];
 
 // Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM professor WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {

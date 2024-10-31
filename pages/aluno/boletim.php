@@ -29,7 +29,7 @@ if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
 $notas = getNotas($alunoId, $moduloId);
 
 // Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {

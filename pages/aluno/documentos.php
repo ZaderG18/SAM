@@ -16,7 +16,7 @@ $user = $_SESSION['user'];
 $id = $user['id'];
 
 // Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM aluno WHERE id = ?";
+$sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -165,23 +165,24 @@ if (!empty($fotoNome)) {
         <div class="left-column">
             <div class="box">
                 <h2>Declarações para retirada</h2>
-                <form action="" method="post">
+                <form action="../../php/aluno/documentos.php" method="post">
+                    <input type="hidden" name="action" value="declaracao">
                 <label for="declaração">Selecione a Declaração:</label>
                 <select id="declaração" name="declaração" class="caixa" required>
                     <option value="">Selecione o tipo de declaração</option>
-                    <option value="declaração1">Declaração Transporte</option>
-                    <option value="declaração2">Declaração de Matrícula</option>
-                    <option value="declaração3">Declaração de Conclusão de Curso</option>
-                    <option value="declaração4">Declaração de Frequência Escolar</option>
+                    <option value="transporte">Declaração Transporte</option>
+                    <option value="matricula">Declaração de Matrícula</option>
+                    <option value="conclusao">Declaração de Conclusão de Curso</option>
+                    <option value="frequencia">Declaração de Frequência Escolar</option>
                 </select>
 
                 <label for="motivo">Para qual finalidade será a declaração?</label>
                 <input type="text" id="motivo" name="motivo" class="caixa" required>
                 <label for="protocolo">Consulta de Protocolo:</label>
-                <input type="text" id="protocolo" name="protocolo" class="caixa" required>
+                <input type="text" id="protocolo" name="protocolo" class="caixa">
                 <p>Prazo para retirada das declarações acontece em até 2 dias úteis</p>
                 <button type="button" onclick="buscarProtocolo()">Buscar</button>
-                <button type="submit">Enviar</button>
+                <button type="submit" name="action" value="declaracao">Enviar</button>
                 
             </div>
             </form>
@@ -206,15 +207,15 @@ if (!empty($fotoNome)) {
         <div class="right-column">
             <div class="box">
                 <h2>Rematrícula</h2>
-                <p>Prazo para rematricula: 09/12/2024 a 16/12/24 - Atualmente Fora do Prazo.</p>
+                <p>Prazo para rematricula: 09/10/2024 a 16/12/24 - Atualmente Fora do Prazo.</p>
                 <form action="../../php/aluno/documentos.php" method="post" id="rematriculaForm">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" class="caixa" required>
 
                     <label for="matricula">Matrícula:</label>
-                    <input type="text" id="matricula" name="matricula" class="caixa" required>
+                    <input type="text" id="matricula" name="RM" class="caixa" required>
 
-                    <button type="submit">Enviar Rematrícula</button>
+                    <button type="submit" name="action" value="rematricula">Enviar Rematrícula</button>
                 </form>
             </div>
         </div>
