@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli("localhost", "root", "", "samm");
+$conn = new mysqli("localhost", "root", "", "sam");
 
 // Verifique se a conexão foi bem-sucedida
 if ($conn->connect_error) {

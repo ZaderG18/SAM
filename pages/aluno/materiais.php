@@ -26,7 +26,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {

@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Erro de conexão com o banco de dados: " . $conn->connect_error);
 }
 
-require_once '../../vendor/autoload.php'; // Certifique-se de que o caminho está correto
+require_once '../../vendor/autoload.php'; 
 use Dompdf\Dompdf;
 
 $mensagem = "";

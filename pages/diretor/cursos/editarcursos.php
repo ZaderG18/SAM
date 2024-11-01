@@ -17,12 +17,10 @@ $user = $_SESSION['user'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../assets/scss/diretor/global/sidebar.css">
-    <link rel="stylesheet" href="../../../assets/scss/diretor/global/menumobile.css">
-    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/editar.css">
-    <link rel="shortcut icon" href="../../../assets/img/Group 4.png" type="image/x-icon">
-    <!--=============== REMIXICONS ===============-->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
+    <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../assets/scss/cursos/editar.css">
 
     <!--==== Box-icons ====-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -31,225 +29,235 @@ $user = $_SESSION['user'];
     <title>Gestão de professores</title>
 </head>
 <body>
-    <header class="header"> 
-        <div class="logo-sam"><img src="../../../assets/img/home/logo/Mask group.png" alt=""></div>
-        <div class="box-search"><i class='bx bx-search'></i><input type="text" placeholder="Pesquisar"></div>
-        <nav class="nav container" id="menu-mobile">
-            <div class="nav__data">
-               <!-- <a href="#" class="nav__logo">
-                  <i class="ri-planet-line"></i> Company
-               </a> -->
-               
-               <div class="nav__toggle" id="nav-toggle">
-                  <i class="ri-menu-line nav__burger"></i>
-                  <i class="ri-close-line nav__close"></i>
-               </div>
+   <!--========== HEADER ==========-->
+   <header class="header">
+    <div class="header__container">
+        <a href="#" class="header__logo">SAM</a>
+
+        <div class="header__search">
+            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input">
+        </div>
+
+        <!-- Notificações -->
+        <div class="dropdown notification-dropdown">
+            <div class="dropdown-toggle" id="notification-toggle">
+                <span class="notification-count">3</span>
+                <i class='bx bxs-bell'></i>
             </div>
-
-            <!--=============== NAV MENU ===============-->
-            <div class="nav__menu" id="nav-menu">
-               <ul class="nav__list">
-                  <li><a href="../home_diretor.php" class="nav__link"><img src="../../../assets/img/home/icons/home.svg" alt="" srcset="">Home</a></li>
-
-                  <li><a href="../docentes/docentes.php" class="nav__link"><img src="../../../assets/img/home/icons/docentes.svg" alt="" srcset="">Docentes</a></li>
-
-                  <li><a href="../dashboard.php" class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">Dashboard</a></li>
-                  <!--=============== DROPDOWN 1 
-                  <li class="dropdown__item">
-                     <div class="nav__link"><img src="../../../assets/img/home/icons/dashboard.svg" alt="" srcset="">
-                        Dashboard<i class="ri-arrow-down-s-line dropdown__arrow"></i>
+            <div class="dropdown-content content-noti" id="notification-content">
+                <hr>
+                <h4>Alertas</h4>
+                <hr>
+                <ul>
+                    <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
+                </ul>
+                <hr>
+                <h4>Notificações</h4>
+                <hr>
+                <div class="box-flex-notification">
+                   <div class="boximg-noti">
+                    <img src="../../assets/img/persona/minhafoto.PNG" alt="Profile">
+                    <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
+                   </div>
+                    <div class="dados-notification">
+                        <h6>fulanodetal0110@gmail.com</h6>
+                        <p>Chat - Aluno - 3°DS</p>
+                    </div>
+                </div>
+                <div class="box-flex-notification">
+                    <div class="boximg-noti">
+                     <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
+                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
+                    </div>
+                     <div class="dados-notification">
+                         <h6>fulanodetal0110@gmail.com</h6>
+                         <p>Chat - Coordenação</p>
                      </div>
-
-                     <ul class="dropdown__menu">
-                        <li>
-                           <a href="../dashboard/index.html" class="dropdown__link">
-                              <i class="ri-pie-chart-line"></i> Painel
-                           </a>                          
-                        </li>
-
-                        <li>
-                           <a href="#" class="dropdown__link">
-                              <i class="ri-arrow-up-down-line"></i> Transactions
-                           </a>
-                        </li>
-
-                        <!--=============== DROPDOWN SUBMENU ===============
-                        <li class="dropdown__subitem">
-                           <div class="dropdown__link">
-                              <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
-                           </div>
-
-                           <ul class="dropdown__submenu">
-                              <li>
-                                 <a href="#" class="dropdown__sublink">
-                                    <i class="ri-file-list-line"></i> Documents
-                                 </a>
-                              </li>
-      
-                              <li>
-                                 <a href="#" class="dropdown__sublink">
-                                    <i class="ri-cash-line"></i> Payments
-                                 </a>
-                              </li>
-      
-                              <li>
-                                 <a href="#" class="dropdown__sublink">
-                                    <i class="ri-refund-2-line"></i> Refunds
-                                 </a>
-                              </li>
-                           </ul>
-                        </li>-->
-                     </ul>
-                  </li>
-                  
-
-                  <!--=============== DROPDOWN 2 ===============-->
-                  <li class="dropdown__item">
-                     <div class="nav__link">
-                        Users <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                 </div>
+                 <div class="box-flex-notification">
+                    <div class="boximg-noti">
+                     <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
+                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
+                    </div>
+                     <div class="dados-notification">
+                         <h6>fulanodetal0110@gmail.com</h6>
+                         <p>Chat - Coordenação</p>
                      </div>
-
-                     <ul class="dropdown__menu">
-                        <li>
-                           <a href="#" class="dropdown__link">
-                              <i class="ri-user-line"></i> Profiles
-                           </a>                          
-                        </li>
-
-                        <li>
-                           <a href="#" class="dropdown__link">
-                              <i class="ri-lock-line"></i> Accounts
-                           </a>
-                        </li>
-
-                        <li>
-                           <a href="#" class="dropdown__link">
-                              <i class="ri-message-3-line"></i> Messages
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-
-                  <li><a href="#" class="nav__link">Contact</a></li>
-               </ul>
+                 </div>
+                 <div class="box-flex-notification">
+                    <div class="boximg-noti">
+                     <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
+                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
+                    </div>
+                     <div class="dados-notification">
+                         <h6>fulanodetal0110@gmail.com</h6>
+                         <p>Chat - Professor - nutrição</p>
+                     </div>
+                 </div>
+                 <div class="box-flex-notification">
+                    <div class="boximg-noti">
+                     <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
+                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
+                    </div>
+                     <div class="dados-notification">
+                         <h6>fulanodetal0110@gmail.com</h6>
+                         <p>Chat - Professor - Física</p>
+                     </div>
+                 </div>
             </div>
-         </nav>
-    </header>
-    <div class="global-container">
-        <aside>
-            <div class="sidebar">
-                        <!--aside bar-->
-                        <nav id="sidebar">
-                            <div id="sidebar_content">
-                                <div id="user">
-                                    <img src="../../../assets/img/home/coqui-chang-COP.jpg" id="user_avatar" alt="Avatar">
-                        
-                                    <p id="user_infos">
-                                        <span class="item-description">
-                                            <?php echo htmlspecialchars($user['nome']); ?>
-                                        </span>
-                                        <span class="item-description">
-                                            Lorem Ipsum
-                                        </span>
-                                    </p>
-                                </div>
-                        
-                                <ul id="side_items">
-                                    <li class="side-item">
-                                        <a href="../home_diretor.php">
-                                            <img src="../../../assets/img/home/icons/home.svg" alt="" >
-                                            <span class="item-description">
-                                                Home
-                                            </span>
-                                        </a>
-                                    </li>
-                        
-                                    <li class="side-item">
-                                        <a href="../docentes/docentes.php">
-                                            <img src="../../../assets/img/home/icons/docentes.svg" alt="">
-                                            <span class="item-description">
-                                                Docentes
-                                            </span>
-                                        </a>
-                                    </li>
-                        
-                                    <li class="side-item active">
-                                        <a href="#">
-                                            <img src="../../../assets/img/home/icons/cursos.svg" alt="" width="30px">
-                                            <span class="item-description">
-                                                Gerenciar Cursos
-                                            </span>
-                                        </a>
-                                    </li>
-                        
-                                    <li class="side-item">
-                                        <a href="#">
-                                            <img src="../../../assets/img/home/icons/user.svg" alt="">
-                                            <span class="item-description">
-                                                Gerenciar usuarios
-                                            </span>
-                                        </a>
-                                    </li>
-                        
-                                    <li class="side-item">
-                                        <a href="#">
-                                            <img src="../../../assets/img/home/icons/comunicado.svg" alt="">
-                                            <span class="item-description">
-                                                Gerenciar comunicados
-                                            </span>
-                                        </a>
-                                    </li>
+        </div>
 
-                                    <li class="side-item">
-                                        <a href="#">
-                                            <img src="../../../assets/img/home/icons/documento.svg" alt="">
-                                            <span class="item-description">
-                                                Gerenciar documentos
-                                            </span>
-                                        </a>
-                                    </li>
+        <!-- Perfil -->
+        <div class="dropdown profile-dropdown" style="margin: 0 15px;">
+            <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+            <div class="dropdown-content" id="profile-content">
+                <h5>Etec | Centro Paula souza</h5>
+                <div class="flex-conta">
+                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                    <div class="box-info-conta">
+                        <h4>David Richard Ramos Rosa</h4>
+                        <p>david.rosa4@etec.sp.gov.br</p>
+                        <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
+                    </div>
+                </div><!--flex-conta-->
 
-                                    <li class="side-item">
-                                        <a href="../dashboard.php">
-                                            <img src="../../../assets/img/home/icons/dashboard.svg" alt="">
-                                            <span class="item-description">
-                                                Dashboard
-                                            </span>
-                                        </a>
-                                    </li>
-                        
-                                    <li class="side-item">
-                                        <a href="#">
-                                            <img src="../../../assets/img/home/icons/configuracao.svg" alt="">
-                                            <span class="item-description">
-                                                Configurações
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                        
-                                <button id="open_btn">
-                                    <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
-                                </button>
-                            </div>
-                    
-                            <div id="logout">
-                                <button id="logout_btn" onclick="window.location.href='../../php/login/logout.php'">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    <span class="item-description">
-                                        Logout
-                                    </span>
-                                </button>
-                            </div>
-                        </nav>
+                <!-- Sub-dropdown de Configurações -->
+                <div class="profile-option" id="settings-toggle">
+                    <p><i class='bx bxs-check-circle'></i> Disponivel</p>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+                <div class="sub-dropdown" id="settings-content">
+                    <p><a href=""><i class='bx bxs-check-circle'></i>Disponivel</a></p>
+                    <p><a href=""><i class='bx bxs-circle'></i>Ocupado</a></p>
+                    <p><a href=""><i class='bx bxs-minus-circle'></i>Não incomodar</a></p>
+                    <p><a href=""><i class='bx bxs-time-five'></i>Volto logo</a></p>
+                    <p><a href=""><i class='bx bxs-time-five'></i>Aparecer como ausente</a></p>
+                    <p><a href=""><i class='bx bx-x-circle'></i>Aparecer offline</a></p>
+                </div>
+
+                <!-- Sub-dropdown de Localização -->
+                <div class="profile-option" id="location-toggle">
+                    <p><i class='bx bxs-location-plus' ></i>Definir local de trabalho</p>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+                <div class="sub-dropdown sub-drop-localiza" id="location-content">
+                    <h6>Para hoje</h6>
+                    <p><i class='bx bx-buildings'></i>Office</p>
+                    <p><i class='bx bxs-home'></i>Remoto</p>
+                </div>
+
+                <button class="logout-btn" style="float: right; margin: 15px 5px 0 5px;"><i class='bx bx-log-out-circle'></i>Logout</button>
             </div>
-        </aside>
+        </div>
+
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+    </div>
+</header>
+    
+                <!--========== NAV ==========-->
+         <div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <a href="#" class="nav__link nav__logo">
+                        <i class='bx bxs-disc nav__icon' ></i>
+                        <span class="nav__logo-name">SAM</span>
+                    </a>
+    
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Principais</h3>
+    
+                            <a href="home_diretor.php" class="nav__link">
+                                <i class='bx bx-home nav__icon' ></i>
+                                <span class="nav__name">Home</span>
+                            </a>
+                            
+                            <a href="calendario.php" class="nav__link ">
+                                <i class='bx bx-calendar-event  nav__icon'></i>
+                                <span class="nav__name">calendário</span>
+                            </a>
+                        
+                            <a href="dashboard.php" class="nav__link">
+                                <i class='bx bx-trending-up nav__icon'></i>
+                                <span class="nav__name">Dashboard</span>
+                            </a>
+                        </div>
+  
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Gerenciamento</h3>
+  
+                            <a href="usuarios/gerenuser.php" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">Gerenciar Usuários</span>
+                            </a>
+                            
+                            <div class="nav__dropdown">
+                              <a href="#" class="nav__link active">
+                                <i class='bx bx-edit-alt nav__icon'></i>
+                                  <span class="nav__name">Gerenciar Cursos</span>
+                                  <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                              </a>
+  
+                              <div class="nav__dropdown-collapse">
+                                  <div class="nav__dropdown-content">
+                                      <a href="index.html" class="nav__dropdown-item">Home</a>
+                                      <a href="criarcurso.html" class="nav__dropdown-item">Criar</a>
+                                      <a href="#" class="nav__dropdown-item">Remover</a>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+    
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Comunicações</h3>
+    
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-broadcast nav__icon'></i>
+                                <span class="nav__name">Comunicados</span>
+                            </a>
+  
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-archive-in nav__icon' ></i>
+                                <span class="nav__name">Envio de Documentos</span>
+                            </a>
+                        </div>
+  
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Interação</h3>
+  
+                            <a href="chat.php" class="nav__link">
+                                <i class='bx bx-conversation nav__icon'></i>
+                                <span class="nav__name">Chat</span>
+                            </a>
+                        </div>
+  
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Configurações</h3>
+  
+                            <a href="configuracoes.php" class="nav__link">
+                                <i class='bx bx-cog nav__icon'></i>
+                                <span class="nav__name">Configurações</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+  
+                <a href="../../php/login/logout.php" class="nav__link nav__logout">
+                    <i class='bx bx-log-out nav__icon' ></i>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+    
         <main>
             <div class="container">
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gerenciamento de Cursos</h1>
-                        <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
+                        <div class="box-img"><img src="../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->
@@ -273,7 +281,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -297,7 +305,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -321,7 +329,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -345,7 +353,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -369,7 +377,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -393,7 +401,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -417,7 +425,7 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
@@ -441,22 +449,22 @@ $user = $_SESSION['user'];
                             <h5>Geografia</h5>
                             <p>professor:<span>Florinda</span></p>
                             <div class="box-docente">
-                                <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                                 <span>35 Membros</span>
                             </div>
                         </div>
                     </div><!--box-curso-->
-                    
 
-                 
                 </div><!--container-cursos-->
             </div><!--container-->
         </main>
-    </div>
 
-    <script src="../../../assets/js/sidebar/sidebar.js"></script>
-    <!-- <script src="../../../assets/js/home/bottomnav.js"></script> -->
-     <script src="../../../assets/js/diretor/cursos/modal.js"></script>
-    <script src="../../../assets/js/home/menumobile.js"></script>
+    <!-- <script src="../../assets/js/sidebar/sidebar.js"></script> -->
+    <!-- <script src="../../assets/js/home/bottomnav.js"></script> -->
+     <script src="../../assets/js/cursos/modal.js"></script>
+     <script src="../../assets/js/global/navgation.js"></script>
+     <script src="../../assets/js/global/navgation.js"></script>
+     <script src="../../assets/js/global/dropdown.js"></script>
+    <!-- <script src="../../assets/js/home/menumobile.js"></script> -->
 </body>
 </html>

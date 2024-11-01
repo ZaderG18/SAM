@@ -1,46 +1,20 @@
-<?php
-
-$host = 'localhost';
-$database = 'sam';
-$username = 'root';
-$password = '';
-$conn = new mysqli($host, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    require_once '../../../php/login/validar.php';
-$user = $_SESSION['user'];
-// Inicialize a variável $professores
-$professores = [];
-// Consulta para obter a lista de professores
-$sql = "SELECT id, nome FROM usuarios WHERE cargo = professor";
-$result = $conn->query($sql);
-
-// Verifica se há resultados e preenche o array $professores
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $professores[] = $row;
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
-    <link rel="stylesheet" href="../../../assets/scss/cursos/cursos.css">
+    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
+    <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../assets/scss/comunicado/comunicado.css">
 
-    <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
     <!--==== Box-icons ====-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Gerenciamento de Cursos</title>
+    <title>Comunicados</title>
 </head>
 <body>
    <!--========== HEADER ==========-->
@@ -71,7 +45,7 @@ if ($result->num_rows > 0) {
                 <hr>
                 <div class="box-flex-notification">
                    <div class="boximg-noti">
-                    <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
+                    <img src="../../assets/img/persona/minhafoto.PNG" alt="Profile">
                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                    </div>
                     <div class="dados-notification">
@@ -81,7 +55,7 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
+                     <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -91,7 +65,7 @@ if ($result->num_rows > 0) {
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
+                     <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -101,7 +75,7 @@ if ($result->num_rows > 0) {
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
+                     <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -111,7 +85,7 @@ if ($result->num_rows > 0) {
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
+                     <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -124,11 +98,11 @@ if ($result->num_rows > 0) {
 
         <!-- Perfil -->
         <div class="dropdown profile-dropdown" style="margin: 0 15px;">
-            <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+            <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
             <div class="dropdown-content" id="profile-content">
                 <h5>Etec | Centro Paula souza</h5>
                 <div class="flex-conta">
-                    <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                     <div class="box-info-conta">
                         <h4>David Richard Ramos Rosa</h4>
                         <p>david.rosa4@etec.sp.gov.br</p>
@@ -184,17 +158,17 @@ if ($result->num_rows > 0) {
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="../home_diretor.php" class="nav__link">
+                            <a href="home_diretor.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
                             
-                            <a href="../calendario.php" class="nav__link ">
+                            <a href="calendario.php" class="nav__link ">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
                         
-                            <a href="../dashboard.php" class="nav__link">
+                            <a href="dashboard.php" class="nav__link">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -203,7 +177,7 @@ if ($result->num_rows > 0) {
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Gerenciamento</h3>
   
-                            <a href="../usuarios/gerenuser.php" class="nav__link">
+                            <a href="usuarios/gerenuser.php" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
@@ -217,8 +191,8 @@ if ($result->num_rows > 0) {
   
                               <div class="nav__dropdown-collapse">
                                   <div class="nav__dropdown-content">
-                                      <a href="cursos.php" class="nav__dropdown-item">Home</a>
-                                      <a href="editarcursos.php" class="nav__dropdown-item">Editar</a>
+                                      <a href="index.html" class="nav__dropdown-item">Home</a>
+                                      <a href="editarcurso.html" class="nav__dropdown-item">Editar</a>
                                       <a href="#" class="nav__dropdown-item">Remover</a>
                                   </div>
                               </div>
@@ -228,7 +202,7 @@ if ($result->num_rows > 0) {
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="../comunicado.php" class="nav__link">
+                            <a href="#" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
@@ -251,7 +225,7 @@ if ($result->num_rows > 0) {
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Configurações</h3>
   
-                            <a href="../configuracoes.php" class="nav__link">
+                            <a href="configuracoes.php" class="nav__link">
                                 <i class='bx bx-cog nav__icon'></i>
                                 <span class="nav__name">Configurações</span>
                             </a>
@@ -259,71 +233,30 @@ if ($result->num_rows > 0) {
                     </div>
                 </div>
   
-                <a href="../../../php/login/logout.php" class="nav__link nav__logout">
+                <a href="../../php/login/logout.php" class="nav__link nav__logout">
                     <i class='bx bx-log-out nav__icon' ></i>
                     <span class="nav__name">Log Out</span>
                 </a>
             </nav>
         </div>
 
-        <main>
+    <main>
         <section class="formulario-flex">
             <div class="box-left">
-                <img src="../../assets/img/cursos/criar/11285789.jpg" alt="">
+                <img src="../../assets/img/comunicado/4782264-min.jpg" alt="">
             </div>
-            <form action="../../../php/diretor/cadastrar_curso.php" method="post" class="form-container" enctype="multipart/form-data">
+            <form action="editarcurso.html" method="get" class="form-container">
                 <!-- Primeiro grupo de inputs -->
                 <fieldset class="step active">
                     <div class="box-legend">
-                        <legend class="legend1">Informações Básicas</legend>
+                        <legend class="legend1">Título do Comunicado</legend>
                         <div class="line-legend line1"></div>
                     </div>
-                            <label for="imagem" class="circle">
-                                <input type="file" id="imagem" name="imagem" accept="image/*" required onchange="previewImage(event)" style="z-index: 1;">
-                                <img id="imagemDisplay" class="image-circle" src="adicionar-icone-adicionar-foto-de-video-de-postagem-imagens-vetoriais_292645-294.avif" alt="Imagem Selecionada">
-                            </label>
-
-                            <script>
-                                function previewImage(event) {
-                                    const imageDisplay = document.getElementById('imagemDisplay');
-                                    const file = event.target.files[0];
-                                    const reader = new FileReader();
-
-                                    reader.onload = function(e) {
-                                        imageDisplay.src = e.target.result; // Atualiza a imagem no círculo
-                                    }
-
-                                    if (file) {
-                                        reader.readAsDataURL(file); // Lê a imagem como URL
-                                    }
-                                }
-
-                                
-                            </script>
-
-                    
                     <div class="box-inputs">
                         <div class="input">
-                            <label for="nome_curso">Nome do Curso:</label>
-                            <input type="text" id="nome_curso" name="nome_curso" placeholder="Digite o nome do curso" required>
+                            <input type="text" id="titulo" name="titulo" placeholder="Digite o título do comunicado" required>
                         </div>
-                        <div class="input input-right">
-                            <label for="codigo">Código:</label>
-                            <input type="text" id="codigo" name="codigo" placeholder="Digite o código do curso" required>
-                        </div>
-                        <div class="input">
-                            <label for="departamento">Departamento:</label>
-                            <input type="text" id="departamento" name="departamento" placeholder="Digite o departamento" required>
-                        </div>
-                        <div class="input input-right">
-                            <label for="carga_horaria">Carga Horária:</label>
-                            <input type="number" id="carga_horaria" name="carga_horaria" placeholder="Ex: 40h" min="1" required>
-                        </div>
-                   
                     </div>
-            
-                    </div>
-                    
                     <div class="box-buttons">
                         <button type="button" class="next">Próximo</button>
                     </div>
@@ -332,40 +265,12 @@ if ($result->num_rows > 0) {
                 <!-- Segundo grupo de inputs -->
                 <fieldset class="step">
                     <div class="box-legend">
-                        <legend class="legend2">Detalhes do Curso</legend>
+                        <legend class="legend2">Corpo do Comunicado</legend>
                         <div class="line-legend line2"></div>
                     </div>
                     <div class="box-inputs">
                         <div class="input">
-                            <label for="tipo_curso">Tipo de Curso:</label>
-                            <select id="tipo-curso" name="tipo_curso" required>
-                                <option value="presencial">Presencial</option>
-                                <option value="online">Online</option>
-                                <option value="semipresencial">Semipresencial</option>
-                            </select>
-                        </div>
-                        <div class="input input-right">
-                            <label for="nivel_curso">Nível do Curso:</label>
-                            <select id="nivel-curso" name="nivel_curso" required>
-                                <option value="basico">Básico</option>
-                                <option value="intermediario">Intermediário</option>
-                                <option value="avancado">Avançado</option>
-                            </select>
-                        </div>
-                        <div class="input">
-                            <label for="periodo">Período/Semestre:</label>
-                            <input type="text" id="periodo" name="periodo" placeholder="Ex: 1º Semestre de 2024" required>
-                        </div>
-                        <div class="input input-right">
-                            <label for="professor">Professor/Instrutor:</label>
-                            <select id="professor" name="professor" required>
-                                <option value="">Selecione um professor</option>
-                                <?php foreach ($professores as $professor): ?>
-                                    <option value="<?= $professor['id']; ?>"><?= htmlspecialchars($professor['nome']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-
-
+                            <textarea id="corpo" name="corpo" placeholder="Escreva aqui o comunicado para informar novidades, atualizações importantes, avisos de eventos ou qualquer outra informação relevante para os usuários da instituição." required></textarea>
                         </div>
                     </div>
                     <div class="box-buttons">
@@ -377,59 +282,67 @@ if ($result->num_rows > 0) {
                 <!-- Terceiro grupo de inputs -->
                 <fieldset class="step">
                     <div class="box-legend">
-                        <legend class="legend3">Descrição e Metodologia</legend>
+                        <legend class="legend3">Imagem (opcional)</legend>
                         <div class="line-legend line3"></div>
                     </div>
                     
-                    <div class="box-inputs">
+                    <div class="box-inputs box-img">
                         <div class="input">
-                            <label for="descricao">Descrição:</label>
-                            <textarea id="descricao" name="descricao" rows="4" placeholder="Descreva o curso" required></textarea>
-                        </div>
-                        <div class="input input-right">
-                            <label for="metodologia">Metodologia:</label>
-                            <textarea id="metodologia" name="metodologia" rows="3" placeholder="Explique a metodologia do curso"></textarea>
+                            <!-- Escondendo o input de arquivo real -->
+                            <input type="file" id="imagem" accept="image/*" onchange="previewImage(event)" style="display: none;">
+                            
+                            <!-- Label estilizado que funciona como botão -->
+                            <label for="imagem" class="upload-button">
+                                <i class='bx bxl-dropbox bx-tada'></i>Selecione uma imagem
+                            </label>
                         </div>
                         <div class="input">
-                            <label for="objetivos_curso">Objetivos do Curso:</label>
-                            <textarea id="objetivos-curso" name="objetivos_curso" rows="3" placeholder="Descreva os objetivos do curso"></textarea>
-                        </div>
-                        <div class="input input-right">
-                            <label for="pre_requisitos">Pré-requisitos:</label>
-                            <input type="text" id="pre-requisitos" name="pre_requisitos" placeholder="Digite os pré-requisitos">
+                            <div id="imagePreviewContainer">
+                                <img id="imagePreview" src="" alt="Pré-visualização da Imagem" style="display: none;">
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="box-buttons">
+                        <button type="button" class="cancel-image" onclick="cancelImage()" style="display: none;">Cancelar Imagem</button>
                         <button type="button" class="prev">Voltar</button>
                         <button type="button" class="next">Próximo</button>
+                        <!-- Botão de cancelar imagem -->
                     </div>
                 </fieldset>
+                
         
                 <!-- Quarto grupo de inputs -->
                 <fieldset class="step">
                     <div class="box-legend">
-                        <legend class="legend4">Avaliação e Recursos</legend>
+                        <legend class="legend4">Tipo de Comunicado</legend>
                         <div class="line-legend line4"></div>
                     </div>
                    
                     <div class="box-inputs">
                         <div class="input">
-                            <label for="criterios_avaliacao">Critérios:</label>
-                            <textarea id="criterios-avaliacao" name="criterios_avaliacao" rows="3" placeholder="Descreva os critérios de avaliação"></textarea>
+                            <label for="alerta">Marcar como Alerta Importante:</label>
+                            <div id="infoExtraAlerta" class="extra-info" style="display: none;">
+                                <p>Você está prestes a marcar este comunicado como "Alerta Importante". Isso significa que a mensagem terá prioridade e será destacada para os destinatários, garantindo que todos vejam a informação com urgência. Você realmente deseja prosseguir com essa marcação?</p>
+                                <div class="box-flex-comunicado">
+                                    <label for="confirmAlerta" class="confirm-label">Confirmar</label>
+                                    <input type="checkbox" id="confirmAlerta" name="confirmAlerta">
+                                </div>
+                            </div>
                         </div>
-                        <div class="input input-right">
-                            <label for="material_recurso">Material e Recurso:</label>
-                            <textarea id="material-recurso" name="material_recurso" rows="3" placeholder="materiais e recursos necessários"></textarea>
-                        </div>
+                        
                         <div class="input">
-                            <label for="modalidade">Modalidade:</label>
-                            <input type="text" id="modalidade" name="modalidade" placeholder="Ex: EAD, Presencial" required>
-                        </div>
-                        <div class="input input-right">
-                            <label for="vagas">Vagas Disponíveis:</label>
-                            <input type="number" id="vagas" name="vagas" min="1" placeholder="Ex: 30" required>
+                            <label for="chat">Postar no Chat:</label>
+                            <div id="infoExtraChat" class="extra-info" style="display: none;">
+                                <p>Você está prestes a notificar os usuários no chat, mas essa notificação será enviada apenas aos destinatários selecionados. Isso significa que, dependendo da sua escolha (professores, alunos, funcionários ou todos), a mensagem será enviada a esses grupos específicos. Você deseja prosseguir com essa notificação?</p>
+                                <div class="box-flex-comunicado">
+                                    <label for="confirmChat" class="confirm-label">Confirmar</label>
+                                    <input type="checkbox" id="confirmChat" name="confirmChat">
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="box-buttons">
                         <button type="button" class="prev">Voltar</button>
                         <button type="button" class="next">Próximo</button>
@@ -439,29 +352,18 @@ if ($result->num_rows > 0) {
                 <!-- Quinto grupo de inputs -->
                 <fieldset class="step">
                     <div class="box-legend">
-                        <legend class="legend5">Datas e Status</legend>
+                        <legend class="legend5">Destinatário</legend>
                         <div class="line-legend line5"></div>
                     </div>
                    
                     <div class="box-inputs">
                         <div class="input">
-                            <label for="data_inicio">Data de Início:</label>
-                            <input type="date" id="data-inicio" name="data_inicio" required>
-                        </div>
-                        <div class="input input-right">
-                            <label for="data_termino">Data de Término:</label>
-                            <input type="date" id="data-termino" name="data_termino" required>
-                        </div>
-                        <div class="input">
-                            <label for="status_curso">Status do Curso:</label>
-                            <select id="status-curso" name="status_curso" required>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                        </div>
-                        <div class="input input-right">
-                            <label for="observacoes">Observações:</label>
-                            <textarea id="observacoes" name="observacoes" rows="3" placeholder="Ex: requer participação ativa em atividades práticas"></textarea>
+                            <select name="destinatario" required>
+                                <option value="todos">Todos</option>
+                                <option value="professores">Professores</option>
+                                <option value="alunos">Alunos</option>
+                                <option value="coordenadores">Coordenadores</option>
+                              </select>
                         </div>
                     </div>
                     <div class="box-buttons">
@@ -469,14 +371,13 @@ if ($result->num_rows > 0) {
                         <button type="submit" class="salvar">Salvar</button>
                     </div>
                 </fieldset>
-                
             </form>
-
-            
         </section>
-        
     </main>
-    <script src="../../../assets/js/diretor/cursos/criar.js"></script>
-    <script src="../../../assets/js/diretor/global/navgation.js"></script>
+
+    <script src="../../assets/js/cursos/criar.js"></script>
+    <script src="../../assets/js/global/navgation.js"></script>
+    <script src="../../assets/js/global/dropdown.js"></script>
+    <script src="../../assets/js/comunicado/comunicado.js"></script>
 </body>
 </html>

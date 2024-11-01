@@ -153,6 +153,9 @@ $tableQueries = [
         aluno_id INT NOT NULL,
         turma_id INT NOT NULL,
         descricao TEXT NOT NULL,
+        data_vencimento DATE,
+        hora_vencimento TIME,
+        arquivo LONGBLOB,  
         data_entrega DATE NOT NULL,
         criacao timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         atualizacao timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -160,6 +163,11 @@ $tableQueries = [
         FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE,
         FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE
     )",
+    "materias" => "CREATE TABLE IF NOT EXISTS materias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    progresso INT DEFAULT 0
+)",
 "atualizacoes" => "CREATE TABLE IF NOT EXISTS atualizacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT,

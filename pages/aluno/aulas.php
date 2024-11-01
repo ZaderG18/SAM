@@ -12,6 +12,7 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 include '../../php/global/notificacao.php';
+include '../../php/aluno/aulas.php';
 $user = $_SESSION['user'];
 $id = $user['id']; // ID do usuário
 
@@ -29,8 +30,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
-
 // Verifica se há uma foto para o usuário
 if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
@@ -168,56 +167,48 @@ if (!empty($fotoNome)) {
                 <!-- Descrição da matéria -->
                 <div class="section description">
                     <h2>Descrição da Matéria</h2>
-                    <p>Esta matéria aborda tópicos fundamentais de matemática, incluindo álgebra, geometria e trigonometria. 
-                    Pré-requisitos incluem uma compreensão básica de aritmética. O objetivo é desenvolver habilidades analíticas e 
-                    a capacidade de resolver problemas complexos.</p>
+                    <p><?php echo htmlspecialchars($descricao_materia); ?></p>
                 </div>
 
                 <!-- Indicador de progresso -->
                 <div class="section progress-section">
                     <h3>Progresso da Matéria</h3>
                     <div class="progress-bar">
-                        <div style="width: 50%;">50% concluído</div>
+                        <div style="width: <?php echo htmlspecialchars($progresso);?>;"><?php echo htmlspecialchars($progresso); ?> concluído</div>
                     </div>
                 </div>
 
                 <!-- Atividades -->
                 <div class="section activities">
                     <h4>Atividades</h4>
+                    <?php foreach ($atividades as $atividade) : ?>
                     <div class="item activity-item">
-                        <span>Exercício 1: Resolver equações lineares</span>
-                        <a href="atividade.php">Fazer</a>
+                        <span><?php echo htmlspecialchars($atividade['titulo']); ?></span>
+                        <a href="atividade.php?id=<?php echo htmlspecialchars($atividade['id'])?>">Fazer</a>
                     </div>
-                    <div class="item activity-item">
-                        <span>Exercício 2: Análise de figuras geométricas</span>
-                        <a href="atividade.php">Fazer</a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Atividades Não Entregues e Pendentes -->
                 <div class="section pending-activities">
                     <h4>Atividades Não Entregues e Pendentes</h4>
+                    <?php foreach($pendentes as $pendente) : ?>
                     <div class="item">
-                        <span>Exercício 3: Problemas de proporções</span>
-                        <a href="atividade.php">Fazer</a>
+                        <span><?php echo htmlspecialchars($pendente['titulo']); ?></span>
+                        <a href="atividade.php?id=<?php echo htmlspecialchars($pendente['id']); ?>">Fazer</a>
                     </div>
-                    <div class="item">
-                        <span>Exercício 4: Teorema de Pitágoras</span>
-                        <a href="atividade.php">Fazer</a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Feedback -->
                 <div class="section feedback">
                     <h4>Feedback do Professor</h4>
+                    <?php foreach ($feedbacks as $feedback): ?>
                     <div class="item feedback-item">
-                        <span>Exercício 1: Resolver equações lineares</span>
-                        <a href="feedback.php">Ver Feedback</a>
+                        <span><?php echo htmlspecialchars($feedback['titulo']); ?></span>
+                        <a href="feedback.php?atividade_id=<?php echo htmlspecialchars($feedback['atividade_id']); ?>">Ver Feedback</a>
                     </div>
-                    <div class="item feedback-item">
-                        <span>Exercício 2: Análise de figuras geométricas</span>
-                        <a href="feedback.php">Ver Feedback</a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Fórum de Discussão -->
@@ -235,14 +226,12 @@ if (!empty($fotoNome)) {
                 <!-- Materiais Complementares -->
                 <div class="section additional-materials">
                     <h4>Materiais Complementares</h4>
+                    <?php foreach ($materiais as $material) : ?>
                     <div class="item material-item">
-                        <span>Livro: Fundamentos de Matemática</span>
-                        <a href="cronograma.php">Acessar</a>
+                        <span><?php echo htmlspecialchars($material['titulo']); ?></span>
+                        <a href="<?php echo htmlspecialchars($material['link']); ?>">Acessar</a>
                     </div>
-                    <div class="item material-item">
-                        <span>Artigo: A História da Matemática</span>
-                        <a href="#">Ler Artigo</a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Suporte de Tutores -->
@@ -250,9 +239,9 @@ if (!empty($fotoNome)) {
                     <h4>Suporte de Tutores</h4>
                     <p>Para suporte adicional, entre em contato com os tutores:</p>
                     <ul>
-                        <li>Tutor 1: tutor1@example.com</li>
-                        <li>Tutor 2: tutor2@example.com</li>
-                        <li>Tutor 3: tutor3@example.com</li>
+                        <?php foreach ($tutores as $tutor) : ?>
+                        <li><?php echo htmlspecialchars($tutor['nome']); ?>: <?php echo htmlspecialchars($tutor['email']); ?></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
@@ -261,6 +250,6 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/aulas/aulas.js"></script>
+    <script src="../../assets/js/aluno/aulas/aulas.js"></script>
 </body>
 </html>

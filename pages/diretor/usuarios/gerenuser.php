@@ -1,49 +1,21 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: validar.php');
-    exit();
-}
-require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-
-// Obtenha todos os usuários e os totais.
-$usuarios = get_todos_usuarios($conn);
-$totalAlunos = total_alunos($conn);
-$totalProfessor = total_professores($conn);
-$totalCoordenador = total_coordenadores($conn);
-$totalDiretores = total_diretores($conn); // Se precisar, adicione isso.
-
-$maximo_registros = 6;
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
-    <!-- <link rel="stylesheet" href="../../assets/scss/home/style.css"> -->
+    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
     <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
-    <link rel="stylesheet" href="../../assets/scss/diretor/home/style.css">
+    <link rel="stylesheet" href="../../assets/scss/usuario/gerenuser.css">
 
-     <!--========== BOX ICONS ==========-->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+   <!--========== BOX ICONS ==========-->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-    <title>Bem vindo ao sam</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Gestão de usuários</title>
 </head>
 <body>
-    
-     <!--========== HEADER ==========-->
+        <!--========== HEADER ==========-->
      <header class="header">
         <div class="header__container">
             <a href="#" class="header__logo">SAM</a>
@@ -130,8 +102,8 @@ $maximo_registros = 6;
                     <div class="flex-conta">
                         <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                         <div class="box-info-conta">
-                            <h4><?php echo htmlspecialchars($user['nome'])?></h4>
-                            <p><?php echo htmlspecialchars($user['email'])?></p>
+                            <h4>David Richard Ramos Rosa</h4>
+                            <p>david.rosa4@etec.sp.gov.br</p>
                             <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                         </div>
                     </div><!--flex-conta-->
@@ -171,7 +143,7 @@ $maximo_registros = 6;
         </div>
     </header>
 
-              <!--========== NAV ==========-->
+            <!--========== NAV ==========-->
         <div class="nav" id="navbar">
             <nav class="nav__container">
                 <div>
@@ -184,7 +156,7 @@ $maximo_registros = 6;
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="#" class="nav__link active">
+                            <a href="home_diretor.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
@@ -204,12 +176,12 @@ $maximo_registros = 6;
                             <h3 class="nav__subtitle">Gerenciamento</h3>
     
                         
-                            <a href="usuarios/gerenuser.php" class="nav__link">
+                            <a href="#" class="nav__link active">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
 
-                            <a href="cursos/cursos.php" class="nav__link">
+                            <a href="../cursos/index.html" class="nav__link">
                                 <i class='bx bx-edit-alt nav__icon'></i>
                                 <span class="nav__name">Gerenciar Cursos</span>
                             </a>
@@ -218,7 +190,7 @@ $maximo_registros = 6;
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="comunicado.php" class="nav__link">
+                            <a href="#" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
@@ -255,107 +227,52 @@ $maximo_registros = 6;
                 </a>
             </nav>
         </div>
-
         <main>
             <div class="container">
-                <div class="box-welcome">
-                    <div class="title-welcome">
-                        <span>Olá <?php echo htmlspecialchars($user['nome'])?></span>
-                        <h1>Seja bem vinda </h1>
+                <div class="box-title">
+                    <div class="flex-title">
+                        <h1>Gerenciamento de Usuarios</h1>
+                        <!-- <div class="box-img"><img src="../../assets/img/cursos/cusos.svg" alt="" srcset=""></div> -->
                     </div>
-                    <div class="img-welcome"></div>
-                </div>
-    
-                <div class="box-visao-geral">
-                    <div class="box-visao">
-                        <h2>Visão geral</h2>
-                        <!-- <input type="date" name="" id=""> -->
+                    <div class="line"></div>
+                </div><!--box-title-->
+
+                <div class="flex-gerenciamento-user">
+                    <div class="box-user">
+                        <a href="coordenador.html" class="box-coordenador">
+                            <div class="img-coordenador img"></div>
+                            <div class="box-descricao">
+                                <h5 style="color: #99a2d6;">coordenador</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
+                            </div><!--box-descricao-->
+                        </a>
                     </div>
-    
-                    <div class="flex-visao-geral">
-                        <div class="content-visao" id="content-visao01">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
-                            <div class="visao-elements">
-                                <img id="img1" src="../../assets/img/home/logo/Layer_1.png" alt="">
-                                <h4><?php echo htmlspecialchars($totalAlunos)?></h4>
-                            </div>
-                            <p>Total de estudantes </p>
-                        </div>
-    
-                        <div class="content-visao" id="content-visao02">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
-                            <div class="visao-elements">
-                                <img id="img2" src="../../assets/img/home/logo/sala-de-aula (3) 1.png" alt="">
-                                <h4><?php echo htmlspecialchars($totalProfessor)?></h4>
-                            </div>
-                            <p>Total de docentes</p>
-                        </div>
-    
-                        <div class="content-visao" id="content-visao03">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
-                            <div class="visao-elements img3">
-                                <img id="img3" src="../../assets/img/home/logo/Layer_1-1.png" alt="">
-                                <h4><?php echo htmlspecialchars($totalCoordenador)?></h4>
-                            </div>
-                            <p>Total de responsáveis   </p>
-                        </div>
+                    <div class="box-user editar">
+                        <a href="docente.html" class="box-docente">
+                            <div class="img-docente img"></div>
+                            <div class="box-descricao">
+                                <h5 style="color: #8aab3d;">Professor</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
+                            </div><!--box-descricao-->
+                        </a>
                     </div>
-                </div> <!--box-visão-geral-->
-                <section class="box-registro">
-                    <div class="box-flex-registro">
-
-                        <div class="grafico">
-                            <h2>Perfis <br>incompletos</h2>
-                            <img src="../../assets/img/home/logo/grafic.png" alt="">
-                            <span>63.8%</span>
-                        </div>
-
-                        <div class="registro">
-                            <h2>últimos  registros </h2>
-
-                            <table>
-                                <div class="line"></div>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Matricula</th>
-                                    <th>Genero</th>
-                                </tr>
-                                <?php $contador =0;
-                                foreach ($usuarios as $usuario) {
-                                    if($contador >= $maximo_registros){ break; } ?>
-                                <tr style=" margin-top: 100px;">
-                                    <td><?php echo htmlspecialchars($usuario['nome'])?></td>
-                                    <td><?php echo htmlspecialchars($usuario['RM'])?></td>
-                                    <td><?php echo htmlspecialchars($usuario['cargo'])?></td>
-                                </tr>
-                                <?php $contador++; } ?>
-                            </table>
-                        </div>
-                    </div><!--box-flex-registro-->
-                </section>
+                    <div class="box-user">
+                        <a href="../../html/usuarios/aluno.html" class="box-aluno">
+                            <div class="img-aluno img"></div>
+                            <div class="box-descricao">
+                                <h5  style="color: #fcb736;">Aluno</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
+                            </div><!--box-descricao-->
+                        </a>
+                    </div>
+                </div><!--flex-gerenciamento-user-->
             </div><!--container-->
-            <!--<div class="bottom-nav">
-                <button class="nav-item"><img src="../../assets/img/home/icons/icon1.png" alt="" > <span>gestão</span></button>
-                <button class="nav-item"><img src="../../assets/img/home/icons/icon2.png" alt="" srcset=""><span>Docentes</span></button>
-                <button class="nav-item"><img src="../../assets/img/home/icons/icon3.png" alt="" srcset=""><span>cursos</span></button>
-                <button class="nav-item"><img src="../../assets/img/home/icons/icon4.png" alt="" srcset=""><span>Usuários</span></button>
-                <button id="add-btn" class="nav-item plus"><img src="../../assets/img/home/icons/icon-menu.png" alt="" srcset=""><span>Mais</span></button>
-              </div>
-              
-              <div id="expand-menu" class="expand-menu">
-                <button class="close-btn">&times;</button>
-                <div class="menu-options">
-                  <button class="menu-item"><img src="../../assets/img/home/icons/icon5.png" alt="" ><span>Comunicados</span></button>
-                  <button class="menu-item"><img src="../../assets/img/home/icons/icon6.png" alt="" ><span>Documentos</span></button>
-                  <button class="menu-item"><img src="../../assets/img/home/icons/icon7.png" alt="" ><span>Financeiro</span></button>
-                </div>
-              </div>-->
         </main>
+    </div>
 
     <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script> -->
-
     <script src="../../assets/js/global/navgation.js"></script>
     <script src="../../assets/js/global/dropdown.js"></script>
 </body>

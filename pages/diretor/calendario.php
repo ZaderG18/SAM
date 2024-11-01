@@ -1,36 +1,31 @@
-<?php
-
-$host = 'localhost';
-$database = 'sam';
-$username = 'root';
-$password = '';
-$conn = new mysqli($host, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    require_once '../../../php/login/validar.php';
-$user = $_SESSION['user'];
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../assets/scss/cursos/gerencursos.css">
-
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <!-- <link rel="stylesheet" href="../../assets/scss/home/style.css"> -->
     <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <!-- <link rel="stylesheet" href="../../assets/scss/home/style.css"> -->
+    <link rel="stylesheet" href="../../assets/scss/calendario/calendario.css">
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <title>Gestão de professores</title>
+
+    <title>Calendário de eventos</title>
 </head>
 <body>
-
-  <!--========== HEADER ==========-->
-  <header class="header">
+    
+   <!--========== HEADER ==========-->
+   <header class="header">
     <div class="header__container">
         <a href="#" class="header__logo">SAM</a>
 
@@ -156,9 +151,7 @@ $user = $_SESSION['user'];
         </div>
     </div>
 </header>
-
-         
-            <!--========== NAV ==========-->
+              <!--========== NAV ==========-->
         <div class="nav" id="navbar">
             <nav class="nav__container">
                 <div>
@@ -171,12 +164,12 @@ $user = $_SESSION['user'];
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="home_diretor.php" class="nav__link">
+                            <a href="../home/home.html" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
                             
-                            <a href="calendario.php" class="nav__link ">
+                            <a href="#" class="nav__link active">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
@@ -191,12 +184,12 @@ $user = $_SESSION['user'];
                             <h3 class="nav__subtitle">Gerenciamento</h3>
     
                         
-                            <a href="../usuarios/gerenuser.html" class="nav__link">
+                            <a href="usuarios/gerenuser.php" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
 
-                            <a href="#" class="nav__link active">
+                            <a href="cursos/cursos.php" class="nav__link">
                                 <i class='bx bx-edit-alt nav__icon'></i>
                                 <span class="nav__name">Gerenciar Cursos</span>
                             </a>
@@ -244,47 +237,89 @@ $user = $_SESSION['user'];
         </div>
 
         <main>
-            <div class="container">
-                <div class="box-title">
-                    <div class="flex-title">
-                        <h1>Gerenciamento de Cursos</h1>
-                        <!-- <div class="box-img"><img src="../../assets/img/cursos/cusos.svg" alt="" srcset=""></div> -->
+            <div class="container calendar-container">
+                <div class="left">
+                  <div class="calendar">
+                    <div class="month">
+                      <i class="fas fa-angle-left prev"></i>
+                      <div class="date">dezembro 2015</div>
+                      <i class="fas fa-angle-right next"></i>
                     </div>
-                    <div class="line"></div>
-                </div><!--box-title-->
-
-                <!-- <p>Oferece a capacidade de gerenciar permissões e funções dos usuários, acompanhar o status das contas, e visualizar o histórico de atividades. Tudo isso de maneira centralizada e organizada, facilitando o controle e a administração dos usuários no sistema.</p> -->
-
-                <div class="flex-gerenciamento-curso">
-                    <div class="box-user">
-                        <a href="criarcurso.html" class="box-criar">
-                            <div class="img-criar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #30bbbf;">Criar Curso</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
+                    <div class="weekdays">
+                      <div>Dom</div>
+                      <div>Seg</div>
+                      <div>Ter</div>
+                      <div>Qua</div>
+                      <div>Qui</div>
+                      <div>Sex</div>
+                      <div>Sáb</div>
                     </div>
-                    <div class="box-user editar">
-                        <a href="editarcurso.html" class="box-editar">
-                            <div class="img-editar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #f5ac3d;">Editar Cursos</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
+                    <div class="days"></div>
+                    <div class="goto-today">
+                      <div class="goto">
+                        <input type="text" placeholder="mm/aaaa" class="date-input" />
+                        <button class="goto-btn">Ir</button>
+                      </div>
+                      <button class="today-btn">Hoje</button>
                     </div>
-                    <div class="box-user">
-                        <a href="#" class="box-deletar">
-                            <div class="img-deletar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #4947bb;">Apagar cursos</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
+                  </div>
+                </div>
+                <div class="right">
+                  <div class="today-date">
+                    <div class="event-day">qua</div>
+                    <div class="event-date">12 de dezembro de 2022</div>
+                  </div>
+                  <div class="events"></div>
+                  <div class="add-event-wrapper">
+                    <div class="add-event-header">
+                      <div class="title">Adicionar Evento</div>
+                      <i class="fas fa-times close"></i>
                     </div>
-                </div><!--flex-gerenciamento-user-->
-            </div><!--container-->
+                    <div class="add-event-body">
+                      <div class="add-event-input">
+                        <input type="text" placeholder="Nome do Evento" class="event-name" />
+                      </div>
+                      <div class="add-event-input">
+                        <input
+                          type="text"
+                          placeholder="Horário de Início"
+                          class="event-time-from"
+                        />
+                      </div>
+                      <div class="add-event-input">
+                        <input
+                          type="text"
+                          placeholder="Horário de Término"
+                          class="event-time-to"
+                        />
+                      </div>
+                    </div>
+                    <div class="add-event-footer">
+                      <button class="add-event-btn">Adicionar Evento</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="add-event">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              
+            <!--<div class="bottom-nav">
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon1.png" alt="" > <span>gestão</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon2.png" alt="" srcset=""><span>Docentes</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon3.png" alt="" srcset=""><span>cursos</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon4.png" alt="" srcset=""><span>Usuários</span></button>
+                <button id="add-btn" class="nav-item plus"><img src="../../assets/img/home/icons/icon-menu.png" alt="" srcset=""><span>Mais</span></button>
+              </div>
+              
+              <div id="expand-menu" class="expand-menu">
+                <button class="close-btn">&times;</button>
+                <div class="menu-options">
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon5.png" alt="" ><span>Comunicados</span></button>
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon6.png" alt="" ><span>Documentos</span></button>
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon7.png" alt="" ><span>Financeiro</span></button>
+                </div>
+              </div>-->
         </main>
 
     <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
@@ -293,5 +328,6 @@ $user = $_SESSION['user'];
 
     <script src="../../assets/js/global/navgation.js"></script>
     <script src="../../assets/js/global/dropdown.js"></script>
+    <script src="../../assets/js/calendario/calendario.js"></script>
 </body>
 </html>

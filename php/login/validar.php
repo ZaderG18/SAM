@@ -56,8 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
 
             $stmt->close();
-            $conn->close();
-            
+                        
             // Redireciona o usuário para a página inicial com base no cargo
             $roleMap = [
                 1 => 'aluno',
@@ -73,8 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Fecha a declaração e a conexão se a validação falhar
     $stmt->close();
-    $conn->close();
-
+    
     // Mensagem de erro se o login falhar
     echo "<script>alert('Email ou senha incorretos.'); window.location.href = '../../index.html';</script>";
 }

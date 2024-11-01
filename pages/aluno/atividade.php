@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+include '../../php/aluno/atividade.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 
@@ -26,7 +27,6 @@ $stmt->execute();
 $stmt->bind_result($fotoNome);
 $stmt->fetch();
 $stmt->close();
-$conn->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
@@ -40,7 +40,7 @@ if (!empty($fotoNome)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividade</title>
+    <title><?php echo "Atividade - " . $titulo; ?></title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="../../assets/scss/aluno/atividade/atividade.css">
@@ -160,16 +160,11 @@ if (!empty($fotoNome)) {
         <main>
             <div class="activity-page">
                 <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
-                <h1>Atividade 11/01 - Redação Inglês</h1>
-                <p class="due-date">Vence 17 de janeiro de 2024 às 23:59 • Fecha 17 de janeiro de 2024 às 23:59</p>
+                <h1><?php echo $titulo; ?></h1>
+                <p class="due-date"><?php
+                echo "Vence " . date("d \\d\\e F \\d\\e Y", strtotime($data_vencimento)) . " às " . date("H:i", strtotime($hora_vencimento)); ?></p>
                 <div class="activity-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Integer id libero id neque pulvinar sodales. Vivamus vehicula, mi id tincidunt vulputate, 
-                        magna odio vehicula ligula, vitae placerat risus lorem nec justo. Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. Integer id libero id neque pulvinar sodales. 
-                        Vivamus vehicula, mi id tincidunt vulputate, magna odio vehicula ligula, 
-                        vitae placerat risus lorem nec justo. 
-                    </p>
+                    <p><?php echo nl2br($descricao)?></p>
                     <!-- Continuação do texto descritivo -->
                 </div>
                 <div class="upload-section">
