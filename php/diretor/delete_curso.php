@@ -35,6 +35,4 @@ if (isset($_GET['id'])) {
     echo json_encode(["status" => "error", "message" => "ID do curso não fornecido."]);
 }
 
-// Fecha a conexão com o banco de dados
-$conn->close(); // Fecha a conexão com o banco de dados
 ?>

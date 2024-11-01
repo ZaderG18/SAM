@@ -21,33 +21,23 @@ if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 function obterDadosPorTipo($conn, $tipo) {
-    // Mapeamento dos tipos para as colunas da tabela
-    $columnMap = [
-        'horario' => 'horario_atendimento',
-        'documento' => 'prazo_documentos',
-        'comunicado' => 'comunicado_rematricula',
-        'equipe' => 'equipe',
-        'documentos_necessarios' => 'documentos_necessarios',
-        'evento' => 'eventos',
-        'faq' => 'faq'
-    ];
-
-    // Verifica se o tipo existe no mapeamento
-    if (!array_key_exists($tipo, $columnMap)) {
+    // Verifica se o tipo fornecido é válido
+    $validTypes = ['horario', 'prazo_documentos', 'comunicado_rematricula', 'equipe', 'documentos_necessarios', 'eventos', 'faq', 'formulario_suporte'];
+    
+    if (!in_array($tipo, $validTypes)) {
         echo "Tipo inválido: $tipo";
         return false;
     }
 
-    $columnName = $columnMap[$tipo];
-
-    // Prepara a consulta
-    $stmt = $conn->prepare("SELECT $columnName AS descricao FROM secretaria");
+    // Prepara a consulta para buscar o tipo especificado na coluna `tipo`
+    $stmt = $conn->prepare("SELECT * FROM secretaria WHERE tipo = ?");
     if ($stmt === false) {
         echo "Erro ao preparar a consulta: " . $conn->error;
         return false;
     }
 
-    // Executa a consulta
+    // Associa o parâmetro e executa a consulta
+    $stmt->bind_param("s", $tipo);
     if (!$stmt->execute()) {
         echo "Erro ao executar a consulta: " . $stmt->error;
         return false;
@@ -55,8 +45,6 @@ function obterDadosPorTipo($conn, $tipo) {
 
     return $stmt->get_result();
 }
-
-
 
 // Bind parameters and execute
 $stmt->bind_param("i", $id);
@@ -276,7 +264,7 @@ if (!empty($fotoNome)) {
             <h3>Próximos Eventos</h3>
             <ul>
                 <?php
-                $result = obterDadosPorTipo($conn, 'evento');
+                $result = obterDadosPorTipo($conn, 'eventos');
                 if ($result->num_rows > 0){
                     while($row = $result->fetch_assoc()){
                         echo "<li> {$row['descricao']} - Data: {$row['data_inicio']} às {$row['hora']}</li>";

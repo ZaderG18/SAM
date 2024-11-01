@@ -354,6 +354,44 @@ id INT(11) NOT NULL,
     titulo VARCHAR(255) NOT NULL,
     descricao TEXT NOT NULL,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE
+)",
+"atividade_extracurricular" => "CREATE TABLE IF NOT EXISTS atividade_extracurricular (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    tipo_atividade VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    data_inicio DATE,
+    data_fim DATE,
+    carga_horaria INT,
+    certificado LONGBLOB,  -- Caso você queira armazenar um certificado digital
+    criacao timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizacao timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('em_andamento', 'concluida', 'cancelada') DEFAULT 'em_andamento',
+    FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE
+)",
+"contato_emergencia"=>"CREATE TABLE contato_emergencia ( 
+id INT PRIMARY KEY AUTO_INCREMENT, 
+aluno_id INT, 
+professor_id INT, 
+nome_emergencia VARCHAR(255), 
+parente_emergencia VARCHAR(50), 
+telefone_emergencia VARCHAR(20), 
+email_emergencia VARCHAR(255), 
+FOREIGN KEY (aluno_id) REFERENCES usuarios(id), 
+FOREIGN KEY (professor_id) REFERENCES usuarios(id) 
+)",
+"academico" => "CREATE TABLE academico (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    aluno_id INT,
+    curso VARCHAR(255),
+    periodo VARCHAR(50),
+    modulo_atual INT,
+    turma VARCHAR(50),
+    nome_professor VARCHAR(255),
+    bolsas_auxilios VARCHAR(255),
+    horas_complementares INT,
+    estagio_atual VARCHAR(255),
+    FOREIGN KEY (aluno_id) REFERENCES usuarios(id)
 )"
 ];
 

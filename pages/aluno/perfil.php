@@ -9,10 +9,16 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+include '../../php/aluno/perfil.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
 
+// Dados principais
+$user = getAlunoData($conn, $id);
+$academico = getAcademicoData($conn, $id);
+$contatoEmergencia = getContatoEmergencia($conn, $id);
+$atividades = getAtividadesExtracurriculares($conn, $id);
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -164,10 +170,10 @@ if (!empty($fotoNome)) {
             <img src="<?php echo $fotoCaminho ?>" alt="Foto do Aluno">
             <div class="info">
                 <h2><?php echo htmlspecialchars($user['nome']) ?></h2>
-                <p>RM: 123456</p>
-                <p>Email: Juliana@exemplo.com</p>
-                <p>Curso: Desenvolvimento de Sistemas</p>
-                <p>Status Acadêmico: Ativo</p>
+                <p>RM: <?php echo htmlspecialchars($user['RM'])?></p>
+                <p>Email: <?php echo htmlspecialchars($user['email'])?></p>
+                <p>Curso: <?php echo htmlspecialchars($user['curso_id'])?></p>
+                <p>Status Acadêmico: <?php echo htmlspecialchars($user['status'])?></p>
             </div>
         </div>
 
@@ -191,11 +197,11 @@ if (!empty($fotoNome)) {
                     <label>Endereço:</label>
                     <p><?php echo htmlspecialchars($user['endereco']) ?></p>
                 </div>
-                <!-- <div class="detail-item">
+                 <div class="detail-item">
                     <label>CPF:</label>
-                    <p></p>
+                    <p><?php echo htmlspecialchars($user['cpf'])?></p>
                 </div>
-                <div class="detail-item">
+                <!--<div class="detail-item">
                     <label>RG:</label>
                     <p>12.345.678-9</p>
                 </div> -->
@@ -205,7 +211,7 @@ if (!empty($fotoNome)) {
                 </div> -->
                 <div class="detail-item">
                     <label>Nacionalidade:</label>
-                    <p>Brasileiro</p>
+                    <p><?php echo htmlspecialchars($user['nacionalidade'])?></p>
                 </div>
                 <div class="detail-item">
                     <label>Data de Matrícula:</label>
@@ -220,35 +226,35 @@ if (!empty($fotoNome)) {
             <div class="details">
                 <div class="detail-item">
                     <label>Curso:</label>
-                    <p><?php echo htmlspecialchars($user['curso']) ?></p>
+                    <p><?php echo htmlspecialchars($academico['curso']) ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Período:</label>
-                    <p><?php echo htmlspecialchars($user['periodo']) ?></p>
+                    <p><?php echo htmlspecialchars($academico['periodo']) ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Semestre Atual:</label>
-                    <p><?php echo htmlspecialchars($user['modulo_atual']) ?></p>
+                    <p><?php echo htmlspecialchars($academico['modulo_atual']) ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Sala:</label>
-                    <p><?php echo htmlspecialchars($user['turma']) ?></p>
+                    <p><?php echo htmlspecialchars($academico['turma']) ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Orientador Acadêmico:</label>
-                    <p>Prof. <?php echo htmlspecialchars($user['nome_professor']) ?></p>
+                    <p>Prof. <?php echo htmlspecialchars($academico['nome_professor']) ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Bolsas e Auxílios:</label>
-                    <p>Bolsa de Iniciação Científica</p>
+                    <p><?php echo htmlspecialchars($academico['bolsas_auxilios']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Horas Complementares:</label>
-                    <p>100 horas</p>
+                    <p><?php echo htmlspecialchars($academico['horas_complementares'])?></p>
                 </div>
                 <div class="detail-item">
                     <label>Estágio Atual:</label>
-                    <p>Estágio na Empresa XYZ - Setor de TI</p>
+                    <p><?php echo htmlspecialchars($academico['estagio_atual'])?></p>
                 </div>
             </div>
         </div>
@@ -280,19 +286,19 @@ if (!empty($fotoNome)) {
             <div class="details">
                 <div class="detail-item">
                     <label>Nome do Contato:</label>
-                    <p>Maria Silva</p>
+                    <p><?php echo htmlspecialchars($user['nome_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Parentesco:</label>
-                    <p>Mãe</p>
+                    <p><?php echo htmlspecialchars($user['parente_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Telefone de Contato:</label>
-                    <p>(11) 98888-8888</p>
+                    <p><?php echo htmlspecialchars($user['telefone_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Email de Contato:</label>
-                    <p>maria.silva@email.com</p>
+                    <p><?php echo htmlspecialchars($user['email_emergencia']); ?></p>
                 </div>
             </div>
         </div>
@@ -301,10 +307,9 @@ if (!empty($fotoNome)) {
         <div class="section">
             <h3 class="section-title">Atividades Extracurriculares</h3>
             <ul>
-                <li>Participação no grupo de robótica da universidade.</li>
-                <li>Monitor de Algoritmos no 5º semestre.</li>
-                <li>Voluntário no projeto de inclusão digital da comunidade local.</li>
-                <li>Membro da Associação Atlética Acadêmica.</li>
+                <?php foreach ($atividades as $atividade) : ?>
+                <li><?php echo htmlspecialchars($atividade); ?></li>
+                <?php endforeach; ?>
             </ul>
         </div>
 

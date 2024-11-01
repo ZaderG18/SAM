@@ -126,4 +126,3 @@ $professores = $data ['professor'];
     </div>
 </body>
 </html>
-<?php $conn->close(); ?>

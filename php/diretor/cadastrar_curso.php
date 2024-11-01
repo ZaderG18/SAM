@@ -89,6 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close(); // Fecha a instrução preparada
-    $conn->close(); // Fecha a conexão com o banco de dados
+    (); // Fecha a conexão com o banco de dados
 }
 ?>
