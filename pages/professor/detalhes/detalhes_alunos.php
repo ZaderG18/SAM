@@ -219,9 +219,7 @@ if (!empty($fotoNome)) {
 
         <!-- Ações -->
         <div class="actions">
-            <button id="sendMessageBtn"><i class="fas fa-envelope"></i> Enviar Mensagem</button>
             <button onclick="alert('Gerar novo relatório');"><i class="fas fa-file-medical"></i> Gerar Relatório</button>
-            <button id="openModalBtn"><i class="fas fa-calendar-plus"></i> Agendar Reunião</button>
         </div>
     </div>
 
