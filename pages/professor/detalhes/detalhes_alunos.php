@@ -225,54 +225,6 @@ if (!empty($fotoNome)) {
         </div>
     </div>
 
-    <!-- Modal Agendar Reunião -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Agendar Reunião</h2>
-            </div>
-            <div class="modal-body">
-                <form id="meetingForm">
-                    <label for="date">Data:</label>
-                    <input type="date" id="date" name="date" required><br><br>
-                    <label for="time">Hora:</label>
-                    <input type="time" id="time" name="time" required><br><br>
-                    <label for="responsavel">Responsável:</label>
-                    <input type="text" id="responsavel" name="responsavel" placeholder="Nome do Responsável" required><br><br>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Email do Responsável" required><br><br>
-                    <label for="phone">Telefone:</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Telefone do Responsável" required><br><br>
-                    <label for="description">Descrição:</label><br>
-                    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="meetingForm">Agendar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Enviar Mensagem -->
-    <div id="sendMessageModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Enviar Mensagem</h2>
-            </div>
-            <div class="modal-body">
-                <form id="sendMessageForm">
-                    <label for="emailTo">Para:</label>
-                    <input type="email" id="emailTo" name="emailTo" placeholder="Email do Aluno" required><br><br>
-                    <label for="subject">Assunto:</label>
-                    <input type="text" id="subject" name="subject" placeholder="Assunto da Mensagem" required><br><br>
-                    <label for="message">Mensagem:</label><br>
-                    <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-                </form>
-            </div>
-        </div>
-    </div>
 
 </main>
 
