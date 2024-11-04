@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02-Nov-2024 às 01:46
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.0.25
+-- Tempo de geração: 04/11/2024 às 20:28
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `academico`
+-- Estrutura para tabela `academico`
 --
 
 CREATE TABLE `academico` (
@@ -43,7 +43,7 @@ CREATE TABLE `academico` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `aluno`
+-- Estrutura para tabela `aluno`
 --
 
 CREATE TABLE `aluno` (
@@ -55,7 +55,7 @@ CREATE TABLE `aluno` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `atividade`
+-- Estrutura para tabela `atividade`
 --
 
 CREATE TABLE `atividade` (
@@ -63,19 +63,26 @@ CREATE TABLE `atividade` (
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `descricao` text NOT NULL,
-  `data_vencimento` date DEFAULT NULL,
-  `hora_vencimento` time DEFAULT NULL,
-  `arquivo` longblob DEFAULT NULL,
   `data_entrega` date NOT NULL,
   `criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status` enum('pendente','concluida') DEFAULT 'pendente'
+  `status` enum('pendente','concluida') DEFAULT 'pendente',
+  `titulo` varchar(255) NOT NULL,
+  `data_vencimento` date NOT NULL,
+  `hora_vencimento` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `atividade`
+--
+
+INSERT INTO `atividade` (`id`, `aluno_id`, `turma_id`, `descricao`, `data_entrega`, `criacao`, `atualizacao`, `status`, `titulo`, `data_vencimento`, `hora_vencimento`) VALUES
+(2, 1, 1, 'Faça um churrasco grego mas com uma baguete francesa', '2024-11-08', '2024-11-01 02:26:25', '2024-11-01 02:26:25', 'pendente', 'churrasco grego', '2024-11-15', '41:25:08');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `atividade_extracurricular`
+-- Estrutura para tabela `atividade_extracurricular`
 --
 
 CREATE TABLE `atividade_extracurricular` (
@@ -95,7 +102,7 @@ CREATE TABLE `atividade_extracurricular` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `atualizacoes`
+-- Estrutura para tabela `atualizacoes`
 --
 
 CREATE TABLE `atualizacoes` (
@@ -108,7 +115,7 @@ CREATE TABLE `atualizacoes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `avaliacao`
+-- Estrutura para tabela `avaliacao`
 --
 
 CREATE TABLE `avaliacao` (
@@ -122,7 +129,7 @@ CREATE TABLE `avaliacao` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contato_emergencia`
+-- Estrutura para tabela `contato_emergencia`
 --
 
 CREATE TABLE `contato_emergencia` (
@@ -138,7 +145,7 @@ CREATE TABLE `contato_emergencia` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `coordenador`
+-- Estrutura para tabela `coordenador`
 --
 
 CREATE TABLE `coordenador` (
@@ -149,35 +156,28 @@ CREATE TABLE `coordenador` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `curso`
+-- Estrutura para tabela `curso`
 --
 
 CREATE TABLE `curso` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nome_curso` varchar(255) NOT NULL,
-  `codigo` varchar(50) NOT NULL,
-  `descricao` text NOT NULL,
-  `departamento` varchar(100) NOT NULL,
-  `carga_horaria` int(6) NOT NULL,
-  `pre_requisitos` varchar(255) DEFAULT NULL,
-  `tipo_curso` varchar(50) NOT NULL,
-  `nivel_curso` varchar(50) NOT NULL,
-  `periodo` varchar(100) NOT NULL,
-  `status_curso` varchar(50) NOT NULL,
-  `data_inicio` date NOT NULL,
-  `data_termino` date NOT NULL,
-  `vagas` int(6) NOT NULL,
-  `modalidade` varchar(100) NOT NULL,
-  `material_recurso` text DEFAULT NULL,
-  `observacoes` text DEFAULT NULL,
-  `imagem_curso` varchar(255) NOT NULL,
-  `fk_professor_id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `carga_horaria` int(11) NOT NULL,
+  `modulo_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `curso`
+--
+
+INSERT INTO `curso` (`id`, `nome`, `descricao`, `carga_horaria`, `modulo_id`) VALUES
+(1, 'banco de dados', 'curso de banco de dados', 11, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `declaracao`
+-- Estrutura para tabela `declaracao`
 --
 
 CREATE TABLE `declaracao` (
@@ -194,7 +194,7 @@ CREATE TABLE `declaracao` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `diretor`
+-- Estrutura para tabela `diretor`
 --
 
 CREATE TABLE `diretor` (
@@ -205,7 +205,7 @@ CREATE TABLE `diretor` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `disciplina`
+-- Estrutura para tabela `disciplina`
 --
 
 CREATE TABLE `disciplina` (
@@ -216,16 +216,24 @@ CREATE TABLE `disciplina` (
   `ano` int(11) NOT NULL,
   `professor_id` int(11) NOT NULL,
   `coordenador_id` int(11) NOT NULL,
+  `turma_id` int(11) NOT NULL,
   `curso_id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
   `declaracao_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `disciplina`
+--
+
+INSERT INTO `disciplina` (`id`, `nome_disciplina`, `carga_horaria`, `semestre`, `ano`, `professor_id`, `coordenador_id`, `turma_id`, `curso_id`, `aluno_id`, `avaliacao_id`, `declaracao_id`) VALUES
+(1, 'matematica', 11, 3, 2024, 2, 3, 1, 1, 1, 0, 0);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `eventos`
+-- Estrutura para tabela `eventos`
 --
 
 CREATE TABLE `eventos` (
@@ -239,7 +247,7 @@ CREATE TABLE `eventos` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `frequencia`
+-- Estrutura para tabela `frequencia`
 --
 
 CREATE TABLE `frequencia` (
@@ -261,10 +269,17 @@ CREATE TABLE `frequencia` (
   `disciplina_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `frequencia`
+--
+
+INSERT INTO `frequencia` (`id`, `aluno_id`, `turma_id`, `status`, `avaliacao_id`, `curso_id`, `declaracao_id`, `aulas_dadas`, `faltas`, `professor_id`, `faltas_permitidas`, `frequencia_atual`, `frequencia_total`, `data`, `presenca`, `disciplina_id`) VALUES
+(1, 1, 1, 'concluida', 0, 1, 0, 55, 10, 2, 20, 90.00, 98, '2024-11-04', 100, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `historico_academico`
+-- Estrutura para tabela `historico_academico`
 --
 
 CREATE TABLE `historico_academico` (
@@ -286,7 +301,7 @@ CREATE TABLE `historico_academico` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `horario`
+-- Estrutura para tabela `horario`
 --
 
 CREATE TABLE `horario` (
@@ -306,7 +321,7 @@ CREATE TABLE `horario` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `materias`
+-- Estrutura para tabela `materias`
 --
 
 CREATE TABLE `materias` (
@@ -315,10 +330,17 @@ CREATE TABLE `materias` (
   `progresso` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `materias`
+--
+
+INSERT INTO `materias` (`id`, `descricao`, `progresso`) VALUES
+(1, 'Matemática', 0);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `matricula`
+-- Estrutura para tabela `matricula`
 --
 
 CREATE TABLE `matricula` (
@@ -336,7 +358,7 @@ CREATE TABLE `matricula` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `mensagens_chat`
+-- Estrutura para tabela `mensagens_chat`
 --
 
 CREATE TABLE `mensagens_chat` (
@@ -351,7 +373,7 @@ CREATE TABLE `mensagens_chat` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `modulo`
+-- Estrutura para tabela `modulo`
 --
 
 CREATE TABLE `modulo` (
@@ -366,7 +388,7 @@ CREATE TABLE `modulo` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `notas`
+-- Estrutura para tabela `notas`
 --
 
 CREATE TABLE `notas` (
@@ -386,7 +408,7 @@ CREATE TABLE `notas` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `notificacoes`
+-- Estrutura para tabela `notificacoes`
 --
 
 CREATE TABLE `notificacoes` (
@@ -404,7 +426,7 @@ CREATE TABLE `notificacoes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `professor`
+-- Estrutura para tabela `professor`
 --
 
 CREATE TABLE `professor` (
@@ -415,7 +437,7 @@ CREATE TABLE `professor` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `rematricula`
+-- Estrutura para tabela `rematricula`
 --
 
 CREATE TABLE `rematricula` (
@@ -425,10 +447,17 @@ CREATE TABLE `rematricula` (
   `status` varchar(20) NOT NULL DEFAULT 'pendente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `rematricula`
+--
+
+INSERT INTO `rematricula` (`id`, `aluno_id`, `data_rematricula`, `status`) VALUES
+(4, 1, '2024-10-31', 'concluida');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `secretaria`
+-- Estrutura para tabela `secretaria`
 --
 
 CREATE TABLE `secretaria` (
@@ -445,13 +474,15 @@ CREATE TABLE `secretaria` (
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `diretor_id` int(11) DEFAULT NULL,
   `coordenador_id` int(11) DEFAULT NULL,
-  `professor_id` int(11) DEFAULT NULL
+  `professor_id` int(11) DEFAULT NULL,
+  `comunicado_rematricula` varchar(255) DEFAULT NULL,
+  `equipe` varchar(255) DEFAULT 'Secretaria'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `turma`
+-- Estrutura para tabela `turma`
 --
 
 CREATE TABLE `turma` (
@@ -460,16 +491,24 @@ CREATE TABLE `turma` (
   `disciplina_id` int(11) NOT NULL,
   `professor_id` int(11) NOT NULL,
   `coordenador_id` int(11) NOT NULL,
+  `aluno_id` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `status` enum('ativa','concluida','cancelada') DEFAULT 'ativa',
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `turma`
+--
+
+INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador_id`, `aluno_id`, `data_inicio`, `data_fim`, `status`, `data_criacao`) VALUES
+(1, '3° ano', 0, 2, 3, 1, '2024-08-05', '2025-12-08', 'ativa', '2024-10-31 19:44:18');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuarios`
+-- Estrutura para tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -483,7 +522,6 @@ CREATE TABLE `usuarios` (
   `reset_expires` datetime DEFAULT NULL,
   `nome` varchar(40) NOT NULL,
   `telefone` varchar(15) DEFAULT NULL,
-  `estado_civil` varchar(50) DEFAULT NULL,
   `data_nascimento` date NOT NULL,
   `genero` enum('masculino','feminino','nao-binario','prefiro-nao-dizer') NOT NULL,
   `endereco` text DEFAULT NULL,
@@ -494,36 +532,42 @@ CREATE TABLE `usuarios` (
   `nacionalidade` varchar(50) DEFAULT NULL,
   `data_saida` date DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `estado_civil` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `usuarios`
+-- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_token`, `reset_expires`, `nome`, `telefone`, `estado_civil`, `data_nascimento`, `genero`, `endereco`, `cargo`, `status`, `data_matricula`, `data_rematricula`, `nacionalidade`, `data_saida`, `data_criacao`, `updated_at`) VALUES
-(1, '4232', NULL, NULL, 'arthur@gmail.com', '$2y$10$I/X02y3vTxm8hYZYTT5.5.SA/olBkAQg5Oq5LxgySnnU6i2misK/.', NULL, NULL, 'Arthur Henrique Goes Rodrigues', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-11-01 23:35:09', '2024-11-01 23:35:09');
+INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_token`, `reset_expires`, `nome`, `telefone`, `data_nascimento`, `genero`, `endereco`, `cargo`, `status`, `data_matricula`, `data_rematricula`, `nacionalidade`, `data_saida`, `data_criacao`, `updated_at`, `estado_civil`) VALUES
+(1, '4232', NULL, '6722896238623_IMG_20230308_195104_633.jpg', 'arthurhenriquegr818@gmail.com', '$2y$10$gFbiA.0hlQW9GsfPT7dWZOTbtHeiPrvz3qzkBGRnPdncVpMrhhgf6', NULL, NULL, 'Arthur Henrique Goes Rodrigues', '11955301309', '2005-01-26', 'masculino', 'Rua profeta Elias', 'aluno', 'ativo', NULL, NULL, 'brasileiro', NULL, '2024-10-30 18:35:40', '2024-10-30 19:30:42', 'solteiro'),
+(2, '5187', NULL, NULL, 'jacinto@gmail.com', '1234\r\n', NULL, NULL, 'Jacinto Leite Dos Santos', NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-10-31 19:36:23', '2024-10-31 19:36:23', NULL),
+(3, '8957', NULL, NULL, 'elizabeth@gmail.com', '1234', NULL, NULL, 'Elizabete Soares', NULL, '0000-00-00', 'feminino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-10-31 19:37:48', '2024-10-31 19:37:48', NULL),
+(4, '5679', NULL, NULL, 'sueli@gmail.com', '1234', NULL, NULL, 'Sueli Muniz', NULL, '0000-00-00', 'feminino', NULL, 'coordenador', 'ativo', NULL, NULL, NULL, NULL, '2024-10-31 19:39:09', '2024-10-31 19:39:09', NULL),
+(5, '8073', NULL, NULL, 'caleb@gmail.com', '$2y$10$phjpaczneqR7WHv4JsUyKuYVj5GkN7XW7iHdYtvqnhSQ7ebtwZ7hS', NULL, NULL, 'caleb oliveira dos santos rodrigues', NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-11-01 16:00:10', '2024-11-01 16:00:10', NULL);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `academico`
+-- Índices de tabela `academico`
 --
 ALTER TABLE `academico`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `aluno`
+-- Índices de tabela `aluno`
 --
 ALTER TABLE `aluno`
   ADD UNIQUE KEY `matricula` (`matricula`),
-  ADD KEY `id` (`id`);
+  ADD KEY `id` (`id`),
+  ADD KEY `curso_id` (`curso_id`);
 
 --
--- Índices para tabela `atividade`
+-- Índices de tabela `atividade`
 --
 ALTER TABLE `atividade`
   ADD PRIMARY KEY (`id`),
@@ -531,21 +575,21 @@ ALTER TABLE `atividade`
   ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `atividade_extracurricular`
+-- Índices de tabela `atividade_extracurricular`
 --
 ALTER TABLE `atividade_extracurricular`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `atualizacoes`
+-- Índices de tabela `atualizacoes`
 --
 ALTER TABLE `atualizacoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `avaliacao`
+-- Índices de tabela `avaliacao`
 --
 ALTER TABLE `avaliacao`
   ADD PRIMARY KEY (`id`),
@@ -553,7 +597,7 @@ ALTER TABLE `avaliacao`
   ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `contato_emergencia`
+-- Índices de tabela `contato_emergencia`
 --
 ALTER TABLE `contato_emergencia`
   ADD PRIMARY KEY (`id`),
@@ -561,20 +605,21 @@ ALTER TABLE `contato_emergencia`
   ADD KEY `professor_id` (`professor_id`);
 
 --
--- Índices para tabela `coordenador`
+-- Índices de tabela `coordenador`
 --
 ALTER TABLE `coordenador`
   ADD KEY `id` (`id`);
 
 --
--- Índices para tabela `curso`
+-- Índices de tabela `curso`
 --
 ALTER TABLE `curso`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_professor_id` (`fk_professor_id`);
+  ADD UNIQUE KEY `nome` (`nome`),
+  ADD KEY `modulo_id` (`modulo_id`);
 
 --
--- Índices para tabela `declaracao`
+-- Índices de tabela `declaracao`
 --
 ALTER TABLE `declaracao`
   ADD PRIMARY KEY (`id`),
@@ -583,84 +628,73 @@ ALTER TABLE `declaracao`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Índices para tabela `diretor`
+-- Índices de tabela `diretor`
 --
 ALTER TABLE `diretor`
   ADD KEY `id` (`id`);
 
 --
--- Índices para tabela `disciplina`
+-- Índices de tabela `disciplina`
 --
 ALTER TABLE `disciplina`
   ADD PRIMARY KEY (`id`),
   ADD KEY `professor_id` (`professor_id`),
   ADD KEY `coordenador_id` (`coordenador_id`),
-  ADD KEY `aluno_id` (`aluno_id`),
-  ADD KEY `avaliacao_id` (`avaliacao_id`),
-  ADD KEY `declaracao_id` (`declaracao_id`);
+  ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `eventos`
+-- Índices de tabela `eventos`
 --
 ALTER TABLE `eventos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `frequencia`
+-- Índices de tabela `frequencia`
 --
 ALTER TABLE `frequencia`
   ADD PRIMARY KEY (`id`),
   ADD KEY `disciplina_id` (`disciplina_id`),
   ADD KEY `aluno_id` (`aluno_id`),
   ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `professor_id` (`professor_id`),
-  ADD KEY `declaracao_id` (`declaracao_id`),
-  ADD KEY `avaliacao_id` (`avaliacao_id`);
+  ADD KEY `professor_id` (`professor_id`);
 
 --
--- Índices para tabela `historico_academico`
+-- Índices de tabela `historico_academico`
 --
 ALTER TABLE `historico_academico`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_aluno_id` (`aluno_id`),
   ADD KEY `fk_disciplina_id` (`disciplina_id`),
   ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `avaliacao_id` (`avaliacao_id`),
-  ADD KEY `declaracao_id` (`declaracao_id`),
+  ADD KEY `curso_id` (`curso_id`),
   ADD KEY `frequencia_id` (`frequencia_id`);
 
 --
--- Índices para tabela `horario`
+-- Índices de tabela `horario`
 --
 ALTER TABLE `horario`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`),
   ADD KEY `disciplina_id` (`disciplina_id`),
-  ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `avaliacao_id` (`avaliacao_id`),
-  ADD KEY `declaracao_id` (`declaracao_id`),
-  ADD KEY `frequencia_id` (`frequencia_id`);
+  ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `materias`
+-- Índices de tabela `materias`
 --
 ALTER TABLE `materias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `matricula`
+-- Índices de tabela `matricula`
 --
 ALTER TABLE `matricula`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`),
-  ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `avaliacao_id` (`avaliacao_id`),
-  ADD KEY `frequencia_id` (`frequencia_id`),
-  ADD KEY `historico_academico_id` (`historico_academico_id`);
+  ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `mensagens_chat`
+-- Índices de tabela `mensagens_chat`
 --
 ALTER TABLE `mensagens_chat`
   ADD PRIMARY KEY (`id`),
@@ -669,45 +703,45 @@ ALTER TABLE `mensagens_chat`
   ADD KEY `chat_turma` (`chat_turma`);
 
 --
--- Índices para tabela `modulo`
+-- Índices de tabela `modulo`
 --
 ALTER TABLE `modulo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `aluno_id` (`aluno_id`);
+  ADD KEY `aluno_id` (`aluno_id`),
+  ADD KEY `matricula_id` (`matricula_id`);
 
 --
--- Índices para tabela `notas`
+-- Índices de tabela `notas`
 --
 ALTER TABLE `notas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`),
   ADD KEY `disciplina_id` (`disciplina_id`),
-  ADD KEY `turma_id` (`turma_id`),
-  ADD KEY `modulo_id` (`modulo_id`);
+  ADD KEY `turma_id` (`turma_id`);
 
 --
--- Índices para tabela `notificacoes`
+-- Índices de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Índices para tabela `professor`
+-- Índices de tabela `professor`
 --
 ALTER TABLE `professor`
   ADD KEY `id` (`id`);
 
 --
--- Índices para tabela `rematricula`
+-- Índices de tabela `rematricula`
 --
 ALTER TABLE `rematricula`
   ADD PRIMARY KEY (`id`),
   ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `secretaria`
+-- Índices de tabela `secretaria`
 --
 ALTER TABLE `secretaria`
   ADD PRIMARY KEY (`id`),
@@ -716,15 +750,16 @@ ALTER TABLE `secretaria`
   ADD KEY `professor_id` (`professor_id`);
 
 --
--- Índices para tabela `turma`
+-- Índices de tabela `turma`
 --
 ALTER TABLE `turma`
   ADD PRIMARY KEY (`id`),
   ADD KEY `professor_id` (`professor_id`),
-  ADD KEY `coordenador_id` (`coordenador_id`);
+  ADD KEY `coordenador_id` (`coordenador_id`),
+  ADD KEY `aluno_id` (`aluno_id`);
 
 --
--- Índices para tabela `usuarios`
+-- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -732,7 +767,7 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -745,7 +780,7 @@ ALTER TABLE `academico`
 -- AUTO_INCREMENT de tabela `atividade`
 --
 ALTER TABLE `atividade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `atividade_extracurricular`
@@ -775,31 +810,31 @@ ALTER TABLE `contato_emergencia`
 -- AUTO_INCREMENT de tabela `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `declaracao`
 --
 ALTER TABLE `declaracao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `disciplina`
 --
 ALTER TABLE `disciplina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `frequencia`
 --
 ALTER TABLE `frequencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `historico_academico`
@@ -817,13 +852,13 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT de tabela `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `matricula`
 --
 ALTER TABLE `matricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `mensagens_chat`
@@ -853,7 +888,7 @@ ALTER TABLE `notificacoes`
 -- AUTO_INCREMENT de tabela `rematricula`
 --
 ALTER TABLE `rematricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `secretaria`
@@ -865,149 +900,139 @@ ALTER TABLE `secretaria`
 -- AUTO_INCREMENT de tabela `turma`
 --
 ALTER TABLE `turma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `academico`
+-- Restrições para tabelas `academico`
 --
 ALTER TABLE `academico`
-  ADD CONSTRAINT `academico_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `academico_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `aluno`
+-- Restrições para tabelas `aluno`
 --
 ALTER TABLE `aluno`
-  ADD CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `aluno_ibfk_2` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`);
 
 --
--- Limitadores para a tabela `atividade`
+-- Restrições para tabelas `atividade`
 --
 ALTER TABLE `atividade`
   ADD CONSTRAINT `atividade_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `atividade_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `atividade_extracurricular`
+-- Restrições para tabelas `atividade_extracurricular`
 --
 ALTER TABLE `atividade_extracurricular`
   ADD CONSTRAINT `atividade_extracurricular_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `atualizacoes`
+-- Restrições para tabelas `atualizacoes`
 --
 ALTER TABLE `atualizacoes`
   ADD CONSTRAINT `atualizacoes_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `avaliacao`
+-- Restrições para tabelas `avaliacao`
 --
 ALTER TABLE `avaliacao`
   ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `avaliacao_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `contato_emergencia`
+-- Restrições para tabelas `contato_emergencia`
 --
 ALTER TABLE `contato_emergencia`
   ADD CONSTRAINT `contato_emergencia_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `contato_emergencia_ibfk_2` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `coordenador`
+-- Restrições para tabelas `coordenador`
 --
 ALTER TABLE `coordenador`
   ADD CONSTRAINT `coordenador_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `curso`
+-- Restrições para tabelas `curso`
 --
 ALTER TABLE `curso`
-  ADD CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`fk_professor_id`) REFERENCES `professor` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`modulo_id`) REFERENCES `modulo` (`id`);
 
 --
--- Limitadores para a tabela `declaracao`
+-- Restrições para tabelas `declaracao`
 --
 ALTER TABLE `declaracao`
   ADD CONSTRAINT `declaracao_ibfk_1` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `declaracao_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `diretor`
+-- Restrições para tabelas `diretor`
 --
 ALTER TABLE `diretor`
   ADD CONSTRAINT `diretor_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `disciplina`
+-- Restrições para tabelas `disciplina`
 --
 ALTER TABLE `disciplina`
   ADD CONSTRAINT `disciplina_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `disciplina_ibfk_2` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `disciplina_ibfk_3` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `disciplina_ibfk_4` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `disciplina_ibfk_5` FOREIGN KEY (`declaracao_id`) REFERENCES `declaracao` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `disciplina_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `eventos`
+-- Restrições para tabelas `eventos`
 --
 ALTER TABLE `eventos`
-  ADD CONSTRAINT `eventos_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `eventos_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `aluno` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `frequencia`
+-- Restrições para tabelas `frequencia`
 --
 ALTER TABLE `frequencia`
   ADD CONSTRAINT `frequencia_ibfk_1` FOREIGN KEY (`disciplina_id`) REFERENCES `disciplina` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `frequencia_ibfk_2` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `frequencia_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `frequencia_ibfk_4` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `frequencia_ibfk_5` FOREIGN KEY (`declaracao_id`) REFERENCES `declaracao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `frequencia_ibfk_6` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `frequencia_ibfk_4` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `historico_academico`
+-- Restrições para tabelas `historico_academico`
 --
 ALTER TABLE `historico_academico`
   ADD CONSTRAINT `fk_aluno_id` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_disciplina_id` FOREIGN KEY (`disciplina_id`) REFERENCES `disciplina` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `historico_academico_ibfk_1` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `historico_academico_ibfk_2` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `historico_academico_ibfk_3` FOREIGN KEY (`declaracao_id`) REFERENCES `declaracao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `historico_academico_ibfk_4` FOREIGN KEY (`frequencia_id`) REFERENCES `frequencia` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `historico_academico_ibfk_2` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `historico_academico_ibfk_3` FOREIGN KEY (`frequencia_id`) REFERENCES `frequencia` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `horario`
+-- Restrições para tabelas `horario`
 --
 ALTER TABLE `horario`
   ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`disciplina_id`) REFERENCES `disciplina` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `horario_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `horario_ibfk_4` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `horario_ibfk_5` FOREIGN KEY (`declaracao_id`) REFERENCES `declaracao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `horario_ibfk_6` FOREIGN KEY (`frequencia_id`) REFERENCES `frequencia` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `horario_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `matricula`
+-- Restrições para tabelas `matricula`
 --
 ALTER TABLE `matricula`
   ADD CONSTRAINT `matricula_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `matricula_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `matricula_ibfk_3` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `matricula_ibfk_4` FOREIGN KEY (`frequencia_id`) REFERENCES `frequencia` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `matricula_ibfk_5` FOREIGN KEY (`historico_academico_id`) REFERENCES `historico_academico` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `matricula_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `mensagens_chat`
+-- Restrições para tabelas `mensagens_chat`
 --
 ALTER TABLE `mensagens_chat`
   ADD CONSTRAINT `mensagens_chat_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
@@ -1015,53 +1040,54 @@ ALTER TABLE `mensagens_chat`
   ADD CONSTRAINT `mensagens_chat_ibfk_3` FOREIGN KEY (`chat_turma`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `modulo`
+-- Restrições para tabelas `modulo`
 --
 ALTER TABLE `modulo`
   ADD CONSTRAINT `modulo_ibfk_1` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `modulo_ibfk_2` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `modulo_ibfk_2` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `modulo_ibfk_3` FOREIGN KEY (`matricula_id`) REFERENCES `matricula` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `notas`
+-- Restrições para tabelas `notas`
 --
 ALTER TABLE `notas`
   ADD CONSTRAINT `notas_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `notas_ibfk_2` FOREIGN KEY (`disciplina_id`) REFERENCES `disciplina` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `notas_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `notas_ibfk_4` FOREIGN KEY (`modulo_id`) REFERENCES `modulo` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `notas_ibfk_3` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `notificacoes`
+-- Restrições para tabelas `notificacoes`
 --
 ALTER TABLE `notificacoes`
   ADD CONSTRAINT `notificacoes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `professor`
+-- Restrições para tabelas `professor`
 --
 ALTER TABLE `professor`
   ADD CONSTRAINT `professor_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `rematricula`
+-- Restrições para tabelas `rematricula`
 --
 ALTER TABLE `rematricula`
-  ADD CONSTRAINT `rematricula_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `rematricula_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `secretaria`
+-- Restrições para tabelas `secretaria`
 --
 ALTER TABLE `secretaria`
-  ADD CONSTRAINT `secretaria_ibfk_1` FOREIGN KEY (`diretor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `secretaria_ibfk_2` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `secretaria_ibfk_3` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `secretaria_ibfk_1` FOREIGN KEY (`diretor_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `secretaria_ibfk_2` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `secretaria_ibfk_3` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `turma`
+-- Restrições para tabelas `turma`
 --
 ALTER TABLE `turma`
   ADD CONSTRAINT `turma_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `turma_ibfk_2` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `turma_ibfk_2` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `turma_ibfk_3` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

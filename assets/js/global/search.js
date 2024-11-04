@@ -1,44 +1,76 @@
-document.getElementById('search').addEventListener('input', function() {
-    const query = this.value;
-    if (query.length > 2) {
-        fetch('../../php/global/search.php?q=' + encodeURIComponent(query))
-        .then(response => response.json())
-        .then(data => {
-            const results = document.querySelector('.filtro-tabela');
-            results.innerHTML = ''; // Limpar os resultados anteriores
+    // Lista de páginas
+    const pages = [
+        "home",
+        "atividade",
+        "boletim",
+        "chat",
+        "configurações",
+        "cronograma",
+        "documentos",
+        "enquete",
+        "faq",
+        "feedback",
+        "frequência",
+        "histórico",
+        "materiais",
+        "perfil",
+        "secretaria",
+        "suporte"
+    ];
 
-            data.forEach(item => {
-                // Criação do elemento row
-                const row = document.createElement('div');
-                row.classList.add('tabela-item'); // Adiciona a classe CSS ao div
+    function showSuggestions() {
+        const query = document.getElementById("searchInput").value.toLowerCase().trim();
+        const suggestionsDiv = document.getElementById("suggestions");
 
-                // Adicionar o conteúdo HTML dentro do row
-                row.innerHTML = `
-                    <div class="tabela-item">
-                        <h5> Nome:</h5>
-                        <span>${item.nome}</span> <!-- Nome do professor -->
-                    </div>
-                    <div class="box-foto">
-                        <img src="../../assets/img/persona/${item.foto}" alt="Foto do Professor">
-                    </div>
-                    <div class="box-info-geral">
-                        <div class="flex-info">
-                            <h5>CPF:</h5>
-                            <span>${item.cpf}</span>
-                        </div>
-                        <div class="flex-info">
-                            <h5>Setor:</h5>
-                            <span>${item.disciplina}</span>
-                        </div>
-                    </div>
-                    <div class="box-RM">
-                        <span>${item.rm}</span>
-                    </div>
-                `;
+        // Limpa as sugestões anteriores
+        suggestionsDiv.innerHTML = '';
 
-                // Adicionar o row ao container de resultados
-                results.appendChild(row);
+        if (query.length > 0) {
+            // Filtra as páginas que começam com o que o usuário digitou
+            const filteredPages = pages.filter(page => page.startsWith(query));
+
+            // Exibe as sugestões
+            filteredPages.forEach(page => {
+                const suggestionItem = document.createElement("div");
+                suggestionItem.className = "suggestion-item";
+                suggestionItem.innerText = page;
+                suggestionItem.onclick = () => {
+                    // Preenche o input com a sugestão clicada e redireciona
+                    document.getElementById("searchInput").value = page;
+                    redirectToPage();
+                };
+                suggestionsDiv.appendChild(suggestionItem);
             });
-        });
+        }
     }
-});
+
+    function redirectToPage() {
+        const query = document.getElementById("searchInput").value.toLowerCase().trim();
+
+        // Mapeia as palavras-chave para URLs
+        const pageMap = {
+            "home": "home.php",
+            "atividade": "atividade.php",
+            "boletim": "boletim.php",
+            "chat": "chat.php",
+            "configurações": "configuracoes.php",
+            "cronograma": "cronograma.php",
+            "documentos": "documentos.php",
+            "enquete": "enquete.php",
+            "faq": "faq.php",
+            "feedback": "feedback.php",
+            "frequência": "frequencia.php",
+            "histórico": "historico.php",
+            "materiais": "materiais.php",
+            "perfil": "perfil.php",
+            "secretaria": "secretaria.php",
+            "suporte": "suporte.php"
+        };
+
+        // Verifica e redireciona
+        if (pageMap[query]) {
+            window.location.href = pageMap[query];
+        } else {
+            alert("Página não encontrada. Tente outra busca.");
+        }
+    }

@@ -68,8 +68,9 @@ if (!empty($fotoNome)) {
 <header class="header">
     <div class="header__container">
         <div class="header__search">
-            <input type="search" placeholder="Search" class="header__input">
-            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
+            <div id="suggestions"></div>
+            <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
         </div>
         <div class="header__dropdown">
             <i class='bx bx-bell header__notification'></i>
@@ -292,6 +293,7 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
+   <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/professor/home/home.js"></script>
 </body>
 </html>

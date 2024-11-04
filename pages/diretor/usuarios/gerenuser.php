@@ -21,8 +21,9 @@
             <a href="#" class="header__logo">SAM</a>
     
             <div class="header__search">
-                <i class='bx bx-search header__icon'></i>
-                <input type="search" placeholder="Search" class="header__input">
+                <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
+                <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
+            <div id="suggestions"></div>
             </div>
     
             <!-- Notificações -->

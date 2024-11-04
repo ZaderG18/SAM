@@ -591,7 +591,7 @@ if (!empty($fotoNome)) {
         </div>
     </section>
     <!-- Final: Chat -->
-    
+    <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/aluno/chat/chat.js"></script>
 </body>
 </html>
