@@ -40,7 +40,7 @@ if (!empty($fotoNome)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes - Alunos</title>
+    <title>Detalhes - Professores</title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="../../../assets/scss/professor/detalhes/detalhes_professores.css">
@@ -219,31 +219,11 @@ if (!empty($fotoNome)) {
 
         <!-- Ações -->
         <div class="actions">
-            <button id="sendMessageBtn"><i class="fas fa-envelope"></i> Enviar Mensagem</button>
             <button onclick="alert('Gerar novo relatório');"><i class="fas fa-file-medical"></i> Gerar Relatório</button>
         </div>
     </div>
 
 
-    <!-- Modal Enviar Mensagem -->
-    <div id="sendMessageModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Enviar Mensagem</h2>
-            </div>
-            <div class="modal-body">
-                <form id="sendMessageForm">
-                    <label for="emailTo">Para:</label>
-                    <input type="email" id="emailTo" name="emailTo" placeholder="Email do Aluno" required><br><br>
-                    <label for="subject">Assunto:</label>
-                    <input type="text" id="subject" name="subject" placeholder="Assunto da Mensagem" required><br><br>
-                    <label for="message">Mensagem:</label><br>
-                    <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-                </form>
-            </div>
-        </div>
-    </div>
 
 </main>
 
