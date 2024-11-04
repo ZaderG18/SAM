@@ -37,30 +37,3 @@ const performanceChart = new Chart(ctx, {
         }
     }
 }); 
-// Modal functionality
-const modals = document.querySelectorAll(".modal");
-const openModalBtn = document.getElementById("openModalBtn");
-const sendMessageBtn = document.getElementById("sendMessageBtn");
-const closeBtns = document.querySelectorAll(".close");
-
-openModalBtn.onclick = function() {
-    document.getElementById("myModal").style.display = "block";
-}
-
-sendMessageBtn.onclick = function() {
-    document.getElementById("sendMessageModal").style.display = "block";
-}
-
-closeBtns.forEach(btn => {
-    btn.onclick = function() {
-        modals.forEach(modal => modal.style.display = "none");
-    }
-});
-
-window.onclick = function(event) {
-    modals.forEach(modal => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    });
-}
