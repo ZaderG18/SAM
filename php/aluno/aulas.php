@@ -26,7 +26,7 @@ $materiais = getMateriaisComplementares($conn, $materia_id);
 $tutores = getTutores($conn, $materia_id);
 
 // Função para obter a descrição da matéria e o progresso
-function getMateria($conn, $materia_id) {
+function getMateria($conn, $materia_id,  $descricao = false, $progresso = false) {
     $sql = "SELECT descricao, progresso FROM materias WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $materia_id);

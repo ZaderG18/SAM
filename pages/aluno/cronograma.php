@@ -11,20 +11,7 @@ require_once '../../php/login/validar.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 
-// Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
 
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close();
 
 // Check if there is a photo for the user
 if (!empty($fotoNome)) {
