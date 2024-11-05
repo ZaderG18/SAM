@@ -38,27 +38,27 @@ if (!empty($fotoNome)) {
 }
 
 // Consulta para buscar as frequências do aluno
-$frequencias = []; // Inicializa como array vazio para evitar o erro
+$sql = "SELECT * FROM frequencia WHERE aluno_id = ?";
+$stmt = $conn->prepare($sql);
 
-$sql_frequencias = "SELECT * FROM frequencia WHERE aluno_id = ?";
-$stmt_frequencias = $conn->prepare($sql_frequencias);
-
-if (!$stmt_frequencias) {
+if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 
-$stmt_frequencias->bind_param("i", $id);
-$stmt_frequencias->execute();
-$result_frequencias = $stmt_frequencias->get_result();
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if ($result_frequencias->num_rows > 0) {
-    // Preenche o array $frequencias com os resultados da consulta
-    while ($row = $result_frequencias->fetch_assoc()) {
+$frequencias = [];
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
         $frequencias[] = $row;
     }
+} else {
+    echo "Erro na consulta: " . $conn->error;
 }
 
-$stmt_frequencias->close();
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -96,7 +96,7 @@ $stmt_frequencias->close();
         <div class="header__dropdown">
             <i class='bx bx-bell header__notification'></i>
             <div class="header__dropdown-content">
-            <?php $notificacoes = obterNotificacoes($conn, $id, true);
+            <?php $notificacoes = obterNotificacoes($conn, $id);
                 if (!empty($notificacoes)) { 
                     echo "<p> Nenhuma notificação no momento.</p>";
                 } else{
@@ -169,7 +169,7 @@ $stmt_frequencias->close();
 
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-<main>
+<main class="main">
     <!---------------------------------------------------------------------Modulo 1-------------------------------------------------------->
     <div id="tabelamodulo1" class="module-selection">
         <div>
@@ -181,8 +181,14 @@ $stmt_frequencias->close();
             </select>
            <!--<button id="downloadbtn" class="button">Baixar Boletim</button>--> 
         </div>
-
-        <div id="modulo1" class="module-table">
+        
+        <?php 
+        //Definição dos modulos em arrays
+        $modulos = [1=> 'modulo1', 2=> 'modulo2', 3=> 'modulo3'];
+        //loop através dos modulos para criar as tabelas de forma dinamicamente
+        foreach($modulos as $modulo){
+        ?>
+        <div id="<?php echo $modulo; ?>" class="module-table" style="<?php echo ($moduloId == 1) ? '' : 'display: none;'; ?>">
             <table class="module-selection">
                 <thead>
                     <tr>
@@ -195,9 +201,9 @@ $stmt_frequencias->close();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $modulo = 1;
-                    $sql = "SELECT * FROM disciplina WHERE modulo_id = $modulo";
-                    $result = $conn->query($sql);
+                    <?php 
+                    $sql = "SELECT * FROM disciplina WHERE modulo_id = $moduloId";
+                    $result = $conn->query($sql); 
                     
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
@@ -217,142 +223,22 @@ $stmt_frequencias->close();
                 </tbody>
             </table>
         </div>
-<!---------------------------------------------------------------------Modulo 2-------------------------------------------------------->
-        <div id="modulo2" class="module-table" style="display:none;">
-            <table class="module-selection">
-                <thead>
-                    <tr>
-                        <th>Disciplinas</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                        <th>Faltas Permitidas</th>
-                        <th>Freq. Atual</th>
-                        <th>Freq. Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                        <td>40</td>
-                        <td>1</td>
-                        <td>25</td>
-                        <td>99%</td>
-                      <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
-                        <td>60</td>
-                        <td>2</td>
-                        <td>15</td>
-                        <td>98%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Internet e Protocolos</a></td>
-                        <td>70</td>
-                        <td>3</td>
-                        <td>20</td>
-                        <td>97%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Desenvolvimento de sistemas</a></td> 
-                        <td>80</td>
-                        <td>4</td>
-                        <td>25</td>
-                        <td>96%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Programação Web</a></td>
-                        <td>30</td>
-                        <td>5</td>
-                        <td>13</td>
-                        <td>94%</td>
-                       <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Programação Orientada a Objetos</a></td>
-                        <td>23</td>
-                        <td>6</td>
-                        <td>16</td>
-                        <td>93%</td>
-                        <td>100%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-<!---------------------------------------------------------------------Modulo 3-------------------------------------------------------->
-        <div id="modulo3" class="module-table" style="display:none;" >
-            <table class="module-selection">
-                <thead>
-                    <tr>
-                        <th>Disciplinas</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                        <th>Faltas Permitidas</th>
-                        <th>Freq. Atual</th>
-                        <th>Freq. Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-mobile')">Programação Mobile</a></td>
-                        <td>100</td>
-                        <td>1</td>
-                        <td>25</td>
-                        <td>99%</td>
-                      <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-banco')">Banco de dados</a></td>
-                        <td>100</td>
-                        <td>2</td>
-                        <td>15</td>
-                        <td>98%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-reprovado-internet')">Internet e Protocolos</a></td>
-                        <td>100</td>
-                        <td>3</td>
-                        <td>20</td>
-                        <td>97%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-sistemas')">Desenvolvimento de sistemas</a></td> 
-                        <td>100</td>
-                        <td>4</td>
-                        <td>25</td>
-                        <td>96%</td>
-                        <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-web')">Programação Web</a></td>
-                        <td>100</td>
-                        <td>5</td>
-                        <td>13</td>
-                        <td>94%</td>
-                       <td>100%</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onclick="showModal('modal-aprovado-poo')">Programação Orientada a Objetos</a></td>
-                        <td>100</td>
-                        <td>6</td>
-                        <td>16</td>
-                        <td>93%</td>
-                        <td>100%</td>
-                    </tr>
-                </tbody>
-            </table>
+        <?php } ?>
     </div>
-
     <!---------------------------------------------------------------------Modal-------------------------------------------------------->
-    <div id="modal-aprovado-mobile" class="modal">
+    <?
+// gerando uma modal para cada disciplina
+$sql = "SELECT * FROM disciplina";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+
+?>        
+<div id="modal-<?php echo strtolower(str_replace(' ', '-', $row['nome'])); ?>" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-mobile')">&times;</span>
-            <h2>Programação Mobile</h2>
+            <span class="close" onclick="closeModal('modal-<?php echo strtolower(str_replace(' ', '-', $row['nome'])); ?>')">&times;</span>
+            <h2><?php echo htmlspecialchars($row['nome']); ?></h2>
             <table class="modal-selection">
                 <thead>
                     <tr>
@@ -364,206 +250,31 @@ $stmt_frequencias->close();
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    $disciplinaId = $row['id'];
+                    $aulasSql = "SELECT * FROM aula WHERE disciplina_id = '$disciplinaId'";
+                    $aulasResult = $conn->query($aulasSql);
+
+                    if ($aulasResult->num_rows > 0) {
+                        while ($aulaRow = $aulasResult->fetch_assoc()) {
+                    ?>
                     <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
+                        <td><?php echo htmlspecialchars($aulaRow['data']); ?></td>
+                        <td><?php echo htmlspecialchars($aulaRow['conteudo']); ?></td>
+                        <td><?php echo htmlspecialchars($aulaRow['professor']); ?></td>
+                        <td><?php echo htmlspecialchars($aulaRow['aulas_dadas']); ?></td>
+                        <td><?php echo htmlspecialchars($aulaRow['faltas']); ?></td>
                     </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
+                    <?php } }else{
+                        echo "<tr><td colspan='5'>Nenhuma aula encontrada para esta disciplina.</td></tr>";
+                    }?>
                 </tbody>
-            </table>
-        </div>
-    </div>
-
-
-
-    <div id="modal-aprovado-banco" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-banco')">&times;</span>
-            <h2>Banco de dados</h2>
-            <table class="modal-selection">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Conteúdo</th>
-                        <th>Professor</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-
-    <div id="modal-reprovado-internet" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-reprovado-internet')">&times;</span>
-            <h2>Internet e Protocolos</h2>
-            <table class="modal-selection">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Conteúdo</th>
-                        <th>Professor</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-
-    <div id="modal-aprovado-sistemas" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-sistemas')">&times;</span>
-            <h2>Desenvolvimento de sistemas</h2>
-            <table class="modal-selection">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Conteúdo</th>
-                        <th>Professor</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-
-    <div id="modal-aprovado-web" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-web')">&times;</span>
-            <h2>Programação Web</h2>
-            <table class="modal-selection">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Conteúdo</th>
-                        <th>Professor</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-    <div id="modal-aprovado-poo" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-poo')">&times;</span>
-            <h2>Programação Orientada a Objetos</h2>
-            <table class="module-selection">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Conteúdo</th>
-                        <th>Professor</th>
-                        <th>Aulas Dadas</th>
-                        <th>Faltas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>19/08</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>12/09</td>
-                        <td>Definição e conceito. Criar um mapa mental usando exemplos nas frases e grifar onde cada item se encontra.</td>
-                        <td>Daniela</td>
-                        <td>2,5</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
+ 
             </table>
         </div>
     </div>
     
 </main>
-
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
    <script src="../../assets/js/global/search.js"></script>

@@ -58,7 +58,7 @@ function uploadFoto($conn) {
         echo "<script> alert('Nenhum arquivo enviado ou erro no upload.');</script>";
     }
 
-    echo "<script> window.location.href = '../../pages/" . $_SESSION['user']['cargo'] . "/configuracoes.php'; </script>";
+    echo "<script> window.location.href = '../../pages/aluno/configuracoes.php'; </script>";
 }
 
 // Função para redirecionamento com mensagem
@@ -99,9 +99,9 @@ function atualizarInformacoes($conn) {
     $stmt->bind_param($param_types, ...$params);
 
     if ($stmt->execute()) {
-        redirecionarComMensagem('Informações atualizadas com sucesso!', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+        redirecionarComMensagem('Informações atualizadas com sucesso!', '../../pages/aluno/configuracoes.php');
     } else {
-        redirecionarComMensagem('Erro ao atualizar informações.', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+        redirecionarComMensagem('Erro ao atualizar informações.', '../../pages/aluno/configuracoes.php');
     }
     $stmt->close();
 }
@@ -131,20 +131,20 @@ function atualizarSenha($conn) {
                 $stmt_update->bind_param("si", $nova_senha_hash, $_SESSION['user']['id']);
 
                 if ($stmt_update->execute()) {
-                    redirecionarComMensagem('Senha atualizada com sucesso!', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+                    redirecionarComMensagem('Senha atualizada com sucesso!', '../../pages/aluno/configuracoes.php');
                 } else {
-                    redirecionarComMensagem('Erro ao atualizar a senha.', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+                    redirecionarComMensagem('Erro ao atualizar a senha.', '../../pages/aluno/configuracoes.php');
                 }
                 $stmt_update->close();
             } else {
-                redirecionarComMensagem('Senha atual incorreta!', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+                redirecionarComMensagem('Senha atual incorreta!', '../../pages/aluno/configuracoes.php');
             }
         } else {
-            redirecionarComMensagem('Usuário não encontrado.', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+            redirecionarComMensagem('Usuário não encontrado.', '../../pages/aluno/configuracoes.php');
         }
         $stmt->close();
     } else {
-        redirecionarComMensagem('As novas senhas não coincidem!', '../../pages/' . $_SESSION['user']['cargo'] . '/configuracoes.php');
+        redirecionarComMensagem('As novas senhas não coincidem!', '../../pages/aluno/configuracoes.php');
     }
 }
 
@@ -162,4 +162,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         atualizarSenha($conn);
     }
 }
-?>
