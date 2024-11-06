@@ -7,15 +7,18 @@ require '../../vendor/autoload.php'; // Certifique-se de que o PHPMailer esteja 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Receber os dados do formulário
-    $nome = $_POST['nome-completo'];
-    $telefone = $_POST['telefone'];
-    $emailAluno = $_POST['email'];
-    $rm = $_POST['rm'];
-    $curso = $_POST['curso'];
-    $mensagem = $_POST['mensagem'];
+    $nome = isset($_POST['nome-completo']) ? $_POST['nome-completo'] : '';
+    $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : '';
+    $emailAluno = isset($_POST['email']) ? $_POST['email'] : '';
+    $rm = isset($_POST['rm']) ? $_POST['rm'] : '';
+    $curso = isset($_POST['curso']) ? $_POST['curso'] : '';
+    $mensagem = isset($_POST['mensagem']) ? $_POST['mensagem'] : '';
 
-    // Verificar se o arquivo foi enviado
+    // Verificar se o arquivo foi enviado e se há erros
     $arquivo = $_FILES['arquivo']['tmp_name'] ?? null;
+    if ($arquivo && $_FILES['arquivo']['error'] !== UPLOAD_ERR_OK) {
+        die('Erro ao fazer upload do arquivo.');
+    }
 
     // Configurações do PHPMailer
     $mail = new PHPMailer(true);
@@ -39,25 +42,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Falha na conexão: " . $conn->connect_error);
         }
 
-        // Capturar e-mails do diretor e coordenador
+        // Capturar e-mails de diretores e coordenadores da tabela usuarios
         $emails = [];
 
-        // Buscar e-mails da tabela diretor
-        $sqlDiretor = "SELECT email FROM diretor";
-        $resultDiretor = $conn->query($sqlDiretor);
-        if ($resultDiretor->num_rows > 0) {
-            while ($row = $resultDiretor->fetch_assoc()) {
+        // Buscar e-mails dos diretores e coordenadores
+        $sqlUsuarios = "SELECT email FROM usuarios WHERE cargo IN ('diretor', 'coordenador')";
+        $resultUsuarios = $conn->query($sqlUsuarios);
+
+        // Verificação para garantir que a consulta retornou e-mails
+        if ($resultUsuarios && $resultUsuarios->num_rows > 0) {
+            while ($row = $resultUsuarios->fetch_assoc()) {
                 $emails[] = $row['email'];
             }
+        } else {
+            throw new Exception('Nenhum e-mail encontrado para diretores ou coordenadores.');
         }
 
-        // Buscar e-mails da tabela coordenador
-        $sqlCoordenador = "SELECT email FROM coordenador";
-        $resultCoordenador = $conn->query($sqlCoordenador);
-        if ($resultCoordenador->num_rows > 0) {
-            while ($row = $resultCoordenador->fetch_assoc()) {
-                $emails[] = $row['email'];
-            }
+        // Verificar se há e-mails para enviar
+        if (empty($emails)) {
+            throw new Exception('Não há e-mails de destinatários para enviar a solicitação.');
         }
 
         // Adicionar os destinatários
@@ -90,8 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             window.location.href = '../../pages/aluno/suporte.php';
         </script>";
     } catch (Exception $e) {
+        // Capturar e exibir o erro específico
         echo "<script>
-            alert('Erro ao enviar a solicitação. Tente novamente.');
+            alert('Erro: " . $e->getMessage() . "');
             window.location.href = '../../pages/aluno/suporte.php';
         </script>";
     }

@@ -37,28 +37,6 @@ if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
 
-// Consulta para buscar as frequências do aluno
-$sql = "SELECT * FROM frequencia WHERE aluno_id = ?";
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$frequencias = [];
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $frequencias[] = $row;
-    }
-} else {
-    echo "Erro na consulta: " . $conn->error;
-}
-
-$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -116,6 +94,20 @@ $stmt->close();
                 <?php } }?>
             </div>
         </div>
+        <div class="header__dropdown">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
+            <div class="header__dropdown-content">
+                <a href="perfil.php" class="header__dropdown-item">
+                    <i class='bx bx-user'></i> Perfil
+                </a>
+                <a href="configuracoes.php" class="header__dropdown-item">
+                    <i class='bx bx-cog'></i> Configurações
+                </a>
+                <a href="faq.php" class="header__dropdown-item">
+                    <i class='bx bx-help-circle'></i> Ajuda
+                </a>
+            </div>
+        </div>
         <div class="header__toggle">
             <i class='bx bx-menu' id="header-toggle"></i>
         </div>
@@ -168,11 +160,11 @@ $stmt->close();
 </div>
 
 <!--=================================================================== MAIN CONTENT ============================================================-->
-
 <main class="main">
-    <!---------------------------------------------------------------------Modulo 1-------------------------------------------------------->
+    <!---------------------------------------------------------------------Modulo-------------------------------------------------------->
     <div id="tabelamodulo1" class="module-selection">
-        <div>
+    <form action="" method="post" id="module-form">  
+    <div>
             <label for="module-select">Selecione o Módulo:</label>
             <select id="module-select" onchange="changeModule(this.value)">
                 <option value="modulo1">Módulo 1</option>
@@ -181,14 +173,9 @@ $stmt->close();
             </select>
            <!--<button id="downloadbtn" class="button">Baixar Boletim</button>--> 
         </div>
-        
-        <?php 
-        //Definição dos modulos em arrays
-        $modulos = [1=> 'modulo1', 2=> 'modulo2', 3=> 'modulo3'];
-        //loop através dos modulos para criar as tabelas de forma dinamicamente
-        foreach($modulos as $modulo){
-        ?>
-        <div id="<?php echo $modulo; ?>" class="module-table" style="<?php echo ($moduloId == 1) ? '' : 'display: none;'; ?>">
+        </form>  
+
+        <?php if (empty($frequencias)) { ?>
             <table class="module-selection">
                 <thead>
                     <tr>
@@ -201,44 +188,38 @@ $stmt->close();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
-                    $sql = "SELECT * FROM disciplina WHERE modulo_id = $moduloId";
-                    $result = $conn->query($sql); 
-                    
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td><a href='#' onclick=\"showModal('modal-{$row['nome']}')\">" . $row["nome"] . "</a></td>";
-                            echo "<td>" . $row["aulas_dadas"] . "</td>";
-                            echo "<td>" . $row["faltas"] . "</td>";
-                            echo "<td>" . $row["faltas_permitidas"] . "</td>";
-                            echo "<td>" . $row["freq_atual"] . "</td>";
-                            echo "<td>" . $row["freq_total"] . "</td>";
-                            echo "</tr>";
-                            }
-                        } else{
-                            echo "<tr><td colspan='6'>Nenhuma disciplina encontrada</td></tr>";
-                        }
-                    ?>
+                <?php 
+                if (!empty($frequencias)) {
+                    foreach ($frequencias as $frequencia) {
+                        echo "<tr>";
+                        echo "<td><a href='#' onclick=\"showModal('modal-{$frequencia['disciplina_id']}')\">" . htmlspecialchars($frequencia['disciplina']) . "</a></td>";
+                        echo "<td>" . htmlspecialchars($frequencia['aulas_dadas']) . "</td>";
+                        echo "<td>" . htmlspecialchars($frequencia['faltas']) . "</td>";
+                        echo "<td>" . htmlspecialchars($frequencia['frequencia']) . "</td>";
+                        echo "<td>" . htmlspecialchars($frequencia['frequencia_total']) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='5'>Nenhuma frequência encontrada para este módulo.</td></tr>";
+                }
+                ?>
                 </tbody>
             </table>
         </div>
         <?php } ?>
     </div>
+
     <!---------------------------------------------------------------------Modal-------------------------------------------------------->
-    <?
-// gerando uma modal para cada disciplina
-$sql = "SELECT * FROM disciplina";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-
-?>        
-<div id="modal-<?php echo strtolower(str_replace(' ', '-', $row['nome'])); ?>" class="modal">
+    <?php
+    foreach ($frequencias as $frequencia) {
+        $disciplinaId = $frequencia['disciplina_id'];
+        $aulasSql = "SELECT * FROM aula WHERE disciplina_id = '$disciplinaId'";
+        $aulasResult = $conn->query($aulasSql);
+    ?>     
+    <div id="modal-<?php echo $disciplinaId; ?>" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-<?php echo strtolower(str_replace(' ', '-', $row['nome'])); ?>')">&times;</span>
-            <h2><?php echo htmlspecialchars($row['nome']); ?></h2>
+            <span class="close" onclick="closeModal('modal-<?php echo $disciplinaId; ?>')">&times;</span>
+            <h2><?php echo htmlspecialchars($frequencia['disciplina']); ?></h2>
             <table class="modal-selection">
                 <thead>
                     <tr>
@@ -251,11 +232,7 @@ if ($result->num_rows > 0) {
                 </thead>
                 <tbody>
                     <?php
-                    $disciplinaId = $row['id'];
-                    $aulasSql = "SELECT * FROM aula WHERE disciplina_id = '$disciplinaId'";
-                    $aulasResult = $conn->query($aulasSql);
-
-                    if ($aulasResult->num_rows > 0) {
+                    if ($aulasResult && $aulasResult->num_rows > 0) {
                         while ($aulaRow = $aulasResult->fetch_assoc()) {
                     ?>
                     <tr>
@@ -265,19 +242,24 @@ if ($result->num_rows > 0) {
                         <td><?php echo htmlspecialchars($aulaRow['aulas_dadas']); ?></td>
                         <td><?php echo htmlspecialchars($aulaRow['faltas']); ?></td>
                     </tr>
-                    <?php } }else{
+                    <?php 
+                        }
+                    } else {
                         echo "<tr><td colspan='5'>Nenhuma aula encontrada para esta disciplina.</td></tr>";
-                    }?>
+                    }
+                    ?>
                 </tbody>
- 
             </table>
         </div>
     </div>
-    
+    <?php 
+        }
+    ?>
 </main>
+
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
    <script src="../../assets/js/global/search.js"></script>
-    <script src="../../assets/js/frequencia/frequencia.js"></script>
+    <script src="../../assets/js/aluno/frequencia/frequencia.js"></script>
 </body>
 </html>

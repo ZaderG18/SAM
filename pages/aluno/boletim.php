@@ -430,7 +430,7 @@ if (!empty($fotoNome)) {
                 <li>Critério 2: Entrega de todos os trabalhos</li>
                 <li>Critério 3: Boas notas nas avaliações</li>
                 <li>Critério 4: Compreensão dos conceitos</li>
-            </u</div>l>
+            </ul></div>
         </div>
     </div>
 

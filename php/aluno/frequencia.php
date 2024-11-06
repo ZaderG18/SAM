@@ -15,6 +15,8 @@ session_status() === PHP_SESSION_NONE && session_start();
 $user = $_SESSION['user'];
 $alunoId = $user['id'];
 
+include '../global/gerarPDF.php';
+
 // Verifica se foi passado o módulo via POST
 $frequencias = [];
 if (isset($_POST['modulo'])) {
@@ -31,7 +33,7 @@ function buscarFrequencias($conn, $alunoId, $modulo) {
             JOIN disciplina d ON f.disciplina_id = d.id
             WHERE f.aluno_id = ? AND f.modulo = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $alunoId, $modulo); // Supondo que o módulo é uma string
+    $stmt->bind_param("is", $alunoId, $modulo);
     $stmt->execute();
     $result = $stmt->get_result();
     $frequencias = [];

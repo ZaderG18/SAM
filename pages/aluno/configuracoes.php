@@ -294,7 +294,6 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-   <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/aluno/configuracoes/configuracoes.js"></script>
 </body>

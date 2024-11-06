@@ -24,4 +24,3 @@ function obterNotificacoes($conn, $userId, $apenasNaoLidas = false) {
     $stmt->close();
     return $notificacoes;
 }
-?>

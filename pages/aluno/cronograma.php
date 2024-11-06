@@ -8,6 +8,8 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
 require_once '../../php/login/validar.php';
+include '../../php/global/notificacao.php';
+include '../../php/aluno/cronograma.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 
@@ -158,16 +160,19 @@ if (!empty($fotoNome)) {
                     <th>Sexta</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="cronograma-body">
+                <?php 
+                foreach ($horariosOrdenados as $horario){
+                ?>
                 <tr>
-                    <td class="time-slot">08:00 - 09:00</td>
-                    <td>Banco de Dados</td>
-                    <td>Programação web</td>
-                    <td>Biologia</td>
-                    <td>Química</td>
-                    <td>Inglês</td>
+                    <td class="time-slot"><?php echo $horario; ?></td>
+                    <td><?php echo $data[$horario]['Segunda'];?></td>
+                    <td><?php echo $data[$horario]['Terça']; ?></td>
+                    <td><?php echo $data[$horario]['Quarta']; ?></td>
+                    <td><?php echo $data[$horario]['Quinta']; ?></td>
+                    <td><?php echo $data[$horario]['Sexta']; ?></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td class="time-slot">09:00 - 10:00</td>
                     <td>Português</td>
                     <td>História</td>
@@ -201,7 +206,8 @@ if (!empty($fotoNome)) {
                     <td>História</td>
                     <td>Física</td>
                     <td>Química</td>
-                </tr>
+                </tr> -->
+                <?php } ?>
             </tbody>
         </table>
     </div>
@@ -211,6 +217,6 @@ if (!empty($fotoNome)) {
     <script src="../../assets/js/sidebar/sidebar.js"></script>
    <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/global/search.js"></script>
-    <script src="../../assets/js/calendario/calendario.js"></script>
+    <script src="../../assets/js/aluno/calendario/calendario.js"></script>
 </body>
 </html>

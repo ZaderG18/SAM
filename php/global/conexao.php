@@ -58,6 +58,12 @@ $tableQueries = [
     data_criacao timestamp NOT NULL DEFAULT current_timestamp(),
     updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
   )",
+  "cronograma" => "CREATE TABLE cronograma (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    horario VARCHAR(20) NOT NULL,
+    dia VARCHAR(10) NOT NULL,
+    disciplina VARCHAR(100) NOT NULL
+)",
     "academico" => "CREATE TABLE IF NOT EXISTS academico (
         id INT PRIMARY KEY AUTO_INCREMENT,
         aluno_id INT,

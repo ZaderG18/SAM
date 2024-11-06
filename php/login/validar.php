@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Fecha a declaração e a conexão se a validação falhar
+    // Fecha a declaração se a validação falhar
     $stmt->close();
     
     // Mensagem de erro se o login falhar

@@ -49,7 +49,7 @@
 
         // Mapeia as palavras-chave para URLs
         const pageMap = {
-            "home": "home.php",
+            "home": "home_aluno.php",
             "atividade": "atividade.php",
             "boletim": "boletim.php",
             "chat": "chat.php",

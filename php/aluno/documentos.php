@@ -10,8 +10,8 @@ if ($conn->connect_error) {
     die("Erro de conexão com o banco de dados: " . $conn->connect_error);
 }
 
-require_once '../../vendor/autoload.php'; 
-use Dompdf\Dompdf;
+require_once '../../vendor/autoload.php';
+use TCPDF;
 
 $mensagem = "";
 $protocolo = "";
@@ -25,25 +25,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($action === 'declaracao') {
         $tipo_declaracao = filter_input(INPUT_POST, 'declaração', FILTER_SANITIZE_SPECIAL_CHARS);
         $motivo = filter_input(INPUT_POST, 'motivo', FILTER_SANITIZE_SPECIAL_CHARS);
-        
-        if (!empty($tipo_declaracao) && !empty($motivo)) {
+
+        if (!empty($tipo_declaracao) && !empty($motivo) && !empty($turma_id)) {
             $protocolo = uniqid();
-            $stmt = $conn->prepare("INSERT INTO declaracao (tipo_declaracao, motivo, protocolo) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $tipo_declaracao, $motivo, $protocolo);
+            $stmt = $conn->prepare("INSERT INTO declaracao (tipo_declaracao, motivo, protocolo, turma_id) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("sssi", $tipo_declaracao, $motivo, $protocolo, $turma_id);
 
             if ($stmt->execute()) {
-                // Gerar PDF
-                $dompdf = new Dompdf();
+                // Gerar PDF com TCPDF
+                $pdf = new TCPDF();
+                $pdf->SetCreator(PDF_CREATOR);
+                $pdf->SetAuthor('Nome da Instituição');
+                $pdf->SetTitle('Declaração');
+                $pdf->SetMargins(10, 10, 10);
+
+                // Adicionar página
+                $pdf->AddPage();
+
+                // Conteúdo do PDF
                 $html = '
                 <h1 style="text-align: center;">Declaração de ' . htmlspecialchars($tipo_declaracao) . '</h1>
                 <p>Motivo: ' . htmlspecialchars($motivo) . '</p>
                 <p>Protocolo: ' . htmlspecialchars($protocolo) . '</p>
                 ';
-                $dompdf->loadHtml($html);
-                $dompdf->setPaper('A4', 'portrait');
-                $dompdf->render();
+
+                // Escrever o HTML no PDF
+                $pdf->writeHTML($html, true, false, true, false, '');
+
+                // Caminho para salvar o PDF
                 $pdfFilePath = 'declaracao_' . $protocolo . '.pdf';
-                file_put_contents($pdfFilePath, $dompdf->output()); // Salva o PDF no servidor
+                $pdf->Output($pdfFilePath, 'F'); // Salva o PDF no servidor
 
                 $mensagem = "<script>
                 alert('Declaração solicitada com sucesso! Protocolo: $protocolo');
@@ -58,32 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->close();
         } else {
             $mensagem = "<script>
-            alert('Preencha todos os campos para solicitar uma declaração.')
-            window.location.href= '../../pages/aluno/documentos.php'; 
-            </script>";
-        }
-    }
-
-    // Consulta de protocolo
-    if ($action === 'consulta') {
-        $protocoloConsulta = filter_input(INPUT_POST, 'protocolo', FILTER_SANITIZE_SPECIAL_CHARS);
-        
-        if (!empty($protocoloConsulta)) {
-            $stmt = $conn->prepare("SELECT * FROM declaracao WHERE protocolo = ?");
-            $stmt->bind_param("s", $protocoloConsulta);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $resultadoConsulta = $result->fetch_assoc();
-            } else {
-                $mensagem = "<script> alert('Protocolo não encontrado.');
-                window.location.href= '../../pages/aluno/documentos.php'; 
-                </script>";
-            }
-            $stmt->close();
-        } else {
-            $mensagem = "<script> alert('Informe um protocolo para a consulta.');
+            alert('Preencha todos os campos para solicitar uma declaração.');
             window.location.href= '../../pages/aluno/documentos.php'; 
             </script>";
         }
