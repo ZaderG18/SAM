@@ -42,7 +42,7 @@ function uploadFoto($conn) {
             $fotoCaminhoCompleto = $fotoPasta . $fotoNovoNome;
 
             if (move_uploaded_file($fotoTemp, $fotoCaminhoCompleto)) {
-                $sqlFoto = "UPDATE professor SET foto = ? WHERE id = ?";
+                $sqlFoto = "UPDATE usuarios SET foto = ? WHERE id = ?";
                 $id = $_SESSION['user']['id'];
 
                 $stmtFoto = $conn->prepare($sqlFoto);
@@ -88,7 +88,7 @@ function atualizarInformacoes($conn) {
     $curso = $_POST['curso'];
 
     // Atualizar no banco de dados
-    $sql = "UPDATE professor SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=?, curso=? WHERE id=?";
+    $sql = "UPDATE usuarios SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=?, curso=? WHERE id=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $curso, $_SESSION['user_id']);
 
@@ -109,7 +109,7 @@ function atualizarSenha($conn) {
     // Verificar se as senhas coincidem
     if ($nova_senha === $confirmar_senha) {
         // Consultar a senha atual no banco
-        $sql = "SELECT senha FROM professor WHERE id = ?";
+        $sql = "SELECT senha FROM usuarios WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $_SESSION['user']['id']);
         $stmt->execute();

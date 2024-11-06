@@ -33,6 +33,17 @@ if (!empty($fotoNome)) {
 } else {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
+// Consulta para buscar os cursos
+$sql = "SELECT nome, professor_id, imagem FROM curso";
+$result = $mysqli->query($sql);
+
+// Verifica se há resultados
+$cursos = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $cursos[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -158,53 +169,15 @@ if (!empty($fotoNome)) {
 
 <main>
     <div class="course-grid">
-        <!--------------------- Card 1 --------------------------------->
+        <!--------------------- Card --------------------------------->
+        <?php foreach ($cursos as $curso) : ?>
         <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_01.jpg" alt="Matéria 1">
-            <h3>Matemática na programação</h3>
-            <p>Professores: João, Maria</p>
+            <img src="../../assets/img/home/cards/<?php echo $curso['imagem']; ?>" alt="Imagem do curso <?php echo htmlspecialchars($curso['nome']); ?>">
+            <h3><?php echo htmlspecialchars($curso['nome']); ?></h3>
+            <p>Professores: <?php echo htmlspecialchars($curso['professor'])?></p>
             <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
-
-        <!----------------------- Card 2 ---------------------------------->
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_02.jpg" alt="Matéria 2">
-            <h3>Redes de Internet</h3>
-            <p>Professores: Carla, Pedro</p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
-
-        <!-------------------------- Card 3 --------------------------------->
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_03.jpg" alt="Matéria 3">
-            <h3>Algoritmos Avançados</h3>
-            <p>Professores: Lucas, Ana</p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
-
-        <!---------------------------- Card 4 -------------------------------->
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_04.jpg" alt="Matéria 4">
-            <h3>Desenvolvimento Web</h3>
-            <p>Professores: Fernanda, Paulo</p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
-
-        <!----------------------------- Card 5 ------------------------------>
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_05.jpg" alt="Matéria 5">
-            <h3>Banco de Dados</h3>
-            <p>Professores: Beatriz, Carlos</p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
-
-        <!------------------------------ Card 6 ----------------------------->
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/aula_06.jpg" alt="Matéria 6">
-            <h3>Análises de Projetos</h3>
-            <p>Professores: Rafael, Juliana</p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
+            <?php endforeach; ?>
     </div>
     
 </main>
