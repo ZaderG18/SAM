@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 $professor_id = $_SESSION['user']['id'];
 
 // Consulta para obter os dados do professor
-$sql = "SELECT nome, genero, RM, email, telefone, foto FROM professor WHERE id = ?";
+$sql = "SELECT nome, genero, RM, email, telefone, foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $professor_id);
 $stmt->execute();
@@ -48,7 +48,7 @@ if (isset($professor)) {
 }
 
 // Seção: Tarefas Pendentes
-$sqlTarefas = "SELECT COUNT(*) as total_tarefas FROM tarefas WHERE professor_id = ? AND status = 'pendente'";
+$sqlTarefas = "SELECT COUNT(*) as total_tarefas FROM atividade WHERE professor_id = ? AND status = 'pendente'";
 $stmtTarefas = $conn->prepare($sqlTarefas);
 $stmtTarefas->bind_param("i", $professor_id);
 $stmtTarefas->execute();

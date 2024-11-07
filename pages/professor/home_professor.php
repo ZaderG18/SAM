@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: validar.php');
     exit();
 }
-require_once '../../php/professor/home.php';
+// include '../../php/professor/home.php';
 include '../../php/global/notificacao.php';
 $user = $_SESSION['user'];
 

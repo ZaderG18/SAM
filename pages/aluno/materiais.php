@@ -34,8 +34,8 @@ if (!empty($fotoNome)) {
     $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
 }
 // Consulta para buscar os cursos
-$sql = "SELECT nome, professor_id, imagem FROM curso";
-$result = $mysqli->query($sql);
+$sql = "SELECT nome_curso, fk_professor_id, imagem_curso FROM curso";
+$result = $conn->query($sql);
 
 // Verifica se há resultados
 $cursos = [];

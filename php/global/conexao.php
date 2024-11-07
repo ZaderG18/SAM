@@ -402,7 +402,9 @@ $foreignKeys = [
     "ALTER TABLE contato_emergencia ADD CONSTRAINT fk_eventos_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
     "ALTER TABLE atualizacoes ADD CONSTRAINT fk_atualizacao_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
     "ALTER TABLE atividade_extracurricular ADD CONSTRAINT fk_atividade_usuarios FOREIGN KEY (usuarios_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE aluno ADD CONSTRAINT fk_aluno_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE"
+    "ALTER TABLE aluno ADD CONSTRAINT fk_aluno_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE atividade ADD CONSTRAINT fk_professor_id FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE"
+
 ];
 
 // Executar consultas para criação das chaves estrangeiras
