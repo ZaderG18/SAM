@@ -19,7 +19,6 @@ function enviarEmailRecuperacao($email, $token) {
     mail($email, "Redefinir sua senha", "Clique aqui para redefinir sua senha: $reset_link");
 }
 
-$tables = ['aluno', 'professor', 'coordenador', 'diretor'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -63,14 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         foreach ($tables as $table) {
             // Verifica se o token é válido e se ainda não expirou
-            $stmt = $conn->prepare("SELECT id FROM $table WHERE reset_token = ? AND reset_expires > NOW()");
+            $stmt = $conn->prepare("SELECT id FROM usuarios WHERE reset_token = ? AND reset_expires > NOW()");
             $stmt->bind_param("s", $token);
             $stmt->execute();
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
                 // Atualiza a senha e remove o token e data de expiração
-                $stmt = $conn->prepare("UPDATE $table SET senha = ?, reset_token = NULL, reset_expires = NULL WHERE reset_token = ?");
+                $stmt = $conn->prepare("UPDATE usuarios SET senha = ?, reset_token = NULL, reset_expires = NULL WHERE reset_token = ?");
                 $stmt->bind_param("ss", $new_password, $token);
                 $stmt->execute();
 
