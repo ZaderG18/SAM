@@ -46,10 +46,7 @@ function buscarMensagens($conn, $usuario_id) {
                        WHEN user_id = ? THEN 'Você' 
                        ELSE 
                            CASE 
-                               WHEN EXISTS (SELECT * FROM aluno WHERE id = user_id) THEN (SELECT nome FROM aluno WHERE id = user_id) 
-                               WHEN EXISTS (SELECT * FROM professor WHERE id = user_id) THEN (SELECT nome FROM professor WHERE id = user_id) 
-                               WHEN EXISTS (SELECT * FROM diretor WHERE id = user_id) THEN (SELECT nome FROM diretor WHERE id = user_id) 
-                               WHEN EXISTS (SELECT * FROM coordenador WHERE id = user_id) THEN (SELECT nome FROM coordenador WHERE id = user_id) 
+                               WHEN EXISTS (SELECT * FROM usuarios WHERE id = user_id) THEN (SELECT nome FROM usuarios WHERE id = user_id)  
                            END 
                    END AS remetente,
                    mensagens_chat.data_envio
@@ -113,7 +110,7 @@ function buscarUsuariosRecentes($conn, $usuario_id) {
 
 // Função para obter o nome do usuário a partir de seu ID
 function obterNomeUsuario($conn, $usuario_id) {
-    $tables = ['aluno', 'professor', 'coordenador', 'diretor'];
+    $tables = ['usuarios'];
     foreach ($tables as $table) {
         $sql = "SELECT nome FROM $table WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {

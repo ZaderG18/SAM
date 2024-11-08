@@ -276,6 +276,7 @@ $tableQueries = [
         descricao_modulo TEXT, 
         aluno_id INT, 
         turma_id INT, 
+        curso_id INT,
         matricula_id INT
     )",
     "notas" => "CREATE TABLE IF NOT EXISTS notas (
@@ -346,6 +347,7 @@ $foreignKeys = [
     "ALTER TABLE turma ADD CONSTRAINT fk_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE avaliacao ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE avaliacao ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE modulo ADD CONSTRAINT fk_curso FOREIGN KEY curso_id REFERENCES modulo(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_diretor FOREIGN KEY (diretor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_coordendor FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",

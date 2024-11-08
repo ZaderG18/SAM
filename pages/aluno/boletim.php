@@ -25,9 +25,6 @@ if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
     $moduloId = 1; // Definindo um módulo padrão
 }
 
-// Chame a função para obter as notas
-$notas = getNotas($alunoId, $moduloId);
-
 // Prepare SQL statement to retrieve photo
 $sql = "SELECT foto FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -177,12 +174,12 @@ if (!empty($fotoNome)) {
     <div class="student-info">
         <h2>Dados do Aluno</h2>
         <p>Nome: <?php echo htmlspecialchars($user['nome']) ?></p>
-        <p>Turma: 3º Módulo</p>
-        <p>Curso: <?php echo htmlspecialchars($user['curso'])?></p>
-        <p>Turma: A</p>
-        <p>Inicio Curso: Jan de 2024</p>
-        <p>Final Curso: Dez de 2025</p>
-        <p>Situação: Cursando</p>
+        <p>Turma: <?php echo htmlspecialchars($turma['modulo']) . 'º Módulo'; ?></p>
+        <p>Curso: <?php echo htmlspecialchars($curso['nome']); ?></p>
+        <p>Turma: <?php  echo htmlspecialchars($turma['nome'])?></p>
+        <p>Inicio Curso: <?php echo htmlspecialchars($curso['inicio_curso'])?></p>
+        <p>Final Curso: <?php echo htmlspecialchars($curso['final_curso'])?></p>
+        <p>Situação: <?php  echo htmlspecialchars($user['status'])?></p>
     </div>
     <!---------------------------------------------------------------------Modulo 1-------------------------------------------------------->
     <div id="tabelamodulo1" class="module-selection">
@@ -206,8 +203,8 @@ if (!empty($fotoNome)) {
                     <th>Faltas</th>
                     <th>Nota 1</th>
                     <th>Nota 2</th>
-                    <th>Nota 3</th>
-                    <th>Nota 4</th>
+                    <th>Nota média</th>
+                    <!-- <th>Nota 4</th> -->
                     <th>Critérios</th>
                     <th>Observações</th>
                 </tr>
@@ -216,7 +213,7 @@ if (!empty($fotoNome)) {
             <?php
                 foreach ($notas as $nota) {
                     // Calcular a média das notas
-                    $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+                    $media = ($nota['nota1'] + $nota['nota2']) /2;
 
                     // Definindo a situação com base na média
                     $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
@@ -226,8 +223,7 @@ if (!empty($fotoNome)) {
                     <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
                     <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
                     <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
-                    <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
-                    <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                    <td><?php echo htmlspecialchars($nota['notamedia']); ?></td>
                     <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
                     <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                 </tr>
@@ -246,8 +242,7 @@ if (!empty($fotoNome)) {
                         <th>Faltas</th>
                         <th>Nota 1</th>
                         <th>Nota 2</th>
-                        <th>Nota 3</th>
-                        <th>Nota 4</th>
+                        <th>Nota média</th>
                         <th>Critérios</th>
                         <th>Observações</th>
                     </tr>
@@ -256,7 +251,7 @@ if (!empty($fotoNome)) {
                 <?php
                     foreach ($notas as $nota) {
                         // Calcular a média das notas
-                        $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+                        $media = ($nota['nota1'] + $nota['nota2']) / 2;
 
                         // Definindo a situação com base na média
                         $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
@@ -266,8 +261,7 @@ if (!empty($fotoNome)) {
                         <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
                         <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
                         <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
-                        <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
-                        <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['nota_media']); ?></td>
                         <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
                         <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                     </tr>
@@ -284,8 +278,7 @@ if (!empty($fotoNome)) {
                         <th>Faltas</th>
                         <th>Nota 1</th>
                         <th>Nota 2</th>
-                        <th>Nota 3</th>
-                        <th>Nota 4</th>
+                        <th>Nota média</th>
                         <th>Critérios</th>
                         <th>Observações</th>
                     </tr>
@@ -294,7 +287,7 @@ if (!empty($fotoNome)) {
                 <?php
                     foreach ($notas as $nota) {
                         // Calcular a média das notas
-                        $media = ($nota['nota1'] + $nota['nota2'] + $nota['nota3'] + $nota['nota4']) / 4;
+                        $media = ($nota['nota1'] + $nota['nota2']) / 2;
 
                         // Definindo a situação com base na média
                         $situacao = ($media >= 5) ? 'Aprovado' : 'Reprovado';
@@ -304,8 +297,7 @@ if (!empty($fotoNome)) {
                         <td><?php echo htmlspecialchars($nota['faltas']); ?></td>
                         <td><?php echo htmlspecialchars($nota['nota1']); ?></td>
                         <td><?php echo htmlspecialchars($nota['nota2']); ?></td>
-                        <td><?php echo htmlspecialchars($nota['nota3']); ?></td>
-                        <td><?php echo htmlspecialchars($nota['nota4']); ?></td>
+                        <td><?php echo htmlspecialchars($nota['notamedia']); ?></td>
                         <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo $situacao; ?></a></td>
                         <td><a href="#" onclick="showModal('modal-<?php echo strtolower(str_replace(' ', '_', $nota['disciplina'])); ?>')"><?php echo htmlspecialchars($nota['observacoes']); ?></a></td>
                     </tr>

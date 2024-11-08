@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 require_once '../../php/login/validar.php';
 require_once '../../php/aluno/documentos.php';
 include '../../php/global/notificacao.php';
-include '../../php/global/gerarPDF.php';
+//include '../../php/global/gerarPDF.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];

@@ -3,6 +3,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start(); // Inicie a sessão apenas se ainda não estiver ativa
 }
+
+// Configuração do banco de dados
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -13,30 +15,57 @@ if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
-function getNotas($alunoId, $moduloId) {
-    global $conn; // Conexão com o banco de dados
+// Função para obter o curso do aluno
+function getCurso($conn, $cursoId) {
+    $query = "SELECT * FROM curso WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        die("Erro ao preparar a consulta de curso: " . $conn->error);
+    }
+    $stmt->bind_param("i", $cursoId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result ? $result->fetch_assoc() : [];
+}
+
+// Função para obter a turma do aluno
+function getTurma($conn, $turmaId) {
+    $query = "SELECT * FROM turma WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        die("Erro ao preparar a consulta de turma: " . $conn->error);
+    }
+    $stmt->bind_param("i", $turmaId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result ? $result->fetch_assoc() : [];
+}
+
+// Função para obter notas
+function getNotas($conn, $alunoId, $moduloId) {
     $query = "
         SELECT n.*, d.nome_disciplina AS disciplina
         FROM notas n
         JOIN disciplina d ON n.disciplina_id = d.id
-        WHERE n.aluno_id = ?
+        WHERE n.aluno_id = ? AND n.modulo_id = ?
     ";
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         die("Erro ao preparar a consulta: " . $conn->error);
     }
-    
-    $stmt->bind_param("i", $alunoId);
+    $stmt->bind_param("ii", $alunoId, $moduloId);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    return $result->fetch_all(MYSQLI_ASSOC);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-function getModulos() {
-    global $conn;
-    $query = "SELECT * FROM modulos"; // Obter todos os módulos
+// Função para obter módulos
+function getModulos($conn) {
+    $query = "SELECT * FROM modulo";
     $result = $conn->query($query);
+    if (!$result) {
+        die("Erro na consulta de módulos: " . $conn->error);
+    }
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
@@ -45,13 +74,16 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
     die("Usuário não está autenticado.");
 }
 
-// Obter o ID do aluno
+// Obter o ID do aluno a partir da sessão
 $alunoId = $_SESSION['user']['id'];
+$cursoId = $_SESSION['user']['curso_id'];
+$turmaId = $_SESSION['user']['turma_id'];
 
-// Obter módulos
-$modulos = getModulos();
+// Obter dados do curso e da turma
+$curso = getCurso($conn, $cursoId);
+$turma = getTurma($conn, $turmaId);
 
-// Verificar se um módulo foi selecionado
-$selectedModule = isset($_GET['modulo']) ? (int)$_GET['modulo'] : 1; // Definindo um módulo padrão se nenhum for passado
-$notas = getNotas($alunoId, $selectedModule); // Obter notas do módulo selecionado
-?>
+// Obter módulos e notas do aluno
+$modulos = getModulos($conn);
+$selectedModule = isset($_GET['modulo']) ? (int)$_GET['modulo'] : 1;
+$notas = getNotas($conn, $alunoId, $selectedModule);
