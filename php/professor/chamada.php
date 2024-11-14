@@ -9,20 +9,17 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-$acao = $_GET['acao'] ?? '';
+$acao = isset($_GET['acao']) ? $_GET['acao'] : '';
 
 if ($acao === 'carregarFiltros') {
     carregarFiltros();
 } elseif ($acao === 'carregarAlunos') {
     carregarAlunos();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if ($data['acao'] === 'marcarPresenca') {
-        marcarPresenca($data);
-    }
+    marcarPresenca();
 }
 
-// Função para carregar as turmas e matérias (filtros)
+// Função para carregar turmas e disciplinas
 function carregarFiltros() {
     global $conn;
 
@@ -44,11 +41,11 @@ function carregarFiltros() {
     echo json_encode(['turmas' => $turmas, 'materias' => $materias]);
 }
 
-// Função para carregar alunos de acordo com os filtros selecionados
+// Função para carregar alunos de acordo com os filtros
 function carregarAlunos() {
     global $conn;
-    $turmaId = $_GET['turma'];
-    $materiaId = $_GET['materia'];
+    $turmaId = isset($_GET['turma']) ? $_GET['turma'] : '';
+    $materiaId = isset($_GET['materia']) ? $_GET['materia'] : '';
 
     $stmt = $conn->prepare("SELECT id, nome FROM aluno WHERE turma_id = ? AND materia_id = ?");
     $stmt->bind_param("ii", $turmaId, $materiaId);
@@ -63,9 +60,11 @@ function carregarAlunos() {
     echo json_encode($alunos);
 }
 
-// Função para marcar presença
-function marcarPresenca($data) {
+// Função para marcar presença no banco de dados
+function marcarPresenca() {
     global $conn;
+    $data = json_decode(file_get_contents('php://input'), true);
+
     $alunoId = $data['alunoId'];
     $presente = $data['presente'];
     $observacao = $data['observacao'];
@@ -80,3 +79,4 @@ function marcarPresenca($data) {
         echo json_encode(['status' => 'error']);
     }
 }
+?>

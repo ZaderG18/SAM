@@ -41,13 +41,10 @@ function carregarAlunos() {
                             <td>${index + 1}</td>
                             <td>${aluno.nome}</td>
                             <td class="status">
-                                <button onclick="marcarPresenca(this, ${aluno.id})">Presente</button>
-                                <button onclick="marcarAusencia(this, ${aluno.id})">Ausente</button>
+                                <button onclick="marcarPresenca(this, ${aluno.id}, 1)">Presente</button>
+                                <button onclick="marcarPresenca(this, ${aluno.id}, 0)">Ausente</button>
                             </td>
                             <td><textarea placeholder="Adicionar observação"></textarea></td>
-                            <td class="actions">
-                                <button class="edit" onclick="editarStatus(this)">Editar</button>
-                            </td>
                         </tr>`;
                 });
             })
@@ -55,26 +52,9 @@ function carregarAlunos() {
     }
 }
 
-function marcarPresenca(button, alunoId) {
-    atualizarStatus(button, alunoId, 1);
-}
-
-function marcarAusencia(button, alunoId) {
-    atualizarStatus(button, alunoId, 0);
-}
-
-function editarStatus(button) {
-    const statusCell = button.parentNode.previousElementSibling.previousElementSibling;
-    statusCell.innerHTML = `
-        <button onclick="marcarPresenca(this)">Presente</button>
-        <button onclick="marcarAusencia(this)">Ausente</button>
-    `;
-}
-
-// Função para salvar o status de presença no banco de dados
-function atualizarStatus(button, alunoId, presente) {
+function marcarPresenca(button, alunoId, presente) {
     const observacao = button.closest("tr").querySelector("textarea").value;
-    
+
     fetch('../../../../php/professor/chamada.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -96,8 +76,4 @@ function atualizarStatus(button, alunoId, presente) {
         }
     })
     .catch(error => console.error('Erro ao atualizar presença:', error));
-}
-
-function salvarChamada() {
-    alert('Chamada salva com sucesso!');
 }

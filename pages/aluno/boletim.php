@@ -437,7 +437,7 @@ if (!empty($fotoNome)) {
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
-   <script src="../../assets/js/global/search.js"></script>
+    <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/aluno/boletim/boletim.js"></script>
     <script src="../../assets/js/global/search.js"></script>
 </body>

@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
-include '../../php/aluno/cronograma.php';
+include '../../php/global/cronograma.php';
 $user = $_SESSION['user'];
 $id = $user['id'];
 

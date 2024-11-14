@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+include '../../php/global/cronograma.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
@@ -179,57 +180,17 @@ if (!empty($fotoNome)) {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="time-slot">08:00 - 09:00</td>
-                <td class="banco-de-dados">Banco de Dados</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="time-slot">09:00 - 10:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="programacao-mobile">Programação Mobile</td>
-            </tr>
-            <tr>
-                <td class="time-slot">10:00 - 11:00</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr class="interval">
-                <td colspan="6" class="interval">Intervalo</td>
-            </tr>
-            <tr>
-                <td class="time-slot">11:30 - 12:30</td>
-                <td></td>
-                <td></td>
-                <td class="programacao-mobile">Programação Mobile</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="time-slot">12:30 - 13:30</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="time-slot">13:30 - 14:30</td>
-                <td></td>
-                <td class="programacao-web">Programação Web</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+        <?php foreach ($horariosOrdenados as $horario){
+                ?>
+                <tr>
+                    <td class="time-slot"><?php echo $horario; ?></td>
+                    <td><?php echo $data[$horario]['Segunda'];?></td>
+                    <td><?php echo $data[$horario]['Terça']; ?></td>
+                    <td><?php echo $data[$horario]['Quarta']; ?></td>
+                    <td><?php echo $data[$horario]['Quinta']; ?></td>
+                    <td><?php echo $data[$horario]['Sexta']; ?></td>
+                </tr>
+                <?php } ?>
         </tbody>
     </table>
 </div>
