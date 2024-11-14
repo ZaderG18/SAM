@@ -1,5 +1,13 @@
 <?php
-include "../global/conexao.php"; // Certifique-se de que a conexão usa MySQLi
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbName = "SAM";
+$conn = new mysqli($host, $username, $password, $dbName);
+
+if ($conn->connect_error) {
+    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
+}
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);

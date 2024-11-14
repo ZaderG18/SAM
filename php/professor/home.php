@@ -57,7 +57,7 @@ $totalTarefas = $resultTarefas->fetch_assoc()['total_tarefas'];
 $stmtTarefas->close();
 
 // Seção: Atualizações (consideradas como mensagens novas)
-$sqlAtualizacoes = "SELECT COUNT(*) as total_atualizacoes FROM atualizacoes WHERE professor_id = ? ORDER BY data DESC";
+$sqlAtualizacoes = "SELECT COUNT(*) as total_atualizacoes FROM atualizacoes WHERE professor_id = ? ORDER BY data_atualizacao DESC";
 $stmtAtualizacoes = $conn->prepare($sqlAtualizacoes);
 $stmtAtualizacoes->bind_param("i", $professor_id);
 $stmtAtualizacoes->execute();
@@ -87,10 +87,10 @@ $resultChamadas = $stmtChamadas->get_result();
 $stmtChamadas->close();
 
 // Seção: Atualizações Recentes
-$sqlAtualizacoesRecentes = "SELECT descricao, data FROM atualizacoes WHERE professor_id = ? ORDER BY data DESC LIMIT 5";
+$sqlAtualizacoesRecentes = "SELECT descricao, data_atualizacao FROM atualizacoes WHERE professor_id = ? ORDER BY data_atualizacao DESC LIMIT 5";
 $stmtAtualizacoesRecentes = $conn->prepare($sqlAtualizacoesRecentes);
 $stmtAtualizacoesRecentes->bind_param("i", $professor_id);
 $stmtAtualizacoesRecentes->execute();
 $resultAtualizacoesRecentes = $stmtAtualizacoesRecentes->get_result();
 $stmtAtualizacoesRecentes->close();
-?>
+

@@ -15,46 +15,39 @@ $username = "root";
 $password = "";
 $dbName = "SAM";
 
-// Conectando ao banco de dados MySQL e selecionando o banco
+// Conectando ao banco de dados MySQL
 $conn = new mysqli($host, $username, $password, $dbName);
-
-// Verifica se houve erro na conexão
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
+$conn->set_charset("utf8mb4");
 
 // Função para enviar uma nova mensagem
 function enviarMensagem($conn, $remetente_id, $receptor_id, $mensagem) {
     $sql = "INSERT INTO mensagens_chat (user_id, mensagem, receptor_id, data_envio) VALUES (?, ?, ?, NOW())";
+    $stmt = $conn->prepare($sql);
     
-    if ($stmt = $conn->prepare($sql)) {
+    if ($stmt) {
         $stmt->bind_param("isi", $remetente_id, $mensagem, $receptor_id);
-        if ($stmt->execute()) {
-            return ['success' => true]; // Mensagem enviada com sucesso
-        } else {
-            return ['success' => false, 'error' => "Erro ao enviar a mensagem: " . $stmt->error];
-        }
-    } else {
-        return ['success' => false, 'error' => "Erro na preparação da consulta: " . $conn->error];
+        $resultado = $stmt->execute();
+        $stmt->close();
+        return $resultado ? ['success' => true] : ['success' => false, 'error' => $stmt->error];
     }
+    return ['success' => false, 'error' => $conn->error];
 }
 
 // Função para buscar as mensagens do chat
 function buscarMensagens($conn, $usuario_id) {
-    $sql = "SELECT mensagens_chat.mensagem, 
-                   CASE 
-                       WHEN user_id = ? THEN 'Você' 
-                       ELSE 
-                           CASE 
-                               WHEN EXISTS (SELECT * FROM usuarios WHERE id = user_id) THEN (SELECT nome FROM usuarios WHERE id = user_id)  
-                           END 
-                   END AS remetente,
-                   mensagens_chat.data_envio
-            FROM mensagens_chat
-            WHERE receptor_id = ? OR user_id = ?
-            ORDER BY data_envio DESC";
-
-    if ($stmt = $conn->prepare($sql)) {
+    $sql = "SELECT m.mensagem,
+                   IF(m.user_id = ?, 'Você', u.nome) AS remetente,
+                   m.data_envio
+            FROM mensagens_chat m
+            LEFT JOIN usuarios u ON m.user_id = u.id
+            WHERE m.receptor_id = ? OR m.user_id = ?
+            ORDER BY m.data_envio DESC";
+    
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
         $stmt->bind_param("iii", $usuario_id, $usuario_id, $usuario_id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -63,82 +56,51 @@ function buscarMensagens($conn, $usuario_id) {
         while ($row = $result->fetch_assoc()) {
             $mensagens[] = $row;
         }
-
         $stmt->close();
         return $mensagens;
-    } else {
-        return "Erro na preparação da consulta: " . $conn->error;
     }
+    return [];
 }
 
-// Função para buscar usuários recentes
+// Função para buscar usuários recentes com quem o usuário conversou
 function buscarUsuariosRecentes($conn, $usuario_id) {
     $sql = "SELECT DISTINCT 
                 CASE 
-                    WHEN user_id = ? THEN receptor_id 
-                    ELSE user_id 
-                END AS id_usuario
-            FROM mensagens_chat
-            WHERE user_id = ? OR receptor_id = ?
-            ORDER BY MAX(data_envio) DESC";
-
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("iii", $usuario_id, $usuario_id, $usuario_id);
+                    WHEN m.user_id = ? THEN m.receptor_id 
+                    ELSE m.user_id 
+                END AS id_usuario,
+                u.nome
+            FROM mensagens_chat m
+            LEFT JOIN usuarios u ON u.id = CASE WHEN m.user_id = ? THEN m.receptor_id ELSE m.user_id END
+            WHERE m.user_id = ? OR m.receptor_id = ?
+            ORDER BY MAX(m.data_envio) DESC";
+    
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("iiii", $usuario_id, $usuario_id, $usuario_id, $usuario_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $usuarios_recentes = [];
         while ($row = $result->fetch_assoc()) {
-            // Obtem o nome do usuário
-            $id_usuario = $row['id_usuario'];
-            $nome_usuario = '';
-
-            // Verifica em cada tabela
-            $nome_usuario = obterNomeUsuario($conn, $id_usuario);
-
-            if ($nome_usuario) {
-                $usuarios_recentes[] = ['id' => $id_usuario, 'nome' => $nome_usuario];
-            }
+            $usuarios_recentes[] = ['id' => $row['id_usuario'], 'nome' => $row['nome']];
         }
-
         $stmt->close();
         return $usuarios_recentes;
-    } else {
-        return "Erro na preparação da consulta: " . $conn->error;
     }
-}
-
-// Função para obter o nome do usuário a partir de seu ID
-function obterNomeUsuario($conn, $usuario_id) {
-    $tables = ['usuarios'];
-    foreach ($tables as $table) {
-        $sql = "SELECT nome FROM $table WHERE id = ?";
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("i", $usuario_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                return $row['nome'];
-            }
-        }
-    }
-    return null; // Retorna null se o usuário não for encontrado em nenhuma tabela
+    return [];
 }
 
 // Verifica se o método de solicitação é POST para enviar mensagem
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $remetente_id = $_SESSION['user']['id'];
     $receptor_id = filter_input(INPUT_POST, 'receptor_id', FILTER_SANITIZE_NUMBER_INT);
-    $mensagem = filter_input(INPUT_POST, 'mensagem', FILTER_SANITIZE_SPECIAL_CHARS);
+    $mensagem = filter_input(INPUT_POST, 'mensagem', FILTER_SANITIZE_STRING);
 
     if (!empty($mensagem) && !empty($receptor_id)) {
         $resultado = enviarMensagem($conn, $remetente_id, $receptor_id, $mensagem);
-        if ($resultado['success']) {
-            echo json_encode(['success' => true, 'message' => "Mensagem enviada com sucesso!"]);
-        } else {
-            echo json_encode(['success' => false, 'error' => $resultado['error']]);
-        }
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
     } else {
         echo json_encode(['success' => false, 'error' => "Mensagem ou receptor não pode ser vazio!"]);
     }
@@ -153,3 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode(['mensagens' => $mensagens, 'usuarios_recentes' => $usuarios_recentes]);
 }
 
+// Fecha a conexão com o banco de dados
+$conn->close();
+?>

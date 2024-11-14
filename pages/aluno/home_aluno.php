@@ -269,7 +269,7 @@ if (!empty($fotoNome)) {
                             <ul>
                                 <?php if(!empty($atividades)): ?>
                                     <?php foreach($atividades as $atividade): ?>
-                                <li><?= $atividade['descricao']?> <span>(entrega em <?= date('d/m/Y', strtotime($atividade['data'])) ?>)</span></li>
+                                <li><?= $atividade['descricao']?> <span>(entrega em <?= date('d/m/Y', strtotime($atividade['data_entrega'])) ?>)</span></li>
                                 <?php endforeach; ?>
                                 <?php else: ?>
                                     <li>Não há tarefas pendentes</li>
@@ -297,7 +297,7 @@ if (!empty($fotoNome)) {
                             <ul>
                                 <?php if(!empty($atualizacoes)): ?>
                                     <?php foreach($atualizacoes as $atualizacao): ?>
-                                        <li><?= $atualizacao['descricao']?> <span>(<?= date('d/m/Y', strtotime($atualizacao['data'])) ?>)</span></li>
+                                        <li><?= $atualizacao['descricao']?> <span>(<?= date('d/m/Y', strtotime($atualizacao['data_atualizacao'])) ?>)</span></li>
                                      <?php endforeach; ?>
                                     <?php else: ?>
                                        <li>Não há atualizações recentes</li>

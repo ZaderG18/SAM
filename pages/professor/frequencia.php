@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+// include_once '../../php/professor/chamada.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];

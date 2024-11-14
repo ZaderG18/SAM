@@ -18,7 +18,7 @@ $conn = new mysqli($host, $username, $password);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
-echo "Conectado ao servidor com sucesso!<br>";
+//echo "Conectado ao servidor com sucesso!<br>";
 
 // Criando o banco de dados 'SAM' se ele não existir.
 $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
@@ -32,7 +32,7 @@ if ($conn->query($sql) === TRUE) {
 $conn->select_db($dbName);
 
 function atualizarBanco($conn){
-// Consultas para criar as tabelas, se não existirem.
+
 $tableQueries = [
     "usuarios" => "CREATE TABLE IF NOT EXISTS usuarios (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -122,7 +122,8 @@ $tableQueries = [
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT,
         descricao TEXT,
-        data_atualizacao DATETIME
+        data_atualizacao DATETIME,
+        professor_id INT
     )",
     
     "contato_emergencia"=>"CREATE TABLE if not exists contato_emergencia ( 
@@ -245,6 +246,7 @@ $tableQueries = [
         turma_id INT (11) NOT NULL,
         avaliacao_id INT(11) NOT NULL,
         declaracao_id INT(11) NOT NULL,
+        professor_id int(11) NOT NULL,
         frequencia_id INT(11) NOT NULL,
         disciplina_id INT (11) NOT NULL,
         dia_semana enum('Segunda','Terça','Quarta','Quinta','Sexta','Sábado') DEFAULT NULL,
@@ -266,6 +268,7 @@ $tableQueries = [
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
         receptor_id INT NOT NULL,
+        tipo_chat ENUM('privado', 'grupo') DEFAULT 'privado',
         chat_turma INT NOT NULL,
         mensagem TEXT NOT NULL,
         data_envio DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -341,81 +344,82 @@ foreach ($tableQueries as $tableName => $query) {
 
 // Array com as consultas para adicionar chaves estrangeiras
 $foreignKeys = [
-    "ALTER TABLE academico ADD CONSTRAINT fk_academico FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE turma ADD CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES materias(id) ON DELETE CASCADE",
-    "ALTER TABLE turma ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE turma ADD CONSTRAINT fk_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE avaliacao ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE avaliacao ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE modulo ADD CONSTRAINT fk_curso FOREIGN KEY curso_id REFERENCES modulo(id) ON DELETE CASCADE",
-    "ALTER TABLE secretaria ADD CONSTRAINT fk_diretor FOREIGN KEY (diretor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE secretaria ADD CONSTRAINT fk_coordendor FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE secretaria ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE rematricula ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE notificacoes ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE academico ADD CONSTRAINT fk_academico_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE turma ADD CONSTRAINT fk_turma_disciplina FOREIGN KEY (disciplina_id) REFERENCES materias(id) ON DELETE CASCADE",
+    "ALTER TABLE turma ADD CONSTRAINT fk_turma_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE turma ADD CONSTRAINT fk_turma_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE avaliacao ADD CONSTRAINT fk_avaliacao_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE avaliacao ADD CONSTRAINT fk_avaliacao_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_diretor FOREIGN KEY (diretor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_coordendor FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE rematricula ADD CONSTRAINT fk_rematricula_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE notificacoes ADD CONSTRAINT fk_notificacoes_user FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE professor ADD CONSTRAINT fk_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE notas ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE notas ADD CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
-    "ALTER TABLE notas ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE notas ADD CONSTRAINT fk_modulo FOREIGN KEY (modulo_id) REFERENCES modulo(id) ON DELETE CASCADE",
-    "ALTER TABLE modulo ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE modulo ADD CONSTRAINT fk_matricula FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
-    "ALTER TABLE modulo ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE notas ADD CONSTRAINT fk_notas_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE notas ADD CONSTRAINT fk_notas_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
+    "ALTER TABLE notas ADD CONSTRAINT fk_notas_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE notas ADD CONSTRAINT fk_notas_modulo FOREIGN KEY (modulo_id) REFERENCES modulo(id) ON DELETE CASCADE",
+    "ALTER TABLE modulo ADD CONSTRAINT fk_modulo_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE modulo ADD CONSTRAINT fk_modulo_matricula FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
+    "ALTER TABLE modulo ADD CONSTRAINT fk_modulo_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_receptor_id FOREIGN KEY (receptor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_turma FOREIGN KEY (chat_turma) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE matricula ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE matricula ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE matricula ADD CONSTRAINT fk_historico FOREIGN KEY (historico_academico_id) REFERENCES historico_academico(id) ON DELETE CASCADE",
-    "ALTER TABLE matricula ADD CONSTRAINT fk_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
-    "ALTER TABLE matricula ADD CONSTRAINT fk_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
-    "ALTER TABLE horario ADD CONSTRAINT fk_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
-    "ALTER TABLE disciplina ADD CONSTRAINT fk_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
-    "ALTER TABLE disciplina ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE disciplina ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE disciplina ADD CONSTRAINT fk_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_aluno_id FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
-    "ALTER TABLE historico_academico ADD CONSTRAINT fk_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
-    "ALTER TABLE atividade ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE atividade ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
-    "ALTER TABLE frequencia ADD CONSTRAINT fk_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
-    "ALTER TABLE eventos ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE diretor ADD CONSTRAINT fk_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE declaracao ADD CONSTRAINT fk_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
-    "ALTER TABLE declaracao ADD CONSTRAINT fk_usuarios FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE curso ADD CONSTRAINT fk_professor FOREIGN KEY (fk_professor_id) REFERENCES professor(id) ON DELETE CASCADE",
+    "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_mensagem_turma FOREIGN KEY (chat_turma) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_historico FOREIGN KEY (historico_academico_id) REFERENCES historico_academico(id) ON DELETE CASCADE",
+    "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
+    "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_professor_horario FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
+    "ALTER TABLE horario ADD CONSTRAINT fk_horario_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
+    "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
+    "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_aluno_id FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
+    "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
+    "ALTER TABLE atividade ADD CONSTRAINT fk_atividade_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE atividade ADD CONSTRAINT fk_atividade_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_declaracao FOREIGN KEY (declaracao_id) REFERENCES declaracao(id) ON DELETE CASCADE",
+    "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",
+    "ALTER TABLE eventos ADD CONSTRAINT fk_eventos_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE diretor ADD CONSTRAINT fk_diretor FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE declaracao ADD CONSTRAINT fk_declaracao_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE declaracao ADD CONSTRAINT fk_declaracao_usuarios FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE curso ADD CONSTRAINT fk_curso_professor FOREIGN KEY (fk_professor_id) REFERENCES professor(id) ON DELETE CASCADE",
     "ALTER TABLE coordenador ADD CONSTRAINT fk_coordenador FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE contato_emergencia ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
-    "ALTER TABLE contato_emergencia ADD CONSTRAINT fk_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
-    "ALTER TABLE atualizacoes ADD CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
-    "ALTER TABLE atividade_extracurricular ADD CONSTRAINT fk_usuarios FOREIGN KEY (usuarios_id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE aluno ADD CONSTRAINT fk_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
-    "ALTER TABLE atividade ADD CONSTRAINT fk_id FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE"
-
+    "ALTER TABLE contato_emergencia ADD CONSTRAINT fk_contato_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
+    "ALTER TABLE contato_emergencia ADD CONSTRAINT fk_contato_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
+    "ALTER TABLE atualizacoes ADD CONSTRAINT fk_atualizacao_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
+    "ALTER TABLE atualizacoes ADD CONSTRAINT fk_atualizacoes_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
+    "ALTER TABLE atividade_extracurricular ADD CONSTRAINT fk_ati_extra_usuarios FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE aluno ADD CONSTRAINT fk_aluno_usuarios FOREIGN KEY (id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE atividade ADD CONSTRAINT fk_atividade_id FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE"
 ];
 
 // Executar consultas para criação das chaves estrangeiras
 foreach ($foreignKeys as $query) {
     if ($conn->query($query) === TRUE) {
-        echo "Chave estrangeira adicionada com sucesso.<br>";
+       echo "Chave estrangeira adicionada com sucesso.<br>";
     } else {
-        echo "Erro ao adicionar chave estrangeira: " . $conn->error . "<br>";
+       echo "Erro ao adicionar chave estrangeira: " . $conn->error . "<br>";
     }
 }
 
 }
 atualizarBanco($conn);
+?>
