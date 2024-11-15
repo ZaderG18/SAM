@@ -1,14 +1,14 @@
 <?php
-// $host = "localhost";
-// $username = "root";
-// $password = "";
-// $dbName = "SAM";
-// $conn = new mysqli($host, $username, $password, $dbName);
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbName = "SAM";
+$conn = new mysqli($host, $username, $password, $dbName);
 
-// if ($conn->connect_error) {
-//     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-// }
-include_once '../global/conexao.php';
+if ($conn->connect_error) {
+    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
+}
+// include_once '../global/conexao.php';
 
 // Sanitiza e valida os dados do formulário.
 $usuarioEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);

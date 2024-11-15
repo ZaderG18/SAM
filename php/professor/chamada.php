@@ -1,82 +1,122 @@
 <?php
+// Conectar ao banco de dados
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "sam";
-$conn = new mysqli($host, $username, $password, $dbname);
 
+$conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-$acao = isset($_GET['acao']) ? $_GET['acao'] : '';
-
-if ($acao === 'carregarFiltros') {
-    carregarFiltros();
-} elseif ($acao === 'carregarAlunos') {
-    carregarAlunos();
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    marcarPresenca();
-}
-
-// Função para carregar turmas e disciplinas
-function carregarFiltros() {
-    global $conn;
-
+// Função para carregar turmas
+function carregarTurmas($conn) {
+    $result = $conn->query("SELECT id, nome FROM turma ORDER BY nome ASC");
     $turmas = [];
-    $materias = [];
-
-    // Buscar turmas
-    $resultTurma = $conn->query("SELECT id, nome FROM turma");
-    while ($turma = $resultTurma->fetch_assoc()) {
-        $turmas[] = $turma;
+    while ($row = $result->fetch_assoc()) {
+        $turmas[] = $row;
     }
-
-    // Buscar disciplinas
-    $resultMateria = $conn->query("SELECT id, nome_disciplina FROM disciplina");
-    while ($materia = $resultMateria->fetch_assoc()) {
-        $materias[] = $materia;
-    }
-
-    echo json_encode(['turmas' => $turmas, 'materias' => $materias]);
+    return $turmas;
 }
 
-// Função para carregar alunos de acordo com os filtros
-function carregarAlunos() {
-    global $conn;
-    $turmaId = isset($_GET['turma']) ? $_GET['turma'] : '';
-    $materiaId = isset($_GET['materia']) ? $_GET['materia'] : '';
+// Função para carregar disciplinas
+function carregarMaterias($conn) {
+    $result = $conn->query("SELECT id, nome_disciplina FROM disciplina ORDER BY nome_disciplina ASC");
+    $materias = [];
+    while ($row = $result->fetch_assoc()) {
+        $materias[] = $row;
+    }
+    return $materias;
+}
 
+// Função para carregar alunos
+function carregarAlunos($conn, $turmaId, $materiaId) {
     $stmt = $conn->prepare("SELECT id, nome FROM aluno WHERE turma_id = ? AND materia_id = ?");
     $stmt->bind_param("ii", $turmaId, $materiaId);
     $stmt->execute();
     $result = $stmt->get_result();
-
+    
     $alunos = [];
-    while ($aluno = $result->fetch_assoc()) {
-        $alunos[] = $aluno;
+    while ($row = $result->fetch_assoc()) {
+        $alunos[] = $row;
     }
-
-    echo json_encode($alunos);
+    return $alunos;
 }
 
-// Função para marcar presença no banco de dados
-function marcarPresenca() {
-    global $conn;
-    $data = json_decode(file_get_contents('php://input'), true);
-
-    $alunoId = $data['alunoId'];
-    $presente = $data['presente'];
-    $observacao = $data['observacao'];
-
-    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) VALUES (?, ?, ?)");
+// Função para marcar presença
+function marcarPresenca($conn, $alunoId, $presente, $observacao) {
+    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) VALUES (?, ?, ?) 
+                            ON DUPLICATE KEY UPDATE presente = VALUES(presente), observacao = VALUES(observacao)");
     $stmt->bind_param("iis", $alunoId, $presente, $observacao);
     $stmt->execute();
+    return $stmt->affected_rows > 0;
+}
 
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(['status' => 'success']);
+// Carregar turmas e matérias
+$turmas = carregarTurmas($conn);
+$materias = carregarMaterias($conn);
+
+// Inicializar variáveis
+$turmaId = isset($_GET['turma']) ? $_GET['turma'] : '';
+$materiaId = isset($_GET['materia']) ? $_GET['materia'] : '';
+$alunos = [];
+
+// Carregar alunos se turma e matéria forem selecionadas
+if ($turmaId && $materiaId) {
+    $alunos = carregarAlunos($conn, $turmaId, $materiaId);
+}
+
+// Marcar presença
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcarPresenca'])) {
+    $alunoId = $_POST['alunoId'];
+    $presente = $_POST['presente'];
+    $observacao = $_POST['observacao'];
+
+    if (marcarPresenca($conn, $alunoId, $presente, $observacao)) {
+        echo "<p>Presença registrada com sucesso!</p>";
     } else {
-        echo json_encode(['status' => 'error']);
+        echo "<p>Erro ao registrar presença.</p>";
     }
 }
-?>
+// Função para carregar turmas e matérias
+function carregarFiltros($conn) {
+    $turmas = mysqli_query($conn, "SELECT id, nome FROM turma");
+    $materias = mysqli_query($conn, "SELECT id, nome_disciplina FROM disciplina");
+    return [$turmas, $materias];
+}
+
+list($turmas, $materias) = carregarFiltros($conn);
+
+// Carregar alunos com base nos filtros selecionados
+$alunos = [];
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma'], $_GET['materia'])) {
+    $turmaId = $_GET['turma'];
+    $materiaId = $_GET['materia'];
+    $turno = $_GET['turno'];
+    $periodo = $_GET['periodo'];
+    $periodoDia = $_GET['periodo-dia'];
+    $data = $_GET['filtro-dia'];
+
+    // Consulta para obter os alunos
+    $query = "SELECT a.id, a.nome 
+              FROM aluno a 
+              INNER JOIN matricula m ON a.id = m.aluno_id
+              WHERE m.turma_id = '$turmaId' AND m.materia_id = '$materiaId'";
+    $resultado = mysqli_query($conn, $query);
+    $alunos = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+}
+
+// Marcar presença via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alunoId'])) {
+    $alunoId = $_POST['alunoId'];
+    $presente = $_POST['presente'];
+    $observacao = $_POST['observacao'];
+    $data = date('Y-m-d');
+
+    // Inserir ou atualizar a presença no banco de dados
+    $sql = "INSERT INTO frequencia (aluno_id, presente, observacao, data) 
+            VALUES ('$alunoId', '$presente', '$observacao', '$data') 
+            ON DUPLICATE KEY UPDATE presente = '$presente', observacao = '$observacao'";
+    mysqli_query($conn, $sql);
+}

@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 }
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
-// include_once '../../php/professor/chamada.php';
+include_once '../../php/professor/chamada.php';
 
 $user = $_SESSION['user'];
 $id = $user['id'];
@@ -172,50 +172,63 @@ if (!empty($fotoNome)) {
         
         <!-- Filtros -->
         <div class="filters">
-            <select id="turma">
+            <form action="../../php/professor/chamada.php" method="get">
+            <select id="turma" name="turma" required>
                 <option value="">Selecione a Turma</option>
-                <option value="turma1">Turma 1</option>
-                <option value="turma2">Turma 2</option>
-            </select>
+                <?php foreach ($turmas as $turma) :?>
+                    <option value="<?= $turma['id'] ?>" <?= (isset($_GET['turma']) && $_GET['turma'] == $turma['id']) ? 'selected' : '' ?>>
+                        <?= $turma['nome'] ?>
+                    </option>
+                <?php endforeach; ?>
+                    </select>
 
-            <select id="materia">
+            <select id="materia" name="materia" required>
                 <option value="">Selecione a Matéria</option>
-                <option value="html">HTML</option>
-                <option value="css">CSS</option>
-                <option value="javascript">JavaScript</option>
-                <option value="python">Python</option>
+                <?php foreach ($materias as $materia) :?>
+                    <option value="<?= $materia['id'] ?>" <?= (isset($_GET['materia']) && $_GET['materia'] == $materia['id']) ? 'selected' : '' ?>>
+                        <?= $materia['nome_disciplina'] ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
 
-            <select id="turno">
+            <select id="turno" name="turno" required>
                 <option value="">Selecione o Turno</option>
-                <option value="manha">Manhã</option>
-                <option value="tarde">Tarde</option>
+                <option value="manha">Matutino</option>
+                <option value="tarde">Vespertino</option>
                 <option value="noite">Noturno</option>
             </select>
 
-            <select id="periodo">
+            <select id="periodo" name="periodo" required>
                 <option value="">Selecione o Período</option>
-                <option value="1bim">1º Bimestre</option>
-                <option value="2bim">2º Bimestre</option>
+                <option value="1">1º Período</option>
+                <option value="2">2º Período</option>
+                <option value="3">3º Período</option>
+                <option value="4">4º Período</option>
             </select>
 
-            <select id="periodo-dia">
+            <select id="periodo-dia" name="periodo-dia" required>
                 <option value="">Selecione o Período do Dia</option>
-                <option value="primeira-aula">Primeira Aula</option>
-                <option value="segunda-aula">Segunda Aula</option>
+                <option value="1aula">1° aula</option>
+                <option value="2aula">2° aula</option>
+                <option value="3aula">3° aula</option>
+                <option value="4aula">4° aula</option>
             </select>
 
-            <input type="date" id="filtro-dia">
+            <input type="date" name="filtro-dia" value="<?= isset($_GET['filtro-dia']) ? $_GET['filtro-dia'] : '' ?>" required>
 
             <select id="status-chamada">
                 <option value="">Status da Chamada</option>
                 <option value="feitas">Feitas</option>
                 <option value="pendentes">Pendentes</option>
             </select>
+            <button type="submit">Carregar Alunos</button>
         </div>
+        </form>
 
         <!-- Tabela de Chamada -->
+         <?php if (!empty($alunos)) : ?>
         <div class="table-wrapper">
+            <form action="../../php/professor/chamada.php" method="post">
             <table>
                 <thead>
                     <tr>
@@ -226,87 +239,34 @@ if (!empty($fotoNome)) {
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabela-alunos">
+                <?php foreach ($alunos as $index => $aluno): ?>
                     <tr>
-                        <td>1</td>
-                        <td>João Silva</td>
+                    <td><?= $index + 1 ?></td>
+                    <td><?= $aluno['nome'] ?></td>
+                    <td><?= $aluno['status'] ?></td>
                         <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
+                            <button onclick="marcarPresenca(this)" value="1">Presente</button>
+                            <button onclick="marcarAusencia(this)" value="0">Ausente</button>
                         </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
+                        <td><textarea name="observacao[<?= $aluno['id'] ?>]" placeholder="Adicionar observação"></textarea></td>
                         <td class="actions">
                             <button class="edit" onclick="editarStatus(this)">Editar</button>
                         </td>
+                    </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Ana Souza</td>
-                        <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
-                        </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Carlos Oliveira</td>
-                        <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
-                        </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Maria Lima</td>
-                        <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
-                        </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Pedro Santos</td>
-                        <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
-                        </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Lucas Almeida</td>
-                        <td class="actions">
-                            <button onclick="marcarPresenca(this)">Presente</button>
-                            <button onclick="marcarAusencia(this)">Ausente</button>
-                        </td>
-                        <td><textarea placeholder="Adicionar observação"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
-                        </td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
+
         </div>
 
         <!-- Botão de Salvar Chamada -->
         <div class="save-button">
-            <button onclick="salvarChamada()">Salvar Chamada</button>
+            <button type="submit" name="salvar" id="salvarChamada()">Salvar Chamada</button>
         </div>
+        </form>
+        <?php endif; ?>
     </div>
 </main>
     <!-- Scripts -->

@@ -1,21 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    carregarOpcoes();
+    carregarFiltros();
     document.getElementById('turma').addEventListener('change', carregarAlunos);
     document.getElementById('materia').addEventListener('change', carregarAlunos);
 });
 
-function carregarOpcoes() {
+function carregarFiltros() {
     fetch('../../../../php/professor/chamada.php?acao=carregarFiltros')
         .then(response => response.json())
         .then(data => {
             const turmaSelect = document.getElementById('turma');
             const materiaSelect = document.getElementById('materia');
 
+            // Preencher turmas
             turmaSelect.innerHTML = '<option value="">Selecione a Turma</option>';
             data.turmas.forEach(turma => {
                 turmaSelect.innerHTML += `<option value="${turma.id}">${turma.nome}</option>`;
             });
 
+            // Preencher matérias
             materiaSelect.innerHTML = '<option value="">Selecione a Matéria</option>';
             data.materias.forEach(materia => {
                 materiaSelect.innerHTML += `<option value="${materia.id}">${materia.nome_disciplina}</option>`;
@@ -32,15 +34,15 @@ function carregarAlunos() {
         fetch(`../../../../php/professor/chamada.php?acao=carregarAlunos&turma=${turmaId}&materia=${materiaId}`)
             .then(response => response.json())
             .then(alunos => {
-                const tbody = document.querySelector("tbody");
-                tbody.innerHTML = ''; // Limpar a tabela antes de adicionar novos alunos
+                const tbody = document.getElementById('tabela-alunos');
+                tbody.innerHTML = '';
 
                 alunos.forEach((aluno, index) => {
                     tbody.innerHTML += `
                         <tr>
                             <td>${index + 1}</td>
                             <td>${aluno.nome}</td>
-                            <td class="status">
+                            <td>
                                 <button onclick="marcarPresenca(this, ${aluno.id}, 1)">Presente</button>
                                 <button onclick="marcarPresenca(this, ${aluno.id}, 0)">Ausente</button>
                             </td>
@@ -75,5 +77,5 @@ function marcarPresenca(button, alunoId, presente) {
             alert('Erro ao salvar presença!');
         }
     })
-    .catch(error => console.error('Erro ao atualizar presença:', error));
+    .catch(error => console.error('Erro ao marcar presença:', error));
 }
