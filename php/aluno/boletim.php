@@ -42,7 +42,7 @@ function getTurma($conn, $turmaId) {
 }
 
 // Função para obter notas
-function getNotas($conn, $alunoId, $moduloId) {
+function getNotas($conn, $id, $moduloId) {
     $query = "
         SELECT n.*, d.nome_disciplina AS disciplina
         FROM notas n
@@ -53,7 +53,7 @@ function getNotas($conn, $alunoId, $moduloId) {
     if (!$stmt) {
         die("Erro ao preparar a consulta: " . $conn->error);
     }
-    $stmt->bind_param("ii", $alunoId, $moduloId);
+    $stmt->bind_param("ii", $id, $moduloId);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
@@ -75,7 +75,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
 }
 
 // Obter o ID do aluno a partir da sessão
-$alunoId = $_SESSION['user']['id'];
+$id = $_SESSION['user']['id'];
 $cursoId = $_SESSION['user']['curso_id'];
 $turmaId = $_SESSION['user']['turma_id'];
 
@@ -86,4 +86,4 @@ $turma = getTurma($conn, $turmaId);
 // Obter módulos e notas do aluno
 $modulos = getModulos($conn);
 $selectedModule = isset($_GET['modulo']) ? (int)$_GET['modulo'] : 1;
-$notas = getNotas($conn, $alunoId, $selectedModule);
+$notas = getNotas($conn, $id, $selectedModule);

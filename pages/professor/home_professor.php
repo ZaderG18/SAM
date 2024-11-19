@@ -6,38 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 include_once '../../php/professor/home.php';
 include '../../php/global/notificacao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-// Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close();
-
-// Verifica se há uma foto para o usuário
-if (!empty($fotoNome)) {
-    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
-} else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão se nenhuma foto for carregada
-}
+include '../../php/global/cabecario.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

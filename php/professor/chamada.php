@@ -45,10 +45,10 @@ function carregarAlunos($conn, $turmaId, $materiaId) {
 }
 
 // Função para marcar presença
-function marcarPresenca($conn, $alunoId, $presente, $observacao) {
+function marcarPresenca($conn, $id, $presente, $observacao) {
     $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) VALUES (?, ?, ?) 
                             ON DUPLICATE KEY UPDATE presente = VALUES(presente), observacao = VALUES(observacao)");
-    $stmt->bind_param("iis", $alunoId, $presente, $observacao);
+    $stmt->bind_param("iis", $id, $presente, $observacao);
     $stmt->execute();
     return $stmt->affected_rows > 0;
 }
@@ -69,11 +69,11 @@ if ($turmaId && $materiaId) {
 
 // Marcar presença
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcarPresenca'])) {
-    $alunoId = $_POST['alunoId'];
+    $id = $_POST['alunoId'];
     $presente = $_POST['presente'];
     $observacao = $_POST['observacao'];
 
-    if (marcarPresenca($conn, $alunoId, $presente, $observacao)) {
+    if (marcarPresenca($conn, $id, $presente, $observacao)) {
         echo "<p>Presença registrada com sucesso!</p>";
     } else {
         echo "<p>Erro ao registrar presença.</p>";
@@ -109,14 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma'], $_GET['materia
 
 // Marcar presença via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alunoId'])) {
-    $alunoId = $_POST['alunoId'];
+    $id = $_POST['alunoId'];
     $presente = $_POST['presente'];
     $observacao = $_POST['observacao'];
     $data = date('Y-m-d');
 
     // Inserir ou atualizar a presença no banco de dados
     $sql = "INSERT INTO frequencia (aluno_id, presente, observacao, data) 
-            VALUES ('$alunoId', '$presente', '$observacao', '$data') 
+            VALUES ('$id', '$presente', '$observacao', '$data') 
             ON DUPLICATE KEY UPDATE presente = '$presente', observacao = '$observacao'";
     mysqli_query($conn, $sql);
 }

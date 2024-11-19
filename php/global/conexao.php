@@ -64,6 +64,13 @@ $tableQueries = [
     dia VARCHAR(10) NOT NULL,
     disciplina VARCHAR(100) NOT NULL
 )",
+"enquetes" => "CREATE TABLE enquetes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pergunta VARCHAR(255),
+    tipo VARCHAR(50),
+    resposta VARCHAR(255),
+    comentario text
+)",
     "academico" => "CREATE TABLE IF NOT EXISTS academico (
         id INT PRIMARY KEY AUTO_INCREMENT,
         aluno_id INT,

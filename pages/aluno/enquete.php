@@ -1,42 +1,6 @@
 <?php
-session_start(); // Certifique-se de que a sessão está iniciada
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sam";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Verifica se a conexão foi bem-sucedida
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
+include '../../php/global/cabecario.php';
 include '../../php/global/notificacao.php';
-$user = $_SESSION['user'];
-$id = $user['id']; // ID do usuário
-
-// Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close();
-
-// Verifica se há uma foto para o usuário
-if (!empty($fotoNome)) {
-    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
-} else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão se nenhuma foto for carregada
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

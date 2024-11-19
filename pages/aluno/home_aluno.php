@@ -1,56 +1,10 @@
 <?php
-session_start();
-
-// Verificar se o usuário está logado e pertence à role 'aluno'
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'aluno') {
-    header('Location: validar.php');
-    exit();
-}
-
-// Requerendo arquivos necessários
+include '../../php/global/cabecario.php';
 require_once '../../php/global/funcao.php';
 require_once '../../php/global/upload.php';
 require_once '../../php/aluno/home.php';
 require_once '../../php/global/notificacao.php';
-
-// Acessando os dados do usuário da sessão
-$user = $_SESSION['user'];
-
-// Verificando o status do usuário, com valor padrão se não estiver definido
-$status = isset($user['status']) ? $user['status'] : 'Desconhecido';
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-$id = $user['id']; // ID do usuário
-
-// Prepara SQL statement para recuperar a foto
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close();
-
-// Verifica se há uma foto para o usuário
-if (!empty($fotoNome)) {
-    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
-} else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Imagem padrão se nenhuma foto for carregada
-}?>
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
