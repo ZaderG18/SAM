@@ -141,14 +141,14 @@ $result = $conn->query($sql);
 
         <ul class="poll-list">
             <!-- Enquete sobre Aulas -->
+             <?php while ($enquete = $result->fetch_assoc()) { ?>
             <li class="poll-item">
-                <h3>Como você avalia a participação dos alunos nas aulas online?</h3>
-                <form class="poll-form" data-poll="aulas"></form>
+                <h3><?php echo htmlspecialchars($enquete['pergunta']); ?></h3>
+                <form class="poll-form" data-poll="<?php echo $enquete['id'];?>" action="../../php/global/enquetes.php" method="post">
                     <ul class="poll-options">
-                        <li><input type="radio" name="poll_aulas" value="muito_bom"> Muito boa</li>
-                        <li><input type="radio" name="poll_aulas" value="boa"> Boa</li>
-                        <li><input type="radio" name="poll_aulas" value="regular"> Regular</li>
-                        <li><input type="radio" name="poll_aulas" value="ruim"> Ruim</li>
+                        <?php $opcoes = getOptions($enquete['id']);
+                        foreach ($opcoes as $opcao) { 
+                            echo '<li><input type="radio" name="poll_' . $enquete['id'] . '" value="' . $opcao . '"> ' . ucfirst($opcao). '</li>'; } ?>
                     </ul>
                     <div class="textarea-container">
                         <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
@@ -156,92 +156,20 @@ $result = $conn->query($sql);
                     <button class="btn" type="submit">Votar</button>
                 </form>
             </li>
-
-            <!-- Enquete sobre Matérias -->
-            <li class="poll-item">
-                <h3>Qual matéria você considera mais desafiadora para ensinar?</h3>
-                <form class="poll-form" data-poll="materias"></form>
-                    <ul class="poll-options">
-                        <li><input type="radio" name="poll_materias" value="matematica"> Análises de Projetos</li>
-                        <li><input type="radio" name="poll_materias" value="fisica"> Programação Mobile</li>
-                        <li><input type="radio" name="poll_materias" value="quimica"> Desenvolvimento web</li>
-                        <li><input type="radio" name="poll_materias" value="programacao"> Programação</li>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
-
-            <!-- Enquete sobre Alunos -->
-            <li class="poll-item">
-                <h3>Qual aluno você acha mais participativo?</h3>
-                <form class="poll-form" data-poll="alunos"></form>
-                    <ul class="poll-options">
-                        <li><input type="radio" name="poll_alunos" value="aluno_a"> Aluno A</li>
-                        <li><input type="radio" name="poll_alunos" value="aluno_b"> Aluno B</li>
-                        <li><input type="radio" name="poll_alunos" value="aluno_c"> Aluno C</li>
-                        <li><input type="radio" name="poll_alunos" value="aluno_d"> Aluno D</li>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
-
-            <!-- Enquete sobre Secretaria -->
-            <li class="poll-item">
-                <h3>Você está satisfeito com o suporte da secretaria acadêmica?</h3>
-                <form class="poll-form" data-poll="secretaria"></form>
-                    <ul class="poll-options">
-                        <li><input type="radio" name="poll_secretaria" value="sim"> Sim</li>
-                        <li><input type="radio" name="poll_secretaria" value="nao"> Não</li>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
-
-            <!-- Enquete sobre Curso -->
-            <li class="poll-item">
-                <h3>Como você avalia o desempenho geral dos alunos no curso?</h3>
-                <form class="poll-form" data-poll="curso"></form>
-                    <ul class="poll-options">
-                        <li><input type="radio" name="poll_curso" value="excelente"> Excelente</li>
-                        <li><input type="radio" name="poll_curso" value="bom"> Bom</li>
-                        <li><input type="radio" name="poll_curso" value="regular"> Regular</li>
-                        <li><input type="radio" name="poll_curso" value="ruim"> Ruim</li>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
-
-            <!-- Enquete sobre Escola -->
-            <li class="poll-item">
-                <h3>Qual a sua opinião sobre a infraestrutura da escola?</h3>
-                <form class="poll-form" data-poll="escola"></form>
-                    <ul class="poll-options">
-                        <li><input type="radio" name="poll_escola" value="excelente"> Excelente</li>
-                        <li><input type="radio" name="poll_escola" value="boa"> Boa</li>
-                        <li><input type="radio" name="poll_escola" value="regular"> Regular</li>
-                        <li><input type="radio" name="poll_escola" value="ruim"> Ruim</li>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
+        <?php } ?>
+         
         </ul>
     </div>
     </main>
+<?php 
+ function getOptions($enqueteId) {
+    switch ($enqueteId){
+        case 1:
+            return ['muito_bom', 'bom', 'regular', 'ruim', 'muito_ruim'];
+        case 2:
+            return ['']
+    }
+?>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
