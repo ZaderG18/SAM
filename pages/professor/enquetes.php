@@ -134,42 +134,77 @@ $result = $conn->query($sql);
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
 <main>
-     
     <div class="containerpx">
         <h1 class="headerpx">Enquetes</h1>
         <h2>Enquetes Ativas</h2>
 
         <ul class="poll-list">
             <!-- Enquete sobre Aulas -->
-             <?php while ($enquete = $result->fetch_assoc()) { ?>
-            <li class="poll-item">
-                <h3><?php echo htmlspecialchars($enquete['pergunta']); ?></h3>
-                <form class="poll-form" data-poll="<?php echo $enquete['id'];?>" action="../../php/global/enquetes.php" method="post">
-                    <ul class="poll-options">
-                        <?php $opcoes = getOptions($enquete['id']);
-                        foreach ($opcoes as $opcao) { 
-                            echo '<li><input type="radio" name="poll_' . $enquete['id'] . '" value="' . $opcao . '"> ' . ucfirst($opcao). '</li>'; } ?>
-                    </ul>
-                    <div class="textarea-container">
-                        <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
-                    </div>
-                    <button class="btn" type="submit">Votar</button>
-                </form>
-            </li>
-        <?php } ?>
-         
+            <?php
+            // Consulta para buscar as enquetes
+            $sql = "SELECT id, pergunta FROM enquetes";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($enquete = $result->fetch_assoc()) {
+                    ?>
+                    <li class="poll-item">
+                        <h3><?php echo htmlspecialchars($enquete['pergunta']); ?></h3>
+                        <form class="poll-form" data-poll="<?php echo $enquete['id']; ?>" action="../../php/global/enquetes.php" method="post">
+                            <ul class="poll-options">
+                                <?php
+                                // Passando o ID da enquete para a função getOptions
+                                $opcoes = getOptions($enquete['id'], $conn);
+                                foreach ($opcoes as $opcao) {
+                                    echo '<li><input type="radio" name="poll_' . $enquete['id'] . '" value="' . htmlspecialchars($opcao) . '"> ' . ucfirst(htmlspecialchars($opcao)) . '</li>';
+                                }
+                                ?>
+                            </ul>
+                            <div class="textarea-container">
+                                <textarea name="comment" placeholder="Deixe um comentário ou sugestão..."></textarea>
+                            </div>
+                            <button class="btn" type="submit">Votar</button>
+                        </form>
+                    </li>
+                    <?php
+                }
+            } else {
+                echo "<p>Não há enquetes ativas no momento.</p>";
+            }
+            ?>
         </ul>
     </div>
-    </main>
-<?php 
- function getOptions($enqueteId) {
-    switch ($enqueteId){
-        case 1:
-            return ['muito_bom', 'bom', 'regular', 'ruim', 'muito_ruim'];
-        case 2:
-            return ['']
+</main>
+
+<?php
+// Função para buscar opções com base no ID da enquete
+function getOptions($enqueteId, $conn)
+{
+    switch ($enqueteId) {
+        case 1: // Exemplo de enquete fixa
+            return ['muito_bom', 'bom', 'regular', 'ruim'];
+        case 2: // Exemplo dinâmico: buscar matérias do banco de dados
+            $sql = "SELECT nome_disciplina FROM disciplina";
+            $result = $conn->query($sql);
+            $opcoes = [];
+            while ($row = $result->fetch_assoc()) {
+                $opcoes[] = $row['nome_disciplina'];
+            }
+            return $opcoes;
+        case 3: // Exemplo dinâmico: buscar alunos
+            $sql = "SELECT nome FROM usuarios WHERE cargo = 'aluno'";
+            $result = $conn->query($sql);
+            $opcoes = [];
+            while ($row = $result->fetch_assoc()) {
+                $opcoes[] = $row['nome'];
+            }
+            return $opcoes;
+        default: // Caso padrão
+            return ['opção_1', 'opção_2', 'opção_3'];
     }
+}
 ?>
+
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>

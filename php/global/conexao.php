@@ -69,7 +69,8 @@ $tableQueries = [
     pergunta VARCHAR(255),
     tipo VARCHAR(50),
     resposta VARCHAR(255),
-    comentario text
+    comentario text,
+    enquete_id INT
 )",
     "academico" => "CREATE TABLE IF NOT EXISTS academico (
         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -357,6 +358,7 @@ $foreignKeys = [
     "ALTER TABLE turma ADD CONSTRAINT fk_turma_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE avaliacao ADD CONSTRAINT fk_avaliacao_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE avaliacao ADD CONSTRAINT fk_avaliacao_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE enquetes ADD CONSTRAINT fk_enquetes FOREIGN KEY (enquete_id) REFERENCES enquetes(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_diretor FOREIGN KEY (diretor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_coordendor FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE secretaria ADD CONSTRAINT fk_secretaria_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
@@ -429,4 +431,5 @@ foreach ($foreignKeys as $query) {
 
 }
 atualizarBanco($conn);
-?>
+// Fecha a conexão com o banco de dados
+$conn->close();
