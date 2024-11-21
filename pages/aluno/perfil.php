@@ -148,86 +148,52 @@ $atividades = getAtividadesExtracurriculares($conn, $id);
         </div>
 
         <!-- Informações Pessoais -->
+         <?php if(!empty($user)) : ?>
         <div class="section">
             <h3 class="section-title">Informações Pessoais</h3>
             <div class="details">
+                <?php $infoPessoais = [
+                    'Nome Completo' => $user['nome'],
+                    'Data de Nascimento' => $user['data_nascimento'],
+                    'Telefone' => $user['telefone'],
+                    'Endereço' => $user['endereco'],
+                    'CPF' => $user['cpf'],
+                    'Nacionalidade' => $user['nacionalidade'],
+                    'Data de Matrícula' => $user['data_matricula']
+                ];
+                foreach ($infoPessoais as $label => $value) : ?>
                 <div class="detail-item">
-                    <label>Nome Completo:</label>
-                    <p><?php echo htmlspecialchars($user['nome']) ?></p>
+                    <label><?= $label; ?>:</label>
+                    <p><?php htmlspecialchars($value) ?></p>
                 </div>
-                <div class="detail-item">
-                    <label>Data de Nascimento:</label>
-                    <p><?php echo htmlspecialchars($user['data_nascimento']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Telefone:</label>
-                    <p><?php echo htmlspecialchars($user['telefone']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Endereço:</label>
-                    <p><?php echo htmlspecialchars($user['endereco']) ?></p>
-                </div>
-                 <div class="detail-item">
-                    <label>CPF:</label>
-                    <p><?php echo htmlspecialchars($user['cpf'])?></p>
-                </div>
-                <!--<div class="detail-item">
-                    <label>RG:</label>
-                    <p>12.345.678-9</p>
-                </div> -->
-                <!-- <div class="detail-item">
-                    <label>Estado Civil:</label>
-                    <p>Solteiro</p>
-                </div> -->
-                <div class="detail-item">
-                    <label>Nacionalidade:</label>
-                    <p><?php echo htmlspecialchars($user['nacionalidade'])?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Data de Matrícula:</label>
-                    <p><?php echo htmlspecialchars($user['data_matricula']) ?></p>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
-
+        <?php endif; ?>
         <!-- Informações Acadêmicas -->
+         <?php if (!empty($academico)) : ?>
         <div class="section">
             <h3 class="section-title">Informações Acadêmicas</h3>
             <div class="details">
+                <?php $infoAcademicas = [
+                    'Curso' => $academico['curso'],
+                    'Período' => $academico['periodo'],
+                    'Semestre Atual' => $academico['modulo_atual'],
+                    'Sala' => $academico['turma'],
+                    'Orientador Acadêmico' => 'Prof. ' . $academico['nome_professor'],
+                    'Bolsas e Auxílios' => $academico['bolsas_auxilios'],
+                    'Horas Complementares' => $academico['horas_complementares'],
+                    'Estágio Atual' => $academico['estagio_atual']
+                ]; 
+                foreach ($infoAcademicas as $label => $value) : ?>
                 <div class="detail-item">
-                    <label>Curso:</label>
-                    <p><?php echo htmlspecialchars($academico['curso']) ?></p>
+                    <label><?= $label ?>:</label>
+                    <p><?= htmlspecialchars($value) ?></p>
                 </div>
-                <div class="detail-item">
-                    <label>Período:</label>
-                    <p><?php echo htmlspecialchars($academico['periodo']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Semestre Atual:</label>
-                    <p><?php echo htmlspecialchars($academico['modulo_atual']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Sala:</label>
-                    <p><?php echo htmlspecialchars($academico['turma']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Orientador Acadêmico:</label>
-                    <p>Prof. <?php echo htmlspecialchars($academico['nome_professor']) ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Bolsas e Auxílios:</label>
-                    <p><?php echo htmlspecialchars($academico['bolsas_auxilios']); ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Horas Complementares:</label>
-                    <p><?php echo htmlspecialchars($academico['horas_complementares'])?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Estágio Atual:</label>
-                    <p><?php echo htmlspecialchars($academico['estagio_atual'])?></p>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- Desempenho Acadêmico -->
         <div class="section">

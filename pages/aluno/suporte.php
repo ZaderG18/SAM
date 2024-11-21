@@ -2,6 +2,12 @@
 include '../../php/global/cabecario.php';
 require '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+$cursos = "SELECT nome_curso FROM curso WHERE aluno_id = ?";
+$stmtCursos = $conn->prepare($cursos);
+$stmtCursos->bind_param("i", $id);
+$stmtCursos->execute();
+$resultCursos = $stmtCursos->get_result();
+$stmtCursos->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -137,11 +143,7 @@ include '../../php/global/notificacao.php';
                     experiência possível em sua jornada acadêmica.
                 </p>
             </div>
-
-        
         </div> 
-            
-        
         <div class="form-container">
             <h2>Formulário de ajuda</h2>
             <form action="../../php/aluno/envioEmail.php" method="post" enctype="multipart/form-data">
@@ -164,12 +166,13 @@ include '../../php/global/notificacao.php';
                 <div class="form-group">
                     <label for="curso">Curso:</label>
                     <select id="curso" name="curso" class = "caixa" required>
-                        <option value="">Selecione o curso</option>
-                        <option value="Desenvolvimento_de_sistemas">Desenvolvimento de sistemas</option>
-                        <option value="Nutricao">Nutrição</option>
-                        <option value="Gastronomia">Gastronomia</option>
-                        <option value="Enfermagem">Enfermagem</option>
+                    <?php if($resultCursos->num_rows > 0): ?>
+                        <option value="" disabled selected>Selecione o curso</option>
+                        <option value="<?php echo $cursos['nome_curso']; ?>"><?php echo $cursos['nome_curso']; ?></option>
+                        <?php else: ?>
+                            <option value="" disabled selected>Você não contém nenhum curso</option>
                     </select>
+                    <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label for="mensagem">Mensagem:</label>
