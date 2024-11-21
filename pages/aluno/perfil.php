@@ -195,26 +195,24 @@ $atividades = getAtividadesExtracurriculares($conn, $id);
         </div>
         <?php endif; ?>
 
+        <?php $listas = [
+            'Desempenho Acadêmico' => $desempenhoAcademico,
+            'Projetos e Pesquisas' => $projetosPesquisas,
+            'Eventos Acadêmicos' => $eventosAcademicos,
+            'Atividades Extracurriculares' => $atividadesExtracurriculares
+        ];
+        foreach ($listas as $titulo => $itens) :
+        if (!empty($itens)) : ?>
         <!-- Desempenho Acadêmico -->
         <div class="section">
-            <h3 class="section-title">Desempenho Acadêmico</h3>
+            <h3 class="section-title"><?= $titulo ?></h3>
             <ul>
-                <li>Participação em 90% das aulas no semestre atual.</li>
-                <li>Média Geral: 8.7</li>
-                <li>Projetos realizados no curso com destaque.</li>
-                <li>Melhor aluno em Matemática Aplicada no 5º semestre.</li>
+                <?php foreach ($itens as $item) : ?>
+                <li><?= htmlspecialchars($item) ?></li>
+                <?php endforeach; ?>
             </ul>
         </div>
-
-        <!-- Projetos e Pesquisas -->
-        <div class="section">
-            <h3 class="section-title">Projetos e Pesquisas</h3>
-            <ul>
-                <li>Projeto de robótica autônoma (em andamento).</li>
-                <li>Pesquisa sobre algoritmos de inteligência artificial (concluída em 2023).</li>
-                <li>Projeto de Sistema de Energia Solar (em desenvolvimento).</li>
-            </ul>
-        </div>
+        <?php endif; endforeach;?>
 
         <!-- Contato de Emergência -->
         <div class="section">
@@ -222,45 +220,22 @@ $atividades = getAtividadesExtracurriculares($conn, $id);
             <div class="details">
                 <div class="detail-item">
                     <label>Nome do Contato:</label>
-                    <p><?php echo htmlspecialchars($user['nome_emergencia']); ?></p>
+                    <p><?php echo htmlspecialchars($contatoEmergencia['nome_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Parentesco:</label>
-                    <p><?php echo htmlspecialchars($user['parente_emergencia']); ?></p>
+                    <p><?php echo htmlspecialchars($contatoEmergencia['parente_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Telefone de Contato:</label>
-                    <p><?php echo htmlspecialchars($user['telefone_emergencia']); ?></p>
+                    <p><?php echo htmlspecialchars($contatoEmergencia['telefone_emergencia']); ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Email de Contato:</label>
-                    <p><?php echo htmlspecialchars($user['email_emergencia']); ?></p>
+                    <p><?php echo htmlspecialchars($contatoEmergencia['email_emergencia']); ?></p>
                 </div>
             </div>
         </div>
-
-        <!-- Atividades Extracurriculares -->
-        <div class="section">
-            <h3 class="section-title">Atividades Extracurriculares</h3>
-            <ul>
-                <?php foreach ($atividades as $atividade) : ?>
-                <li><?php echo htmlspecialchars($atividade); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-
-        <!-- Eventos -->
-        <div class="section">
-            <h3 class="section-title">Eventos Acadêmicos</h3>
-            <ul>
-                <li>Semana da Engenharia - 12/11/2024</li>
-                <li>Hackathon Acadêmico - 25/11/2024</li>
-                <li>Feira de Ciências e Tecnologia - 10/12/2024</li>
-            </ul>
-        </div>
-    </div>
-   
-    
 </main>
 
     <!-- Scripts -->
