@@ -3,8 +3,8 @@ include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE php>
+<php lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +63,7 @@ include '../../../php/global/notificacao.php';
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../<?php echo $fotoCaminho ?>" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
                 <a href="../perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
@@ -140,28 +140,28 @@ include '../../../php/global/notificacao.php';
 <main>
     <div class="main-dashboard">
         <!-- Card de Visão Geral de Disciplinas -->
-        <a href="disciplinas.html" class="card">
+        <a href="disciplina.php" class="card">
             <h3>Disciplinas Coordenadas</h3>
             <div class="count">8</div>
             <p>Disciplinas atualmente sob sua coordenação. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Alunos Supervisionados -->
-        <a href="alunos.html" class="card">
+        <a href="alunos.php" class="card">
             <h3>Alunos Supervisionados</h3>
             <div class="count">120</div>
             <p>Total de alunos sob supervisão direta em várias disciplinas. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Supervisão de Professores -->
-        <a href="professores.html" class="card">
+        <a href="professores.php" class="card">
             <h3>Professores Supervisionados</h3>
             <div class="count">15</div>
             <p>Número de professores sob sua coordenação. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Relatórios Pendentes -->
-        <a href="relatorios.html" class="card">
+        <a href="relatorios.php" class="card">
             <h3>Relatórios Pendentes</h3>
             <div class="count">3</div>
             <p>Relatórios acadêmicos que precisam ser enviados. Clique para detalhes.</p>
@@ -207,4 +207,4 @@ include '../../../php/global/notificacao.php';
    <script src="../../../assets/js/global/search.js"></script>
     <script src="../../../assets/js/professor/dashboard/dashboard.js"></script>
 </body>
-</html>
+</php>

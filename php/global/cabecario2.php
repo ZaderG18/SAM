@@ -7,6 +7,9 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Erro ao conectar ao banco". $conn->connect_error);
 }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $user = $_SESSION['user'];
 $id = $user['id'];
 

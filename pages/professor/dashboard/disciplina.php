@@ -11,7 +11,7 @@ include '../../../php/global/notificacao.php';
     <title>Dashboard - Cursos</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../../assets/scss/professor/dashboard/disciplinas.css">
+    <link rel="stylesheet" href="../../../assets/scss/professor/dashboard/disciplina.css">
     <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../../assets/scss/global/estilogeral.css">
  
@@ -63,7 +63,7 @@ include '../../../php/global/notificacao.php';
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../<?php echo $fotoCaminho ?>" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
                 <a href="../perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
@@ -155,61 +155,61 @@ include '../../../php/global/notificacao.php';
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="HTML">
             <h3>HTML</h3>
             <p>Turma: 1 | Desempenho: 85%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="CSS">
             <h3>CSS</h3>
             <p>Turma: 2 | Desempenho: 90%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="JavaScript">
             <h3>JavaScript</h3>
             <p>Turma: 3 | Desempenho: 88%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="Python">
             <h3>Python</h3>
             <p>Turma: 1 | Desempenho: 92%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="Java">
             <h3>Java</h3>
             <p>Turma: 2 | Desempenho: 87%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="C#">
             <h3>C#</h3>
             <p>Turma: 3 | Desempenho: 89%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="Ruby">
             <h3>Ruby</h3>
             <p>Turma: 1 | Desempenho: 91%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="PHP">
             <h3>PHP</h3>
             <p>Turma: 2 | Desempenho: 86%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="SQL">
             <h3>SQL</h3>
             <p>Turma: 3 | Desempenho: 93%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="Go">
             <h3>Go</h3>
             <p>Turma: 1 | Desempenho: 94%</p>
-            <a href="../../html/detalhes/detalhes_materia.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
         </div>
 

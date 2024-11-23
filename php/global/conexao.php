@@ -431,5 +431,3 @@ foreach ($foreignKeys as $query) {
 
 }
 atualizarBanco($conn);
-// Fecha a conexão com o banco de dados
-$conn->close();

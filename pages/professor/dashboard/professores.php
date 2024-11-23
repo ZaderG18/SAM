@@ -154,61 +154,61 @@ include '../../../php/global/notificacao.php';
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Maria Silva">
             <h3>Maria Silva</h3>
             <p>Turma: 1 | Matérias: HTML, CSS</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma2">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Ana Souza">
             <h3>Ana Souza</h3>
             <p>Turma: 2 | Matérias: JavaScript, React</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma3">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Clara Lima">
             <h3>Clara Lima</h3>
             <p>Turma: 3 | Matérias: Python, Django</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma1">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Beatriz Alves">
             <h3>Beatriz Alves</h3>
             <p>Turma: 1 | Matérias: Java, Spring</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma2">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Fernanda Costa">
             <h3>Fernanda Costa</h3>
             <p>Turma: 2 | Matérias: C#, .NET</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma3">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Gabriela Rocha">
             <h3>Gabriela Rocha</h3>
             <p>Turma: 3 | Matérias: PHP, Laravel</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma1">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Isabela Martins">
             <h3>Isabela Martins</h3>
             <p>Turma: 1 | Matérias: Ruby, Rails</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma2">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Juliana Pereira">
             <h3>Juliana Pereira</h3>
             <p>Turma: 2 | Matérias: Swift, iOS</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma3">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Larissa Fernandes">
             <h3>Larissa Fernandes</h3>
             <p>Turma: 3 | Matérias: Kotlin, Android</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
             <div class="teacher-card" data-turma="turma1">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Mariana Oliveira">
             <h3>Mariana Oliveira</h3>
             <p>Turma: 1 | Matérias: SQL, NoSQL</p>
-            <a href="../../html/detalhes/detalhes_professor.html">Ver Detalhes</a>
+            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
         </div>
 

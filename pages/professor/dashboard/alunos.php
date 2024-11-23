@@ -154,61 +154,61 @@ include '../../../php/global/notificacao.php';
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Maria Silva">
                 <h3>Maria Silva</h3>
                 <p>Turma: 1 | Desempenho: 85%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Ana Souza">
                 <h3>Ana Souza</h3>
                 <p>Turma: 2 | Desempenho: 90%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Clara Lima">
                 <h3>Clara Lima</h3>
                 <p>Turma: 3 | Desempenho: 88%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Beatriz Alves">
                 <h3>Beatriz Alves</h3>
                 <p>Turma: 1 | Desempenho: 92%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Fernanda Costa">
                 <h3>Fernanda Costa</h3>
                 <p>Turma: 2 | Desempenho: 87%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Gabriela Rocha">
                 <h3>Gabriela Rocha</h3>
                 <p>Turma: 3 | Desempenho: 89%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Isabela Martins">
                 <h3>Isabela Martins</h3>
                 <p>Turma: 1 | Desempenho: 91%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma2">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Juliana Pereira">
                 <h3>Juliana Pereira</h3>
                 <p>Turma: 2 | Desempenho: 86%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma3">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Larissa Fernandes">
                 <h3>Larissa Fernandes</h3>
                 <p>Turma: 3 | Desempenho: 93%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
             <div class="student-card" data-turma="turma1">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Mariana Oliveira">
                 <h3>Mariana Oliveira</h3>
                 <p>Turma: 1 | Desempenho: 94%</p>
-                <a href="../../html/detalhes/detalhes_aluno.html">Ver Detalhes</a>
+                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
             </div>
         </div>
 

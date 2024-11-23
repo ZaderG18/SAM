@@ -63,7 +63,7 @@ include '../../../php/global/notificacao.php';
             </div>
         </div>
         <div class="header__dropdown">
-            <img src="../<?php echo $fotoCaminho ?>" alt="" class="header__img">
+            <img src="<?php echo $fotoCaminho ?>" alt="" class="header__img">
             <div class="header__dropdown-content">
                 <a href="../perfil.php" class="header__dropdown-item">
                     <i class='bx bx-user'></i> Perfil
