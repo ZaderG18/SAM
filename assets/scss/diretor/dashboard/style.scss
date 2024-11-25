@@ -72,6 +72,8 @@
 
 */
 
+
+
 /*SKULL VERDE TÓXICO */
 :root {
     --color-primary: #6b3e9c;
@@ -124,19 +126,20 @@ html {
 
 .container {
     display: grid;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 14rem auto 23rem;;
+    grid-template-columns: 14rem auto 23rem;
 }
+
 body {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     font-family: poppins, sans-serif;
     font-size: 0.88rem;
     background: var(--color-background);
     user-select: none;
-    overflow-x: hidden;
+    overflow-x: auto;
     color: var(--color-dark);
 }
 

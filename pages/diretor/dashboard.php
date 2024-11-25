@@ -7,7 +7,7 @@
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-     <link rel="stylesheet" href="../../assets/scss/dashboard/dashboard.css">
+     <link rel="stylesheet" href="../../assets/scss/diretor/dashboard/dashboard.css">
      <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <title>Dashboard SAM</title>
 </head>
@@ -18,9 +18,8 @@
         <a href="#" class="header__logo">SAM</a>
 
         <div class="header__search">
-            <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-            <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input">
         </div>
 
         <!-- Notificações -->
@@ -164,7 +163,7 @@
                                 <span class="nav__name">calendário</span>
                             </a>
 
-                            <a href="#" class="nav__link active">
+                            <a href="dashboard.php" class="nav__link active">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -187,12 +186,12 @@
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="#" class="nav__link">
+                            <a href="comunicado.php" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
 
-                            <a href="#" class="nav__link">
+                            <a href="documentos/solicdocument.php" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -294,49 +293,9 @@
                     </section>
                     <section class="section-registro">
                         <h3>Últimos registros</h3>
-                        <div class="table-container">
-                            <table>
-                              <thead>
-                                <tr>
-                                  <th>Nome</th>
-                                  <th>Matrícula</th>
-                                  <th>Gênero</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td data-label="Nome">Ana Souza</td>
-                                  <td data-label="Matrícula">20231001</td>
-                                  <td data-label="Gênero">Feminino</td>
-                                </tr>
-                                <tr>
-                                  <td data-label="Nome">Carlos Santos</td>
-                                  <td data-label="Matrícula">20231002</td>
-                                  <td data-label="Gênero">Masculino</td>
-                                </tr>
-                                <tr>
-                                  <td data-label="Nome">Mariana Oliveira</td>
-                                  <td data-label="Matrícula">20231003</td>
-                                  <td data-label="Gênero">Feminino</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Nome">Ana Souza</td>
-                                    <td data-label="Matrícula">20231001</td>
-                                    <td data-label="Gênero">Feminino</td>
-                                  </tr>
-                                  <tr>
-                                    <td data-label="Nome">Carlos Santos</td>
-                                    <td data-label="Matrícula">20231002</td>
-                                    <td data-label="Gênero">Masculino</td>
-                                  </tr>
-                                  <tr>
-                                    <td data-label="Nome">Mariana Oliveira</td>
-                                    <td data-label="Matrícula">20231003</td>
-                                    <td data-label="Gênero">Feminino</td>
-                                  </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                        <div class="box-grifico">
+                            <canvas id="grafico1"></canvas>
+                        </div>
                     </section>
                 </div><!--container-content-->
             </main>
@@ -377,7 +336,7 @@
                                 <p>RM:<span>000-00-000</span></p>
                             </div>
                         </div><!--aluno-->
-                        <button>Ver todos</button>
+                        <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
 
@@ -416,7 +375,7 @@
                                 <p>RM:<span>000-00-000</span></p>
                             </div>
                         </div><!--aluno-->
-                        <button>Ver todos</button>
+                        <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
 
@@ -432,11 +391,12 @@
             </aside>
         </div><!--global-container-->
 
-        <script src="../../assets/js/global/navgation.js"></script>
-        <script src="../../assets/js/dashboard/spa/spa.js"></script>
+        <script src="../../assets/js/diretor/global/navgation.js"></script>
+        <script src="../../assets/js/diretor/dashboard/spa/spa.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="../../assets/js/dashboard/dashboard.js"></script>
-        <script src="../../assets/js/dashboard/navdash.js"></script>
-        <script src="../../assets/js/global/dropdown.js"></script>
+        <script src="../../assets/js/diretor/dashboard/dashboard.js"></script>
+        <script src="../../assets/js/diretor/dashboard/navdash.js"></script>
+        <script src="../../assets/js/diretor/global/dropdown.js"></script>
+        <script src="../../assets/js/diretor/dashboard/grafico.js"></script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+
+
+/* Respostas */
+.response-list h2 {
+    font-size: 1.4rem;
+    color: #0056b3;
+    margin-bottom: 15px;
+}
+
+.response-card {
+    background: #eef2f7;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.response-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.response-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background: #0056b3;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 704px){
+    #response-container{
+        margin: 0 10px;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .filter-section form {
+        flex-direction: column;
+    }
+
+    .filter-section select,
+    .filter-section input {
+        flex: 1 1 100%;
+    }
+
+    .filter-section .btn-submit {
+        flex: 1 1 100%;
+    }
+
+    .response-card {
+        padding: 10px;
+    }
+
+    .response-card h3 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .filter-section h2,
+    .response-list h2 {
+        font-size: 1.2rem;
+    }
+
+    .response-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .response-card p {
+        font-size: 0.85rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+#response-container{
+    height: 400px;
+    overflow-y: auto;
+}

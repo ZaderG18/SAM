@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
-    <!-- <link rel="stylesheet" href="../../assets/scss/home/style.css"> -->
+    <!-- <link rel="stylesheet" href="../../assets/scss/diretor/home/style.css"> -->
     <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
-    <!-- <link rel="stylesheet" href="../../assets/scss/home/style.css"> -->
-    <link rel="stylesheet" href="../../assets/scss/calendario/calendario.css">
+    <!-- <link rel="stylesheet" href="../../assets/scss/diretor/home/style.css"> -->
+    <link rel="stylesheet" href="../../assets/scss/diretor/calendario/calendario.css">
 
     <link
     rel="stylesheet"
@@ -30,9 +30,8 @@
         <a href="#" class="header__logo">SAM</a>
 
         <div class="header__search">
-            <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-            <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input">
         </div>
 
         <!-- Notificações -->
@@ -165,12 +164,12 @@
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="../home/home.html" class="nav__link">
+                            <a href="home_diretor.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
                             
-                            <a href="#" class="nav__link active">
+                            <a href="calendario.php" class="nav__link active">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
@@ -199,12 +198,12 @@
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="#" class="nav__link">
+                            <a href="comunicado.php" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
 
-                            <a href="#" class="nav__link">
+                            <a href="documentos/solicdocument.php" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -327,8 +326,8 @@
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script> -->
 
-    <script src="../../assets/js/global/navgation.js"></script>
-    <script src="../../assets/js/global/dropdown.js"></script>
-    <script src="../../assets/js/calendario/calendario.js"></script>
+    <script src="../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../assets/js/diretor/global/dropdown.js"></script>
+    <script src="../../assets/js/diretor/calendario/calendario.js"></script>
 </body>
 </html>

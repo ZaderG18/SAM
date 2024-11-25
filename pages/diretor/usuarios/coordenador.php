@@ -1,3 +1,8 @@
+<?php
+require '../../../php/global/cabecario2.php';
+require '../../../php/login/validar.php';
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../assets/scss/global/navgation.css">
     <!-- <link rel="stylesheet" href="../../assets/scss/usuario/style.css"> -->
     
     <link rel="stylesheet" href="../../assets/scss/usuario/swiper-bundle.min.css">
@@ -30,9 +35,8 @@
           <a href="#" class="header__logo">SAM</a>
   
           <div class="header__search">
-              <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-              <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+              <i class='bx bx-search header__icon'></i>
+              <input type="search" placeholder="Search" class="header__input">
           </div>
   
           <!-- Notificações -->
@@ -166,7 +170,7 @@
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="home_diretor.php" class="nav__link">
+                            <a href="../home_diretor.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
@@ -344,7 +348,7 @@
     <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script> -->
-    <script src="../../assets/js/global/navgation.js"></script>
-    <script src="../../assets/js/global/dropdown.js"></script>
+    <script src="../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../assets/js/diretor/global/dropdown.js"></script>
 </body>
 </html>

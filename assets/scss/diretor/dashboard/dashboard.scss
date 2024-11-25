@@ -6,7 +6,7 @@
 
 :root {
     --color-primary: #2C3E50; /* Azul escuro para textos e títulos */
-    --background-color: #F4F6F8; /* Fundo geral do sistema */
+    --background-color: #f6f9f8; /* Fundo geral do sistema */
     --color-cards: #F8F9FA; /* Fundo dos cards */
     --color-border: #E0E0E0; /* Bordas dos cards e inputs */
     --color-hover: #EAEDED; /* Fundo ao passar o mouse sobre os cards */
@@ -102,7 +102,12 @@ main .box-title-dashboard .flexh1 i{
     /* border-bottom: 2px solid rgba(187, 187, 187, 0.411); */
     padding-bottom: 10px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
 }
+
 
 /* Oculta o menu-toggle por padrão */
 .menu-toggle {
@@ -126,10 +131,12 @@ main .box-title-dashboard .flexh1 i{
     font-weight: 500;
     color: #b5b7b7;
     text-decoration: none;
+    padding: 10px 15px;
 }
 
 li .active {
-    color: var(--color-primary) !important;
+    color: white !important;
+    background-color: var(--color-primary) !important;
 }
 
 
@@ -181,17 +188,23 @@ ul .nav_link {
     width: 30%;
     /* min-width: 200px; */
     height: auto;
-    background-color: var(--color-cards);
+    background-color: white;
     /* color: black; */
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    box-shadow: 0 1rem 2rem rgba(132, 200, 174, 0.18);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: 0.3s;
+}
+
+
+.flex-box-dashboard .box-dashboard:hover{
+    box-shadow: 0 2rem 3rem rgba(132, 200, 174, 0.267);
 }
 
 /* .box-dashboard i{
@@ -275,7 +288,7 @@ ul .nav_link {
 aside{
     width: 30%;
     height: auto;
-    background-color: #f6f9f8;
+    /* background-color: #f6f9f8; */
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     padding: 50px 10px 50px 10px;
 }
@@ -283,6 +296,17 @@ aside{
 aside .section-aluno{
     width: 100%;
     height: auto;
+}
+
+.button-notificar{
+    padding: 10px;
+    width: 100px;
+    background-color: #2C3E50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .section-aluno h6{
@@ -303,6 +327,8 @@ aside .section-aluno{
     margin-bottom: 10px;
     /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .aluno img{
@@ -310,6 +336,7 @@ aside .section-aluno{
     height: 50px;
     border-radius: 100%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .aluno .box-info-aluno{
@@ -349,12 +376,16 @@ aside .section-aluno{
     padding: 0 40px 50px 40px;
 }
 
-/* .box-grifico{
+.box-grifico{
     width: 100%;
     height: 500px;
     display: flex;
     justify-content: center;
-} */
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 1rem 2rem rgba(132, 200, 174, 0.18);
+}
 
 .section-grafico canvas{
     width: 100%;

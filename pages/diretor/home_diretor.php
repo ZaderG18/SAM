@@ -5,18 +5,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 require_once '../../php/global/funcao.php';
-$user = $_SESSION['user'];
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "SAM";
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-
+require '../../php/global/cabecario.php';
 // Obtenha todos os usuários e os totais.
 $usuarios = get_todos_usuarios($conn);
 $totalAlunos = total_alunos($conn);
@@ -49,9 +38,8 @@ $maximo_registros = 6;
             <a href="#" class="header__logo">SAM</a>
     
             <div class="header__search">
-                <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-                <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+                <i class='bx bx-search header__icon'></i>
+                <input type="search" placeholder="Search" class="header__input">
             </div>
     
             <!-- Notificações -->
@@ -131,8 +119,8 @@ $maximo_registros = 6;
                     <div class="flex-conta">
                         <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                         <div class="box-info-conta">
-                            <h4><?php echo htmlspecialchars($user['nome'])?></h4>
-                            <p><?php echo htmlspecialchars($user['email'])?></p>
+                            <h4>David Richard Ramos Rosa</h4>
+                            <p>david.rosa4@etec.sp.gov.br</p>
                             <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                         </div>
                     </div><!--flex-conta-->
@@ -224,7 +212,7 @@ $maximo_registros = 6;
                                 <span class="nav__name">Comunicados</span>
                             </a>
 
-                            <a href="#" class="nav__link">
+                            <a href="documentos/solicdocument.php" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -298,7 +286,7 @@ $maximo_registros = 6;
                                 <img id="img3" src="../../assets/img/home/logo/Layer_1-1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalCoordenador)?></h4>
                             </div>
-                            <p>Total de responsáveis   </p>
+                            <p>Total de Coordenadores</p>
                         </div>
                     </div>
                 </div> <!--box-visão-geral-->
@@ -357,7 +345,7 @@ $maximo_registros = 6;
     <script src="../../assets/js/home/bottomnav.js"></script>
     <script src="../../assets/js/home/menumobile.js"></script> -->
 
-    <script src="../../assets/js/global/navgation.js"></script>
-    <script src="../../assets/js/global/dropdown.js"></script>
+    <script src="../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../assets/js/diretor/global/dropdown.js"></script>
 </body>
 </html>

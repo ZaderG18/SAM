@@ -1,27 +1,17 @@
 <?php
-
-$host = 'localhost';
-$database = 'sam';
-$username = 'root';
-$password = '';
-$conn = new mysqli($host, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    require_once '../../../php/login/validar.php';
-$user = $_SESSION['user'];
+require_once '../../../php/login/validar.php';
+require '../../../php/global/cabecario2.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../assets/scss/cursos/gerencursos.css">
+    <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
+    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/gerencursos.css">
 
-    <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
 
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -35,9 +25,8 @@ $user = $_SESSION['user'];
         <a href="#" class="header__logo">SAM</a>
 
         <div class="header__search">
-            <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-            <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input">
         </div>
 
         <!-- Notificações -->
@@ -58,7 +47,7 @@ $user = $_SESSION['user'];
                 <hr>
                 <div class="box-flex-notification">
                    <div class="boximg-noti">
-                    <img src="../../assets/img/persona/minhafoto.PNG" alt="Profile">
+                    <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
                     <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                    </div>
                     <div class="dados-notification">
@@ -68,7 +57,7 @@ $user = $_SESSION['user'];
                 </div>
                 <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
+                     <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -78,7 +67,7 @@ $user = $_SESSION['user'];
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
+                     <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -88,7 +77,7 @@ $user = $_SESSION['user'];
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
+                     <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -98,7 +87,7 @@ $user = $_SESSION['user'];
                  </div>
                  <div class="box-flex-notification">
                     <div class="boximg-noti">
-                     <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
+                     <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                     </div>
                      <div class="dados-notification">
@@ -111,11 +100,11 @@ $user = $_SESSION['user'];
 
         <!-- Perfil -->
         <div class="dropdown profile-dropdown" style="margin: 0 15px;">
-            <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+            <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
             <div class="dropdown-content" id="profile-content">
                 <h5>Etec | Centro Paula souza</h5>
                 <div class="flex-conta">
-                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                    <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                     <div class="box-info-conta">
                         <h4>David Richard Ramos Rosa</h4>
                         <p>david.rosa4@etec.sp.gov.br</p>
@@ -172,17 +161,17 @@ $user = $_SESSION['user'];
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="home_diretor.php" class="nav__link">
+                            <a href="../home_diretor.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
                             
-                            <a href="calendario.php" class="nav__link ">
+                            <a href="../calendario.php" class="nav__link ">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
                         
-                            <a href="dashboard.php" class="nav__link">
+                            <a href="../dashboard.php" class="nav__link">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -206,12 +195,12 @@ $user = $_SESSION['user'];
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="#" class="nav__link">
+                            <a href="../comunicados.php" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
 
-                            <a href="#" class="nav__link">
+                            <a href="../documentos/solicdocument.php" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -220,7 +209,7 @@ $user = $_SESSION['user'];
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Interação</h3>
 
-                            <a href="chat.php" class="nav__link">
+                            <a href="../chat.php" class="nav__link">
                                 <i class='bx bx-conversation nav__icon'></i>
                                 <span class="nav__name">Chat</span>
                             </a>
@@ -229,7 +218,7 @@ $user = $_SESSION['user'];
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Configurações</h3>
 
-                            <a href="configuracoes.php" class="nav__link">
+                            <a href="../configuracoes.php" class="nav__link">
                                 <i class='bx bx-cog nav__icon'></i>
                                 <span class="nav__name">Configurações</span>
                             </a>
@@ -237,7 +226,7 @@ $user = $_SESSION['user'];
                     </div>
                 </div>
 
-                <a href="../../php/login/logout.php" class="nav__link nav__logout">
+                <a href="../../../php/login/logout.php" class="nav__link nav__logout">
                     <i class='bx bx-log-out nav__icon' ></i>
                     <span class="nav__name">Log Out</span>
                 </a>
@@ -249,7 +238,7 @@ $user = $_SESSION['user'];
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gerenciamento de Cursos</h1>
-                        <!-- <div class="box-img"><img src="../../assets/img/cursos/cusos.svg" alt="" srcset=""></div> -->
+                        <!-- <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div> -->
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->
@@ -267,7 +256,7 @@ $user = $_SESSION['user'];
                         </a>
                     </div>
                     <div class="box-user editar">
-                        <a href="editarcurso.html" class="box-editar">
+                        <a href="cursos/editarcursos.php" class="box-editar">
                             <div class="img-editar img"></div>
                             <div class="box-descricao">
                                 <h5 style="color: #f5ac3d;">Editar Cursos</h5>
@@ -288,11 +277,11 @@ $user = $_SESSION['user'];
             </div><!--container-->
         </main>
 
-    <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script> -->
+    <!-- <script src="../../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../../assets/js/home/bottomnav.js"></script>
+    <script src="../../../assets/js/home/menumobile.js"></script> -->
 
-    <script src="../../assets/js/global/navgation.js"></script>
-    <script src="../../assets/js/global/dropdown.js"></script>
+    <script src="../../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../../assets/js/diretor/global/dropdown.js"></script>
 </body>
 </html>

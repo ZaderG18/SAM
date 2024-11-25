@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/scss/chat/tailwindcss-colors.css">
-    <link rel="stylesheet" href="../../assets/scss/chat/style.css">
+    <link rel="stylesheet" href="../../assets/scss/diretor/chat/tailwindcss-colors.css">
+    <link rel="stylesheet" href="../../assets/scss/diretor/chat/style.css">
     <title>Chat</title>
 </head>
 <body>
@@ -558,6 +558,6 @@
     </section>
     <!-- end: Chat -->
     
-    <script src="../../assets/js/chat/script.js"></script>
+    <script src="../../assets/js/diretor/chat/script.js"></script>
 </body>
 </html>

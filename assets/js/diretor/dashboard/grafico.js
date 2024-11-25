@@ -1,7 +1,7 @@
 const ctx = document.getElementById('grafico1');
 
   new Chart(ctx, {
-    type: 'doughnut',
+    type: 'line',
     data: {
       labels: ['Alunos', 'Responsaveis', 'Coordenação', 'Secretaria', 'Professores', 'Técnico de TI/Suporte'],
       datasets: [{

@@ -1,16 +1,7 @@
 <?php
+require '../../../php/global/cabecario2.php';
+require_once '../../../php/login/validar.php';
 
-$host = 'localhost';
-$database = 'sam';
-$username = 'root';
-$password = '';
-$conn = new mysqli($host, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-    require_once '../../../php/login/validar.php';
-$user = $_SESSION['user'];
 // Inicialize a variável $professores
 $professores = [];
 // Consulta para obter a lista de professores
@@ -32,7 +23,7 @@ if ($result->num_rows > 0) {
     <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
-    <link rel="stylesheet" href="../../../assets/scss/cursos/cursos.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/cursos.css">
 
     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
@@ -49,9 +40,8 @@ if ($result->num_rows > 0) {
         <a href="#" class="header__logo">SAM</a>
 
         <div class="header__search">
-            <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-            <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+            <i class='bx bx-search header__icon'></i>
+            <input type="search" placeholder="Search" class="header__input">
         </div>
 
         <!-- Notificações -->
@@ -218,8 +208,8 @@ if ($result->num_rows > 0) {
   
                               <div class="nav__dropdown-collapse">
                                   <div class="nav__dropdown-content">
-                                      <a href="cursos.php" class="nav__dropdown-item">Home</a>
-                                      <a href="editarcursos.php" class="nav__dropdown-item">Editar</a>
+                                      <a href="../cursos/cursos.php" class="nav__dropdown-item">Home</a>
+                                      <a href="../cursos/editarcursos.php" class="nav__dropdown-item">Editar</a>
                                       <a href="#" class="nav__dropdown-item">Remover</a>
                                   </div>
                               </div>
@@ -234,7 +224,7 @@ if ($result->num_rows > 0) {
                                 <span class="nav__name">Comunicados</span>
                             </a>
   
-                            <a href="#" class="nav__link">
+                            <a href="../documentos/solicdocument.php" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -243,7 +233,7 @@ if ($result->num_rows > 0) {
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Interação</h3>
   
-                            <a href="chat.php" class="nav__link">
+                            <a href="../chat.php" class="nav__link">
                                 <i class='bx bx-conversation nav__icon'></i>
                                 <span class="nav__name">Chat</span>
                             </a>
@@ -270,7 +260,7 @@ if ($result->num_rows > 0) {
         <main>
         <section class="formulario-flex">
             <div class="box-left">
-                <img src="../../assets/img/cursos/criar/11285789.jpg" alt="">
+                <img src="../../../assets/img/cursos/criar/11285789.jpg" alt="">
             </div>
             <form action="../../../php/diretor/cadastrar_curso.php" method="post" class="form-container" enctype="multipart/form-data">
                 <!-- Primeiro grupo de inputs -->
@@ -284,25 +274,7 @@ if ($result->num_rows > 0) {
                                 <img id="imagemDisplay" class="image-circle" src="adicionar-icone-adicionar-foto-de-video-de-postagem-imagens-vetoriais_292645-294.avif" alt="Imagem Selecionada">
                             </label>
 
-                            <script>
-                                function previewImage(event) {
-                                    const imageDisplay = document.getElementById('imagemDisplay');
-                                    const file = event.target.files[0];
-                                    const reader = new FileReader();
 
-                                    reader.onload = function(e) {
-                                        imageDisplay.src = e.target.result; // Atualiza a imagem no círculo
-                                    }
-
-                                    if (file) {
-                                        reader.readAsDataURL(file); // Lê a imagem como URL
-                                    }
-                                }
-
-                                
-                            </script>
-
-                    
                     <div class="box-inputs">
                         <div class="input">
                             <label for="nome_curso">Nome do Curso:</label>
@@ -311,6 +283,24 @@ if ($result->num_rows > 0) {
                         <div class="input input-right">
                             <label for="codigo">Código:</label>
                             <input type="text" id="codigo" name="codigo" placeholder="Digite o código do curso" required>
+                        </div>
+                        <div class="input">
+                            <label for="dias-curso">Dias de Aula:</label>
+                            <select id="dias-curso" name="dias-curso" required>
+                                <option value="">Selecione os dias</option>
+                                <option value="segunda-feira">Segunda-feira</option>
+                                <option value="terça-feira">Terça-feira</option>
+                                <option value="quarta-feira">Quarta-feira</option>
+                                <option value="quinta-feira">Quinta-feira</option>
+                                <option value="sexta-feira">Sexta-feira</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                                <option value="segunda-quarta-sexta">Segunda, Quarta e Sexta</option>
+                                <option value="terça-quinta">Terça e Quinta</option>
+                                <option value="segunda-sexta">Segunda e Sexta</option>
+                                <option value="segunda-terça-quarta-quinta-sexta">Segunda a Sexta (todos os dias úteis)</option>
+                                <option value="sabado-domingo">Sábado e Domingo</option>
+                            </select>
                         </div>
                         <div class="input">
                             <label for="departamento">Departamento:</label>
@@ -436,6 +426,101 @@ if ($result->num_rows > 0) {
                         <button type="button" class="next">Próximo</button>
                     </div>
                 </fieldset>
+                <fieldset class="step">
+                    <div class="box-legend">
+                        <legend class="legend-img">Personalização</legend>
+                        <div class="line-legend line-img"></div>
+                    </div>
+                   
+                    <div class="box-img-curso">
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img1.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img2.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img3.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img4.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img5.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img6.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img7.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img8.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img9.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img10.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img11.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img12.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img13.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img14.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img15.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img16.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img17.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img18.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img19.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img20.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img21.PNG" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img22.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img23.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img24.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img25.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img26.jpg" alt="">
+                        </div>
+                        <div class="box-img">
+                            <img src="../../../assets/img/cursos/img-criar-curso/img27.PNG" alt="">
+                        </div>
+
+                    </div>
+                    <div class="box-buttons">
+                        <button type="button" class="prev">Voltar</button>
+                        <button type="button" class="next">Próximo</button>
+                    </div>
+                </fieldset>
         
                 <!-- Quinto grupo de inputs -->
                 <fieldset class="step">
@@ -479,5 +564,32 @@ if ($result->num_rows > 0) {
     </main>
     <script src="../../../assets/js/diretor/cursos/criar.js"></script>
     <script src="../../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../../assets/js/diretor/global/dropdown.js"></script>
+    <script>
+function previewImage(event) {
+    const imageDisplay = document.getElementById('imagemDisplay');
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+    imageDisplay.src = e.target.result; // Atualiza a imagem no círculo
+    }
+if (file) {
+        reader.readAsDataURL(file); // Lê a imagem como URL
+    }
+}
+const boxes = document.querySelectorAll('.box-img');
+// Função para remover a classe 'selected' de todas as caixas de imagem
+function removeSelected() {
+    boxes.forEach(box => box.classList.remove('selected'));
+}
+
+// Adiciona o evento de clique para cada caixa de imagem
+boxes.forEach(box => {
+    box.addEventListener('click', () => {
+        removeSelected();  // Remove a seleção de qualquer outra caixa
+        box.classList.add('selected');  // Adiciona a borda à caixa clicada
+    });
+});                                
+</script>
 </body>
 </html>

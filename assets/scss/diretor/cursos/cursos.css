@@ -121,6 +121,14 @@ fieldset legend {
   background-color: #4947bb;
 }
 
+.legend-img {
+  color: #abc1e4;
+}
+
+.line-img {
+  background-color: #abc1e4;
+}
+
 .line-legend {
   width: 60px;
   height: 5px;
@@ -157,6 +165,14 @@ fieldset legend {
   border: none;
   box-shadow: rgba(0, 0, 0, 0.212) 0px 4px 12px;
   outline: none;
+}
+
+select {
+  background-color: white;
+}
+
+input[type=date] {
+  background-color: white;
 }
 
 .input input::-moz-placeholder {
@@ -245,6 +261,40 @@ button:hover {
 
 .salvar:hover {
   background-color: #68812d;
+}
+
+.box-img-curso {
+  background-color: rgba(241, 241, 241, 0.5960784314);
+  display: flex;
+  overflow-y: scroll;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 260px;
+}
+
+.box-img-curso .box-img {
+  width: 170px;
+  height: 170px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid transparent;
+}
+
+.box-img-curso .box-img:hover {
+  border: 2px solid #8cae3d;
+}
+
+.box-img.selected {
+  border: 2px solid #8cae3d; /* Ajuste a cor conforme desejar */
+}
+
+.box-img-curso img {
+  width: 100%;
+  height: 170px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  padding: 10px;
 }
 
 @media screen and (min-width: 1400px) {
@@ -380,9 +430,34 @@ button:hover {
     font-size: 10px;
   }
 }
+@media screen and (max-width: 380px) {
+  .box-img-curso .box-img {
+    width: 140px;
+    height: 140px;
+    margin: 10px 5px;
+    cursor: pointer;
+  }
+  .box-img-curso img {
+    width: 100%;
+    height: 140px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    padding: 10px;
+  }
+}
 @media screen and (max-width: 330px) {
   .input {
     width: calc(100% - 20px);
     margin: 20px 10px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .box-img-curso .box-img {
+    width: 200px;
+    height: 200px;
+    margin: 10px 5px;
+  }
+  .box-img-curso img {
+    height: 200px;
   }
 }/*# sourceMappingURL=cursos.css.map */

@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: "Poppins", sans-serif;
+}
+
+main .global-flex-doc{
+    max-width: 1440px;
+    width: 1200px;
+    height: auto;
+    display: flex;
+    margin: 0 20px;
+}
+
+.global-flex-doc .left-img-doc{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.global-flex-doc .left-img-doc img{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+
+.container-right{
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.514);
+    padding: 50px 20px;
+    width: 50%;
+    height: 500px;
+    overflow-y: auto;
+}
+
+#specificUserFilter input{
+    background-color: none;
+    height: 0;
+    border: none;
+    box-shadow: none;
+    margin-top: 15px;
+}
+
+.line-filter{
+    width: 100%;
+    height: 2px;
+    background-color: #cacacabe;
+}
+
+input[type="text"]{
+    padding: 5px 10px;
+    width: 100%;
+    height: 55px;
+    border-radius: 10px;
+    border: none;
+    /* box-shadow: rgba(0, 0, 0, 0.212) 0px 4px 12px; */
+    outline: none;
+}
+
+        h1 {
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Selectores e input */
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Botões */
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .btn-clear {
+            background-color: #f44336;
+            color: white;
+        }
+
+
+        #userList {
+        max-height: 200px; /* Ajuste a altura máxima conforme necessário */
+        overflow-y: auto;  /* Adiciona a barra de rolagem vertical */
+        border: 1px solid #ccc; /* Adiciona uma borda para delimitar a área */
+        padding: 10px; /* Espaçamento interno */
+        margin-top: 10px; /* Espaçamento superior */
+    }
+
+    .user-item {
+        margin-bottom: 10px; /* Espaçamento entre os itens da lista */
+        padding: 5px;
+        background-color: #f9f9f9; /* Fundo leve para os itens */
+        border: 1px solid #ddd; /* Borda leve para os itens */
+        border-radius: 5px; /* Cantos arredondados */
+    }
+
+    .user-modal {
+        display: none; /* Escondido por padrão */
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+        z-index: 10;
+        top: -10px;
+        right: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-item:hover .user-modal {
+        display: block; /* Mostra ao passar o mouse */
+    }
+
+    
+
+    .document-dropdown {
+        position: relative;
+        width: 100%;
+        margin-bottom: 20px;
+        
+    }
+
+    .document-dropdown label{
+        font-weight: bold;
+    }
+    
+    .document-selected {
+        background: white;
+        padding: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+    }
+    
+    .document-options {
+        display: none; /* Ocultar inicialmente */
+        position: absolute;
+        top: 100%; /* Posicionar abaixo do selected */
+        left: 0;
+        right: 0;
+        max-height: 100px; /* Altura máxima */
+        overflow-y: auto; /* Rolagem vertical */
+        border: 1px solid #ccc;
+        background: white;
+        z-index: 1000;
+    }
+    
+    .document-dropdown:hover .document-options,
+    .document-dropdown:focus-within .document-options {
+        display: block; /* Mostrar opções ao passar o mouse ou focar */
+    }
+    
+    .document-options div {
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .document-options div:hover {
+        background: #e0e0e0; /* Efeito hover nas opções */
+    }
+
+    .button-filtro{
+        margin: 20px 0;
+    }
+    
+
+@media screen and (max-width:1113px){
+        
+main .global-flex-doc{
+    max-width: 1440px;
+    width: 1200px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.global-flex-doc .left-img-doc{
+    width: 100%;
+    height: auto;
+    background-color: #fefaee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.global-flex-doc .left-img-doc img{
+    height: 400px;
+    object-position: top;
+}
+
+.container-right{
+    background-color: white;
+    padding: 50px 20px;
+    width: 100%;
+    height: 500px;
+    overflow-y: auto;
+}
+
+}
+
+@media screen and (max-width:950px){
+    .global-flex-doc .left-img-doc img{
+        height: 300px;
+        object-position: top;
+    }
+}
+
+
+@media screen and (max-width:600px){
+    .global-flex-doc .left-img-doc img{
+        height: 200px;
+        object-position: top;
+    }
+}
+
+@media screen and (max-width:400px){
+    .global-flex-doc .left-img-doc img{
+        height: 130px;
+        object-position: top;
+    }
+}

@@ -1,22 +1,26 @@
+<?php 
+require '../../../php/global/cabecario2.php';
+require '../../../php/login/validar.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
-    <!-- <link rel="stylesheet" href="../../assets/scss/docente/style.css"> -->
+    <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
+    <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
+    <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
+    <!-- <link rel="stylesheet" href="../../../assets/scss/docente/style.css"> -->
     
-    <link rel="stylesheet" href="../../assets/scss/usuario/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets/scss/usuario/aluno/aluno.css">
-    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/aluno/aluno.css">
+    <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
       <!-- Swiper JS -->
-      <script src="../../assets/js/docente/swiper-bundle.min.js"></script>
+      <script src="../../../assets/js/diretor/docente/swiper-bundle.min.js"></script>
 
       <!-- JavaScript -->
-      <script src="../../assets/js/docente/main.js"></script>
+      <script src="../../../assets/js/diretor/docente/main.js"></script>
 
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -30,9 +34,8 @@
             <a href="#" class="header__logo">SAM</a>
     
             <div class="header__search">
-                <button onclick="redirectToPage()"><i class='bx bx-search header__icon'></i></button>
-                <input type="search" placeholder="Search" class="header__input" id="searchInput" oninput="showSuggestions()" autocomplete="off">
-            <div id="suggestions"></div>
+                <i class='bx bx-search header__icon'></i>
+                <input type="search" placeholder="Search" class="header__input">
             </div>
     
             <!-- Notificações -->
@@ -53,7 +56,7 @@
                     <hr>
                     <div class="box-flex-notification">
                        <div class="boximg-noti">
-                        <img src="../../assets/img/persona/minhafoto.PNG" alt="Profile">
+                        <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                        </div>
                         <div class="dados-notification">
@@ -63,7 +66,7 @@
                     </div>
                     <div class="box-flex-notification">
                         <div class="boximg-noti">
-                         <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
+                         <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
                          <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                         </div>
                          <div class="dados-notification">
@@ -73,7 +76,7 @@
                      </div>
                      <div class="box-flex-notification">
                         <div class="boximg-noti">
-                         <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
+                         <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
                          <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                         </div>
                          <div class="dados-notification">
@@ -83,7 +86,7 @@
                      </div>
                      <div class="box-flex-notification">
                         <div class="boximg-noti">
-                         <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
+                         <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
                          <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                         </div>
                          <div class="dados-notification">
@@ -93,7 +96,7 @@
                      </div>
                      <div class="box-flex-notification">
                         <div class="boximg-noti">
-                         <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
+                         <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
                          <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                         </div>
                          <div class="dados-notification">
@@ -106,11 +109,11 @@
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">
-                <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+                <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
                 <div class="dropdown-content" id="profile-content">
                     <h5>Etec | Centro Paula souza</h5>
                     <div class="flex-conta">
-                        <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                        <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                         <div class="box-info-conta">
                             <h4>David Richard Ramos Rosa</h4>
                             <p>david.rosa4@etec.sp.gov.br</p>
@@ -167,7 +170,7 @@
                       <div class="nav__items">
                           <h3 class="nav__subtitle">Principais</h3>
   
-                          <a href="home_diretor.php" class="nav__link">
+                          <a href="../home_diretor.php" class="nav__link">
                               <i class='bx bx-home nav__icon' ></i>
                               <span class="nav__name">Home</span>
                           </a>
@@ -254,7 +257,7 @@
             <div class="box-title">
                 <div class="flex-title">
                     <h1>Gestão de Alunos</h1>
-                    <!-- <div class="box-img"><img src="../../assets/img/docente/image 1.png" alt="" srcset=""></div> -->
+                    <!-- <div class="box-img"><img src="../../../assets/img/docente/image 1.png" alt="" srcset=""></div> -->
                 </div>
             </div><!--box-title-->
 
@@ -265,7 +268,7 @@
                           <div class="image-content">
                             <span class="overlay"></span>
                             <div class="card-image">
-                              <img src="../../assets/img/persona/minhafoto.PNG" alt="" />
+                              <img src="../../../assets/img/persona/minhafoto.PNG" alt="" />
                             </div>
                           </div>
                           <div class="card-content">
@@ -283,7 +286,7 @@
                           <div class="image-content">
                             <span class="overlay"></span>
                             <div class="card-image">
-                              <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" />
+                              <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="" />
                             </div>
                           </div>
                           <div class="card-content">
@@ -301,7 +304,7 @@
                           <div class="image-content">
                             <span class="overlay"></span>
                             <div class="card-image">
-                              <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" />
+                              <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" />
                             </div>
                           </div>
                           <div class="card-content">
@@ -319,7 +322,7 @@
                           <div class="image-content">
                             <span class="overlay"></span>
                             <div class="card-image">
-                              <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" />
+                              <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" />
                             </div>
                           </div>
                           <div class="card-content">
@@ -344,10 +347,10 @@
 
       
 
-    <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../assets/js/home/bottomnav.js"></script>
-    <script src="../../assets/js/home/menumobile.js"></script> -->
-    <script src="../../assets/js/global/navgation.js"></script>
-    <script src="../../assets/js/global/dropdown.js"></script>
+    <!-- <script src="../../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../../assets/js/home/bottomnav.js"></script>
+    <script src="../../../assets/js/home/menumobile.js"></script> -->
+    <script src="../../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../../assets/js/diretor/global/dropdown.js"></script>
 </body>
 </html>
