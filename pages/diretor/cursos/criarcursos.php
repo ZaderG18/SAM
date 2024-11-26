@@ -2,18 +2,19 @@
 require '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 
-// Inicialize a variável $professores
+// ** Consulta para listar professores ** //
 $professores = [];
-// Consulta para obter a lista de professores
-$sql = "SELECT id, nome FROM usuarios WHERE cargo = professor";
-$result = $conn->query($sql);
+$sqlProfessores = "SELECT id, nome FROM usuarios WHERE cargo = 'professor' "; // Ajuste a tabela conforme necessário
+$resultProfessores = $conn->query($sqlProfessores);
 
-// Verifica se há resultados e preenche o array $professores
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $professores[] = $row;
+if ($resultProfessores) {
+    while ($row = $resultProfessores->fetch_assoc()) {
+        $professores[] = $row; // Adiciona ao array
     }
+} else {
+    echo "Erro na consulta de professores: " . $conn->error;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -208,8 +209,8 @@ if ($result->num_rows > 0) {
   
                               <div class="nav__dropdown-collapse">
                                   <div class="nav__dropdown-content">
-                                      <a href="../cursos/cursos.php" class="nav__dropdown-item">Home</a>
-                                      <a href="../cursos/editarcursos.php" class="nav__dropdown-item">Editar</a>
+                                      <a href="cursos.php" class="nav__dropdown-item">Home</a>
+                                      <a href="editarcursos.php" class="nav__dropdown-item">Editar</a>
                                       <a href="#" class="nav__dropdown-item">Remover</a>
                                   </div>
                               </div>
@@ -260,7 +261,7 @@ if ($result->num_rows > 0) {
         <main>
         <section class="formulario-flex">
             <div class="box-left">
-                <img src="../../../assets/img/cursos/criar/11285789.jpg" alt="">
+                <img src="../../../assets/img/diretor/cursos/criar/11285789.jpg" alt="">
             </div>
             <form action="../../../php/diretor/cadastrar_curso.php" method="post" class="form-container" enctype="multipart/form-data">
                 <!-- Primeiro grupo de inputs -->
@@ -434,85 +435,85 @@ if ($result->num_rows > 0) {
                    
                     <div class="box-img-curso">
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img1.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img1.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img2.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img2.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img3.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img3.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img4.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img4.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img5.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img5.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img6.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img6.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img7.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img7.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img8.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img8.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img9.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img9.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img10.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img10.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img11.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img11.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img12.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img12.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img13.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img13.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img14.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img14.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img15.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img15.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img16.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img16.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img17.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img17.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img18.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img18.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img19.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img19.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img20.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img20.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img21.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img21.PNG" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img22.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img22.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img23.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img23.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img24.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img24.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img25.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img25.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img26.jpg" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img26.jpg" alt="">
                         </div>
                         <div class="box-img">
-                            <img src="../../../assets/img/cursos/img-criar-curso/img27.PNG" alt="">
+                            <img src="../../../assets/img/diretor/cursos/img-criar-curso/img27.PNG" alt="">
                         </div>
 
                     </div>

@@ -12,7 +12,7 @@ require '../../../php/login/validar.php';
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
     <!-- <link rel="stylesheet" href="../../../assets/scss/usuario/style.css"> -->
     
-    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundler.min.css">
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/docente/docente.css">
     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
 
@@ -200,14 +200,14 @@ require '../../../php/login/validar.php';
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="gerenuser.html" class="nav__dropdown-item">Home</a>
+                                    <a href="gerenuser.php" class="nav__dropdown-item">Home</a>
                                     <a href="coordenador.html" class="nav__dropdown-item">Coordenador</a>
-                                    <a href="aluno.html" class="nav__dropdown-item">Aluno</a>
+                                    <a href="aluno.php" class="nav__dropdown-item">Aluno</a>
                                 </div>
                             </div>
                         </div>
 
-                          <a href="../cursos/index.html" class="nav__link">
+                          <a href="../cursos/cu" class="nav__link">
                               <i class='bx bx-edit-alt nav__icon'></i>
                               <span class="nav__name">Gerenciar Cursos</span>
                           </a>
@@ -257,7 +257,7 @@ require '../../../php/login/validar.php';
             <div class="box-title">
                 <div class="flex-title">
                     <h1>Gestão de Professores</h1>
-                    <!-- <div class="box-img"><img src="../../../assets/img/docente/image 1.png" alt="" srcset=""></div> -->
+                    <div class="box-img"><img src="../../../assets/img/docente/image 1.png" alt="" srcset=""></div>
                 </div>
             </div><!--box-title-->
 

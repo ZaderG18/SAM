@@ -47,9 +47,9 @@ main .formulario-flex {
   height: 600px;
   -o-object-fit: cover;
      object-fit: cover;
-  /* background-image: url(../../img/cursos/criar/11285789.jpg);
+  background-image: url(../../../img/diretor/cursos/criar/11285789.jpg);
   background-repeat: no-repeat;
-  background-size: cover; */
+  background-size: cover;
   /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
   border-radius: 15px 0 0 15px;
 }
@@ -390,9 +390,9 @@ button:hover {
     height: 500px;
     -o-object-fit: cover;
        object-fit: cover;
-    /* background-image: url(../../img/cursos/criar/11285789.jpg);
+    background-image: url(../../../img/diretor/cursos/criar/11285789.jpg);
     background-repeat: no-repeat;
-    background-size: cover; */
+    background-size: cover;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     border-radius: 15px 0 0 15px;
   }

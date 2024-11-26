@@ -87,3 +87,14 @@ $turma = getTurma($conn, $turmaId);
 $modulos = getModulos($conn);
 $selectedModule = isset($_GET['modulo']) ? (int)$_GET['modulo'] : 1;
 $notas = getNotas($conn, $id, $selectedModule);
+
+// Consulta para buscar os modais
+$sql = "SELECT * FROM modals";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $id = strtolower(str_replace(' ', '-', $row['titulo']));
+        $criterios = isset($row['criterios']) ? explode(';', $row['criterios']) : [];
+    }
+}

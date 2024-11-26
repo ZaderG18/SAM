@@ -11,6 +11,7 @@ require '../../../php/login/validar.php';
     <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/gerenuser.css">
+    <link rel="shortcut icon" href="../../../assets/img/Group 4.png" type="image/x-icon">
 
    <!--========== BOX ICONS ==========-->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -185,7 +186,7 @@ require '../../../php/login/validar.php';
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
 
-                            <a href="../cursos/index.html" class="nav__link">
+                            <a href="../cursos/cursos.php" class="nav__link">
                                 <i class='bx bx-edit-alt nav__icon'></i>
                                 <span class="nav__name">Gerenciar Cursos</span>
                             </a>
@@ -236,14 +237,14 @@ require '../../../php/login/validar.php';
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gerenciamento de Usuarios</h1>
-                        <!-- <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div> -->
+                        <!-- <div class="box-img"><img src="../../../assets/img/diretor/cursos/cusos.svg" alt="" srcset=""></div> -->
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->
 
                 <div class="flex-gerenciamento-user">
                     <div class="box-user">
-                        <a href="coordenador.html" class="box-coordenador">
+                        <a href="coordenador.php" class="box-coordenador">
                             <div class="img-coordenador img"></div>
                             <div class="box-descricao">
                                 <h5 style="color: #99a2d6;">coordenador</h5>
@@ -252,7 +253,7 @@ require '../../../php/login/validar.php';
                         </a>
                     </div>
                     <div class="box-user editar">
-                        <a href="docente.html" class="box-docente">
+                        <a href="docente.php" class="box-docente">
                             <div class="img-docente img"></div>
                             <div class="box-descricao">
                                 <h5 style="color: #8aab3d;">Professor</h5>
@@ -261,7 +262,7 @@ require '../../../php/login/validar.php';
                         </a>
                     </div>
                     <div class="box-user">
-                        <a href="../../html/usuarios/aluno.html" class="box-aluno">
+                        <a href="aluno.php" class="box-aluno">
                             <div class="img-aluno img"></div>
                             <div class="box-descricao">
                                 <h5  style="color: #fcb736;">Aluno</h5>

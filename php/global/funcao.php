@@ -9,28 +9,28 @@ if ($conn->connect_error) {
 }
 // Função para obter todos os alunos do banco de dados.
 function get_todos_alunos($conn) {
-    $stmt = $conn->prepare("SELECT id, nome, RM, 'Aluno' AS cargo, data_criacao FROM aluno ORDER BY data_criacao DESC");
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Aluno' AS cargo, data_criacao FROM usuarios WHERE cargo = 'aluno' ORDER BY data_criacao DESC");
     $stmt->execute();
     return $stmt->get_result();
 }
 
 // Função para obter todos os professores do banco de dados.
 function get_todos_professores($conn) {
-    $stmt = $conn->prepare("SELECT id, nome, RM, cpf, email, 'Professor' AS cargo, data_criacao FROM professor ORDER BY data_criacao DESC");
+    $stmt = $conn->prepare("SELECT id, nome, RM, cpf, email, 'Professor' AS cargo, data_criacao FROM usuarios WHERE cargo = 'professor' ORDER BY data_criacao DESC");
     $stmt->execute();
     return $stmt->get_result();
 }
 
 // Função para obter todos os coordenadores do banco de dados.
 function get_todos_coordenadores($conn) {
-    $stmt = $conn->prepare("SELECT id, nome, RM, 'Coordenador' AS cargo, data_criacao FROM coordenador ORDER BY data_criacao DESC");
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Coordenador' AS cargo, data_criacao FROM usuarios WHERE cargo = 'coordenador' ORDER BY data_criacao DESC");
     $stmt->execute();
     return $stmt->get_result();
 }
 
 // Função para obter todos os diretores do banco de dados.
 function get_todos_diretores($conn) {
-    $stmt = $conn->prepare("SELECT id, nome, RM, 'Diretor' AS cargo, data_criacao FROM diretor ORDER BY data_criacao DESC");
+    $stmt = $conn->prepare("SELECT id, nome, RM, 'Diretor' AS cargo, data_criacao FROM usuarios WHERE cargo = 'diretor' ORDER BY data_criacao DESC");
     $stmt->execute();
     return $stmt->get_result();
 }
@@ -73,7 +73,7 @@ function get_todos_usuarios($conn) {
 
 // Funções para contar o total de registros
 function total_alunos($conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM aluno");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'aluno'");
     $stmt->execute();
     $resultado = $stmt->get_result();
     $row = $resultado->fetch_assoc();
@@ -81,7 +81,7 @@ function total_alunos($conn) {
 }
 
 function total_professores($conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM professor");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'professor'");
     $stmt->execute();
     $resultado = $stmt->get_result();
     $row = $resultado->fetch_assoc();
@@ -89,7 +89,7 @@ function total_professores($conn) {
 }
 
 function total_coordenadores($conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM coordenador");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'coordenador'");
     $stmt->execute();
     $resultado = $stmt->get_result();
     $row = $resultado->fetch_assoc();
@@ -97,7 +97,7 @@ function total_coordenadores($conn) {
 }
 
 function total_diretores($conn) {
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM diretor");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'diretor'");
     $stmt->execute();
     $resultado = $stmt->get_result();
     $row = $resultado->fetch_assoc();

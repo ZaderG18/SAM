@@ -4,33 +4,38 @@ $username = "root";
 $password = "";
 $dbname = "sam";
 $conn = new mysqli($host, $username, $password, $dbname);
+
+// Verifica a conexão
 if ($conn->connect_error) {
-    die("Erro ao conectar ao banco". $conn->connect_error);
+    die("Erro ao conectar ao banco: " . $conn->connect_error);
 }
+
+// Inicia a sessão, se ainda não iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 $user = $_SESSION['user'];
 $id = $user['id'];
 
-// Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
+// ** Recupera a foto do usuário ** //
+$sqlFoto = "SELECT foto FROM usuarios WHERE id = ?"; // Ajuste a tabela conforme necessário
+$stmtFoto = $conn->prepare($sqlFoto);
 
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
+if (!$stmtFoto) {
+    die("Erro ao preparar a consulta: " . $conn->error);
 }
 
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close();
+// Associa o ID e executa a consulta
+$stmtFoto->bind_param("i", $id);
+$stmtFoto->execute();
+$stmtFoto->bind_result($fotoNome);
+$stmtFoto->fetch();
+$stmtFoto->close();
 
-// Check if there is a photo for the user
+// Define o caminho da foto ou uma imagem padrão
 if (!empty($fotoNome)) {
     $fotoCaminho = "../../../assets/img/uploads/" . $fotoNome;
 } else {
-    $fotoCaminho = "../../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+    $fotoCaminho = "../../../assets/img/logo.jpg"; // Imagem padrão
 }

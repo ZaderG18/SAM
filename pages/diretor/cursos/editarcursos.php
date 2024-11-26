@@ -165,12 +165,12 @@ require_once '../../../php/login/validar.php';
                                 <span class="nav__name">Home</span>
                             </a>
                             
-                            <a href="calendario.php" class="nav__link ">
+                            <a href="../calendario.php" class="nav__link ">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
                         
-                            <a href="dashboard.php" class="nav__link">
+                            <a href="../dashboard.php" class="nav__link">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -179,7 +179,7 @@ require_once '../../../php/login/validar.php';
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Gerenciamento</h3>
   
-                            <a href="usuarios/gerenuser.php" class="nav__link">
+                            <a href="../usuarios/gerenuser.php" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
@@ -193,8 +193,8 @@ require_once '../../../php/login/validar.php';
   
                               <div class="nav__dropdown-collapse">
                                   <div class="nav__dropdown-content">
-                                      <a href="index.html" class="nav__dropdown-item">Home</a>
-                                      <a href="criarcurso.html" class="nav__dropdown-item">Criar</a>
+                                      <a href="cursos.php" class="nav__dropdown-item">Home</a>
+                                      <a href="criarcursos.php" class="nav__dropdown-item">Criar</a>
                                       <a href="#" class="nav__dropdown-item">Remover</a>
                                   </div>
                               </div>
@@ -247,7 +247,7 @@ require_once '../../../php/login/validar.php';
                 <div class="box-title">
                     <div class="flex-title">
                         <h1>Gerenciamento de Cursos</h1>
-                        <div class="box-img"><img src="../../../assets/img/cursos/cusos.svg" alt="" srcset=""></div>
+                        <div class="box-img"><img src="../../../assets/img/diretor/cursos/cusos.svg" alt="" srcset=""></div>
                     </div>
                     <div class="line"></div>
                 </div><!--box-title-->

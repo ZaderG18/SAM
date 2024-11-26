@@ -217,7 +217,7 @@ include '../../php/global/notificacao.php';
         <!-- Link para Formulário de Suporte -->
         <div class="section">
             <h3>Formulário de Suporte</h3>
-            <a href="../../html/suporte/index.html" class="btn">Acessar Formulário de Suporte ao Professor</a>
+            <a href="suporte.php" class="btn">Acessar Formulário de Suporte ao Professor</a>
         </div>
     </div>
     

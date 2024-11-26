@@ -195,8 +195,8 @@ require '../../../php/login/validar.php';
   
                               <div class="nav__dropdown-collapse">
                                   <div class="nav__dropdown-content">
-                                      <a href="index.html" class="nav__dropdown-item">Home</a>
-                                      <a href="cursos/editarcursos.php" class="nav__dropdown-item">Editar</a>
+                                      <a href="../cursos/cursos.php" class="nav__dropdown-item">Home</a>
+                                      <a href="../cursos/editarcursos.php" class="nav__dropdown-item">Editar</a>
                                       <a href="#" class="nav__dropdown-item">Remover</a>
                                   </div>
                               </div>
@@ -247,7 +247,7 @@ require '../../../php/login/validar.php';
         <main>
             <section class="formulario-flex">
                 <div class="box-left">
-                    <img src="../../../assets/img/docente/flat-design-children-back-school_52683-44264.jpg" alt="">
+                    <img src="../../../assets/img/diretor/docente/flat-design-children-back-school_52683-44264.jpg" alt="">
                 </div>
                 <form action="adicionarusuario.html" method="post" class="form-container">
                     

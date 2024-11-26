@@ -1,26 +1,19 @@
-<?php
-require_once '../../../php/login/validar.php';
-require '../../../php/global/cabecario2.php';
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
-    <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
-    <link rel="stylesheet" href="../../../assets/scss/diretor/cursos/gerencursos.css">
-
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
-
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <title>Gestão de professores</title>
+
+     <link rel="stylesheet" href="../../../assets/scss/diretor/dashboard/dashboard.css">
+     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <title>Dashboard SAM</title>
 </head>
 <body>
-
-  <!--========== HEADER ==========-->
-  <header class="header">
+   <!--========== HEADER ==========-->
+   <header class="header">
     <div class="header__container">
         <a href="#" class="header__logo">SAM</a>
 
@@ -147,8 +140,7 @@ require '../../../php/global/cabecario2.php';
     </div>
 </header>
 
-         
-            <!--========== NAV ==========-->
+               <!--========== NAV ==========-->
         <div class="nav" id="navbar">
             <nav class="nav__container">
                 <div>
@@ -165,18 +157,17 @@ require '../../../php/global/cabecario2.php';
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
-                            
+
                             <a href="../calendario.php" class="nav__link ">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
-                        
-                            <a href="../dashboard.php" class="nav__link">
+
+                            <a href="dashboard.php" class="nav__link active">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
-                        </div>
-
+                            
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Gerenciamento</h3>
     
@@ -186,7 +177,7 @@ require '../../../php/global/cabecario2.php';
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
 
-                            <a href="#" class="nav__link active">
+                            <a href="../cursos/cursos.php" class="nav__link">
                                 <i class='bx bx-edit-alt nav__icon'></i>
                                 <span class="nav__name">Gerenciar Cursos</span>
                             </a>
@@ -195,7 +186,7 @@ require '../../../php/global/cabecario2.php';
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="../comunicados.php" class="nav__link">
+                            <a href="../comunicado.php" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
@@ -233,55 +224,179 @@ require '../../../php/global/cabecario2.php';
             </nav>
         </div>
 
-        <main>
-            <div class="container">
-                <div class="box-title">
-                    <div class="flex-title">
-                        <h1>Gerenciamento de Cursos</h1>
-                        <!-- <div class="box-img"><img src="../../../assets/img/diretor/cursos/cusos.svg" alt="" srcset=""></div> -->
+        <div class="global-container">
+           
+            <main>
+                <div class="box-title-dashboard">
+                    <div class="flexh1">
+                        <h1>Dashboard</h1>
+                        <i class='bx bx-trending-up nav__icon'></i>
                     </div>
-                    <div class="line"></div>
-                </div><!--box-title-->
+                    <nav class="navbar">
+                        <div class="menu-toggle"><i class='bx bx-menu-alt-right'></i></div> <!-- Ícone hambúrguer -->
+                        <ul>
+                            <li><a href="#" onclick="loadContent('coordedenador')" class="nav_link active" data-section="coordedenador">Coordenador</a></li>
+                            <li><a href="#" onclick="loadContent('professor')" class="nav_link" data-section="professor">Professor</a></li>
+                            <li><a href="#" onclick="loadContent('aluno')" class="nav_link" data-section="aluno">Aluno</a></li>
+                            <li><a href="#" onclick="loadContent('curso')" class="nav_link" data-section="cursos">Curso</a></li>
+                            <!-- <li><a href="#" class="nav_link" data-section="relatorios">Relatórios</a></li>
+                            <li><a href="#" class="nav_link" data-section="integracoes">Integrações</a></li> -->
+                        </ul>
+                    </nav>
+                    <!-- <input type="date" name="" id=""> -->
+                </div>
+                <div class="container-content" id="main-content">
+                    <section class="dashboard">
+                        <div class="flex-box-dashboard">
+                            <div class="box-dashboard">
+                                <div class="box-icon">
+                                    <img src="../../../assets/img/diretor/dashboard/docente02.svg" alt="" srcset="">
+                                </div><!--box-icon-->
+                                <div class="box-flex-dados">
+                                    <div class="dados">
+                                        <span>Professores ativos</span>
+                                        <h3>15</h3>
+                                    </div><!--dados-->
+                                    <!-- <div class="grafico"></div> -->
+                                </div><!--box-flex-dados-->
+                                <!-- <span >últimas 24 horas</span> -->
+                            </div>
+        
+                            <div class="box-dashboard">
+                                <div class="box-icon">
+                                    <img src="../../../assets/img/diretor/dashboard/student.svg" alt="" srcset="">
+                                </div><!--box-icon-->
+                                <div class="box-flex-dados">
+                                    <div class="dados">
+                                        <span>Alunos matriculados</span>
+                                        <h3>358</h3>
+                                    </div><!--dados-->
+                                    <!-- <div class="grafico"></div> -->
+                                </div><!--box-flex-dados-->
+                                <!-- <span >últimas 24 horas</span> -->
+                            </div>
+        
+                            <div class="box-dashboard">
+                                <div class="box-icon">
+                                    <img src="../../../assets/img/diretor/dashboard/curso.svg" alt="" srcset="">
+                                </div><!--box-icon-->
+                                <div class="box-flex-dados">
+                                    <div class="dados">
+                                        <span>cursos ativos</span>
+                                        <h3>10</h3>
+                                    </div><!--dados-->
+                                    <!-- <div class="grafico"></div> -->
+                                </div><!--box-flex-dados-->
+                                <!-- <span >últimas 24 horas</span> -->
+                            </div>
+                        </div>
+                    </section>
+                    <section class="section-registro">
+                        <h3>Últimos registros</h3>
+                        <div class="box-grifico">
+                            <canvas id="grafico1"></canvas>
+                        </div>
+                    </section>
+                </div><!--container-content-->
+            </main>
+            
+            <aside >
+                <section class="section-aluno">
+                    <h6>Alunos com matrículas pendentes</h6>
+                    <div class="box-global-alunos">
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/minhafoto.PNG" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
 
-                <!-- <p>Oferece a capacidade de gerenciar permissões e funções dos usuários, acompanhar o status das contas, e visualizar o histórico de atividades. Tudo isso de maneira centralizada e organizada, facilitando o controle e a administração dos usuários no sistema.</p> -->
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
 
-                <div class="flex-gerenciamento-curso">
-                    <div class="box-user">
-                        <a href="criarcursos.php" class="box-criar">
-                            <div class="img-criar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #30bbbf;">Criar Curso</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
+                        <button class="button-notificar">Notificar</button>
                     </div>
-                    <div class="box-user editar">
-                        <a href="editarcursos.php" class="box-editar">
-                            <div class="img-editar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #f5ac3d;">Editar Cursos</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
-                    </div>
-                    <div class="box-user">
-                        <a href="#" class="box-deletar">
-                            <div class="img-deletar img"></div>
-                            <div class="box-descricao">
-                                <h5 style="color: #4947bb;">Apagar cursos</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nisi doloribus ea nam tempora quas? </p>
-                            </div><!--box-descricao-->
-                        </a>
-                    </div>
-                </div><!--flex-gerenciamento-user-->
-            </div><!--container-->
-        </main>
+                </section>
 
-    <!-- <script src="../../../assets/js/sidebar/sidebar.js"></script>
-    <script src="../../../assets/js/home/bottomnav.js"></script>
-    <script src="../../../assets/js/home/menumobile.js"></script> -->
+                <section class="section-aluno">
+                    <h6>Alunos com risco de evasão</h6>
+                    <div class="box-global-alunos">
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
 
-    <script src="../../../assets/js/diretor/global/navgation.js"></script>
-    <script src="../../../assets/js/diretor/global/dropdown.js"></script>
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
+
+                        <div class="aluno">
+                            <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
+                            <div class="box-info-aluno">
+                                <div class="box-nome">
+                                    <h5>David Richard</h5>
+                                    <span>3ºDesenvolvimento de sistemas</span>
+                                </div>
+                                <p>RM:<span>000-00-000</span></p>
+                            </div>
+                        </div><!--aluno-->
+                        <button class="button-notificar">Notificar</button>
+                    </div>
+                </section>
+
+                <!-- <section class="section-docentes">
+                    <h2>Docentes</h2>
+                </section> -->
+                 <!-- <section class="section-grafico">
+                    <h1>Total de acessos no SAM</h1>
+                    <div class="box-grifico">
+                        <canvas id="grafico1"></canvas>
+                    </div>
+                </section> -->
+            </aside>
+        </div><!--global-container-->
+
+        <script src="../../../assets/js/diretor/global/navgation.js"></script>
+        <script src="../../../assets/js/diretor/dashboard/spa/spa.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="../../../assets/js/diretor/dashboard/dashboard.js"></script>
+        <script src="../../../assets/js/diretor/dashboard/navdash.js"></script>
+        <script src="../../../assets/js/diretor/global/dropdown.js"></script>
+        <script src="../../../assets/js/diretor/dashboard/grafico.js"></script>
 </body>
 </html>

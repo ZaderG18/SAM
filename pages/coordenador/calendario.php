@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <!-- <link rel="stylesheet" href="../../assets/scss/diretor/home/style.css"> -->
     <link rel="stylesheet" href="../../assets/scss/diretor/global/navgation.css">
+    <!-- <link rel="stylesheet" href="../../assets/scss/diretor/home/style.css"> -->
+    <link rel="stylesheet" href="../../assets/scss/diretor/calendario/calendario.css">
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-     <link rel="stylesheet" href="../../assets/scss/diretor/dashboard/dashboard.css">
-     <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
-    <title>Dashboard SAM</title>
+    <title>Calendário de eventos</title>
 </head>
 <body>
+    
    <!--========== HEADER ==========-->
    <header class="header">
     <div class="header__container">
@@ -139,8 +151,7 @@
         </div>
     </div>
 </header>
-
-               <!--========== NAV ==========-->
+              <!--========== NAV ==========-->
         <div class="nav" id="navbar">
             <nav class="nav__container">
                 <div>
@@ -157,17 +168,18 @@
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
-
-                            <a href="calendario.php" class="nav__link ">
+                            
+                            <a href="calendario.php" class="nav__link active">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
-
-                            <a href="dashboard.php" class="nav__link active">
+                        
+                            <a href="dashboard.php" class="nav__link">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
-                            
+                        </div>
+
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Gerenciamento</h3>
     
@@ -224,179 +236,98 @@
             </nav>
         </div>
 
-        <div class="global-container">
-           
-            <main>
-                <div class="box-title-dashboard">
-                    <div class="flexh1">
-                        <h1>Dashboard</h1>
-                        <i class='bx bx-trending-up nav__icon'></i>
+        <main>
+            <div class="container calendar-container">
+                <div class="left">
+                  <div class="calendar">
+                    <div class="month">
+                      <i class="fas fa-angle-left prev"></i>
+                      <div class="date">dezembro 2015</div>
+                      <i class="fas fa-angle-right next"></i>
                     </div>
-                    <nav class="navbar">
-                        <div class="menu-toggle"><i class='bx bx-menu-alt-right'></i></div> <!-- Ícone hambúrguer -->
-                        <ul>
-                            <li><a href="#" onclick="loadContent('coordedenador')" class="nav_link active" data-section="coordedenador">Coordenador</a></li>
-                            <li><a href="#" onclick="loadContent('professor')" class="nav_link" data-section="professor">Professor</a></li>
-                            <li><a href="#" onclick="loadContent('aluno')" class="nav_link" data-section="aluno">Aluno</a></li>
-                            <li><a href="#" onclick="loadContent('curso')" class="nav_link" data-section="cursos">Curso</a></li>
-                            <!-- <li><a href="#" class="nav_link" data-section="relatorios">Relatórios</a></li>
-                            <li><a href="#" class="nav_link" data-section="integracoes">Integrações</a></li> -->
-                        </ul>
-                    </nav>
-                    <!-- <input type="date" name="" id=""> -->
+                    <div class="weekdays">
+                      <div>Dom</div>
+                      <div>Seg</div>
+                      <div>Ter</div>
+                      <div>Qua</div>
+                      <div>Qui</div>
+                      <div>Sex</div>
+                      <div>Sáb</div>
+                    </div>
+                    <div class="days"></div>
+                    <div class="goto-today">
+                      <div class="goto">
+                        <input type="text" placeholder="mm/aaaa" class="date-input" />
+                        <button class="goto-btn">Ir</button>
+                      </div>
+                      <button class="today-btn">Hoje</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="container-content" id="main-content">
-                    <section class="dashboard">
-                        <div class="flex-box-dashboard">
-                            <div class="box-dashboard">
-                                <div class="box-icon">
-                                    <img src="../../assets/img/dashboard/docente02.svg" alt="" srcset="">
-                                </div><!--box-icon-->
-                                <div class="box-flex-dados">
-                                    <div class="dados">
-                                        <span>Professores ativos</span>
-                                        <h3>15</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
-                            </div>
-        
-                            <div class="box-dashboard">
-                                <div class="box-icon">
-                                    <img src="../../assets/img/dashboard/student.svg" alt="" srcset="">
-                                </div><!--box-icon-->
-                                <div class="box-flex-dados">
-                                    <div class="dados">
-                                        <span>Alunos matriculados</span>
-                                        <h3>358</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
-                            </div>
-        
-                            <div class="box-dashboard">
-                                <div class="box-icon">
-                                    <img src="../../assets/img/dashboard/curso.svg" alt="" srcset="">
-                                </div><!--box-icon-->
-                                <div class="box-flex-dados">
-                                    <div class="dados">
-                                        <span>cursos ativos</span>
-                                        <h3>10</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
-                            </div>
-                        </div>
-                    </section>
-                    <section class="section-registro">
-                        <h3>Últimos registros</h3>
-                        <div class="box-grifico">
-                            <canvas id="grafico1"></canvas>
-                        </div>
-                    </section>
-                </div><!--container-content-->
-            </main>
-            
-            <aside >
-                <section class="section-aluno">
-                    <h6>Alunos com matrículas pendentes</h6>
-                    <div class="box-global-alunos">
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/minhafoto.PNG" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-                        <button class="button-notificar">Notificar</button>
+                <div class="right">
+                  <div class="today-date">
+                    <div class="event-day">qua</div>
+                    <div class="event-date">12 de dezembro de 2022</div>
+                  </div>
+                  <div class="events"></div>
+                  <div class="add-event-wrapper">
+                    <div class="add-event-header">
+                      <div class="title">Adicionar Evento</div>
+                      <i class="fas fa-times close"></i>
                     </div>
-                </section>
-
-                <section class="section-aluno">
-                    <h6>Alunos com risco de evasão</h6>
-                    <div class="box-global-alunos">
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-                        <button class="button-notificar">Notificar</button>
+                    <div class="add-event-body">
+                      <div class="add-event-input">
+                        <input type="text" placeholder="Nome do Evento" class="event-name" />
+                      </div>
+                      <div class="add-event-input">
+                        <input
+                          type="text"
+                          placeholder="Horário de Início"
+                          class="event-time-from"
+                        />
+                      </div>
+                      <div class="add-event-input">
+                        <input
+                          type="text"
+                          placeholder="Horário de Término"
+                          class="event-time-to"
+                        />
+                      </div>
                     </div>
-                </section>
-
-                <!-- <section class="section-docentes">
-                    <h2>Docentes</h2>
-                </section> -->
-                 <!-- <section class="section-grafico">
-                    <h1>Total de acessos no SAM</h1>
-                    <div class="box-grifico">
-                        <canvas id="grafico1"></canvas>
+                    <div class="add-event-footer">
+                      <button class="add-event-btn">Adicionar Evento</button>
                     </div>
-                </section> -->
-            </aside>
-        </div><!--global-container-->
+                  </div>
+                </div>
+                <button class="add-event">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              
+            <!--<div class="bottom-nav">
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon1.png" alt="" > <span>gestão</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon2.png" alt="" srcset=""><span>Docentes</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon3.png" alt="" srcset=""><span>cursos</span></button>
+                <button class="nav-item"><img src="../../assets/img/home/icons/icon4.png" alt="" srcset=""><span>Usuários</span></button>
+                <button id="add-btn" class="nav-item plus"><img src="../../assets/img/home/icons/icon-menu.png" alt="" srcset=""><span>Mais</span></button>
+              </div>
+              
+              <div id="expand-menu" class="expand-menu">
+                <button class="close-btn">&times;</button>
+                <div class="menu-options">
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon5.png" alt="" ><span>Comunicados</span></button>
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon6.png" alt="" ><span>Documentos</span></button>
+                  <button class="menu-item"><img src="../../assets/img/home/icons/icon7.png" alt="" ><span>Financeiro</span></button>
+                </div>
+              </div>-->
+        </main>
 
-        <script src="../../assets/js/diretor/global/navgation.js"></script>
-        <script src="../../assets/js/diretor/dashboard/spa/spa.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="../../assets/js/diretor/dashboard/dashboard.js"></script>
-        <script src="../../assets/js/diretor/dashboard/navdash.js"></script>
-        <script src="../../assets/js/diretor/global/dropdown.js"></script>
-        <script src="../../assets/js/diretor/dashboard/grafico.js"></script>
+    <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../assets/js/home/bottomnav.js"></script>
+    <script src="../../assets/js/home/menumobile.js"></script> -->
+
+    <script src="../../assets/js/diretor/global/navgation.js"></script>
+    <script src="../../assets/js/diretor/global/dropdown.js"></script>
+    <script src="../../assets/js/diretor/calendario/calendario.js"></script>
 </body>
 </html>
