@@ -1,3 +1,6 @@
+<?php 
+include '../../php/global/cabecario.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -111,8 +114,8 @@
                 <div class="flex-conta">
                     <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                     <div class="box-info-conta">
-                        <h4>David Richard Ramos Rosa</h4>
-                        <p>david.rosa4@etec.sp.gov.br</p>
+                        <h4><?php echo htmlspecialchars($user['nome'])?></h4>
+                        <p><?php echo htmlspecialchars($user['email'])?></p>
                         <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                     </div>
                 </div><!--flex-conta-->
@@ -174,7 +177,7 @@
                                 <span class="nav__name">calendário</span>
                             </a>
                         
-                            <a href="dashboard.php" class="nav__link">
+                            <a href="dashboard/dashboard.php" class="nav__link">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -328,6 +331,7 @@
 
     <script src="../../assets/js/diretor/global/navgation.js"></script>
     <script src="../../assets/js/diretor/global/dropdown.js"></script>
+    
     <script src="../../assets/js/diretor/calendario/calendario.js"></script>
 </body>
 </html>

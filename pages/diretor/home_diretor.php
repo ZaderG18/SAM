@@ -119,36 +119,37 @@ $maximo_registros = 6;
                     <div class="flex-conta">
                         <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                         <div class="box-info-conta">
-                            <h4>David Richard Ramos Rosa</h4>
-                            <p>david.rosa4@etec.sp.gov.br</p>
+                            <h4><?php echo htmlspecialchars($user['nome'])?></h4>
+                            <p><?php echo htmlspecialchars($user['email'])?></p>
                             <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                         </div>
                     </div><!--flex-conta-->
     
-                    <!-- Sub-dropdown de Configurações -->
-                    <div class="profile-option" id="settings-toggle">
-                        <p><i class='bx bxs-check-circle'></i> Disponivel</p>
-                        <i class='bx bx-chevron-right'></i>
-                    </div>
-                    <div class="sub-dropdown" id="settings-content">
-                        <p><a href=""><i class='bx bxs-check-circle'></i>Disponivel</a></p>
-                        <p><a href=""><i class='bx bxs-circle'></i>Ocupado</a></p>
-                        <p><a href=""><i class='bx bxs-minus-circle'></i>Não incomodar</a></p>
-                        <p><a href=""><i class='bx bxs-time-five'></i>Volto logo</a></p>
-                        <p><a href=""><i class='bx bxs-time-five'></i>Aparecer como ausente</a></p>
-                        <p><a href=""><i class='bx bx-x-circle'></i>Aparecer offline</a></p>
-                    </div>
-    
-                    <!-- Sub-dropdown de Localização -->
-                    <div class="profile-option" id="location-toggle">
-                        <p><i class='bx bxs-location-plus' ></i>Definir local de trabalho</p>
-                        <i class='bx bx-chevron-right'></i>
-                    </div>
-                    <div class="sub-dropdown sub-drop-localiza" id="location-content">
-                        <h6>Para hoje</h6>
-                        <p><i class='bx bx-buildings'></i>Office</p>
-                        <p><i class='bx bxs-home'></i>Remoto</p>
-                    </div>
+                   <!-- Sub-dropdown de Configurações -->
+                <div class="profile-option" id="settings-toggle">
+                    <p id="current-status"><i class='bx bxs-check-circle'></i> Disponível</p>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+                <div class="sub-dropdown" id="settings-content">
+                    <p data-status="Disponível"><i class='bx bxs-check-circle'></i> Disponível</p>
+                    <p data-status="Ocupado"><i class='bx bxs-circle'></i> Ocupado</p>
+                    <p data-status="Não incomodar"><i class='bx bxs-minus-circle'></i> Não incomodar</p>
+                    <p data-status="Volto logo"><i class='bx bxs-time-five'></i> Volto logo</p>
+                    <p data-status="Ausente"><i class='bx bxs-time-five'></i> Aparecer como ausente</p>
+                    <p data-status="Offline"><i class='bx bx-x-circle'></i> Aparecer offline</p>
+                </div>
+                
+                <!-- Sub-dropdown de Localização -->
+                <div class="profile-option" id="location-toggle">
+                    <p id="current-location"><i class='bx bxs-location-plus'></i> Definir local de trabalho</p>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+                <div class="sub-dropdown sub-drop-localiza" id="location-content">
+                    <h6>Para hoje</h6>
+                    <p data-location="Office"><i class='bx bx-buildings'></i> Office</p>
+                    <p data-location="Remoto"><i class='bx bxs-home'></i> Remoto</p>
+                </div>
+
     
                     <button class="logout-btn" style="float: right; margin: 15px 5px 0 5px;"><i class='bx bx-log-out-circle'></i>Logout</button>
                 </div>

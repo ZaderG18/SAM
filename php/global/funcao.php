@@ -79,6 +79,65 @@ function total_alunos($conn) {
     $row = $resultado->fetch_assoc();
     return $row["total"];
 }
+function total_cursos($conn){
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM curso");
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $row = $resultado->fetch_assoc();
+    return $row["total"];
+}
+// Função para buscar alunos por critério
+function fetchAlunosByStatus($status, $conn) {
+    // Construção da consulta para buscar alunos com base no status da turma
+    $query = "
+        SELECT 
+            usuarios.nome,
+            usuarios.rm,
+            turma.nome AS turma,
+            usuarios.foto
+        FROM usuarios
+        INNER JOIN matricula ON usuarios.id = matricula.aluno_id
+        INNER JOIN turma ON matricula.turma_id = turma.id
+        WHERE usuarios.cargo = 'aluno'
+    ";
+
+    // Ajustar a consulta com base no status da turma
+    if ($status === 'pendente') {
+        $query .= " AND turma.status = 'pendente'";
+    } elseif ($status === 'risco') {
+        $query .= " AND turma.status = 'risco'";
+    }
+
+    // Preparar e executar a consulta
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Retornar os resultados como um array associativo
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+function getAccessData($conn) {
+    $query = "
+        SELECT 
+            (SELECT COUNT(*) FROM usuarios WHERE cargo = 'aluno') AS alunos,
+            (SELECT COUNT(*) FROM usuarios WHERE cargo = 'coordenador') AS coordenadores,
+            (SELECT COUNT(*) FROM usuarios WHERE cargo = 'diretor') AS diretores,
+            (SELECT COUNT(*) FROM usuarios WHERE cargo = 'professor') AS professores
+    ";
+
+    $result = $conn->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc(); // Retorna os dados como um array associativo
+    }
+
+    return [
+        'alunos' => 0,
+        'coordenadores' => 0,
+        'diretores' => 0,
+        'professores' => 0
+    ]; // Retorna valores padrão caso a consulta falhe
+}
 
 function total_professores($conn) {
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'professor'");

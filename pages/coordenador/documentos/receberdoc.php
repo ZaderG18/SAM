@@ -106,8 +106,8 @@
                 <div class="flex-conta">
                     <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                     <div class="box-info-conta">
-                        <h4>David Richard Ramos Rosa</h4>
-                        <p>david.rosa4@etec.sp.gov.br</p>
+                        <h4><?php echo htmlspecialchars($user['nome'])?></h4>
+                        <p><?php echo htmlspecialchars($user['email'])?></p>
                         <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                     </div>
                 </div><!--flex-conta-->

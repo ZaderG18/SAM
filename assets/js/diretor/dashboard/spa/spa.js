@@ -7,12 +7,12 @@ const contentData = {
                   <div class="flex-box-dashboard">
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/docente02.svg" alt="" srcset="">
+                              <img src="../../../../img/diretor/dashboard/docente02.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
                                   <span>Alunos matriculados</span>
-                                  <h3>350</h3>
+                                  <h3><?php echo $totalAlunos; ?></h3>
                               </div><!--dados-->
                               <!-- <div class="grafico"></div> -->
                           </div><!--box-flex-dados-->
@@ -21,7 +21,7 @@ const contentData = {
   
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/student.svg" alt="" srcset="">
+                              <img src="../../../../img/diretor/dashboard/student.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
@@ -35,7 +35,7 @@ const contentData = {
   
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/curso.svg" alt="" srcset="">
+                              <img src="../../../../img/diretor/dashboard/curso.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
@@ -107,7 +107,7 @@ const contentData = {
                   <div class="flex-box-dashboard">
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/docente02.svg" alt="" srcset="">
+                              <img src="../../../../img/diretor/dashboard/docente02.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
@@ -121,7 +121,7 @@ const contentData = {
   
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/student.svg" alt="" srcset="">
+                              <img src="../../../../img/diretor/dashboard/student.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
@@ -135,7 +135,7 @@ const contentData = {
   
                       <div class="box-dashboard">
                           <div class="box-icon">
-                              <img src="../../assets/img/dashboard/curso.svg" alt="" srcset="">
+                              <img src="../../../img/diretor/dashboard/curso.svg" alt="" srcset="">
                           </div><!--box-icon-->
                           <div class="box-flex-dados">
                               <div class="dados">
@@ -207,7 +207,7 @@ const contentData = {
     <div class="flex-box-dashboard docente">
         <div class="box-dashboard">
             <div class="box-icon">
-                <img src="../../assets/img/dashboard/docente02.svg" alt="" srcset="">
+                <img src="../../../../img/diretor/dashboard/docente02.svg" alt="" srcset="">
             </div><!--box-icon-->
             <div class="box-flex-dados">
                 <div class="dados">
@@ -221,7 +221,7 @@ const contentData = {
 
         <div class="box-dashboard">
             <div class="box-icon">
-                <img src="../../assets/img/dashboard/student.svg" alt="" srcset="">
+                <img src="../../../../img/diretor/dashboard/student.svg" alt="" srcset="">
             </div><!--box-icon-->
             <div class="box-flex-dados">
                 <div class="dados">
@@ -292,7 +292,7 @@ const contentData = {
     <div class="flex-box-dashboard">
         <div class="box-dashboard">
             <div class="box-icon">
-                <img src="../../assets/img/dashboard/docente02.svg" alt="" srcset="">
+                <img src="../../../../img/diretor/dashboard/docente02.svg" alt="" srcset="">
             </div><!--box-icon-->
             <div class="box-flex-dados">
                 <div class="dados">
@@ -306,7 +306,7 @@ const contentData = {
 
         <div class="box-dashboard">
             <div class="box-icon">
-                <img src="../../assets/img/dashboard/student.svg" alt="" srcset="">
+                <img src="../../../../img/diretor/dashboard/student.svg" alt="" srcset="">
             </div><!--box-icon-->
             <div class="box-flex-dados">
                 <div class="dados">
@@ -320,7 +320,7 @@ const contentData = {
 
         <div class="box-dashboard">
             <div class="box-icon">
-                <img src="../../assets/img/dashboard/curso.svg" alt="" srcset="">
+                <img src="../../../../img/diretor/dashboard/curso.svg" alt="" srcset="">
             </div><!--box-icon-->
             <div class="box-flex-dados">
                 <div class="dados">

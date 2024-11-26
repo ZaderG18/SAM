@@ -1,3 +1,15 @@
+<?php 
+include '../../../php/global/cabecario.php';
+include '../../../php/global/funcao.php';
+$totalAlunos = total_alunos($conn);
+$totalProfessor = total_professores($conn);
+$totalCursos = total_cursos($conn);
+$accessData = getAccessData($conn);
+
+// Buscar alunos com matrículas pendentes e risco de evasão
+$alunosPendentes = fetchAlunosByStatus('pendente', $conn);
+$alunosRisco = fetchAlunosByStatus('risco', $conn);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -99,8 +111,8 @@
                 <div class="flex-conta">
                     <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
                     <div class="box-info-conta">
-                        <h4>David Richard Ramos Rosa</h4>
-                        <p>david.rosa4@etec.sp.gov.br</p>
+                        <h4><?php echo htmlspecialchars($user['nome'])?></h4>
+                        <p><?php echo htmlspecialchars($user['email'])?></p>
                         <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                     </div>
                 </div><!--flex-conta-->
@@ -255,7 +267,7 @@
                                 <div class="box-flex-dados">
                                     <div class="dados">
                                         <span>Professores ativos</span>
-                                        <h3>15</h3>
+                                        <h3><?php echo $totalProfessor; ?></h3>
                                     </div><!--dados-->
                                     <!-- <div class="grafico"></div> -->
                                 </div><!--box-flex-dados-->
@@ -269,7 +281,7 @@
                                 <div class="box-flex-dados">
                                     <div class="dados">
                                         <span>Alunos matriculados</span>
-                                        <h3>358</h3>
+                                        <h3><?php echo $totalAlunos; ?></h3>
                                     </div><!--dados-->
                                     <!-- <div class="grafico"></div> -->
                                 </div><!--box-flex-dados-->
@@ -283,7 +295,7 @@
                                 <div class="box-flex-dados">
                                     <div class="dados">
                                         <span>cursos ativos</span>
-                                        <h3>10</h3>
+                                        <h3><?php echo $totalCursos; ?></h3>
                                     </div><!--dados-->
                                     <!-- <div class="grafico"></div> -->
                                 </div><!--box-flex-dados-->
@@ -304,38 +316,18 @@
                 <section class="section-aluno">
                     <h6>Alunos com matrículas pendentes</h6>
                     <div class="box-global-alunos">
+                        <?php foreach ($alunosPendentes as $aluno) : ?>
                         <div class="aluno">
-                            <img src="../../../assets/img/persona/minhafoto.PNG" alt="">
+                            <img src="<?php echo htmlspecialchars($aluno['foto']); ?>" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5><?php echo htmlspecialchars($aluno['nome']); ?></h5>
+                                    <span><?php echo htmlspecialchars($aluno['turma']); ?></span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM:<span><?php echo htmlspecialchars($aluno['rm']); ?></span></p>
                             </div>
                         </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
+                        <?php endforeach; ?>
                         <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
@@ -343,38 +335,18 @@
                 <section class="section-aluno">
                     <h6>Alunos com risco de evasão</h6>
                     <div class="box-global-alunos">
+                        <?php foreach ($alunosRisco as $aluno) : ?>
                         <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
+                            <img src="<?php echo htmlspecialchars($aluno['foto']); ?>" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5><?php echo htmlspecialchars($aluno['nome']); ?></h5>
+                                    <span><?php echo htmlspecialchars($aluno['turmo'])?></span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM:<span><?php echo htmlspecialchars($aluno['rm']); ?></span></p>
                             </div>
                         </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
-
-                        <div class="aluno">
-                            <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
-                            <div class="box-info-aluno">
-                                <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
-                                </div>
-                                <p>RM:<span>000-00-000</span></p>
-                            </div>
-                        </div><!--aluno-->
+                            <?php endforeach; ?>
                         <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
@@ -397,6 +369,33 @@
         <script src="../../../assets/js/diretor/dashboard/dashboard.js"></script>
         <script src="../../../assets/js/diretor/dashboard/navdash.js"></script>
         <script src="../../../assets/js/diretor/global/dropdown.js"></script>
-        <script src="../../../assets/js/diretor/dashboard/grafico.js"></script>
+        <script>
+            const ctx = document.getElementById('grafico1');
+
+// Dados do gráfico (passando dados dinâmicos do PHP para o JavaScript)
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Alunos', 'Coordenação', 'Diretores', 'Professores'],
+    datasets: [{
+      label: 'Total de acessos',
+      data: [
+        <?php echo $accessData['alunos']; ?>,
+        <?php echo $accessData['coordenadores']; ?>,
+        <?php echo $accessData['diretores']; ?>,
+        <?php echo $accessData['professores']; ?>,
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+        </script>
 </body>
 </html>
