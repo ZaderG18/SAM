@@ -272,131 +272,22 @@ if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
     </div>
 
     <!---------------------------------------------------------------------Modal-------------------------------------------------------->
-    <div id="modal-aprovado-mobile" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-mobile')">&times;</span>
-            <h2>Aprovado - Programação Mobile</h2>
-            <ul>
-                <li>Critério 1: Alta participação nas aulas</li>
-                <li>Critério 2: Entrega de todos os trabalhos</li>
-                <li>Critério 3: Boas notas nas avaliações</li>
-                <li>Critério 4: Compreensão dos conceitos</li>
-            </ul>
+    <div id="modal-<?php echo $id; ?>" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal-<?php echo $id; ?>')">&times;</span>
+                <h2><?php echo $row['titulo']; ?></h2>
+                
+                <?php if (!empty($criterios)) { ?>
+                    <ul>
+                        <?php foreach ($criterios as $criterio) { ?>
+                            <li><?php echo $criterio; ?></li>
+                        <?php } ?>
+                    </ul>
+                <?php } else { ?>
+                    <p><?php echo $row['conteudo']; ?></p>
+                <?php } ?>
+            </div>
         </div>
-    </div>
-
-    <div id="modal-bom-mobile" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-bom-mobile')">&times;</span>
-            <h2>Bom desempenho - Programação Mobile</h2>
-            <p>O aluno demonstrou um bom desempenho devido à sua dedicação e compreensão dos conceitos abordados.</p>
-        </div>
-    </div>
-
-    <div id="modal-aprovado-banco" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-banco')">&times;</span>
-            <h2>Aprovado - Banco de dados</h2>
-            <ul>
-                <li>Critério 1: Alta participação nas aulas</li>
-                <li>Critério 2: Entrega de todos os trabalhos</li>
-                <li>Critério 3: Boas notas nas avaliações</li>
-                <li>Critério 4: Compreensão dos conceitos</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-bom-banco" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-bom-banco')">&times;</span>
-            <h2>Bom desempenho - Banco de dados</h2>
-            <p>O aluno demonstrou um bom desempenho devido à sua dedicação e compreensão dos conceitos abordados.</p>
-        </div>
-    </div>
-
-    <div id="modal-reprovado-internet" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-reprovado-internet')">&times;</span>
-            <h2>Reprovado - Internet e Protocolos</h2>
-            <ul>
-                <li>Critério 1: Baixa participação nas aulas</li>
-                <li>Critério 2: Falta de entrega de trabalhos</li>
-                <li>Critério 3: Notas insuficientes nas avaliações</li>
-                <li>Critério 4: Dificuldade na compreensão dos conceitos</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-insatisfatorio-internet" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-insatisfatorio-internet')">&times;</span>
-            <h2>Desempenho insatisfatório - Internet e Protocolos</h2>
-            <p>O aluno apresentou um desempenho insatisfatório devido à falta de dedicação e dificuldade na compreensão dos conceitos.</p>
-        </div>
-    </div>
-
-    <div id="modal-aprovado-sistemas" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-sistemas')">&times;</span>
-            <h2>Aprovado - Desenvolvimento de sistemas</h2>
-            <ul>
-                <li>Critério 1: Alta participação nas aulas</li>
-                <li>Critério 2: Entrega de todos os trabalhos</li>
-                <li>Critério 3: Boas notas nas avaliações</li>
-                <li>Critério 4: Compreensão dos conceitos</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-bom-sistemas" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-bom-sistemas')">&times;</span>
-            <h2>Bom desempenho - Desenvolvimento de sistemas</h2>
-            <p>O aluno demonstrou um bom desempenho devido à sua dedicação e compreensão dos conceitos abordados.</p>
-        </div>
-    </div>
-
-    <div id="modal-aprovado-web" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-web')">&times;</span>
-            <h2>Aprovado - Programação Web</h2>
-            <ul>
-                <li>Critério 1: Alta participação nas aulas</li>
-                <li>Critério 2: Entrega de todos os trabalhos</li>
-                <li>Critério 3: Boas notas nas avaliações</li>
-                <li>Critério 4: Compreensão dos conceitos</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-bom-web" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-bom-web')">&times;</span>
-            <h2>Bom desempenho - Programação Web</h2>
-            <p>O aluno demonstrou um bom desempenho devido à sua dedicação e compreensão dos conceitos abordados.</p>
-        </div>
-    </div>
-
-    <div id="modal-aprovado-poo" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-aprovado-poo')">&times;</span>
-            <h2>Aprovado - Programação Orientada a Objetos</h2>
-            <u>
-                <li>Critério 1: Alta participação nas aulas</li>
-                <li>Critério 2: Entrega de todos os trabalhos</li>
-                <li>Critério 3: Boas notas nas avaliações</li>
-                <li>Critério 4: Compreensão dos conceitos</li>
-            </ul></div>
-        </div>
-    </div>
-
-    <div id="modal-bom-poo" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal-bom-poo')">&times;</span>
-            <h2>Bom desempenho - Programação Orientada a Objetos</h2>
-            <p>O aluno demonstrou um bom desempenho devido à sua dedicação e compreensão dos conceitos abordados.</p>
-        </div>
-    </div>
 </main>
 
     <!-- Scripts -->
