@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../css/img/Group 4.png" type="image/x-icon">
+    <title>Documento</title>
+    <style>
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .declaration-container {
+            background-color: #fff;
+            border: 1px solid #000;
+            height: auto;
+            margin: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .declaration-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .institution-logo {
+            width: 50px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .institution-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #e4c38a; 
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .declaration-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .declaration-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+            margin: 20px 0;
+            text-align: justify;
+        }
+
+        .student-name, .student-cpf, .course-name {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+        }
+
+        .sign-line {
+            width: 60%;
+            border-bottom: 2px solid #333;
+            margin: 0 auto 10px;
+        }
+
+        .signature {
+            text-align: start;
+            margin-bottom: 10px;
+            margin-top: 100px;
+        }
+
+        .signature p {
+            margin: 5px 0;
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .declaration-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .institution-logo {
+                width: 40px;
+            }
+
+            .institution-name {
+                font-size: 18px;
+            }
+
+            .declaration-title {
+                font-size: 20px;
+            }
+
+            .declaration-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="declaration-container">
+        <div class="declaration-header">
+            <img src="../css/img/Group 4.png" alt="Institution Logo" class="institution-logo">
+            <h1 class="institution-name">Instituição [Nome]</h1>
+        </div>
+        <h2 class="declaration-title">Declaração</h2>
+        <p class="declaration-text">
+            Declaramos para os devidos fins que <span class="student-name">[Nome do Aluno]</span>, portador(a) do CPF <span class="student-cpf">[CPF do Aluno]</span>, está devidamente matriculado(a) no curso de <span class="course-name">[Nome do Curso]</span> nesta instituição de ensino.
+        </p>
+        <p class="declaration-text">
+            Esta declaração é emitida a pedido do(a) aluno(a) para comprovação de vínculo acadêmico, não substituindo documentos oficiais de conclusão de curso.
+        </p>
+        <p class="declaration-text">
+            Cidade, [Data de Emissão]
+        </p>
+        <div class="signature-section">
+            <div class="signature">
+                <p class="sign-line"></p>
+                <p>Assinatura do Diretor/Coordenação</p>
+            </div>
+        </div>
+    </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .declaration-container {
+            background-color: #fff;
+            border: 1px solid #000;
+            height: auto;
+            margin: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .declaration-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .institution-logo {
+            width: 50px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .institution-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #e4c38a; 
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .declaration-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .declaration-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+            margin: 20px 0;
+            text-align: justify;
+        }
+
+        .student-name, .student-cpf, .course-name {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+        }
+
+        .sign-line {
+            width: 60%;
+            border-bottom: 2px solid #333;
+            margin: 0 auto 10px;
+        }
+
+        .signature {
+            text-align: start;
+            margin-bottom: 10px;
+            margin-top: 100px;
+        }
+
+        .signature p {
+            margin: 5px 0;
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .declaration-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .institution-logo {
+                width: 40px;
+            }
+
+            .institution-name {
+                font-size: 18px;
+            }
+
+            .declaration-title {
+                font-size: 20px;
+            }
+
+            .declaration-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+
+    
+</body>
+</html>

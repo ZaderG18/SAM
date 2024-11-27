@@ -137,7 +137,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_01.jpg" alt="Matéria 1">
             <h3>Matemática na programação</h3>
             <p>Professores: João, Maria</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------- Card 2 ---------------------------------->
@@ -145,7 +145,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_02.jpg" alt="Matéria 2">
             <h3>Redes de Internet</h3>
             <p>Professores: Carla, Pedro</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!-------------------------- Card 3 --------------------------------->
@@ -153,7 +153,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_03.jpg" alt="Matéria 3">
             <h3>Algoritmos Avançados</h3>
             <p>Professores: Lucas, Ana</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!---------------------------- Card 4 -------------------------------->
@@ -161,7 +161,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_04.jpg" alt="Matéria 4">
             <h3>Desenvolvimento Web</h3>
             <p>Professores: Fernanda, Paulo</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!----------------------------- Card 5 ------------------------------>
@@ -169,7 +169,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_05.jpg" alt="Matéria 5">
             <h3>Banco de Dados</h3>
             <p>Professores: Beatriz, Carlos</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
 
         <!------------------------------ Card 6 ----------------------------->
@@ -177,7 +177,7 @@ include '../../php/global/notificacao.php';
             <img src="../../assets/img/home/cards/aula_06.jpg" alt="Matéria 6">
             <h3>Análises de Projetos</h3>
             <p>Professores: Rafael, Juliana</p>
-            <a href="aula.php" class="start-btn">Entrar</a>
+            <a href="aulas.php" class="start-btn">Entrar</a>
         </div>
     </div>
     

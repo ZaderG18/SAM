@@ -132,7 +132,7 @@ include '../../php/global/notificacao.php';
 
 <main>
     <div class="activity-page">
-        <a href="aula.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
+        <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
         <h1>Atividade 11/01 - Redação Inglês</h1>
         <p class="due-date">Vence 17 de janeiro de 2024 às 23:59 • Fecha 17 de janeiro de 2024 às 23:59</p>
         

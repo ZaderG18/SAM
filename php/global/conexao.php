@@ -196,6 +196,8 @@ $tableQueries = [
         turma_id INT NOT NULL,
         descricao TEXT NOT NULL,
         professor_id INT NOT NULL,
+        titulo VARCHAR(30) NOT NULL,
+        conteudo TEXT NOT NULL,
         data_vencimento DATE,
         hora_vencimento TIME,
         arquivo LONGBLOB,  

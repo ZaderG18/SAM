@@ -2,6 +2,32 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+
+// ID da atividade (você deve obter esse valor a partir da URL ou outro meio)
+$atividade_id = $_GET['id'] ?? 0; // Obter ID da URL (ex: editar_atividade.php?id=1)
+
+// Verificar se o ID da atividade foi passado
+if ($atividade_id == 0) {
+    die("Atividade não encontrada.");
+}
+
+// Buscar os dados da atividade no banco de dados
+$query = "SELECT * FROM atividades WHERE id = ?";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param('i', $atividade_id); // Bind do parâmetro como inteiro
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Verificar se a atividade existe
+$atividade = $result->fetch_assoc();
+if (!$atividade) {
+    die("Atividade não encontrada no banco de dados.");
+}
+
+// Dados da atividade
+$conteudo_atividade = $atividade['conteudo']; // Assumindo que a tabela tem uma coluna 'conteudo'
+$data_vencimento = $atividade['data_vencimento']; // Assumindo que a tabela tem uma coluna 'data_vencimento'
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -134,23 +160,23 @@ include '../../php/global/notificacao.php';
 
         <main>
             <div class="activity-page">
-                <a href="aula.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
+                <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
             
-                <h1>Editar Atividade - Redação Inglês</h1>
-            
+                <h1>Editar Atividade - <?php echo htmlspecialchars( $atividade['nome'])?></h1>
+                <form action="../../php/professor/salvarAtividade.php" method="post">
                 <div class="activity-description">
                     <label for="edit-activity" class="activity-label">Editar Conteúdo da Atividade:</label>
-                    <textarea id="edit-activity" rows="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id libero id neque pulvinar sodales. Vivamus vehicula, mi id tincidunt vulputate, magna odio vehicula ligula, vitae placerat risus lorem nec justo.</textarea>
+                    <textarea id="edit-activity" rows="6"><?php echo htmlspecialchars( $atividade['conteudo']);?></textarea>
                 </div>
             
                 <div class="due-date-section">
                     <label for="edit-due-date">Editar Data de Vencimento:</label>
-                    <input type="datetime-local" id="edit-due-date" value="2024-01-17T23:59">
+                    <input type="datetime-local" id="edit-due-date" value="<?php echo date('Y-m-d\TH:i', strtotime($data_vencimento))?>">
                 </div>
             
                 <button id="submit-button" class="submit-button">Salvar Alterações</button>
             </div>
- 
+            </form>
         </main>
 
     <!-- Scripts -->

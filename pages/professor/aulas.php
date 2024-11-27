@@ -11,7 +11,7 @@ include '../../php/global/notificacao.php';
     <title>Aulas</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/scss/aulas/aulas.css">
+    <link rel="stylesheet" href="../../assets/scss/professor/aulas/aulas.css">
     <link rel="stylesheet" href="../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../assets/scss/global/estilogeral.css">
  
@@ -131,136 +131,148 @@ include '../../php/global/notificacao.php';
 
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
-    <main>
-        <div class="containerfx">
-            <!-- Lista de Alunos Inscritos -->
-            <div class="section students-list">
-                <h2>Alunos Inscritos</h2>
-                <ul>
-                    <li>
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 1" class="student-img">
-                        <div class="student-info">
-                            <span>Aluno 1</span>
-                            <span>aluno1@example.com</span>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 2" class="student-img">
-                        <div class="student-info">
-                            <span>Aluno 2</span>
-                            <span>aluno2@example.com</span>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="../../assets/img/home/fotos/Ana_Icon.png" alt="Aluno 3" class="student-img">
-                        <div class="student-info">
-                            <span>Aluno 3</span>
-                            <span>aluno3@example.com</span>
-                        </div>
-                    </li>
-                    <!-- Adicione mais alunos conforme necessário -->
-                </ul>
-            </div>
+<main>
+    <div class="containerfx">
+        <!-- Lista de Alunos Inscritos -->
+        <div class="section students-list">
+            <h2>Alunos Inscritos</h2>
+            <ul>
+                <?php
+                $query = "SELECT nome, email, foto FROM usuarios WHERE cargo = 'aluno'";
+                $result = $conn->query($query);
 
-            <!-- Alunos que Fizeram e Não Fizeram Atividades -->
-            <div class="section activities-status">
-                <h3>Status das Atividades</h3>
-                <div class="sub-section">
-                    <h4>Alunos que Fizeram</h4>
-                    <ul>
-                        <li>Aluno 1 <a href="feedback.php" class="feedback-link">Enviar Feedback</a></li>
-                        <li>Aluno 2 <a href="feedback.php" class="feedback-link">Enviar Feedback</a></li>
-                        <!-- Adicione mais alunos conforme necessário -->
-                    </ul>
-                </div>
-                <div class="sub-section">
-                    <h4>Alunos que Não Fizeram</h4>
-                    <ul>
-                        <li>Aluno 3</li>
-                        <li>Aluno 4</li>
-                        <!-- Adicione mais alunos conforme necessário -->
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Tarefas Atribuídas e Pendentes -->
-            <div class="section assigned-tasks">
-                <h4>Tarefas Atribuídas e Pendentes</h4>
-                <ul>
-                    <li>
-                        <span>Atividade 1</span>
-                        <div class="task-buttons">
-                            <a href="atividade.php" class="edit-link">Editar</a>
-                            <a href="#" class="delete-link">Excluir</a>
-                        </div>
-                    </li>
-                    <li>
-                        <span>Atividade 2</span>
-                        <div class="task-buttons">
-                            <a href="atividade.php" class="edit-link">Editar</a>
-                            <a href="#" class="delete-link">Excluir</a>
-                        </div>
-                    </li>
-                    <!-- Adicione mais atividades conforme necessário -->
-                </ul>
-            </div>
-
-            <!-- Enviar Materiais Complementares -->
-            <div class="section additional-materials">
-                <h4>Enviar Materiais Complementares</h4>
-                <textarea rows="2" placeholder="Nome do arquivo..."></textarea>
-                <input type="file" id="material-file" style="display: none;">
-                <button class="btn" id="send-material-btn">Enviar Material</button>
-                <label for="material-file" class="btnarq">Escolher Arquivo</label>
-                <span id="file-name" ></span>
-            </div>
-
-            <!-- Comunicação Individual -->
-            <div class="section individual-communication">
-                <h4>Comunicação Individual</h4>
-                <div class="forum">
-                    <select>
-                        <option value="aluno1">Aluno 1</option>
-                        <option value="aluno2">Aluno 2</option>
-                        <option value="aluno3">Aluno 3</option>
-                        <!-- Adicione mais alunos conforme necessário -->
-                    </select>
-                    <div class="forum-messages">
-                        <div class="message">
-                            <p><strong>Aluno 1:</strong> Mensagem do aluno 1</p>
-                        </div>
-                        <div class="message">
-                            <p><strong>Aluno 2:</strong> Mensagem do aluno 2</p>
-                        </div>
-                        <!-- Adicione mais mensagens conforme necessário -->
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                ?>
+                <li>
+                    <img src="../../assets/img/uploads/<?php echo htmlspecialchars($row['foto']); ?>" alt="<?php echo htmlspecialchars($row['nome']); ?>" class="student-img">
+                    <div class="student-info">
+                        <span><?php echo htmlspecialchars($row['nome']); ?></span>
+                        <span><?php echo htmlspecialchars($row['email']); ?></span>
                     </div>
-                    <textarea rows="4" placeholder="Digite sua resposta..."></textarea>
-                    <button class="btn" id="send-reply-btn">Enviar Resposta</button>
+                </li>
+                <?php
+                    }
+                } else {
+                    echo '<li>Nenhum aluno inscrito.</li>';
+                }
+                ?>
+            </ul>
+        </div>
+
+        <!-- Alunos que Fizeram e Não Fizeram Atividades -->
+        <div class="section activities-status">
+            <h3>Status das Atividades</h3>
+            <div class="sub-section">
+                <h4>Alunos que Fizeram</h4>
+                <ul>
+                    <?php
+                    $query = "SELECT nome FROM usuarios WHERE cargo = 'aluno' AND status = 'concluida'";
+                    $result = $conn->query($query);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <li>
+                        <?php echo htmlspecialchars($row['nome']); ?> 
+                        <a href="feedback.php" class="feedback-link">Enviar Feedback</a>
+                    </li>
+                    <?php
+                        }
+                    } else {
+                        echo '<li>Nenhum aluno concluiu as atividades.</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+            <div class="sub-section">
+                <h4>Alunos que Não Fizeram</h4>
+                <ul>
+                    <?php
+                    $query = "SELECT nome FROM usuarios WHERE cargo = 'aluno' AND status = 'pendente'";
+                    $result = $conn->query($query);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <li><?php echo htmlspecialchars($row['nome']); ?></li>
+                    <?php
+                        }
+                    } else {
+                        echo '<li>Todos os alunos concluíram as atividades.</li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarefas Atribuídas e Pendentes -->
+        <div class="section assigned-tasks">
+            <h4>Tarefas Atribuídas e Pendentes</h4>
+            <ul>
+                <?php
+                $query = "SELECT id, titulo FROM atividade";
+                $result = $conn->query($query);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                ?>
+                <li>
+                    <span><?php echo htmlspecialchars($row['titulo']); ?></span>
+                    <div class="task-buttons">
+                        <a href="atividade.php?id=<?php echo $row['id']; ?>" class="edit-link">Editar</a>
+                        <a href="excluir_atividade.php?id=<?php echo $row['id']; ?>" class="delete-link">Excluir</a>
+                    </div>
+                </li>
+                <?php
+                    }
+                } else {
+                    echo '<li>Nenhuma atividade cadastrada.</li>';
+                }
+                ?>
+            </ul>
+        </div>
+
+        <!-- Comunicação Individual -->
+        <div class="section individual-communication">
+            <h4>Comunicação Individual</h4>
+            <div class="forum">
+                <select>
+                    <?php
+                    $query = "SELECT id, nome FROM usuarios WHERE cargo = 'aluno'";
+                    $result = $conn->query($query);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <option value="<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></option>
+                    <?php
+                        }
+                    }
+                    ?>
+                </select>
+                <div class="forum-messages">
+                    <!-- Mensagens podem ser carregadas aqui dinamicamente -->
                 </div>
+                <textarea rows="4" placeholder="Digite sua resposta..."></textarea>
+                <button class="btn" id="send-reply-btn">Enviar Resposta</button>
             </div>
+        </div>
 
-            <!-- Lançar Atividades -->
-            <div class="section launch-activities">
-                <h4>Lançar Atividades</h4>
-                <textarea rows="2" placeholder="Nome da atividade..."></textarea>
-                <textarea rows="4" placeholder="Descrição da atividade..."></textarea>
-                <input type="file" id="activity-file" style="display: none;">
-                <button class="btn" id="launch-activity-btn">Lançar Atividade</button>
+        <!-- Lançar Atividades -->
+        <div class="section launch-activities">
+            <h4>Lançar Atividades</h4>
+            <form method="POST" action="../../php/professor/lancarAtividade.php" enctype="multipart/form-data">
+                <textarea name="titulo" rows="2" placeholder="Nome da atividade..." required></textarea>
+                <textarea name="descricao" rows="4" placeholder="Descrição da atividade..." required></textarea>
+                <input type="file" name="arquivo" id="activity-file" style="display: none;" required>
+                <button class="btn" id="launch-activity-btn" type="submit">Lançar Atividade</button>
                 <label for="activity-file" class="btnarq">Escolher Arquivo</label>
-                <span id="activity-file-name"></span>
-            </div>
+            </form>
         </div>
+    </div>
+</main>
 
-        <div id="delete-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h4>Tem certeza que deseja excluir a atividade?</h4>
-                <button class="btn" id="confirm-delete-btn">Excluir</button>
-                <button class="btn" id="cancel-delete-btn">Cancelar</button>
-            </div>
-        </div>
-       
-    </main>
 
     <!-- Scripts -->
     <script src="../../assets/js/sidebar/sidebar.js"></script>
