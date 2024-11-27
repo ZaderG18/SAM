@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../../assets/css/global/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/global/menumobile.css"> -->
+    <link rel="stylesheet" href="../../assets/css/global/navgation.css">
+    <link rel="stylesheet" href="../../assets/css/docente/style.css">
+    
+    <link rel="stylesheet" href="../../assets/css/docente/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../assets/css/docente/slide.css">
+    <link rel="icon" href="../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+
+     <!--========== BOX ICONS ==========-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <title>Gestão de professores</title>
+</head>
+<body>
+     <!--========== HEADER ==========-->
+     <header class="header">
+        <div class="header__container">
+            <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="header__img">
+
+            <a href="#" class="header__logo">SAM</a>
+
+            <div class="header__search">
+                <input type="search" placeholder="Search" class="header__input">
+                <i class='bx bx-search header__icon'></i>
+            </div>
+
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
+        </div>
+    </header>
+
+            <!--========== NAV ==========-->
+        <div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <a href="#" class="nav__link nav__logo">
+                        <i class='bx bxs-disc nav__icon' ></i>
+                        <span class="nav__logo-name">SAM</span>
+                    </a>
+    
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Home</h3>
+    
+                            <a href="../../html/home/home.html" class="nav__link">
+                                <i class='bx bx-home nav__icon' ></i>
+                                <span class="nav__name">Home</span>
+                            </a>
+                            
+                            <a href="#" class="nav__link active">
+                                <i class='bx bx-user nav__icon' ></i>
+                                <span class="nav__name">Gerenciar Usuários</span>
+                            </a>
+
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-message-rounded nav__icon' ></i>
+                                <span class="nav__name">Messages</span>
+                            </a>
+                        </div>
+    
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Menu</h3>
+    
+                            <div class="nav__dropdown">
+                                <a href="#" class="nav__link">
+                                    <i class='bx bx-bell nav__icon' ></i>
+                                    <span class="nav__name">Notifications</span>
+                                    <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                </a>
+
+                                <div class="nav__dropdown-collapse">
+                                    <div class="nav__dropdown-content">
+                                        <a href="#" class="nav__dropdown-item">Blocked</a>
+                                        <a href="#" class="nav__dropdown-item">Silenced</a>
+                                        <a href="#" class="nav__dropdown-item">Publish</a>
+                                        <a href="#" class="nav__dropdown-item">Program</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-compass nav__icon' ></i>
+                                <span class="nav__name">Explore</span>
+                            </a>
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-bookmark nav__icon' ></i>
+                                <span class="nav__name">Saved</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="../../html/login/login.html" class="nav__link nav__logout">
+                    <i class='bx bx-log-out nav__icon' ></i>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+        <main>
+            <div class="container">
+                <div class="box-title">
+                    <div class="flex-title">
+                        <h1>Gestão de professores</h1>
+                        <div class="box-img"><img src="../../assets/img/docente/image 1.png" alt="" srcset=""></div>
+                    </div>
+                </div><!--box-title-->
+
+                <div class="container-painel-docente">
+                    <div class="container-filtro">
+
+                        <div class="box-filtro">
+                            <label for="">Nome:</label>
+                            <input type="text">
+                        </div>
+                        <div class="box-filtro">
+                            <label for="">Disciplinas ministradas</label>
+                            <select name="disciplinas" id="disciplinas">
+                                <option value="volvo">Desenvolvimento de Sistemas</option>
+                                <option value="saab">Nutrição</option>
+                                <option value="opel">Adiministração</option>
+                                <option value="audi">Enfermagem</option>
+                              </select>
+                        </div>
+                        <div class="box-filtro">
+                            <label for="">Registro de Matrícula</label>
+                            <input type="text">
+                        </div>
+
+                        <input type="button" value="Filtrar" id="filtrar">
+                    </div>
+
+                    <div class="filtro-tabela">
+                        <!-- <nav class="nav">
+                            <ul>
+                                <li><a href="">Prestadores de serviço</a></li>
+                                <li><a href="">Coordenador</a></li>
+                                <li><a href="" class="active">Docentes</a></li>
+                            </ul>
+                        </nav> 
+                        <div class="line" style="display: none;"></div>-->
+
+                        <div class="table-flex-title">
+                            <div class="title-foto table"><h5>foto</h5></div>
+                            <div class="title-dados table"><h5>Dados gerais</h5></div>
+                            <div class="title-disciplina table"><h5>Disciplina</h5></div>
+                        </div>
+
+
+                        <div class="tabela" ><!--Tabela-->
+                            <div class="box-foto">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="" class="image">
+                            </div>
+                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
+                                    <h5>Nome:</h5>
+                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>CPF:</h5>
+                                    <span>000.000.000-00</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>Setor:</h5>
+                                    <span>Área pedagógica</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span>000-00-00</span>
+                                </div>
+                            </div>
+                            <div class="box-disciplina">
+                                <span>Nutrição</span>
+                            </div>
+                        </div><!--tabela--> 
+
+                        <div class="tabela" ><!--Tabela-->
+                            <div class="box-foto">
+                                <img src="../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="" class="image">
+                            </div>
+                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
+                                    <h5>Nome:</h5>
+                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>CPF:</h5>
+                                    <span>000.000.000-00</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>Setor:</h5>
+                                    <span>Área pedagógica</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span>000-00-00</span>
+                                </div>
+                            </div>
+                            <div class="box-disciplina">
+                                <span>Nutrição</span>
+                            </div>
+                        </div><!--tabela--> 
+
+                        <div class="tabela" ><!--Tabela-->
+                            <div class="box-foto">
+                                <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
+                            </div>
+                            <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                <div class="flex-info nome-info">
+                                    <h5>Nome:</h5>
+                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>CPF:</h5>
+                                    <span>000.000.000-00</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>Setor:</h5>
+                                    <span>Área pedagógica</span>
+                                </div>
+                                <div class="flex-info nome-info">
+                                    <h5>RM:</h5>
+                                    <span>000-00-00</span>
+                                </div>
+                            </div>
+                            <div class="box-disciplina">
+                                <span>Nutrição</span>
+                            </div>
+                        </div><!--tabela--> 
+
+                    </div><!--filtro-tabela-desktop-->
+
+
+
+                                            <!--TABELA DOCENTE MOBILE-->
+
+
+                        <div class="testimonial mySwiper">
+                            <div class="testi-content swiper-wrapper">
+                              <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+
+                            <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+
+                            <div class="slide swiper-slide tabela" ><!--Tabela-->
+                                <div class="box-foto">
+                                    <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="" class="image">
+                                </div>
+                                <div class="box-info-geral" style="display: flex; flex-direction: column;">
+                                    <div class="flex-info nome-info">
+                                        <h5>Nome:</h5>
+                                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>CPF:</h5>
+                                        <span>000.000.000-00</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>Setor:</h5>
+                                        <span>Área pedagógica</span>
+                                    </div>
+                                    <div class="flex-info nome-info">
+                                        <h5>RM:</h5>
+                                        <span>000-00-00</span>
+                                    </div>
+                                </div>
+                                <div class="box-disciplina">
+                                    <span>Nutrição</span>
+                                </div>
+                            </div><!--tabela--> 
+                
+                              </div>
+                            </div>
+                </div>
+            </div><!--container-->
+        </main>
+    </div>
+
+        <!-- Swiper JS -->
+        <script src="../../assets/js/docente/swiper-bundle.min.js"></script>
+
+        <!-- JavaScript -->
+        <script src="../../assets/js/docente/script.js"></script>
+
+    <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
+    <script src="../../assets/js/home/bottomnav.js"></script>
+    <script src="../../assets/js/home/menumobile.js"></script> -->
+    <script src="../../assets/js/global/navgation.js"></script>
+</body>
+</html>

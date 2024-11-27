@@ -1,5 +1,6 @@
 <?php 
 include '../../php/global/cabecario.php';
+include '../../php/diretor/gerenCalend.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -148,10 +148,10 @@ include '../../php/global/notificacao.php';
         
         <div class="form-container">
             <h2>Formulário de ajuda</h2>
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form action="../../php/global/envioSuporte.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nome-completo">Nome Completo:</label>
-                    <input type="text" id="nome-completo" name="nome-completo" class = "caixa" required>
+                    <input type="text" id="nome-completo" name="nome_completo" class = "caixa" required>
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone:</label>
@@ -169,10 +169,17 @@ include '../../php/global/notificacao.php';
                     <label for="curso">Curso:</label>
                     <select id="curso" name="curso" class = "caixa" required>
                         <option value="">Selecione o curso</option>
-                        <option value="curso1">Desenvolvimento de sistemas</option>
-                        <option value="curso2">Nutrição</option>
-                        <option value="curso3">Gastronomia</option>
-                        <option value="curso4">Enfermagem</option>
+                        <?php $sql = "SELECT id, nome FROM curso";
+                        $result = $conn->query($sql);
+                        
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value='{$row['id']}'>{$row['nome']}</option>";
+                            }
+                        } else {
+                            echo "<option value=''>Nenhum curso disponível</option>";
+                        }
+?>
                     </select>
                 </div>
                 <div class="form-group">

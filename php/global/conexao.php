@@ -190,6 +190,17 @@ $tableQueries = [
         titulo VARCHAR(255) NOT NULL,
         descricao TEXT NOT NULL
     )",
+    "solicitacoes" => "CREATE TABLE IF NOT EXISTS solicitacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_completo VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    id_usuario VARCHAR(20) NOT NULL,
+    curso_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    arquivo VARCHAR(255),
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)",
     "atividade" => "CREATE TABLE IF NOT EXISTS atividade (
         id INT AUTO_INCREMENT PRIMARY KEY,
         aluno_id INT NOT NULL,
@@ -384,6 +395,7 @@ $foreignKeys = [
     "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
     "ALTER TABLE horario ADD CONSTRAINT fk_horario_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE horario ADD CONSTRAINT fk_professor_horario FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
+    "ALTER TABLE solicitacoes ADD CONSTRAINT fk_solicitacao_curso_id FOREIGN KEY (curso_id) REFERENCES curso(id)",
     "ALTER TABLE horario ADD CONSTRAINT fk_horario_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
     "ALTER TABLE horario ADD CONSTRAINT fk_horario_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE horario ADD CONSTRAINT fk_horario_avaliacao FOREIGN KEY (avaliacao_id) REFERENCES avaliacao(id) ON DELETE CASCADE",

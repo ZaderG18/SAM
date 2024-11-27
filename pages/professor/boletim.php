@@ -2,6 +2,26 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+
+// Consultar os módulos
+$modulos_query = "SELECT * FROM modulo";
+$modulos_result = $conn->query($modulos_query);
+
+// Consultar as turmas
+$turmas_query = "SELECT * FROM turma";
+$turmas_result = $conn->query($turmas_query);
+
+// Consultar as matérias
+$materias_query = "SELECT * FROM materias";
+$materias_result = $conn->query($materias_query);
+
+// Consultar os turnos
+$turnos_query = "SELECT * FROM turnos";
+$turnos_result = $conn->query($turnos_query);
+
+// Consultar os alunos
+$alunos_query = "SELECT * FROM usuarios where cargo = 'aluno'";
+$alunos_result = $conn->query($alunos_query);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -139,26 +159,30 @@ include '../../php/global/notificacao.php';
         <div class="filters">
             <select id="modulo">
                 <option value="">Selecione o Módulo</option>
-                <option value="modulo1">Módulo 1</option>
-                <option value="modulo2">Módulo 2</option>
+                <?php while($modulo = $modulos_result->fetch_assoc()) : ?>
+                <option value="<?= $modulo['id'] ?>"><?php echo $modulo['nome']; ?></option>
+                <?php endwhile; ?>
             </select>
 
             <select id="turma">
                 <option value="">Selecione a Turma</option>
-                <option value="turma1">Turma 1</option>
-                <option value="turma2">Turma 2</option>
+                <?php while($turma = $turmas_result->fetch_assoc()) :?>
+                <option value="<?= $turma['id'] ?>"><?= $turma['nome'] ?></option>
+                <?php endwhile; ?>
             </select>
 
             <select id="materia">
                 <option value="">Selecione a Matéria</option>
-                <option value="matematica">Banco de dados</option>
-                <option value="portugues">Programação</option>
+                <?php while($materia = $materias_result->fetch_assoc()) : ?>
+                <option value="<?= $materia['id'] ?>"><?= $materia['nome']; ?></option>
+                <?php endwhile; ?>
             </select>
 
             <select id="turno">
                 <option value="">Selecione o Turno</option>
-                <option value="manha">Manhã</option>
-                <option value="tarde">Tarde</option>
+                <?php while($turno = $turnos_result->fetch_assoc()) : ?>
+                <option value="<?= $turno['id'];?>"><?= $turno['nome']?></option>
+                <?php endwhile; ?>
             </select>
 
             <select id="semestre">
@@ -172,6 +196,7 @@ include '../../php/global/notificacao.php';
 
         <!-- Tabela de Notas -->
         <div class="table-wrapper">
+            <form action="">
             <table>
                 <thead>
                     <tr>
@@ -187,63 +212,22 @@ include '../../php/global/notificacao.php';
                     </tr>
                 </thead>
                 <tbody>
+                    <?php while($aluno = $alunos_result->fetch_assoc()) :?>
                     <tr>
-                        <td>1</td>
-                        <td>João Silva</td>
-                        <td><input type="number" id="nota1-1" min="0" max="10"></td>
-                        <td><input type="number" id="nota2-1" min="0" max="10"></td>
-                        <td><input type="number" id="media-1" readonly></td>
-                        <td><input type="number" id="recuperacao-1" min="0" max="10"></td>
-                        <td><input type="number" id="media-rec-1" readonly></td>
-                        <td><textarea id="observacoes-1" placeholder="Observações"></textarea></td>
+                        <td><?= $aluno['id']?></td>
+                        <td><?= $aluno['nome']?></td>
+                        <td><input type="number" id="nota1-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number" id="nota2-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number" id="media-<?= $aluno['id']?>" readonly></td>
+                        <td><input type="number" id="recuperacao-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number" id="media-rec-<?= $aluno['id']?>" readonly></td>
+                        <td><textarea id="observacoes-<?= $aluno['id']?>" placeholder="Observações"></textarea></td>
                         <td class="actions">
-                            <button class="edit" onclick="calcularMedia(1)">Calcular Média</button>
-                            <button class="edit" onclick="editarNota(1)">Editar Nota</button>
+                            <button class="edit" onclick="calcularMedia(<?= $aluno['id']?>)">Calcular Média</button>
+                            <button class="edit" onclick="editarNota(<?= $aluno['id']?>)">Editar Nota</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Ana Souza</td>
-                        <td><input type="number" id="nota1-2" min="0" max="10"></td>
-                        <td><input type="number" id="nota2-2" min="0" max="10"></td>
-                        <td><input type="number" id="media-2" readonly></td>
-                        <td><input type="number" id="recuperacao-2" min="0" max="10"></td>
-                        <td><input type="number" id="media-rec-2" readonly></td>
-                        <td><textarea id="observacoes-2" placeholder="Observações"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="calcularMedia(2)">Calcular Média</button>
-                            <button class="edit" onclick="editarNota(2)">Editar Nota</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Pedro Lima</td>
-                        <td><input type="number" id="nota1-3" min="0" max="10"></td>
-                        <td><input type="number" id="nota2-3" min="0" max="10"></td>
-                        <td><input type="number" id="media-3" readonly></td>
-                        <td><input type="number" id="recuperacao-3" min="0" max="10"></td>
-                        <td><input type="number" id="media-rec-3" readonly></td>
-                        <td><textarea id="observacoes-3" placeholder="Observações"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="calcularMedia(3)">Calcular Média</button>
-                            <button class="edit" onclick="editarNota(3)">Editar Nota</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Maria Oliveira</td>
-                        <td><input type="number" id="nota1-4" min="0" max="10"></td>
-                        <td><input type="number" id="nota2-4" min="0" max="10"></td>
-                        <td><input type="number" id="media-4" readonly></td>
-                        <td><input type="number" id="recuperacao-4" min="0" max="10"></td>
-                        <td><input type="number" id="media-rec-4" readonly></td>
-                        <td><textarea id="observacoes-4" placeholder="Observações"></textarea></td>
-                        <td class="actions">
-                            <button class="edit" onclick="calcularMedia(4)">Calcular Média</button>
-                            <button class="edit" onclick="editarNota(4)">Editar Nota</button>
-                        </td>
-                    </tr>
-                    <!-- Adicione mais alunos conforme necessário -->
+                    <?php endwhile; ?>
                 </tbody>
             </table>
         </div>
