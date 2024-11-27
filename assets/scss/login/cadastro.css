@@ -30,7 +30,7 @@ main .container .flex-elements {
 main .container .flex-elements .left-img {
   width: 50%;
   min-height: 1050px;
-  height: 190vh;
+  height: 100vh;
   background-image: url(../../img/fundo.png);
   background-size: cover;
 }
@@ -185,23 +185,9 @@ select {
 .inputbx i {
   color: #a7a1a1;
   font-size: 20px;
+  cursor: pointer;
   position: relative;
   left: -20px;
-}
-
-/* Oculta o botão de mostrar senha em Chrome, Edge e Opera */
-input[type=password]::-webkit-textfield-decoration-container {
-  display: none;
-}
-
-/* Oculta o botão de mostrar senha no Firefox */
-input[type=password]::-moz-password-toggle {
-  display: none;
-}
-
-/* Oculta o botão de mostrar senha no IE e Edge antigos */
-input[type=password]::-ms-reveal {
-  display: none;
 }
 
 /* Botão de login */

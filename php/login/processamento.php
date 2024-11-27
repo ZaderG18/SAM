@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbName = "SAM";
+// $host = "localhost";
+// $username = "root";
+// $password = "";
+// $dbName = "SAM";
 
 include_once '../global/conexao.php';
 

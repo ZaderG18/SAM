@@ -2,6 +2,7 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+include '../../php/professor/historico.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -145,37 +146,36 @@ include '../../php/global/notificacao.php';
                 <label for="turma">Selecionar Turma:</label>
                 <select id="turma">
                     <option value="todas">Todas</option>
-                    <option value="turmaA">Turma A</option>
-                    <option value="turmaB">Turma B</option>
-                    <option value="turmaC">Turma C</option>
+                    <?php while ($turma = $turmas->fetch_assoc()) { ?>
+                        <option value="<?= $turma['id'] ?>"><?= $turma['nome'] ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div>
                 <label for="bimestre">Selecionar Bimestre:</label>
                 <select id="bimestre">
                     <option value="todos">Todos</option>
-                    <option value="1bim">1º Bimestre</option>
-                    <option value="2bim">2º Bimestre</option>
-                    <option value="3bim">3º Bimestre</option>
-                    <option value="4bim">4º Bimestre</option>
+                    <?php foreach ($bimestres as $bimestre) { ?>
+                        <option value="<?= $bimestre ?>"><?= $bimestre ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div>
                 <label for="turno">Selecionar Turno:</label>
                 <select id="turno">
                     <option value="todos">Todos</option>
-                    <option value="manha">Manhã</option>
-                    <option value="tarde">Tarde</option>
-                    <option value="noite">Noite</option>
+                    <?php foreach ($turnos as $turno) { ?>
+                        <option value="<?= $turno ?>"><?= $turno ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div>
                 <label for="periodo">Selecionar Período:</label>
                 <select id="periodo">
                     <option value="todos">Todos</option>
-                    <option value="1periodo">1º Período</option>
-                    <option value="2periodo">2º Período</option>
-                    <option value="3periodo">3º Período</option>
+                    <?php foreach ($periodos as $periodo) { ?>
+                        <option value="<?= $periodo ?>"><?= $periodo ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
@@ -186,11 +186,11 @@ include '../../php/global/notificacao.php';
             <div class="cards-overview">
                 <div class="card">
                     <h3>Média da Turma</h3>
-                    <p>7.8</p>
+                    <p><?= $turmaDados->fetch_assoc()['media_turma'] ?></p>
                 </div>
                 <div class="card">
                     <h3>Disciplinas Críticas</h3>
-                    <p>2 Disciplinas com alta taxa de reprovação</p>
+                    <p><?= $turmaCritica->fetch_assoc()['disciplinas_criticas']?> Disciplinas com alta taxa de reprovação</p>
                 </div>
                 <div class="card">
                     <h3>Progresso da Turma</h3>
@@ -200,7 +200,7 @@ include '../../php/global/notificacao.php';
                 </div>
                 <div class="card">
                     <h3>Alunos com Desempenho Crítico</h3>
-                    <p>3 alunos com nota média abaixo de 5.0</p>
+                    <p><?= $alunosCriticos->fetch_assoc()['alunos_criticos'] ?> alunos com nota média abaixo de 5.0</p>
                 </div>
             </div>
         </div>
@@ -211,22 +211,24 @@ include '../../php/global/notificacao.php';
             <div class="filters">
                 <label for="student-select">Selecionar Aluno:</label>
                 <select id="student-select">
-                    <option value="juliana">Juliana Santos</option>
-                    <option value="joao">João Pereira</option>
-                    <option value="maria">Maria Silva</option>
+                    <?php $alunos->data_seek(0);
+                    while ($aluno = $alunos->fetch_assoc()) { ?>
+                    <option value="<?= $aluno['id'] ?>"><?=  $aluno['nome'] ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
             <!-- Resumo Acadêmico do Aluno -->
             <div class="summary">
-                <p><strong>Nome:</strong> Juliana Santos</p>
-                <p><strong>RM:</strong> 202312345</p>
-                <p><strong>Média Geral:</strong> 8.2</p>
-                <p><strong>Disciplinas Pendentes:</strong> 6</p>
-                <p><strong>Prazo Estimado de Conclusão:</strong> Dezembro de 2024</p>
+                <?php $resumo = $alunoResumo->fetch_assoc(); ?>
+                <p><strong>Nome:</strong> <?= $resumo['nome']; ?></p>
+                <p><strong>RM:</strong> <?= $resumo['rm']; ?></p>
+                <p><strong>Média Geral:</strong> <?= $resumo['media_geral']; ?></p>
+                <p><strong>Disciplinas Pendentes:</strong> <?= $resumo['disciplinas_pendentes']; ?></p>
+                <p><strong>Prazo Estimado de Conclusão:</strong> <?= $resumo['prazo_estimado']; ?></p>
 
                 <div class="progress-bar">
-                    <div class="progress" style="width: 67%;">67% Concluído</div>
+                    <div class="progress" style="width: <?php echo $progresso; ?>%;"><?php echo round($progresso); ?>% Concluído</div>
                 </div>
             </div>
 
@@ -243,30 +245,14 @@ include '../../php/global/notificacao.php';
                         </tr>
                     </thead>
                     <tbody>
+                        <?php while ($disciplina = $desempenhoDisciplinas->fetch_assoc()) { ?>
                         <tr>
-                            <td>Algoritmos e Programação</td>
-                            <td>8.7</td>
-                            <td>4</td>
-                            <td class="approved">Aprovado</td>
+                            <td><?= $disciplina['nome']; ?></td>
+                            <td><?= $disciplina['nota']; ?></td>
+                            <td><?= $disciplina['faltas']; ?></td>
+                            <td class="<?= strtolower($disciplina['status']) ?>"><?=  $disciplina['status']; ?></td>
                         </tr>
-                        <tr>
-                            <td>Banco de Dados</td>
-                            <td>7.5</td>
-                            <td>4</td>
-                            <td class="approved">Aprovado</td>
-                        </tr>
-                        <tr>
-                            <td>Desenvolvimento Web</td>
-                            <td>6.0</td>
-                            <td>4</td>
-                            <td class="approved">Aprovado</td>
-                        </tr>
-                        <tr>
-                            <td>Programação Mobile</td>
-                            <td>5.0</td>
-                            <td>5</td>
-                            <td class="failed">Reprovado</td>
-                        </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -276,8 +262,15 @@ include '../../php/global/notificacao.php';
         <div class="alerts-section">
             <h2>Alertas e Recomendações</h2>
             <ul class="alerts-list">
-                <li><strong>Alerta:</strong> Aluno com alta taxa de faltas em Banco de Dados (Juliana Santos)</li>
-                <li><strong>Recomendação:</strong> Considerar recuperação para João Pereira em Programação Mobile</li>
+               <!-- Exibir alertas de faltas -->
+        <?php while ($alerta = $result_alertas->fetch_assoc()): ?>
+            <li><strong>Alerta:</strong> Aluno com alta taxa de faltas em <?php echo $alerta['nome_disciplina']; ?> (<?php echo $alerta['aluno_nome']; ?>)</li>
+        <?php endwhile; ?>
+
+        <!-- Exibir recomendações de recuperação -->
+        <?php while ($recomendacao = $result_recomendacoes->fetch_assoc()): ?>
+            <li><strong>Recomendação:</strong> Considerar recuperação para <?php echo $recomendacao['aluno_nome']; ?> em <?php echo $recomendacao['nome_disciplina']; ?></li>
+        <?php endwhile; ?>
             </ul>
         </div>
     </div>
