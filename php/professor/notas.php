@@ -1,72 +1,63 @@
 <?php
-// Incluir a conexão com o banco de dados
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sam";
+// Conectar ao banco de dados
+$conn = new mysqli('localhost', 'root', '', 'sam');
 
-$conn = new mysqli($host, $username, $password, $dbname);
+// Verificar conexão
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
 
-if (isset($_POST['acao'])) {
-    $acao = $_POST['acao'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nota1 = $_POST['nota1'];
+    $nota2 = $_POST['nota2'];
+    $media = $_POST['media'];
+    $recuperacao = $_POST['recuperacao'];
+    $media_rec = $_POST['media_rec'];
+    $observacoes = $_POST['observacoes'];
 
-    if (strpos($acao, 'calcular_') === 0) {
-        // Ação de calcular a média
-        $id_usuario = str_replace('calcular_', '', $acao);  // Obtém o ID do usuário (aluno ou professor)
-        $nota1 = $_POST['nota1'][$id_usuario];
-        $nota2 = $_POST['nota2'][$id_usuario];
+    $success = true;
 
-        // Calcular a média
-        $media = ($nota1 + $nota2) / 2;
+    // Usar prepared statement para evitar SQL injection
+    $stmt = $conn->prepare("
+        INSERT INTO notas (aluno_id, nota1, nota2, nota_media, recuperacao, media_rec, observacoes) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+        nota1 = VALUES(nota1), 
+        nota2 = VALUES(nota2), 
+        nota_media = VALUES(nota_media), 
+        recuperacao = VALUES(recuperacao), 
+        media_rec = VALUES(media_rec), 
+        observacoes = VALUES(observacoes)
+    ");
 
-        // Atualizar no banco de dados a média na tabela notas
-        $sql = "UPDATE notas SET media = ? WHERE id_usuario = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("di", $media, $id_usuario);
-        $stmt->execute();
-        $stmt->close();
-
-        echo "Média calculada e salva com sucesso!";
+    if ($stmt === false) {
+        die("Erro ao preparar a consulta: " . $conn->error);
     }
 
-    if (strpos($acao, 'editar_') === 0) {
-        // Ação de editar a nota
-        $id_usuario = str_replace('editar_', '', $acao);  // Obtém o ID do usuário (aluno ou professor)
-        $nota1 = $_POST['nota1'][$id_usuario];
-        $nota2 = $_POST['nota2'][$id_usuario];
+    foreach ($nota1 as $id => $n1) {
+        $n2 = $nota2[$id];
+        $med = $media[$id];
+        $rec = $recuperacao[$id];
+        $med_rec = $media_rec[$id];
+        $obs = $observacoes[$id];
 
-        // Atualizar as notas no banco de dados
-        $sql = "UPDATE notas SET nota1 = ?, nota2 = ? WHERE id_usuario = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ddi", $nota1, $nota2, $id_usuario);
-        $stmt->execute();
-        $stmt->close();
+        // Associar parâmetros e executar
+        $stmt->bind_param('iddddds', $id, $n1, $n2, $med, $rec, $med_rec, $obs);
 
-        echo "Notas editadas e salvas com sucesso!";
-    }
-
-    if ($acao === 'salvar_notas') {
-        // Ação de salvar todas as notas
-        foreach ($_POST['nota1'] as $id_usuario => $nota1) {
-            $nota2 = $_POST['nota2'][$id_usuario];
-            $observacao = $_POST['observacoes'][$id_usuario];
-
-            // Calcular a média
-            $media = ($nota1 + $nota2) / 2;
-
-            // Atualizar as notas e a média no banco de dados
-            $sql = "UPDATE notas SET nota1 = ?, nota2 = ?, media = ?, observacao = ? WHERE id_usuario = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ddssi", $nota1, $nota2, $media, $observacao, $id_usuario);
-            $stmt->execute();
-            $stmt->close();
+        if (!$stmt->execute()) {
+            $success = false;
+            echo "Erro ao salvar nota para o aluno $id: " . $stmt->error;
         }
-        echo "Notas salvas com sucesso!";
     }
 
-    if ($acao === 'enviar_coord') {
-        // Ação de enviar para coordenação/diretoria
-        // Você pode implementar a lógica para enviar as notas para a coordenação por email, por exemplo
-        echo "Notas enviadas para coordenação!";
+    $stmt->close();
+
+    if ($success) {
+        echo "<script>alert('Notas salvas com sucesso!'); window.location.href='../../pages/professor/boletim.php';</script>";
+    } else {
+        echo "Erro ao salvar notas.";
     }
 }
+
+$conn->close();
+?>

@@ -4,12 +4,6 @@ require '../../php/login/validar.php';
 require '../../php/aluno/boletim.php';
 include '../../php/global/notificacao.php';
 
-// Verificar se um módulo foi selecionado e se é numérico
-if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
-    $moduloId = intval($_GET['modulo']); // Converte para inteiro
-} else {
-    $moduloId = 1; // Definindo um módulo padrão
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -275,7 +269,7 @@ if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
     <div id="modal-<?php echo $id; ?>" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('modal-<?php echo $id; ?>')">&times;</span>
-                <h2><?php echo $row['titulo']; ?></h2>
+                <h2><?php echo $row['nome_modulo']; ?></h2>
                 
                 <?php if (!empty($criterios)) { ?>
                     <ul>
@@ -294,6 +288,5 @@ if (isset($_GET['modulo']) && is_numeric($_GET['modulo'])) {
     <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/aluno/boletim/boletim.js"></script>
-    <script src="../../assets/js/global/search.js"></script>
 </body>
 </html>

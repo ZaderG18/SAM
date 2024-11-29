@@ -69,15 +69,6 @@ function getModulos($conn) {
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-// Verificar se o usuário está autenticado
-if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
-    die("Usuário não está autenticado.");
-}
-
-// Obter o ID do aluno a partir da sessão
-$id = $_SESSION['user']['id'];
-$cursoId = $_SESSION['user']['curso_id'];
-$turmaId = $_SESSION['user']['turma_id'];
 
 // Obter dados do curso e da turma
 $curso = getCurso($conn, $cursoId);
@@ -88,13 +79,27 @@ $modulos = getModulos($conn);
 $selectedModule = isset($_GET['modulo']) ? (int)$_GET['modulo'] : 1;
 $notas = getNotas($conn, $id, $selectedModule);
 
-// Consulta para buscar os modais
-$sql = "SELECT * FROM modals";
-$result = $conn->query($sql);
+// Função para calcular a situação
+function calcularSituacao($nota1, $nota2) {
+    if (is_null($nota1) || is_null($nota2)) {
+        return 'Dados insuficientes';
+    }
+    $media = ($nota1 + $nota2) / 2;
+    return $media >= 5 ? 'Aprovado' : 'Reprovado';
+}
 
-if ($result->num_rows > 0) {
+// Atualizando o loop para gerar os modais corretamente
+$modals = [];
+$sql = "SELECT * FROM modulo";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $id = strtolower(str_replace(' ', '-', $row['titulo']));
-        $criterios = isset($row['criterios']) ? explode(';', $row['criterios']) : [];
+        $modalId = strtolower(str_replace(' ', '-', $row['nome_modulo'])); // Defina o modalId corretamente
+        $modals[] = [
+            'id' => $modalId,
+            'titulo' => $row['nome_modulo'],
+            'criterio' => isset($row['criterio']) ? explode(';', $row['criterio']) : []
+        ];
     }
 }
+

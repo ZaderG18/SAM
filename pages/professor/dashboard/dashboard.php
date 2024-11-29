@@ -2,6 +2,34 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Obter contagem de disciplinas coordenadas
+$disciplinasCount = $conn->query("SELECT COUNT(*) AS total FROM disciplina")->fetch_assoc()['total'];
+
+// Obter contagem de alunos supervisionados
+$alunosCount = $conn->query("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'aluno'")->fetch_assoc()['total'];
+
+// Obter contagem de professores supervisionados
+$professoresCount = $conn->query("SELECT COUNT(*) AS total FROM usuarios WHERE cargo = 'professor'")->fetch_assoc()['total'];
+
+// Obter contagem de relatórios pendentes
+$relatoriosCount = $conn->query("SELECT COUNT(*) AS total FROM relatorio WHERE status = 'pendente'")->fetch_assoc()['total'];
+
+// Obter reuniões agendadas
+$reunioes = $conn->query("SELECT DATE_FORMAT(data, '%d/%m') AS data_formatada, descricao FROM reuniao ORDER BY data ASC LIMIT 3");
+
+// Obter comunicados recentes
+$comunicados = $conn->query("SELECT DATE_FORMAT(data, '%d/%m') AS data_formatada, descricao FROM comunicado ORDER BY data DESC LIMIT 3");
+
+// Dados para progresso acadêmico
+$progressQuery = "SELECT nome_disciplina, AVG(progresso) AS progresso FROM progresso_academico GROUP BY nome_disciplina";
+$progressResult = $conn->query($progressQuery);
+$progressData = $progressResult->fetch_all(MYSQLI_ASSOC);
+
+// Dados para desempenho das turmas
+$performanceQuery = "SELECT nome_turma, AVG(nota) AS media_notas FROM desempenho_turmas GROUP BY nome_turma";
+$performanceResult = $conn->query($performanceQuery);
+$performanceData = $performanceResult->fetch_all(MYSQLI_ASSOC);
+
 ?>
 <!DOCTYPE php>
 <php lang="pt-br">
@@ -142,28 +170,28 @@ include '../../../php/global/notificacao.php';
         <!-- Card de Visão Geral de Disciplinas -->
         <a href="disciplina.php" class="card">
             <h3>Disciplinas Coordenadas</h3>
-            <div class="count">8</div>
+            <div class="count"><?= $disciplinasCount; ?></div>
             <p>Disciplinas atualmente sob sua coordenação. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Alunos Supervisionados -->
         <a href="alunos.php" class="card">
             <h3>Alunos Supervisionados</h3>
-            <div class="count">120</div>
+            <div class="count"><?= $alunosCount; ?></div>
             <p>Total de alunos sob supervisão direta em várias disciplinas. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Supervisão de Professores -->
         <a href="professores.php" class="card">
             <h3>Professores Supervisionados</h3>
-            <div class="count">15</div>
+            <div class="count"><?= $professoresCount;?></div>
             <p>Número de professores sob sua coordenação. Clique para detalhes.</p>
         </a>
 
         <!-- Card de Relatórios Pendentes -->
         <a href="relatorios.php" class="card">
             <h3>Relatórios Pendentes</h3>
-            <div class="count">3</div>
+            <div class="count"><?= $relatoriosCount;?></div>
             <p>Relatórios acadêmicos que precisam ser enviados. Clique para detalhes.</p>
         </a>
 
@@ -171,9 +199,9 @@ include '../../../php/global/notificacao.php';
         <div class="card">
             <h3>Reuniões Agendadas</h3>
             <ul class="events-list">
-                <li><span>12/10:</span> Reunião com o corpo docente</li>
-                <li><span>15/10:</span> Discussão sobre planejamento anual</li>
-                <li><span>20/10:</span> Reunião com os diretores</li>
+                <?php while ($row = $reunioes->fetch_row()) : ?>
+                <li><span><?= $row['data_formatada']; ?>:</span> <?= $row['descricao']; ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
 
@@ -181,9 +209,9 @@ include '../../../php/global/notificacao.php';
         <div class="card">
             <h3>Comunicados Recentes</h3>
             <ul class="events-list">
-                <li><span>05/10:</span> Prazo de entrega de notas</li>
-                <li><span>03/10:</span> Atualização no currículo</li>
-                <li><span>01/10:</span> Mudanças no sistema SAM</li>
+            <?php while ($row = $comunicados->fetch_row()) : ?>
+                <li><span><?= $row['data_formatada']; ?>:</span> <?= $row['descricao']; ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
 
@@ -204,7 +232,71 @@ include '../../../php/global/notificacao.php';
 
     <!-- Scripts -->
     <script src="../../../assets/js/sidebar/sidebar.js"></script>
-   <script src="../../../assets/js/global/search.js"></script>
-    <script src="../../../assets/js/professor/dashboard/dashboard.js"></script>
+    <script src="../../../assets/js/global/search.js"></script>
+    <script>
+    // Dados dinâmicos do PHP
+    var progressData = <?= json_encode($progressData); ?>;
+    var performanceData = <?= json_encode($performanceData); ?>;
+
+    // Preparar dados para o gráfico de progresso acadêmico
+    var progressLabels = progressData.map(item => item.nome_disciplina);
+    var progressValues = progressData.map(item => parseInt(item.progresso));
+
+    var ctx = document.getElementById('progressChart').getContext('2d');
+    var progressChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: progressLabels,
+            datasets: [{
+                label: 'Progresso (%)',
+                data: progressValues,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Preparar dados para o gráfico de desempenho das turmas
+    var performanceLabels = performanceData.map(item => item.nome_turma);
+    var performanceValues = performanceData.map(item => parseInt(item.media_notas));
+
+    var ctx = document.getElementById('performanceChart').getContext('2d');
+    var performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: performanceLabels,
+            datasets: [{
+                label: 'Média de Notas (%)',
+                data: performanceValues,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    if (progressData.length === 0) {
+    document.getElementById('progressChart').parentNode.innerHTML = '<p>Sem dados para o gráfico de progresso.</p>';
+}
+
+if (performanceData.length === 0) {
+    document.getElementById('performanceChart').parentNode.innerHTML = '<p>Sem dados para o gráfico de desempenho.</p>';
+}
+
+    </script>
 </body>
 </php>

@@ -2,6 +2,29 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Definir a turma padrão como 'todas as turmas'
+$classFilter = 'all';
+if (isset($_GET['classFilter']) && in_array($_GET['classFilter'], ['turma1', 'turma2', 'turma3'])) {
+    $classFilter = $_GET['classFilter'];
+}
+
+// Consultar todas as turmas para o filtro
+$sqlTurmas = "SELECT DISTINCT nome FROM turma";
+$turmasResult = $conn->query($sqlTurmas);
+
+// Consultar alunos com base na turma e buscar desempenho na tabela desempenho_aluno
+$sqlAlunos = "SELECT u.nome, u.foto, t.nome AS turma, d.desempenho
+              FROM usuarios u
+              JOIN turma t ON u.id_usuario = t.id_usuario
+              LEFT JOIN desempenho_alunos d ON u.id_usuario = d.id_usuario
+              WHERE u.cargo = 'aluno'";
+
+// Adicionar filtro de turma se necessário
+if ($classFilter !== 'all') {
+    $sqlAlunos .= " AND t.nome = '$classFilter'";
+}
+
+$alunosResult = $conn->query($sqlAlunos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -140,23 +163,42 @@ include '../../../php/global/notificacao.php';
 <main>
     <div class="main-content">
         <div class="search-bar">
+            <form action="" method="get">
             <input type="text" id="searchInput" placeholder="Buscar aluno...">
             <select id="classFilter">
-                <option value="all">Todas as turmas</option>
-                <option value="turma1">Turma 1</option>
-                <option value="turma2">Turma 2</option>
-                <option value="turma3">Turma 3</option>
+                <option value="all" <?php if ($classFilter === 'all') echo 'selecionado'?>>Todas as turmas</option>
+               <?php if ($turmasResult->num_rows > 0) {
+                        while ($turma = $turmasResult->fetch_assoc()) {
+                            $turmaNome = $turma['nome'];
+                            echo "<option value='$turmaNome' " . ($classFilter === $turmaNome ? 'selected' : '') . ">$turmaNome</option>";
+                        }
+                    }?>
             </select>
+            <button type="submit">Buscar</button>
+            </form>
         </div>
 
         <div class="student-list" id="studentList">
-            <div class="student-card" data-turma="turma1">
-                <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Maria Silva">
-                <h3>Maria Silva</h3>
-                <p>Turma: 1 | Desempenho: 85%</p>
-                <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
-            </div>
-            <div class="student-card" data-turma="turma2">
+        <?php if ($alunosResult->num_rows > 0) {
+                // Exibir os alunos encontrados
+                while ($row = $alunosResult->fetch_assoc()) {
+                    $nome = $row['nome'];
+                    $turma = $row['turma'];
+                    $desempenho = $row['desempenho'] ?? 'Não disponível';
+                    $foto = $row['foto'];
+            ?>
+        <div class="student-card" data-turma="<?php echo $turma; ?>">
+                        <img src="<?php echo $foto; ?>" alt="<?php echo $nome; ?>">
+                        <h3><?php echo $nome; ?></h3>
+                        <p>Turma: <?php echo $turma; ?> | Desempenho: <?php echo $desempenho; ?>%</p>
+                        <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
+                    </div>
+            <?php
+                }
+            } else {
+                echo "<p>Nenhum aluno encontrado.</p>";
+            } ?>
+            <!-- <div class="student-card" data-turma="turma2">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Ana Souza">
                 <h3>Ana Souza</h3>
                 <p>Turma: 2 | Desempenho: 90%</p>
@@ -209,7 +251,7 @@ include '../../../php/global/notificacao.php';
                 <h3>Mariana Oliveira</h3>
                 <p>Turma: 1 | Desempenho: 94%</p>
                 <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
-            </div>
+            </div> -->
         </div>
 
         <div class="pagination">
@@ -226,7 +268,7 @@ include '../../../php/global/notificacao.php';
 
     <!-- Scripts -->
     <script src="../../../assets/js/sidebar/sidebar.js"></script>
-   <script src="../../../assets/js/global/search.js"></script>
+    <script src="../../../assets/js/global/search.js"></script>
     <script src="../../../assets/js/professor/dashboard/dashboard.js"></script>
     <script src="../../../assets/js/professor/dashboard/alunos.js"></script>
 </body>

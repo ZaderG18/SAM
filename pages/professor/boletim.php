@@ -15,10 +15,6 @@ $turmas_result = $conn->query($turmas_query);
 $materias_query = "SELECT * FROM materias";
 $materias_result = $conn->query($materias_query);
 
-// Consultar os turnos
-$turnos_query = "SELECT * FROM turnos";
-$turnos_result = $conn->query($turnos_query);
-
 // Consultar os alunos
 $alunos_query = "SELECT * FROM usuarios where cargo = 'aluno'";
 $alunos_result = $conn->query($alunos_query);
@@ -160,7 +156,7 @@ $alunos_result = $conn->query($alunos_query);
             <select id="modulo">
                 <option value="">Selecione o Módulo</option>
                 <?php while($modulo = $modulos_result->fetch_assoc()) : ?>
-                <option value="<?= $modulo['id'] ?>"><?php echo $modulo['nome']; ?></option>
+                <option value="<?= $modulo['id'] ?>"><?php echo $modulo['nome_modulo']; ?></option>
                 <?php endwhile; ?>
             </select>
 
@@ -174,14 +170,14 @@ $alunos_result = $conn->query($alunos_query);
             <select id="materia">
                 <option value="">Selecione a Matéria</option>
                 <?php while($materia = $materias_result->fetch_assoc()) : ?>
-                <option value="<?= $materia['id'] ?>"><?= $materia['nome']; ?></option>
+                <option value="<?= $materia['id'] ?>"><?= $materia['descricao']; ?></option>
                 <?php endwhile; ?>
             </select>
 
             <select id="turno">
                 <option value="">Selecione o Turno</option>
-                <?php while($turno = $turnos_result->fetch_assoc()) : ?>
-                <option value="<?= $turno['id'];?>"><?= $turno['nome']?></option>
+                <?php while($turma = $turmas_result->fetch_assoc()) :?>
+                    <option value="<?= $turma['id'] ?>"><?= $turma['turno'] ?></option>
                 <?php endwhile; ?>
             </select>
 
@@ -196,7 +192,7 @@ $alunos_result = $conn->query($alunos_query);
 
         <!-- Tabela de Notas -->
         <div class="table-wrapper">
-            <form action="">
+            <form action="../../php/professor/notas.php" method="post">
             <table>
                 <thead>
                     <tr>
@@ -216,12 +212,12 @@ $alunos_result = $conn->query($alunos_query);
                     <tr>
                         <td><?= $aluno['id']?></td>
                         <td><?= $aluno['nome']?></td>
-                        <td><input type="number" id="nota1-<?= $aluno['id']?>" min="0" max="10"></td>
-                        <td><input type="number" id="nota2-<?= $aluno['id']?>" min="0" max="10"></td>
-                        <td><input type="number" id="media-<?= $aluno['id']?>" readonly></td>
-                        <td><input type="number" id="recuperacao-<?= $aluno['id']?>" min="0" max="10"></td>
-                        <td><input type="number" id="media-rec-<?= $aluno['id']?>" readonly></td>
-                        <td><textarea id="observacoes-<?= $aluno['id']?>" placeholder="Observações"></textarea></td>
+                        <td><input type="number" name="nota1[<?= $aluno['id']?>]" id="nota1-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number" name="nota2[<?= $aluno['id']?>]" id="nota2-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number" name="media[<?= $aluno['id']?>]" id="media-<?= $aluno['id']?>"></td>
+                        <td><input type="number" name="recuperacao[<?= $aluno['id']?>]" id="recuperacao-<?= $aluno['id']?>" min="0" max="10"></td>
+                        <td><input type="number"  name="media_rec[<?= $aluno['id']?>]" id="media-rec-<?= $aluno['id']?>"></td>
+                        <td><textarea name="observacoes[<?= $aluno['id']?>]" id="observacoes-<?= $aluno['id']?>" placeholder="Observações"></textarea></td>
                         <td class="actions">
                             <button class="edit" onclick="calcularMedia(<?= $aluno['id']?>)">Calcular Média</button>
                             <button class="edit" onclick="editarNota(<?= $aluno['id']?>)">Editar Nota</button>
@@ -234,12 +230,12 @@ $alunos_result = $conn->query($alunos_query);
 
         <!-- Botões de Ações -->
         <div class="save-button">
-            <button onclick="salvarNotas()">Salvar Notas</button>
+            <button type="submit">Salvar Notas</button>
         </div>
-
         <div class="send-button">
             <button onclick="enviarParaCoordenacao()">Enviar para Coordenação/Diretoria</button>
         </div>
+        </form>
     </div>
 </main>
 

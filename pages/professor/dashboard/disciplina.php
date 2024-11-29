@@ -2,6 +2,28 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Consulta para obter os dados dos alunos e suas turmas
+$sql = "SELECT nome_disciplina AS nome, turma_id, desempenho, img_path 
+        FROM desempenho_alunos"; // Ajuste essa consulta com base na sua tabela
+$result = $conn->query($sql);
+
+$alunos = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $alunos[] = $row;
+    }
+}
+
+// Consulta para obter as turmas distintas
+$sqlTurmas = "SELECT DISTINCT turma_id FROM desempenho_alunos";
+$resultTurmas = $conn->query($sqlTurmas);
+
+$turmasDisponiveis = [];
+if ($resultTurmas && $resultTurmas->num_rows > 0) {
+    while ($row = $resultTurmas->fetch_assoc()) {
+        $turmasDisponiveis[] = $row['turma_id'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -144,20 +166,22 @@ include '../../../php/global/notificacao.php';
             <input type="text" id="searchInput" placeholder="Buscar aluno...">
             <select id="classFilter">
                 <option value="all">Todas as turmas</option>
-                <option value="turma1">Turma 1</option>
-                <option value="turma2">Turma 2</option>
-                <option value="turma3">Turma 3</option>
+                <?php foreach ($turmasDisponiveis as $turma) : ?>
+                <option value="<?= htmlspecialchars($turma) ?>"><?= ucfirst($turma) ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 
         <div class="student-list" id="studentList">
-            <div class="student-card" data-turma="turma1">
-            <img src="../../../assets/img/home/cards/aula_01.jpg" alt="HTML">
-            <h3>HTML</h3>
-            <p>Turma: 1 | Desempenho: 85%</p>
+            <?php foreach ($alunos as $aluno) : ?>
+            <div class="student-card" data-turma="<?= htmlspecialchars($aluno['turma']) ?>">
+            <img src="<?= htmlspecialchars($aluno['img_path']) ?>" alt="<?= htmlspecialchars($aluno['nome']) ?>">
+            <h3><?= htmlspecialchars($aluno['nome'])?></h3>
+            <p>Turma: <?= htmlspecialchars($aluno['turma'])?> | Desempenho: <?= htmlspecialchars($aluno['desempenho'])?>%</p>
             <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
             </div>
-            <div class="student-card" data-turma="turma2">
+            <?php endforeach; ?>
+            <!-- <div class="student-card" data-turma="turma2">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="CSS">
             <h3>CSS</h3>
             <p>Turma: 2 | Desempenho: 90%</p>
@@ -210,7 +234,7 @@ include '../../../php/global/notificacao.php';
             <h3>Go</h3>
             <p>Turma: 1 | Desempenho: 94%</p>
             <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
-            </div>
+            </div> -->
         </div>
 
         <div class="pagination">

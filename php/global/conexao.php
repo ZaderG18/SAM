@@ -294,6 +294,27 @@ $tableQueries = [
         mensagem TEXT NOT NULL,
         data_envio DATETIME DEFAULT CURRENT_TIMESTAMP
     )",
+    "desempenho_alunos" => "CREATE TABLE desempenho_alunos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_disciplina VARCHAR(255),
+    turma_id VARCHAR(10),
+    desempenho DECIMAL(5,2),
+    img_path VARCHAR(255)
+)",
+    "progresso_academico" => "CREATE TABLE IF NOT EXISTS progresso_academico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_disciplina VARCHAR(255) NOT NULL,
+    progresso INT NOT NULL,
+    aluno_id INT,
+    FOREIGN KEY (aluno_id) REFERENCES usuarios(id)
+)",
+"desempenho_turmas" => "CREATE TABLE desempenho_turmas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_turma VARCHAR(255) NOT NULL,
+    media_notas DECIMAL(5,2) NOT NULL,
+    professor_id INT,
+    FOREIGN KEY (professor_id) REFERENCES professor(id)
+)",
     "modulo" => "CREATE TABLE IF NOT EXISTS modulo ( 
         id INT AUTO_INCREMENT PRIMARY KEY, 
         nome_modulo VARCHAR(255) NOT NULL, 
@@ -309,6 +330,8 @@ $tableQueries = [
         disciplina_id int(11) NOT NULL,
         turma_id int(11) NOT NULL,
         modulo_id int(11) NOT NULL,
+        recuperacao DECIMAL(5,2),
+        media_rec DECIMAL(5,2),
         nota1 decimal(5,2) DEFAULT NULL,
         nota2 decimal(5,2) DEFAULT NULL,
         nota_media decimal(5,2) DEFAULT NULL,
@@ -351,7 +374,23 @@ $tableQueries = [
         diretor_id INT,
         coordenador_id INT,
         professor_id INT
-    )"
+    )",
+    "relatorio" => "CREATE TABLE IF NOT EXISTS relatorio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pendente', 'concluido') DEFAULT 'pendente'
+)",
+    "reuniao" => "CREATE TABLE IF NOT EXISTS reuniao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    data DATETIME NOT NULL
+)",
+    "comunicado" => "CREATE TABLE IF NOT EXISTS comunicado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    data DATETIME NOT NULL
+)"
 ];
 
 // Executando as consultas para criar as tabelas
@@ -405,6 +444,7 @@ $foreignKeys = [
     "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE disciplina ADD CONSTRAINT fk_disciplina_coordenador FOREIGN KEY (coordenador_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE desempenho_alunos ADD CONSTRAINT fk_desempenho_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_aluno_id FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
     "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
