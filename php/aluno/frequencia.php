@@ -15,7 +15,7 @@ session_status() === PHP_SESSION_NONE && session_start();
 $user = $_SESSION['user'];
 $id = $user['id'];
 
-include '../global/gerarPDF.php';
+// include '../global/gerarPDF.php';
 
 // Verifica se foi passado o módulo via POST
 $frequencias = [];

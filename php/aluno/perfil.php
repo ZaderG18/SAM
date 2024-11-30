@@ -36,5 +36,12 @@ function getContatoEmergencia($conn, $id) {
     return $result->fetch_assoc();
 }
 
-
+function getCurso($conn, $id) {
+    $query = "SELECT * FROM curso WHERE aluno_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
 

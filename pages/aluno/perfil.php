@@ -9,6 +9,7 @@ $user = getAlunoData($conn, $id);
 $academico = getAcademicoData($conn, $id);
 $contatoEmergencia = getContatoEmergencia($conn, $id);
 $atividades = getAtividadesExtracurriculares($conn, $id);
+$curso = getCurso($conn, $id);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -142,99 +143,58 @@ $atividades = getAtividadesExtracurriculares($conn, $id);
                 <h2><?php echo htmlspecialchars($user['nome']) ?></h2>
                 <p>RM: <?php echo htmlspecialchars($user['RM'])?></p>
                 <p>Email: <?php echo htmlspecialchars($user['email'])?></p>
-                <p>Curso: <?php echo htmlspecialchars($user['curso_id'])?></p>
+                <p>Curso: <?php echo htmlspecialchars($curso['nome_curso'])?></p>
                 <p>Status Acadêmico: <?php echo htmlspecialchars($user['status'])?></p>
             </div>
         </div>
 
         <!-- Informações Pessoais -->
-         <?php if(!empty($user)) : ?>
         <div class="section">
             <h3 class="section-title">Informações Pessoais</h3>
             <div class="details">
-                <?php $infoPessoais = [
-                    'Nome Completo' => $user['nome'],
-                    'Data de Nascimento' => $user['data_nascimento'],
-                    'Telefone' => $user['telefone'],
-                    'Endereço' => $user['endereco'],
-                    'CPF' => $user['cpf'],
-                    'Nacionalidade' => $user['nacionalidade'],
-                    'Data de Matrícula' => $user['data_matricula']
-                ];
-                foreach ($infoPessoais as $label => $value) : ?>
-                <div class="detail-item">
-                    <label><?= $label; ?>:</label>
-                    <p><?php htmlspecialchars($value) ?></p>
-                </div>
-                <?php endforeach; ?>
+                <div class="detail-item"><label>Nome Completo:</label><p><?= $user['nome']; ?></p></div>
+                <div class="detail-item"><label>Data de Nascimento:</label><p><?= $user['data_nascimento']; ?></p></div>
+                <div class="detail-item"><label>Telefone:</label><p><?= $user['telefone']; ?></p></div>
+                <div class="detail-item"><label>Endereço:</label><p><?= $user['endereco']; ?></p></div>
+                <div class="detail-item"><label>CPF:</label><p><?= $user['cpf']; ?></p></div>
+                <!-- <div class="detail-item"><label>RG:</label><p><?= $user['rg']; ?></p></div> -->
+                <div class="detail-item"><label>Estado Civil:</label><p><?= $user['estado_civil']; ?></p></div>
+                <div class="detail-item"><label>Nacionalidade:</label><p><?= $user['nacionalidade']; ?></p></div>
+                <div class="detail-item"><label>Data de Matrícula:</label><p><?= $curso['data_inicio']; ?></p></div>
             </div>
         </div>
-        <?php endif; ?>
+
         <!-- Informações Acadêmicas -->
-         <?php if (!empty($academico)) : ?>
         <div class="section">
             <h3 class="section-title">Informações Acadêmicas</h3>
             <div class="details">
-                <?php $infoAcademicas = [
-                    'Curso' => $academico['curso'],
-                    'Período' => $academico['periodo'],
-                    'Semestre Atual' => $academico['modulo_atual'],
-                    'Sala' => $academico['turma'],
-                    'Orientador Acadêmico' => 'Prof. ' . $academico['nome_professor'],
-                    'Bolsas e Auxílios' => $academico['bolsas_auxilios'],
-                    'Horas Complementares' => $academico['horas_complementares'],
-                    'Estágio Atual' => $academico['estagio_atual']
-                ]; 
-                foreach ($infoAcademicas as $label => $value) : ?>
-                <div class="detail-item">
-                    <label><?= $label ?>:</label>
-                    <p><?= htmlspecialchars($value) ?></p>
-                </div>
-                <?php endforeach; ?>
+                <div class="detail-item"><label>Curso:</label><p><?= $curso['curso']; ?></p></div>
+                <div class="detail-item"><label>Período:</label><p><?= $curso['periodo']; ?></p></div>
+                <div class="detail-item"><label>Semestre Atual:</label><p><?= $curso['semestre_atual']; ?></p></div>
+                <div class="detail-item"><label>Sala:</label><p><?= $curso['sala']; ?></p></div>
+                <div class="detail-item"><label>Orientador Acadêmico:</label><p><?= $curso['orientador']; ?></p></div>
             </div>
         </div>
-        <?php endif; ?>
 
-        <?php $listas = [
-            'Desempenho Acadêmico' => $desempenhoAcademico,
-            'Projetos e Pesquisas' => $projetosPesquisas,
-            'Eventos Acadêmicos' => $eventosAcademicos,
-            'Atividades Extracurriculares' => $atividadesExtracurriculares
-        ];
-        foreach ($listas as $titulo => $itens) :
-        if (!empty($itens)) : ?>
-        <!-- Desempenho Acadêmico -->
+        <!-- Atividades Extracurriculares -->
         <div class="section">
-            <h3 class="section-title"><?= $titulo ?></h3>
+            <h3 class="section-title">Atividades Extracurriculares</h3>
             <ul>
-                <?php foreach ($itens as $item) : ?>
-                <li><?= htmlspecialchars($item) ?></li>
+                <?php foreach ($extracurricularActivities as $activity): ?>
+                    <li><?= $activity; ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
-        <?php endif; endforeach;?>
 
         <!-- Contato de Emergência -->
         <div class="section">
             <h3 class="section-title">Contato de Emergência</h3>
             <div class="details">
-                <div class="detail-item">
-                    <label>Nome do Contato:</label>
-                    <p><?php echo htmlspecialchars($contatoEmergencia['nome_emergencia']); ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Parentesco:</label>
-                    <p><?php echo htmlspecialchars($contatoEmergencia['parente_emergencia']); ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Telefone de Contato:</label>
-                    <p><?php echo htmlspecialchars($contatoEmergencia['telefone_emergencia']); ?></p>
-                </div>
-                <div class="detail-item">
-                    <label>Email de Contato:</label>
-                    <p><?php echo htmlspecialchars($contatoEmergencia['email_emergencia']); ?></p>
-                </div>
+                <div class="detail-item"><label>Nome do Contato:</label><p><?=$contatoEmergencia['nome']; ?></p></div>
+                <div class="detail-item"><label>Parentesco:</label><p><?=$contatoEmergencia['parentesco']; ?></p></div>
+                <div class="detail-item"><label>Telefone:</label><p><?=$contatoEmergencia['telefone']; ?></p></div>
             </div>
+        </div>
         </div>
 </main>
 

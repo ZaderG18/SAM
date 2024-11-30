@@ -264,7 +264,7 @@ $maximo_registros = 6;
     
                     <div class="flex-visao-geral">
                         <div class="content-visao" id="content-visao01">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="usuarios/aluno.php"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements">
                                 <img id="img1" src="../../assets/img/home/logo/Layer_1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalAlunos)?></h4>
@@ -273,7 +273,7 @@ $maximo_registros = 6;
                         </div>
     
                         <div class="content-visao" id="content-visao02">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="usuarios/docente.php"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements">
                                 <img id="img2" src="../../assets/img/home/logo/sala-de-aula (3) 1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalProfessor)?></h4>
@@ -282,7 +282,7 @@ $maximo_registros = 6;
                         </div>
     
                         <div class="content-visao" id="content-visao03">
-                            <div class="box-menu"><a href=""><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
+                            <div class="box-menu"><a href="usuarios/coordenador.php"><img src="../../assets/img/home/logo/icon-menu.png" alt="" width="30px" style="float: right;"></a></div>
                             <div class="visao-elements img3">
                                 <img id="img3" src="../../assets/img/home/logo/Layer_1-1.png" alt="">
                                 <h4><?php echo htmlspecialchars($totalCoordenador)?></h4>

@@ -2,6 +2,8 @@
 include '../../php/global/cabecario.php';
 require '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+
+// Código PHP para buscar cursos
 $cursos = "SELECT nome_curso FROM curso WHERE aluno_id = ?";
 $stmtCursos = $conn->prepare($cursos);
 $stmtCursos->bind_param("i", $id);
@@ -165,14 +167,18 @@ $stmtCursos->close();
                 </div>
                 <div class="form-group">
                     <label for="curso">Curso:</label>
-                    <select id="curso" name="curso" class = "caixa" required>
-                    <?php if($resultCursos->num_rows > 0): ?>
+                    <select id="curso" name="curso" class="caixa" required>
                         <option value="" disabled selected>Selecione o curso</option>
-                        <option value="<?php echo $cursos['nome_curso']; ?>"><?php echo $cursos['nome_curso']; ?></option>
+                        <?php if ($resultCursos->num_rows > 0): ?>
+                            <?php while ($row = $resultCursos->fetch_assoc()): ?>
+                                <option value="<?php echo htmlspecialchars($row['nome_curso']); ?>">
+                                    <?php echo htmlspecialchars($row['nome_curso']); ?>
+                                </option>
+                            <?php endwhile; ?>
                         <?php else: ?>
-                            <option value="" disabled selected>Você não contém nenhum curso</option>
+                            <option value="" disabled>Você não contém nenhum curso</option>
+                        <?php endif; ?>
                     </select>
-                    <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label for="mensagem">Mensagem:</label>
