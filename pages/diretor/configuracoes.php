@@ -1,7 +1,3 @@
-<?php 
-include '../../php/global/cabecario.php';
-require_once '../../php/login/validar.php';?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -451,6 +447,5 @@ require_once '../../php/login/validar.php';?>
     <script src="../../assets/js/diretor/global/navgation.js"></script>
     <script src="../../assets/js/diretor/global/dropdown.js"></script>
     <script src="../../assets/js/diretor/config/config.js"></script>
-    
 </body>
 </html>
