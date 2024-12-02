@@ -1,6 +1,9 @@
 <?php 
 require '../../../php/global/cabecario2.php';
 require '../../../php/login/validar.php';
+require '../../../php/global/notificacao.php';
+$notificacoes = obterNotificacoes($conn, $id);
+$countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -109,11 +112,11 @@ require '../../../php/login/validar.php';
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">
-                <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+                <img src="<?php echo $fotoCaminho ?>" alt="Profile" class="header__img" id="profile-toggle">
                 <div class="dropdown-content" id="profile-content">
                     <h5>Etec | Centro Paula souza</h5>
                     <div class="flex-conta">
-                        <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                        <img src="<?php echo $fotoCaminho ?>" alt="Profile">
                         <div class="box-info-conta">
                             <h4><?php echo htmlspecialchars($user['nome'])?></h4>
                             <p><?php echo htmlspecialchars($user['email'])?></p>
@@ -175,12 +178,12 @@ require '../../../php/login/validar.php';
                               <span class="nav__name">Home</span>
                           </a>
                           
-                          <a href="calendario.php" class="nav__link ">
+                          <a href="../calendario.php" class="nav__link ">
                             <i class='bx bx-calendar-event  nav__icon'></i>
                             <span class="nav__name">calendário</span>
                         </a>
                       
-                          <a href="dashboard.php" class="nav__link">
+                          <a href="../dashboard/dashboard.php" class="nav__link">
                               <i class='bx bx-trending-up nav__icon'></i>
                               <span class="nav__name">Dashboard</span>
                           </a>
@@ -191,7 +194,7 @@ require '../../../php/login/validar.php';
 
 
                           <div class="nav__dropdown">
-                            <a href="#" class="nav__link active">
+                            <a href="gerenuser.php" class="nav__link active">
                               <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
@@ -215,12 +218,12 @@ require '../../../php/login/validar.php';
                       <div class="nav__items">
                           <h3 class="nav__subtitle">Comunicações</h3>
   
-                          <a href="#" class="nav__link">
+                          <a href="../comunicado.php" class="nav__link">
                               <i class='bx bx-broadcast nav__icon'></i>
                               <span class="nav__name">Comunicados</span>
                           </a>
 
-                          <a href="#" class="nav__link">
+                          <a href="../documentos/solicdocument.php" class="nav__link">
                               <i class='bx bx-archive-in nav__icon' ></i>
                               <span class="nav__name">Envio de Documentos</span>
                           </a>
@@ -229,7 +232,7 @@ require '../../../php/login/validar.php';
                       <div class="nav__items">
                           <h3 class="nav__subtitle">Interação</h3>
 
-                          <a href="chat.php" class="nav__link">
+                          <a href="../chat.php" class="nav__link">
                               <i class='bx bx-conversation nav__icon'></i>
                               <span class="nav__name">Chat</span>
                           </a>
@@ -238,7 +241,7 @@ require '../../../php/login/validar.php';
                       <div class="nav__items">
                           <h3 class="nav__subtitle">Configurações</h3>
 
-                          <a href="configuracoes.php" class="nav__link">
+                          <a href="../configuracoes.php" class="nav__link">
                               <i class='bx bx-cog nav__icon'></i>
                               <span class="nav__name">Configurações</span>
                           </a>
@@ -246,7 +249,7 @@ require '../../../php/login/validar.php';
                   </div>
               </div>
 
-              <a href="../../php/login/logout.php" class="nav__link nav__logout">
+              <a href="../../../php/login/logout.php" class="nav__link nav__logout">
                   <i class='bx bx-log-out nav__icon' ></i>
                   <span class="nav__name">Log Out</span>
               </a>
@@ -286,7 +289,7 @@ require '../../../php/login/validar.php';
                           <div class="image-content">
                             <span class="overlay"></span>
                             <div class="card-image">
-                              <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="" />
+                              <img src="<?php echo $fotoCaminho ?>" alt="" />
                             </div>
                           </div>
                           <div class="card-content">

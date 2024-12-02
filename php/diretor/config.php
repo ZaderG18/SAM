@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Configuração do banco de dados
 $host = "localhost";
 $username = "root";
@@ -15,114 +19,98 @@ if ($conn->connect_error) {
 
 // Verifica qual formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verificar os dados do formulário "perfil"
+    // Atualizar usuário
     if (isset($_POST['nome'], $_POST['email'], $_POST['cargo'], $_POST['senha'])) {
         $nome = $conn->real_escape_string($_POST['nome']);
         $email = $conn->real_escape_string($_POST['email']);
         $cargo = $conn->real_escape_string($_POST['cargo']);
-        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografar a senha
-        
-        // Processamento da imagem
-        $foto = "";
-        if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_ERR_OK) {
-            // Caminho onde a foto será armazenada
-            $uploadDir = 'uploads/';
-            $uploadFile = $uploadDir . basename($_FILES['imageUpload']['name']);
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-            // Verificar se o arquivo é uma imagem válida
-            if (getimagesize($_FILES['imageUpload']['tmp_name'])) {
-                // Mover o arquivo para o diretório de uploads
-                if (move_uploaded_file($_FILES['imageUpload']['tmp_name'], $uploadFile)) {
-                    $foto = $uploadFile; // Armazenar o caminho da foto
-                } else {
-                    echo "Erro ao fazer upload da imagem.";
+        $id = $_SESSION['user']['id'];
+
+        // Atualizar foto
+        $fotoNovoNome = null;
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $foto = $_FILES['foto'];
+            $fotoNome = basename($foto['name']);
+            $fotoTemp = $foto['tmp_name'];
+            $fotoPasta = '../../assets/img/uploads/';
+
+            if (!is_dir($fotoPasta)) {
+                mkdir($fotoPasta, 0777, true);
+            }
+
+            $fotocargo = mime_content_type($fotoTemp);
+            $cargosPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+
+            if (in_array($fotocargo, $cargosPermitidos)) {
+                $fotoNovoNome = uniqid() . '_' . $fotoNome;
+                $fotoCaminhoCompleto = $fotoPasta . $fotoNovoNome;
+
+                if (!move_uploaded_file($fotoTemp, $fotoCaminhoCompleto)) {
+                    echo "<script> alert('Erro no upload da foto.');</script>";
                 }
             } else {
-                echo "O arquivo não é uma imagem válida.";
+                echo "<script> alert('Formato de arquivo não permitido.');
+                window.location.href = '../../pages/diretor/configuracoes.php';</script>";
             }
         }
 
-        // Inserir os dados no banco de dados
-        $sql = "INSERT INTO perfil (nome, email, cargo, senha, foto) VALUES ('$nome', '$email', '$cargo', '$senha', '$foto')";
+        $sql = "UPDATE usuarios SET nome = ?, email = ?, cargo = ?, senha = ? " . 
+               ($fotoNovoNome ? ", foto = ?" : "") . " WHERE id = ?";
+        $stmt = $conn->prepare($sql);
 
-        if ($conn->query($sql) === TRUE) {
-            // Redireciona de volta para a página de configurações com os dados salvos
-            header("Location: ../../pages/diretor/configuracoes.php"); // Altere para o caminho correto da sua página
-            exit();
+        if ($fotoNovoNome) {
+            $stmt->bind_param("sssssi", $nome, $email, $cargo, $senha, $fotoNovoNome, $id);
         } else {
-            echo "Erro: " . $conn->error;
+            $stmt->bind_param("ssssi", $nome, $email, $cargo, $senha, $id);
         }
+
+        if ($stmt->execute()) {
+            echo "<script> alert('Usuário atualizado com sucesso!'); window.location.href = '../../pages/diretor/configuracoes.php'; </script>";
+        } else {
+            echo "Erro: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
-
-    // Verificar os dados do formulário "sistema"
+    // Configurações do sistema
     if (isset($_POST['ano-letivo'], $_POST['nota-minima'], $_POST['frequencia-minima'], $_POST['modulos'])) {
         $anoLetivo = $conn->real_escape_string($_POST['ano-letivo']);
         $notaMinima = $conn->real_escape_string($_POST['nota-minima']);
         $frequenciaMinima = $conn->real_escape_string($_POST['frequencia-minima']);
-        $modulos = implode(',', $_POST['modulos']); // Transformar array em string
+        $modulos = implode(',', $_POST['modulos']);
 
-        $sql = "INSERT INTO sistema (ano_letivo, nota_minima, frequencia_minima, modulos) VALUES ('$anoLetivo', '$notaMinima', '$frequenciaMinima', '$modulos')";
+        $sql = "UPDATE sistema SET ano_letivo = ?, nota_minima = ?, frequencia_minima = ?, modulos = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sdds", $anoLetivo, $notaMinima, $frequenciaMinima, $modulos);
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Configurações do sistema salvas com sucesso!";
+        if ($stmt->execute()) {
+            echo "<script> alert('Configurações do sistema salvas com sucesso!'); window.location.href = '../../pages/diretor/configuracoes.php'; </script>";
         } else {
-            echo "Erro: " . $conn->error;
+            echo "Erro: " . $stmt->error;
         }
+
+        $stmt->close();
     }
 
-    // Formulário de Notificações
+    // Notificações
     if (isset($_POST['canais'], $_POST['frequencia-notif'])) {
-        $canais = implode(',', $_POST['canais']); // Transformar array em string
+        $canais = implode(',', $_POST['canais']);
         $frequenciaNotif = $conn->real_escape_string($_POST['frequencia-notif']);
 
-        $sql = "INSERT INTO notificacoes (canais, frequencia_notif) VALUES ('$canais', '$frequenciaNotif')";
-        if ($conn->query($sql) === TRUE) {
-            echo "Notificações salvas com sucesso!";
+        $sql = "UPDATE notificacoes SET canais = ?, frequencia_notif = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $canais, $frequenciaNotif);
+
+        if ($stmt->execute()) {
+            echo "<script> alert('Notificações salvas com sucesso!'); window.location.href = '../../pages/diretor/configuracoes.php'; </script>";
         } else {
-            echo "Erro: " . $conn->error;
+            echo "Erro: " . $stmt->error;
         }
+
+        $stmt->close();
     }
-
-    // Formulário de Permissões
-    if (isset($_POST['papel'], $_POST['modulo-acesso'])) {
-        $papel = $conn->real_escape_string($_POST['papel']);
-        $moduloAcesso = $conn->real_escape_string($_POST['modulo-acesso']);
-
-        $sql = "INSERT INTO permissoes (papel, modulo_acesso) VALUES ('$papel', '$moduloAcesso')";
-        if ($conn->query($sql) === TRUE) {
-            echo "Permissões salvas com sucesso!";
-        } else {
-            echo "Erro: " . $conn->error;
-        }
-    }
-
-    // Formulário de Relatórios
-    if (isset($_POST['kpis'], $_POST['frequencia-relatorios'])) {
-        $kpis = implode(',', $_POST['kpis']); // Transformar array em string
-        $frequenciaRelatorios = $conn->real_escape_string($_POST['frequencia-relatorios']);
-
-        $sql = "INSERT INTO relatorios (kpis, frequencia_relatorios) VALUES ('$kpis', '$frequenciaRelatorios')";
-        if ($conn->query($sql) === TRUE) {
-            echo "Relatórios salvos com sucesso!";
-        } else {
-            echo "Erro: " . $conn->error;
-        }
-    }
-
-    // Formulário de Integrações
-    // if (isset($_POST['backup'])) {
-    //     $backup = $conn->real_escape_string($_POST['backup']);
-    //
-    //     $sql = "INSERT INTO integracoes (backup) VALUES ('$backup')";
-    //     if ($conn->query($sql) === TRUE) {
-    //         echo "Configurações de integração salvas com sucesso!";
-    //     } else {
-    //         echo "Erro: " . $conn->error;
-    //     }
-    // }
 }
-
-// Fechar conexão
-$conn->close();
 ?>

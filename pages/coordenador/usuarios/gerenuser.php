@@ -101,11 +101,11 @@ require '../../../php/login/validar.php';
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">
-                <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile" class="header__img" id="profile-toggle">
+                <img src="<?php echo $fotoCaminho ?>" alt="Profile" class="header__img" id="profile-toggle">
                 <div class="dropdown-content" id="profile-content">
                     <h5>Etec | Centro Paula souza</h5>
                     <div class="flex-conta">
-                        <img src="../../../assets/img/persona/coqui-chang-COP.jpg" alt="Profile">
+                        <img src="<?php echo $fotoCaminho ?>" alt="Profile">
                         <div class="box-info-conta">
                             <h4><?php echo htmlspecialchars($user['nome'])?></h4>
                             <p><?php echo htmlspecialchars($user['email'])?></p>

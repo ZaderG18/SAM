@@ -339,12 +339,24 @@ $tableQueries = [
         observacoes text DEFAULT NULL,
         data_avaliacao date DEFAULT curdate()
     )",
+    "relatorios" => "CREATE TABLE relatorios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    kpis TEXT NOT NULL,
+    frequencia_relatorios VARCHAR(255) NOT NULL
+)",
+    "permissoes" => "CREATE TABLE IF NOT EXISTS permissoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    papel VARCHAR(255) NOT NULL,
+    modulo_acesso VARCHAR(255) NOT NULL
+)",
     "notificacoes" => "CREATE TABLE IF NOT EXISTS notificacoes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
         tipo_usuarios ENUM('aluno', 'professor', 'coordenador', 'diretor') NOT NULL,
         titulo VARCHAR(255) NOT NULL,
         mensagem TEXT NOT NULL,
+        canais TEXT NOT NULL,
+        frequencia_notif VARCHAR(255) NOT NULL,
         imagem VARCHAR(255) DEFAULT NULL,
         link VARCHAR(255) DEFAULT NULL,
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -381,6 +393,13 @@ $tableQueries = [
     descricao VARCHAR(255) NOT NULL,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pendente', 'concluido') DEFAULT 'pendente'
+)",
+    "sistema" => "CREATE TABLE IF NOT EXISTS sistema (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ano_letivo VARCHAR(255) NOT NULL,
+    nota_minima DECIMAL(5,2) NOT NULL,
+    frequencia_minima DECIMAL(5,2) NOT NULL,
+    modulos TEXT NOT NULL
 )",
     "reuniao" => "CREATE TABLE IF NOT EXISTS reuniao (
     id INT AUTO_INCREMENT PRIMARY KEY,

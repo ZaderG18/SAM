@@ -1,3 +1,10 @@
+<?php
+require '../../php/global/cabecario2.php';
+require '../../php/login/validar.php';
+require '../../php/global/notificacao.php';
+$notificacoes = obterNotificacoes($conn, $id);
+$countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -25,7 +32,7 @@
                     <li><a href="#" data-title="Settings"><i class="ri-settings-line"></i></a></li>
                     <li class="chat-sidebar-profile">
                         <button type="button" class="chat-sidebar-profile-toggle">
-                            <img src="../../assets/img/persona/coqui-chang-COP.jpg" alt="">
+                            <img src="<?php echo $fotoCaminho ?>" alt="">
                         </button>
                         <ul class="chat-sidebar-profile-dropdown">
                             <li><a href="#"><i class="ri-user-line"></i> Profile</a></li>
@@ -213,7 +220,7 @@
                     <div class="conversation-top">
                         <button type="button" class="conversation-back"><i class="ri-arrow-left-line"></i></button>
                         <div class="conversation-user">
-                            <img class="conversation-user-image" src="../../assets/img/persona/coqui-chang-COP.jpg" alt="">
+                            <img class="conversation-user-image" src="<?php echo $fotoCaminho ?>" alt="">
                             <div>
                                 <div class="conversation-user-name">Someone</div>
                                 <div class="conversation-user-status online">online</div>
@@ -267,7 +274,7 @@
                             </li>
                             <li class="conversation-item">
                                 <div class="conversation-item-side">
-                                    <img class="conversation-item-image" src="../../assets/img/persona/coqui-chang-COP.jpg" alt="">
+                                    <img class="conversation-item-image" src="<?php echo $fotoCaminho ?>" alt="">
                                 </div>
                                 <div class="conversation-item-content">
                                     <div class="conversation-item-wrapper">

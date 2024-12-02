@@ -12,27 +12,23 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-$user = $_SESSION['user'];
-$id = $user['id'];
+$user = $_SESSION['user'] ?? null;
+$id = $user['id'] ?? null;
 
-// Prepare SQL statement to retrieve photo
-$sql = "SELECT foto FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
+if ($id === null) {
+    die("User ID is not set");
 }
 
-// Bind parameters and execute
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($fotoNome);
-$stmt->fetch();
-$stmt->close(); // Fechamos o statement aqui, pois ele já foi utilizado.
+try {
+    $sql = "SELECT foto FROM usuarios WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($fotoNome);
+    $stmt->fetch();
+    $stmt->close();
 
-// Check if there is a photo for the user
-if (!empty($fotoNome)) {
-    $fotoCaminho = "../../assets/img/uploads/" . $fotoNome;
-} else {
-    $fotoCaminho = "../../assets/img/logo.jpg"; // Default image if no photo is uploaded
+    $fotoCaminho = !empty($fotoNome) ? "../../assets/img/uploads/" . $fotoNome : "../../assets/img/logo.jpg";
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
