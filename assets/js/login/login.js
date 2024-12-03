@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Função para mostrar a senha do input de senha
 function mostrarSenha() {
-    var inputPass = document.getElementById('senha');
-    var btnShowPass = document.getElementById('btn-senha');
+    var inputPass = document.getElementById('senha'); // Pega o input de senha
+    var btnShowPass = document.getElementById('btn-senha'); // Pega o botão de mostrar senha
 
-    // Alterna entre mostrar e esconder a senha
+    // Se o tipo do input for password, ele muda para text e troca o ícone do botão
     if (inputPass.type === 'password') {
         inputPass.setAttribute('type', 'text');
         btnShowPass.classList.replace('bi-eye', 'bi-eye-slash');
