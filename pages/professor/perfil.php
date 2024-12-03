@@ -223,6 +223,7 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
         <!-- Desempenho Acadêmico -->
         <div class="section">
             <h3 class="section-title">Desempenho Acadêmico</h3>
+            <?php if (isset($desempenho) && is_array($desempenho)): ?>
             <ul>
                 <?php foreach ($desempenho as $item) :?>
                 <li><?= $item?></li>

@@ -2,6 +2,31 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+function obterDadosPorTipo($conn, $tipo) {
+    // Verifica se o tipo fornecido é válido
+    $validTypes = ['horario', 'prazo_documentos', 'comunicado_rematricula', 'equipe', 'documentos_necessarios', 'eventos', 'faq', 'formulario_suporte'];
+    
+    if (!in_array($tipo, $validTypes)) {
+        echo "Tipo inválido: $tipo";
+        return false;
+    }
+
+    // Prepara a consulta para buscar o tipo especificado na coluna `tipo`
+    $stmt = $conn->prepare("SELECT * FROM secretaria WHERE tipo = ?");
+    if ($stmt === false) {
+        echo "Erro ao preparar a consulta: " . $conn->error;
+        return false;
+    }
+
+    // Associa o parâmetro e executa a consulta
+    $stmt->bind_param("s", $tipo);
+    if (!$stmt->execute()) {
+        echo "Erro ao executar a consulta: " . $stmt->error;
+        return false;
+    }
+
+    return $stmt->get_result();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -219,13 +219,13 @@ include '../../php/global/notificacao.php';
                     <label>ID</label>
                     <input type="text" name="id" value="<?= htmlspecialchars($user['id']); ?>">
                     <label>Curso*</label>
-                    <select required>
+                    <!-- <select required>
                         <option>Selecione o curso</option>
                         <option value="desenvolvimento_de_sistemas">Desenvolvimento de Sistemas</option>
                         <option value="enfermagem">Enfermagem</option>
                         <option value="nutricao">Nutrição</option>
                         <option value="gastronomia">Gastronomia</option>
-                    </select>
+                    </select> -->
                     <h3>Contato de Emergência</h3>
                     <label>Nome do Contato*</label>
                     <input type="text" name="nome_emergencia">

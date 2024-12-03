@@ -79,18 +79,17 @@ function atualizarInformacoes($conn) {
     $nome = filter_var($_POST['nome'], FILTER_SANITIZE_SPECIAL_CHARS);
     $telefone = filter_var($_POST['telefone'], FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $genero = $_POST['genero'];
+    $genero = isset($_POST['genero']) ? $_POST['genero'] : null;
     $estado_civil = $_POST['estado_civil'];
     $data_nascimento = $_POST['data_nascimento'];
     $nacionalidade = filter_var($_POST['nacionalidade'], FILTER_SANITIZE_SPECIAL_CHARS);
     $endereco = filter_var($_POST['endereco'], FILTER_SANITIZE_SPECIAL_CHARS);
     $RM = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-    $curso = $_POST['curso'];
 
     // Atualizar no banco de dados
-    $sql = "UPDATE usuarios SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=?, curso=? WHERE id=?";
+    $sql = "UPDATE usuarios SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $curso, $_SESSION['user_id']);
+    $stmt->bind_param("sssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $_SESSION['user_id']);
 
     if ($stmt->execute()) {
         redirecionarComMensagem('Informações pessoais atualizadas com sucesso!', '../../pages/professor/configuracoes.php');
