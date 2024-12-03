@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/12/2024 às 00:38
+-- Tempo de geração: 03/12/2024 às 02:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -655,15 +655,17 @@ CREATE TABLE `notificacoes` (
   `imagem` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lida` tinyint(1) DEFAULT 0
+  `lida` tinyint(1) DEFAULT 0,
+  `canais` text NOT NULL,
+  `frequencia_notif` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `notificacoes`
 --
 
-INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensagem`, `imagem`, `link`, `data_criacao`, `lida`) VALUES
-(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0);
+INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensagem`, `imagem`, `link`, `data_criacao`, `lida`, `canais`, `frequencia_notif`) VALUES
+(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0, 'email,sms,internas', 'Diária');
 
 -- --------------------------------------------------------
 
@@ -1002,6 +1004,18 @@ INSERT INTO `perguntas` (`id`, `enquete_id`, `titulo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `permissoes`
+--
+
+CREATE TABLE `permissoes` (
+  `id` int(11) NOT NULL,
+  `papel` varchar(255) NOT NULL,
+  `modulo_acesso` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `professor`
 --
 
@@ -1094,6 +1108,18 @@ CREATE TABLE `relatorio` (
   `descricao` varchar(255) NOT NULL,
   `data_criacao` datetime DEFAULT current_timestamp(),
   `status` enum('pendente','concluido') DEFAULT 'pendente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id` int(11) NOT NULL,
+  `kpis` text NOT NULL,
+  `frequencia_relatorios` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1239,6 +1265,20 @@ CREATE TABLE `secretaria` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `sistema`
+--
+
+CREATE TABLE `sistema` (
+  `id` int(11) NOT NULL,
+  `ano_letivo` varchar(255) NOT NULL,
+  `nota_minima` decimal(5,2) NOT NULL,
+  `frequencia_minima` decimal(5,2) NOT NULL,
+  `modulos` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `solicitacoes`
 --
 
@@ -1322,7 +1362,9 @@ INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_toke
 (2, '2526', NULL, NULL, 'tramontino@gmail.com', '$2y$10$Rm3G6xsbYPb6N09ecoh4PO8hjjW6ue.LqLxdkdmrTo0oCUhsQ3Rli', NULL, NULL, 'tramontino da silva', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-14 13:32:09', '2024-11-14 13:32:09'),
 (3, '123456789', '12345678910', 'foto1.jpg', 'usuario1@example.com', 'senha1', NULL, NULL, 'João Silva', '11999999999', 'solteiro', '2000-01-01', 'masculino', 'Rua A, 123', 'aluno', 'ativo', '2022-02-01', '2023-02-01', 'Brasileiro', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
 (4, '987654321', '10987654321', 'foto2.jpg', 'usuario2@example.com', 'senha2', NULL, NULL, 'Maria Souza', '11988888888', 'casado', '1995-05-15', 'feminino', 'Avenida B, 456', 'professor', 'ativo', '2020-03-05', NULL, 'Brasileira', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
-(5, '4132', NULL, NULL, 'eli-tutu@hotmail.com', '$2y$10$ez9oP0VLzFmOTsuEy91be.cJyOGU8Wc0HRQkC17g8tnDqNQBncn1.', NULL, NULL, 'Eliane Alves Goes Rodrigues', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-26 14:44:06', '2024-11-26 14:45:10');
+(5, '4132', NULL, '674e12b932ed0_IMG_20230308_195104_633.jpg', 'eli-tutu@hotmail.com', '$2y$10$whNP5AWXTcgwL.xFAPX6vuRSFuecLayvD/YLirVHewg8goVT8HErq', NULL, NULL, 'Eliane Alves Goes', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-26 14:44:06', '2024-12-02 20:27:13'),
+(8, '1805', NULL, NULL, 'diego@gmail.com', '$2y$10$vzwvi/ZabGYAvJzlxtybu.nwV0uIknEmlQ5iUu3h2dtWmciQMSShi', NULL, NULL, 'diego valote', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:24:22', '2024-12-03 01:24:22'),
+(9, '3563', NULL, NULL, 'denis@gmail.com', '$2y$10$HSmJ9UV0dyUg2/zwB9w0KOwjuQrSI14j6qVQLbv8YVWgoxTK9a99S', NULL, NULL, 'Denis Ramiro', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:25:18', '2024-12-03 01:25:18');
 
 --
 -- Índices para tabelas despejadas
@@ -1545,6 +1587,12 @@ ALTER TABLE `notificacoes`
   ADD KEY `fk_notificacoes_user` (`user_id`);
 
 --
+-- Índices de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `professor`
 --
 ALTER TABLE `professor`
@@ -1561,6 +1609,12 @@ ALTER TABLE `progresso_academico`
 -- Índices de tabela `relatorio`
 --
 ALTER TABLE `relatorio`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1584,6 +1638,12 @@ ALTER TABLE `secretaria`
   ADD KEY `fk_secretaria_diretor` (`diretor_id`),
   ADD KEY `fk_secretaria_coordendor` (`coordenador_id`),
   ADD KEY `fk_secretaria_professor` (`professor_id`);
+
+--
+-- Índices de tabela `sistema`
+--
+ALTER TABLE `sistema`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `solicitacoes`
@@ -1751,6 +1811,12 @@ ALTER TABLE `notificacoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `progresso_academico`
 --
 ALTER TABLE `progresso_academico`
@@ -1760,6 +1826,12 @@ ALTER TABLE `progresso_academico`
 -- AUTO_INCREMENT de tabela `relatorio`
 --
 ALTER TABLE `relatorio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1781,6 +1853,12 @@ ALTER TABLE `secretaria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `sistema`
+--
+ALTER TABLE `sistema`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `solicitacoes`
 --
 ALTER TABLE `solicitacoes`
@@ -1796,7 +1874,7 @@ ALTER TABLE `turma`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas

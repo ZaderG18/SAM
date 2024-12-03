@@ -11,10 +11,12 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/dashboard/style.css">
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-     <link rel="stylesheet" href="../../../assets/scss/diretor/dashboard/dashboard.css">
+     <link rel="stylesheet" href="../../assets/css/dashboard/dashboard.css">
      <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
     <title>Dashboard SAM</title>
 </head>
@@ -73,8 +75,8 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                 <div class="flex-conta">
                     <img src="<?php echo $fotoCaminho ?>" alt="Profile">
                     <div class="box-info-conta">
-                        <h4><?php echo htmlspecialchars($user['nome'])?></h4>
-                        <p><?php echo htmlspecialchars($user['email'])?></p>
+                        <h4>David Richard Ramos Rosa</h4>
+                        <p>david.rosa4@etec.sp.gov.br</p>
                         <span><a href="">Exibir Conta <i class='bx bx-check-square'></i></a></span>
                     </div>
                 </div><!--flex-conta-->
@@ -127,17 +129,17 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="../home_diretor.php" class="nav__link">
+                            <a href="../../html/home/home.html" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
 
-                            <a href="../calendario.php" class="nav__link ">
+                            <a href="../calendario/calendario.html" class="nav__link ">
                                 <i class='bx bx-calendar-event  nav__icon'></i>
                                 <span class="nav__name">calendário</span>
                             </a>
 
-                            <a href="dashboard.php" class="nav__link active">
+                            <a href="#" class="nav__link active">
                                 <i class='bx bx-trending-up nav__icon'></i>
                                 <span class="nav__name">Dashboard</span>
                             </a>
@@ -146,12 +148,12 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                             <h3 class="nav__subtitle">Gerenciamento</h3>
     
                         
-                            <a href="../usuarios/gerenuser.php" class="nav__link">
+                            <a href="../../html/usuarios/gerenuser.html" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
                                 <span class="nav__name">Gerenciar Usuários</span>
                             </a>
 
-                            <a href="../cursos/cursos.php" class="nav__link">
+                            <a href="../../html/cursos/index.html" class="nav__link">
                                 <i class='bx bx-edit-alt nav__icon'></i>
                                 <span class="nav__name">Gerenciar Cursos</span>
                             </a>
@@ -160,12 +162,12 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Comunicações</h3>
     
-                            <a href="../comunicado.php" class="nav__link">
+                            <a href="#" class="nav__link">
                                 <i class='bx bx-broadcast nav__icon'></i>
                                 <span class="nav__name">Comunicados</span>
                             </a>
 
-                            <a href="../documentos/solicdocument.php" class="nav__link">
+                            <a href="#" class="nav__link">
                                 <i class='bx bx-archive-in nav__icon' ></i>
                                 <span class="nav__name">Envio de Documentos</span>
                             </a>
@@ -174,7 +176,7 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Interação</h3>
 
-                            <a href="../chat.php" class="nav__link">
+                            <a href="../../html/chat/index.html" class="nav__link">
                                 <i class='bx bx-conversation nav__icon'></i>
                                 <span class="nav__name">Chat</span>
                             </a>
@@ -183,7 +185,7 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Configurações</h3>
 
-                            <a href="../configuracoes.php" class="nav__link">
+                            <a href="../../html/configuracoes/index.html" class="nav__link">
                                 <i class='bx bx-cog nav__icon'></i>
                                 <span class="nav__name">Configurações</span>
                             </a>
@@ -191,7 +193,7 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                     </div>
                 </div>
 
-                <a href="../../../php/login/logout.php" class="nav__link nav__logout">
+                <a href="../../html/login/login.html" class="nav__link nav__logout">
                     <i class='bx bx-log-out nav__icon' ></i>
                     <span class="nav__name">Log Out</span>
                 </a>
@@ -203,174 +205,161 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
             <main>
                 <div class="box-title-dashboard">
                     <div class="flexh1">
-                        <h1>Dashboard</h1>
-                        <i class='bx bx-trending-up nav__icon'></i>
-                    </div>
-                    <nav class="navbar">
-                        <div class="menu-toggle"><i class='bx bx-menu-alt-right'></i></div> <!-- Ícone hambúrguer -->
-                        <ul>
-                            <li><a href="#" onclick="loadContent('coordedenador')" class="nav_link active" data-section="coordedenador">Coordenador</a></li>
-                            <li><a href="#" onclick="loadContent('professor')" class="nav_link" data-section="professor">Professor</a></li>
-                            <li><a href="#" onclick="loadContent('aluno')" class="nav_link" data-section="aluno">Aluno</a></li>
-                            <li><a href="#" onclick="loadContent('curso')" class="nav_link" data-section="cursos">Curso</a></li>
-                            <!-- <li><a href="#" class="nav_link" data-section="relatorios">Relatórios</a></li>
-                            <li><a href="#" class="nav_link" data-section="integracoes">Integrações</a></li> -->
-                        </ul>
-                    </nav>
-                    <!-- <input type="date" name="" id=""> -->
+                        <h1>Painel de Desempenho Acadêmico</h1>
+                        <i class='bx bx-trending-up nav__icon' style="color: #365d85;"></i>
+                    </div>            
                 </div>
+            
                 <div class="container-content" id="main-content">
                     <section class="dashboard">
                         <div class="flex-box-dashboard">
+                            <!-- Box para Alunos com Baixo Desempenho -->
                             <div class="box-dashboard">
                                 <div class="box-icon">
-                                    <img src="../../../assets/img/diretor/dashboard/docente02.svg" alt="" srcset="">
-                                </div><!--box-icon-->
+                                    <img src="../../../assets/img/dashboard/risk.svg" alt="" srcset="">
+                                </div>
                                 <div class="box-flex-dados">
                                     <div class="dados">
-                                        <span>Professores ativos</span>
-                                        <h3>15</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
+                                        <span>Alunos com Baixo Desempenho</span>
+                                        <h3>8</h3> <!-- Número de alunos com baixo desempenho -->
+                                    </div>
+                                </div>
                             </div>
-        
+                
+                            <!-- Box para Intervenções de Melhoria Realizadas -->
                             <div class="box-dashboard">
                                 <div class="box-icon">
-                                    <img src="../../../assets/img/diretor/dashboard/student.svg" alt="" srcset="">
-                                </div><!--box-icon-->
+                                    <img src="../../../assets/img/dashboard/intervention.svg" alt="" srcset="">
+                                </div>
                                 <div class="box-flex-dados">
                                     <div class="dados">
-                                        <span>Alunos matriculados</span>
-                                        <h3>358</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
+                                        <span>Intervenções de Melhoria Realizadas</span>
+                                        <h3>5</h3> <!-- Número de intervenções realizadas -->
+                                    </div>
+                                </div>
                             </div>
-        
+                
+                            <!-- Box para Alunos com Risco de Evasão -->
                             <div class="box-dashboard">
                                 <div class="box-icon">
-                                    <img src="../../../assets/img/diretor/dashboard/curso.svg" alt="" srcset="">
-                                </div><!--box-icon-->
+                                    <img src="../../../assets/img/dashboard/evade.svg" alt="" srcset="">
+                                </div>
                                 <div class="box-flex-dados">
                                     <div class="dados">
-                                        <span>cursos ativos</span>
-                                        <h3>10</h3>
-                                    </div><!--dados-->
-                                    <!-- <div class="grafico"></div> -->
-                                </div><!--box-flex-dados-->
-                                <!-- <span >últimas 24 horas</span> -->
+                                        <span>Alunos com Risco de Evasão</span>
+                                        <h3>3</h3> <!-- Número de alunos com risco de evasão -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
+                
+                    <!-- Gráfico de Desempenho Acadêmico -->
                     <section class="section-registro">
-                        <h3>Últimos registros</h3>
+                        <h3>Últimos Registros de Desempenho Acadêmico</h3>
                         <div class="box-grifico">
-                            <canvas id="grafico1"></canvas>
+                            <canvas id="graficoDesempenho"></canvas>
                         </div>
                     </section>
+                
+                    <!-- Gráfico de Progresso das Intervenções (Comentado) -->
+                    <!-- <section class="section-registro">
+                        <h3>Progresso das Intervenções</h3>
+                        <div class="box-grifico">
+                            <canvas id="graficoIntervencao"></canvas>
+                        </div>
+                    </section> -->
                 </div><!--container-content-->
             </main>
-            
-            <aside >
+                
+            <aside>
+                <!-- Lista de Alunos em Risco -->
                 <section class="section-aluno">
-                    <h6>Alunos com matrículas pendentes</h6>
+                    <h6>Lista de Alunos em Risco de Baixo Desempenho</h6>
                     <div class="box-global-alunos">
                         <div class="aluno">
                             <img src="../../../assets/img/persona/minhafoto.PNG" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
                                     <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <span>3º Análise de Sistemas</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-000</span></p>
                             </div>
-                        </div><!--aluno-->
-
+                        </div>
+            
                         <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
+                            <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash.jpg" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5>Christina W.</h5>
+                                    <span>2º Análise de Sistemas</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-001</span></p>
                             </div>
-                        </div><!--aluno-->
-
+                        </div>
+            
                         <div class="aluno">
-                            <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
+                            <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5>Jurica Koletic</h5>
+                                    <span>4º Redes de Computadores</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-002</span></p>
                             </div>
-                        </div><!--aluno-->
+                        </div>
                         <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
-
+            
+                <!-- Alunos com Risco de Evasão -->
                 <section class="section-aluno">
-                    <h6>Alunos com risco de evasão</h6>
+                    <h6>Alunos com Risco de Evasão</h6>
                     <div class="box-global-alunos">
                         <div class="aluno">
                             <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5>Alfredo Silva</h5>
+                                    <span>1º Ciência da Computação</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-003</span></p>
                             </div>
-                        </div><!--aluno-->
-
+                        </div>
+            
                         <div class="aluno">
                             <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5>Fernanda Souza</h5>
+                                    <span>2º Engenharia de Software</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-004</span></p>
                             </div>
-                        </div><!--aluno-->
-
+                        </div>
+            
                         <div class="aluno">
                             <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="">
                             <div class="box-info-aluno">
                                 <div class="box-nome">
-                                    <h5>David Richard</h5>
-                                    <span>3ºDesenvolvimento de sistemas</span>
+                                    <h5>Carlos Pereira</h5>
+                                    <span>3º Sistemas de Informação</span>
                                 </div>
-                                <p>RM:<span>000-00-000</span></p>
+                                <p>RM: <span>000-00-005</span></p>
                             </div>
-                        </div><!--aluno-->
+                        </div>
                         <button class="button-notificar">Notificar</button>
                     </div>
                 </section>
-
-                <!-- <section class="section-docentes">
-                    <h2>Docentes</h2>
-                </section> -->
-                 <!-- <section class="section-grafico">
-                    <h1>Total de acessos no SAM</h1>
-                    <div class="box-grifico">
-                        <canvas id="grafico1"></canvas>
-                    </div>
-                </section> -->
             </aside>
         </div><!--global-container-->
 
         <script src="../../../assets/js/diretor/global/navgation.js"></script>
-        <script src="../../../assets/js/diretor/dashboard/spa/spa.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="../../../assets/js/diretor/dashboard/dashboard.js"></script>
-        <script src="../../../assets/js/diretor/dashboard/navdash.js"></script>
         <script src="../../../assets/js/diretor/global/dropdown.js"></script>
-        <script src="../../../assets/js/diretor/dashboard/grafico.js"></script>
+        <script src="../../../assets/js/diretor/dashboard/desempenho.js"></script>
+        <!-- <script src="../../assets/js/dashboard/acompanhamento.js"></script> -->
 </body>
 </html>

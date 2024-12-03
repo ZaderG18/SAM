@@ -1,3 +1,10 @@
+<?php
+require '../../../php/global/cabecario2.php';
+require '../../../php/login/validar.php';
+require '../../../php/global/notificacao.php';
+$notificacoes = obterNotificacoes($conn, $id);
+$countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

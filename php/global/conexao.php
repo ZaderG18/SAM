@@ -364,7 +364,15 @@ $tableQueries = [
     )",
     "professor" => "CREATE TABLE IF NOT EXISTS professor (
         id INT(11) NOT NULL,
-        departamento VARCHAR(50) NOT NULL
+        departamento VARCHAR(50) NOT NULL,
+        data_admissao DATE,
+        disciplinas_id INT(11) NOT NULL,
+        sala VARCHAR(50),
+        orientacoes TEXT,
+        projetos_pesquisa TEXT,
+        publicacoes TEXT,
+        desempenho TEXT,
+        projetos TEXT
     )",
     "rematricula" => "CREATE TABLE IF NOT EXISTS rematricula (
         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -472,6 +480,7 @@ FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
     "ALTER TABLE modulo ADD CONSTRAINT fk_modulo_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE curso ADD CONSTRAINT fk_aluno_curso FOREIGN KEY (aluno_id) REFERENCES usuarios (id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE professor ADD CONSTRAINT fk_professor_disciplina FOREIGN KEY (disciplinas_id) REFERENCES disciplina(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_receptor_id FOREIGN KEY (receptor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_mensagem_turma FOREIGN KEY (chat_turma) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",

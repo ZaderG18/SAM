@@ -1,3 +1,12 @@
+
+
+<?php 
+include '../../php/global/cabecario.php';
+require_once '../../php/login/validar.php'; 
+require '../../php/global/notificacao.php';
+$notificacoes = obterNotificacoes($conn, $id);
+$countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,7 +20,7 @@
      <!--========== BOX ICONS ==========-->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-    <title>Bem vindo ao sam</title>
+    <title>Configurações</title>
 </head>
 <body>
     
@@ -123,7 +132,7 @@
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Principais</h3>
     
-                            <a href="home_diretor.php" class="nav__link">
+                            <a href="home_coordenador.php" class="nav__link">
                                 <i class='bx bx-home nav__icon' ></i>
                                 <span class="nav__name">Home</span>
                             </a>
@@ -210,68 +219,65 @@
                         <li><a href="#" class="nav_link" data-section="notificacoes">Notificações</a></li>
                         <li><a href="#" class="nav_link" data-section="permissoes">Permissões</a></li>
                         <li><a href="#" class="nav_link" data-section="relatorios">Relatórios</a></li>
-                        <li><a href="#" class="nav_link" data-section="integracoes">Integrações</a></li>
-                    </ul>
+                        <!-- <li><a href="#" class="nav_link" data-section="integracoes">Integrações</a></li> -->   
+                     </ul>
                 </nav>
         
                 <!-- Seção: Perfil -->
-                <section id="perfil" class="content-section active">
-                    <h2>Seu Perfil</h2>
-                    <span>escolha como você será exibido no SAM</span>
-                    <form>
+                <form method="post" action="../../php/coordenador/config.php" enctype="multipart/form-data">
+                    <div class="global-flex-perfil">
+                        <div class="global-picture">
+                            <div class="box-input nome">
+                                <label for="nome">Nome:</label>
+                                <input type="text" id="nome" name="nome" value="<?php echo isset($user['nome']) ? $user['nome'] : ''; ?>" placeholder="Seu nome completo">
+                            </div><!--box-input-->
+                            <div class="box-input">
+                                <div class="profile-picture">
+                                    <h5>Foto de perfil</h5>
+                                    <img id="profileImg" src="<?php echo isset($user['foto']) ? $user['foto'] : ''; ?>" alt="Profile Picture" />
+                                    <label for="imageUpload" class="upload-label"><i class='bx bxs-up-arrow-circle'></i>
+                                    <input type="file" id="imageUpload" name="foto" accept="image/*" style="display: none;" />
+                                </div>
+                            </div><!--box-input-->
+                        </div><!--global-picture-->
+                        <button class="button-picture"><i class='bx bxs-save'></i>Salvar essas alterações</button>
                         
-                        <div class="global-flex-perfil">
+                        <div class="global-inputs" style="width: 100%; display: flex; flex-wrap: wrap;">
+                            <div class="box-input">
+                                <label for="email">E-mail:</label>
+                                <input type="email" id="email" name="email" value="<?php echo isset($user['email']) ? $user['email'] : ''; ?>" placeholder="seuemail@exemplo.com">
+                            </div><!--box-input-->
+                    
+                            <div class="box-input">
+                                <label for="cargo">Cargo:</label>
+                                <select id="cargo" name="cargo">
+                                    <option value="diretor" <?php echo (isset($user['cargo']) && $user['cargo'] == 'diretor') ? 'selected' : ''; ?>>Diretor</option>
+                                    <option value="coordenador" <?php echo (isset($user['cargo']) && $user['cargo'] == 'coordenador') ? 'selected' : ''; ?>>Coordenador</option>
+                                    <option value="professor" <?php echo (isset($user['cargo']) && $user['cargo'] == 'professor') ? 'selected' : ''; ?>>Professor</option>
+                                    <option value="administrativo" <?php echo (isset($user['cargo']) && $user['cargo'] == 'administrativo') ? 'selected' : ''; ?>>Administrativo</option>
+                                </select>
+                            </div><!--box-input-->
 
-                            <div class="global-picture">
-                                <div class="box-input nome">
-                                    <label for="nome">Nome:</label>
-                                    <input  type="text" id="nome" placeholder="Seu nome completo">
-                                </div><!--box-input-->
-    
-                                <div class="box-input">
-                                    <div class="profile-picture">
-                                        <h5>Foto de perfil</h5>
-                                        <img id="profileImg" alt="Profile Picture" />
-                                        <label for="imageUpload" class="upload-label"><i class='bx bxs-up-arrow-circle'></i></label>
-                                        <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
-                                    </div>
-                                </div><!--box-input-->
-                            </div><!--global-picture-->
+                            <div class="box-input">
+                                <label for="senha">Alterar Senha:</label>
+                                <input type="password" id="senha" name="senha" placeholder="Nova senha">
+                            </div><!--box-input-->
+                        </div><!--global-inputs-->
+                    </div>
+                    <button type="submit"><i class='bx bxs-save'></i>Salvar Alterações</button>
+                </form>
 
-                            <button class="button-picture"><i class='bx bxs-save'></i>Salvar essas alterações</button>
-
-                            <div class="global-inputs" style="width: 100%; display: flex; flex-wrap: wrap;">
-                                <div class="box-input">
-                                    <label for="email">E-mail:</label>
-                                    <input type="email" id="email" placeholder="seuemail@exemplo.com">
-                                </div><!--box-input-->
-    
-                                <div class="box-input">
-                                    <label for="cargo">Cargo:</label>
-                                    <input type="text" id="cargo" placeholder="Cargo na instituição">
-                                </div><!--box-input-->
-    
-                                <div class="box-input">
-                                    <label for="senha">Alterar Senha:</label>
-                                    <input type="password" id="senha" placeholder="Nova senha">
-                                </div><!--box-input-->
-                            </div><!--global-inputs-->
-                        </div>
-        
-                        <button type="submit"><i class='bx bxs-save'></i>Salvar Alterações</button>
-                    </form>
-                </section>
-        
+                
                 <!-- Seção: Sistema Acadêmico -->
                 <section id="sistema" class="content-section">
                     <h2>Sistema Acadêmico</h2>
-                    <form>
+                    <form method="post" action="../../php/coordenador/config.php">
 
                         <div class="global-flex-perfil">
 
                             <div class="box-input">
                                 <label for="ano-letivo">Ano Letivo Ativo:</label>
-                                <select id="ano-letivo">
+                                <select id="ano-letivo" name="ano-letivo">
                                     <option>2024</option>
                                     <option>2025</option>
                                     <option>2026</option>
@@ -280,19 +286,19 @@
     
                             <div class="box-input">
                                 <label for="nota-minima">Nota Mínima para Aprovação:</label>
-                                <input type="number" id="nota-minima" placeholder="Ex: 6.0" min="0" max="10">
+                                <input type="number" id="nota-minima" name="nota-minima" placeholder="Ex: 6.0" min="0" max="10">
                             </div>
                             
                             <div class="box-input">
                                 <label for="frequencia-minima">Frequência Mínima (%):</label>
-                            <input type="number" id="frequencia-minima" placeholder="Ex: 75" min="0" max="100">
+                            <input type="number" id="frequencia-minima" name="frequencia-minima" placeholder="Ex: 75" min="0" max="100">
                             </div>
     
                             <div class="box-input">
                                 <label for="modulos">Módulos Ativos:</label>
                             <div class="box-global-check">
-                                <div class="box-check"><input type="checkbox" id="financeiro"> Gestão Financeira</div>
-                                <div class="box-check"><input type="checkbox" id="calendario"> Calendário Acadêmico</div>
+                                <div class="box-check"><input type="checkbox" id="financeiro" name="modulos[]" value="financeiro"> Gestão Financeira</div>
+                                <div class="box-check"><input type="checkbox" id="calendario" name="modulos[]" value="calendario"> Calendário Acadêmico</div>
                             </div>
                             </div>
                         </div>
@@ -303,20 +309,20 @@
                 <!-- Seção: Notificações -->
                 <section id="notificacoes" class="content-section">
                     <h2>Notificações</h2>
-                    <form>
+                    <form method="post" action="../../php/coordenador/config.php">
                         <div class="global-flex-perfil">
                             <div class="box-input">
                                 <label>Canais de Comunicação:</label>
                                 <div class="box-global-check">
-                                    <div class="box-check"><input type="checkbox" id="email-notif" checked> E-mail</div>
-                                    <div class="box-check"><input type="checkbox" id="sms"> SMS</div>
-                                    <div class="box-check"> <input type="checkbox" id="internas" checked> Notificações Internas</div>
+                                    <div class="box-check"><input type="checkbox" id="email-notif" name="canais[]" value="email" checked> E-mail</div>
+                                    <div class="box-check"><input type="checkbox" id="sms" name="canais[]" value="sms"> SMS</div>
+                                    <div class="box-check"> <input type="checkbox" id="internas" name="canais[]" value="internas" checked> Notificações Internas</div>
                                 </div>
                             </div>
     
                             <div class="box-input">
                                 <label for="frequencia-notif">Frequência de Notificações:</label>
-                                <select id="frequencia-notif">
+                                <select id="frequencia-notif" name="frequencia-notif">
                                     <option>Diária</option>
                                     <option>Semanal</option>
                                     <option>Mensal</option>
@@ -331,11 +337,11 @@
                 <!-- Seção: Permissões -->
                 <section id="permissoes" class="content-section">
                     <h2>Permissões</h2>
-                    <form>
+                    <form method="post" action="../../php/coordenador/config.php">
                         <div class="global-flex-perfil">
                             <div class="box-input">
                                 <label for="papel">Atribuir Papéis:</label>
-                                <select id="papel">
+                                <select id="papel" name="papel">
                                     <option>Administrador</option>
                                     <option>Coordenador</option>
                                     <option>Professor</option>
@@ -344,7 +350,7 @@
     
                             <div class="box-input">
                                 <label for="modulo-acesso">Módulo com Acesso Restrito:</label>
-                                <select id="modulo-acesso">
+                                <select id="modulo-acesso" name="modulo-acesso">
                                     <option>Financeiro</option>
                                     <option>Relatórios</option>
                                 </select>
@@ -357,20 +363,20 @@
                 <!-- Seção: Relatórios -->
                 <section id="relatorios" class="content-section">
                     <h2>Relatórios</h2>
-                    <form>
+                    <form method="post" action="../../php/coordenador/config.php">
                         <div class="global-flex-perfil">
                             <div class="box-input">
                                 <label for="kpis">Selecionar Indicadores (KPIs):</label>
                                 <div class="box-global-check">
-                                    <div class="box-check"><input type="checkbox" id="matricula" checked> Matrículas</div>
-                                    <div class="box-check">  <input type="checkbox" id="evasao"> Evasão Escolar</div>
-                                    <div class="box-check"><input type="checkbox" id="desempenho"> Desempenho Médio</div>
+                                    <div class="box-check"><input type="checkbox" id="matricula" name="kpis[]" value="matricula" checked> Matrículas</div>
+                                    <div class="box-check">  <input type="checkbox" id="evasao" name="kpis[]" value="evasao"> Evasão Escolar</div>
+                                    <div class="box-check"><input type="checkbox" id="desempenho" name="kpis[]" value="desempenho"> Desempenho Médio</div>
                                 </div>
                             </div>
     
                             <div class="box-input">
                                 <label for="frequencia-relatorios">Frequência dos Relatórios:</label>
-                                <select id="frequencia-relatorios">
+                                <select id="frequencia-relatorios" name="frequencia-relatorios">
                                     <option>Semanal</option>
                                     <option>Mensal</option>
                                     <option>Trimestral</option>
@@ -381,10 +387,10 @@
                     </form>
                 </section>
         
-                <!-- Seção: Integrações -->
+                <!-- Seção: Integrações 
                 <section id="integracoes" class="content-section">
                     <h2>Integrações e Backup</h2>
-                    <form>
+                    <form method="post" action="../../php/coordenador/config.php">
                         <div class="global-flex-perfil">
                             <div class="box-input">
                                 <label for="google">Conectar ao Google Calendar:</label>
@@ -393,7 +399,7 @@
     
                             <div class="box-input">
                                 <label for="backup">Agendar Backup Automático:</label>
-                                <select id="backup">
+                                <select id="backup" name="backup">
                                     <option>Diário</option>
                                     <option>Semanal</option>
                                     <option>Mensal</option>
@@ -403,9 +409,10 @@
                         <button type="submit">Salvar Configurações</button>
                     </form>
                 </section>
-            </div><!--container-->
+            </div>
+            container-->
         </main>
-        
+ 
         
     <!-- <script src="../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../assets/js/home/bottomnav.js"></script>

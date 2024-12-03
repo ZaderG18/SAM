@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/12/2024 às 00:38
+-- Tempo de geração: 03/12/2024 às 02:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Estrutura para tabela `academico`
 --
 
-CREATE TABLE IF NOT EXISTS `academico` (
+CREATE TABLE `academico` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   `curso` varchar(255) DEFAULT NULL,
@@ -53,7 +53,7 @@ INSERT INTO `academico` (`id`, `aluno_id`, `curso`, `periodo`, `modulo_atual`, `
 -- Estrutura para tabela `aluno`
 --
 
-CREATE TABLE IF NOT EXISTS`aluno` (
+CREATE TABLE `aluno` (
   `id` int(11) NOT NULL,
   `matricula` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -71,7 +71,7 @@ INSERT INTO `aluno` (`id`, `matricula`) VALUES
 -- Estrutura para tabela `atividade`
 --
 
-CREATE TABLE IF NOT EXISTS `atividade` (
+CREATE TABLE `atividade` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -102,7 +102,7 @@ INSERT INTO `atividade` (`id`, `aluno_id`, `turma_id`, `descricao`, `professor_i
 -- Estrutura para tabela `atividade_extracurricular`
 --
 
-CREATE TABLE IF NOT EXISTS `atividade_extracurricular` (
+CREATE TABLE `atividade_extracurricular` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `tipo_atividade` varchar(100) NOT NULL,
@@ -129,7 +129,7 @@ INSERT INTO `atividade_extracurricular` (`id`, `aluno_id`, `tipo_atividade`, `de
 -- Estrutura para tabela `atualizacoes`
 --
 
-CREATE TABLE IF NOT EXISTS `atualizacoes` (
+CREATE TABLE `atualizacoes` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
@@ -150,7 +150,7 @@ INSERT INTO `atualizacoes` (`id`, `aluno_id`, `descricao`, `data_atualizacao`, `
 -- Estrutura para tabela `avaliacao`
 --
 
-CREATE TABLE IF NOT EXISTS `avaliacao` (
+CREATE TABLE `avaliacao` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -172,7 +172,7 @@ INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`)
 -- Estrutura para tabela `comunicado`
 --
 
-CREATE TABLE IF NOT EXISTS `comunicado` (
+CREATE TABLE `comunicado` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `data` datetime NOT NULL
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `comunicado` (
 -- Estrutura para tabela `contato_emergencia`
 --
 
-CREATE TABLE IF NOT EXISTS `contato_emergencia` (
+CREATE TABLE `contato_emergencia` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   `professor_id` int(11) DEFAULT NULL,
@@ -207,7 +207,7 @@ INSERT INTO `contato_emergencia` (`id`, `aluno_id`, `professor_id`, `nome_emerge
 -- Estrutura para tabela `coordenador`
 --
 
-CREATE TABLE IF NOT EXISTS `coordenador` (
+CREATE TABLE `coordenador` (
   `id` int(11) NOT NULL,
   `setor` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -225,7 +225,7 @@ INSERT INTO `coordenador` (`id`, `setor`) VALUES
 -- Estrutura para tabela `cronograma`
 --
 
-CREATE TABLE IF NOT EXISTS `cronograma` (
+CREATE TABLE `cronograma` (
   `id` int(11) NOT NULL,
   `horario` varchar(20) NOT NULL,
   `dia` varchar(10) NOT NULL,
@@ -246,7 +246,7 @@ INSERT INTO `cronograma` (`id`, `horario`, `dia`, `disciplina`) VALUES
 -- Estrutura para tabela `curso`
 --
 
-CREATE TABLE IF NOT EXISTS `curso` (
+CREATE TABLE `curso` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome_curso` varchar(255) NOT NULL,
   `codigo` varchar(50) NOT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `curso` (
 -- Estrutura para tabela `declaracao`
 --
 
-CREATE TABLE IF NOT EXISTS `declaracao` (
+CREATE TABLE `declaracao` (
   `id` int(11) NOT NULL,
   `tipo_declaracao` varchar(50) DEFAULT NULL,
   `motivo` text DEFAULT NULL,
@@ -298,7 +298,7 @@ INSERT INTO `declaracao` (`id`, `tipo_declaracao`, `motivo`, `usuario_id`, `turm
 -- Estrutura para tabela `desempenho_alunos`
 --
 
-CREATE TABLE IF NOT EXISTS `desempenho_alunos` (
+CREATE TABLE `desempenho_alunos` (
   `id` int(11) NOT NULL,
   `nome_disciplina` varchar(255) DEFAULT NULL,
   `turma` varchar(10) DEFAULT NULL,
@@ -313,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `desempenho_alunos` (
 -- Estrutura para tabela `desempenho_turmas`
 --
 
-CREATE TABLE IF NOT EXISTS `desempenho_turmas` (
+CREATE TABLE `desempenho_turmas` (
   `id` int(11) NOT NULL,
   `nome_turma` varchar(255) NOT NULL,
   `media_notas` decimal(5,2) NOT NULL,
@@ -337,7 +337,7 @@ INSERT INTO `desempenho_turmas` (`id`, `nome_turma`, `media_notas`, `professor_i
 -- Estrutura para tabela `diretor`
 --
 
-CREATE TABLE IF NOT EXISTS `diretor` (
+CREATE TABLE `diretor` (
   `id` int(11) NOT NULL,
   `nivel_acesso` enum('junior','senior','executivo') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -356,7 +356,7 @@ INSERT INTO `diretor` (`id`, `nivel_acesso`) VALUES
 -- Estrutura para tabela `disciplina`
 --
 
-CREATE TABLE IF NOT EXISTS `disciplina` (
+CREATE TABLE `disciplina` (
   `id` int(11) NOT NULL,
   `nome_disciplina` varchar(30) NOT NULL,
   `carga_horaria` int(11) NOT NULL,
@@ -382,7 +382,7 @@ INSERT INTO `disciplina` (`id`, `nome_disciplina`, `carga_horaria`, `semestre`, 
 -- Estrutura para tabela `enquetes`
 --
 
-CREATE TABLE IF NOT EXISTS `enquetes` (
+CREATE TABLE `enquetes` (
   `id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `descricao` text NOT NULL,
@@ -440,7 +440,7 @@ INSERT INTO `enquetes` (`id`, `titulo`, `descricao`, `data_criacao`) VALUES
 -- Estrutura para tabela `eventos`
 --
 
-CREATE TABLE IF NOT EXISTS `eventos` (
+CREATE TABLE `eventos` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `data` date NOT NULL,
@@ -462,7 +462,7 @@ INSERT INTO `eventos` (`id`, `aluno_id`, `data`, `titulo`, `descricao`) VALUES
 -- Estrutura para tabela `frequencia`
 --
 
-CREATE TABLE IF NOT EXISTS `frequencia` (
+CREATE TABLE `frequencia` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -493,7 +493,7 @@ INSERT INTO `frequencia` (`id`, `aluno_id`, `turma_id`, `status`, `avaliacao_id`
 -- Estrutura para tabela `historico_academico`
 --
 
-CREATE TABLE IF NOT EXISTS `historico_academico` (
+CREATE TABLE `historico_academico` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `disciplina_id` int(11) NOT NULL,
@@ -514,7 +514,7 @@ CREATE TABLE IF NOT EXISTS `historico_academico` (
 -- Estrutura para tabela `horario`
 --
 
-CREATE TABLE IF NOT EXISTS `horario` (
+CREATE TABLE `horario` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -534,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `horario` (
 -- Estrutura para tabela `materias`
 --
 
-CREATE TABLE IF NOT EXISTS `materias` (
+CREATE TABLE `materias` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `progresso` int(11) DEFAULT 0
@@ -554,7 +554,7 @@ INSERT INTO `materias` (`id`, `descricao`, `progresso`) VALUES
 -- Estrutura para tabela `matricula`
 --
 
-CREATE TABLE IF NOT EXISTS `matricula` (
+CREATE TABLE `matricula` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -571,7 +571,7 @@ CREATE TABLE IF NOT EXISTS `matricula` (
 -- Estrutura para tabela `mensagens_chat`
 --
 
-CREATE TABLE IF NOT EXISTS `mensagens_chat` (
+CREATE TABLE `mensagens_chat` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `receptor_id` int(11) NOT NULL,
@@ -587,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `mensagens_chat` (
 -- Estrutura para tabela `modulo`
 --
 
-CREATE TABLE IF NOT EXISTS `modulo` (
+CREATE TABLE `modulo` (
   `id` int(11) NOT NULL,
   `nome_modulo` varchar(255) NOT NULL,
   `descricao_modulo` text DEFAULT NULL,
@@ -611,7 +611,7 @@ INSERT INTO `modulo` (`id`, `nome_modulo`, `descricao_modulo`, `aluno_id`, `turm
 -- Estrutura para tabela `notas`
 --
 
-CREATE TABLE IF NOT EXISTS `notas` (
+CREATE TABLE `notas` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `disciplina_id` int(11) DEFAULT NULL,
@@ -646,7 +646,7 @@ INSERT INTO `notas` (`id`, `aluno_id`, `disciplina_id`, `turma_id`, `modulo_id`,
 -- Estrutura para tabela `notificacoes`
 --
 
-CREATE TABLE IF NOT EXISTS `notificacoes` (
+CREATE TABLE `notificacoes` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `tipo_usuarios` enum('aluno','professor','coordenador','diretor') NOT NULL,
@@ -655,15 +655,17 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `imagem` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `lida` tinyint(1) DEFAULT 0
+  `lida` tinyint(1) DEFAULT 0,
+  `canais` text NOT NULL,
+  `frequencia_notif` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `notificacoes`
 --
 
-INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensagem`, `imagem`, `link`, `data_criacao`, `lida`) VALUES
-(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0);
+INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensagem`, `imagem`, `link`, `data_criacao`, `lida`, `canais`, `frequencia_notif`) VALUES
+(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0, 'email,sms,internas', 'Diária');
 
 -- --------------------------------------------------------
 
@@ -671,7 +673,7 @@ INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensage
 -- Estrutura para tabela `opcoes`
 --
 
-CREATE TABLE IF NOT EXISTS `opcoes` (
+CREATE TABLE `opcoes` (
   `id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
   `texto` varchar(255) NOT NULL
@@ -871,7 +873,7 @@ INSERT INTO `opcoes` (`id`, `pergunta_id`, `texto`) VALUES
 -- Estrutura para tabela `perguntas`
 --
 
-CREATE TABLE IF NOT EXISTS `perguntas` (
+CREATE TABLE `perguntas` (
   `id` int(11) NOT NULL,
   `enquete_id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL
@@ -1002,10 +1004,22 @@ INSERT INTO `perguntas` (`id`, `enquete_id`, `titulo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `permissoes`
+--
+
+CREATE TABLE `permissoes` (
+  `id` int(11) NOT NULL,
+  `papel` varchar(255) NOT NULL,
+  `modulo_acesso` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `professor`
 --
 
-CREATE TABLE IF NOT EXISTS `professor` (
+CREATE TABLE `professor` (
   `id` int(11) NOT NULL,
   `departamento` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1016,7 +1030,7 @@ CREATE TABLE IF NOT EXISTS `professor` (
 -- Estrutura para tabela `progresso_academico`
 --
 
-CREATE TABLE IF NOT EXISTS `progresso_academico` (
+CREATE TABLE `progresso_academico` (
   `id` int(11) NOT NULL,
   `nome_disciplina` varchar(255) NOT NULL,
   `progresso` int(11) NOT NULL,
@@ -1039,7 +1053,7 @@ INSERT INTO `progresso_academico` (`id`, `nome_disciplina`, `progresso`, `aluno_
 -- Estrutura para tabela `propostas_cursos`
 --
 
-CREATE TABLE IF NOT EXISTS `propostas_cursos` (
+CREATE TABLE `propostas_cursos` (
   `id` int(11) NOT NULL,
   `nome_curso` varchar(255) NOT NULL,
   `codigo` varchar(50) NOT NULL,
@@ -1089,7 +1103,7 @@ INSERT INTO `propostas_cursos` (`id`, `nome_curso`, `codigo`, `descricao`, `depa
 -- Estrutura para tabela `relatorio`
 --
 
-CREATE TABLE IF NOT EXISTS `relatorio` (
+CREATE TABLE `relatorio` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `data_criacao` datetime DEFAULT current_timestamp(),
@@ -1099,10 +1113,22 @@ CREATE TABLE IF NOT EXISTS `relatorio` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id` int(11) NOT NULL,
+  `kpis` text NOT NULL,
+  `frequencia_relatorios` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `rematricula`
 --
 
-CREATE TABLE IF NOT EXISTS `rematricula` (
+CREATE TABLE `rematricula` (
   `id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `data_rematricula` date NOT NULL,
@@ -1115,7 +1141,7 @@ CREATE TABLE IF NOT EXISTS `rematricula` (
 -- Estrutura para tabela `resposta`
 --
 
-CREATE TABLE IF NOT EXISTS `resposta` (
+CREATE TABLE `resposta` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
@@ -1138,7 +1164,7 @@ INSERT INTO `resposta` (`id`, `usuario_id`, `pergunta_id`, `opcao_id`) VALUES
 -- Estrutura para tabela `respostas`
 --
 
-CREATE TABLE IF NOT EXISTS `respostas` (
+CREATE TABLE `respostas` (
   `id` int(11) NOT NULL,
   `enquete_id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
@@ -1184,7 +1210,7 @@ INSERT INTO `respostas` (`id`, `enquete_id`, `pergunta_id`, `opcao_id`, `data_re
 -- Estrutura para tabela `respostas_usuarios`
 --
 
-CREATE TABLE IF NOT EXISTS `respostas_usuarios` (
+CREATE TABLE `respostas_usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -1207,7 +1233,7 @@ INSERT INTO `respostas_usuarios` (`id`, `nome`, `email`, `enquete_id`) VALUES
 -- Estrutura para tabela `reuniao`
 --
 
-CREATE TABLE IF NOT EXISTS `reuniao` (
+CREATE TABLE `reuniao` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `data` datetime NOT NULL
@@ -1219,7 +1245,7 @@ CREATE TABLE IF NOT EXISTS `reuniao` (
 -- Estrutura para tabela `secretaria`
 --
 
-CREATE TABLE IF NOT EXISTS `secretaria` (
+CREATE TABLE `secretaria` (
   `id` int(11) NOT NULL,
   `tipo` enum('horario','prazo_documentos','comunicado_rematricula','equipe','documentos_necessarios','eventos','faq','formulario_suporte') NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
@@ -1239,10 +1265,24 @@ CREATE TABLE IF NOT EXISTS `secretaria` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `sistema`
+--
+
+CREATE TABLE `sistema` (
+  `id` int(11) NOT NULL,
+  `ano_letivo` varchar(255) NOT NULL,
+  `nota_minima` decimal(5,2) NOT NULL,
+  `frequencia_minima` decimal(5,2) NOT NULL,
+  `modulos` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `solicitacoes`
 --
 
-CREATE TABLE IF NOT EXISTS `solicitacoes` (
+CREATE TABLE `solicitacoes` (
   `id` int(11) NOT NULL,
   `nome_completo` varchar(255) NOT NULL,
   `telefone` varchar(20) NOT NULL,
@@ -1260,7 +1300,7 @@ CREATE TABLE IF NOT EXISTS `solicitacoes` (
 -- Estrutura para tabela `turma`
 --
 
-CREATE TABLE IF NOT EXISTS `turma` (
+CREATE TABLE `turma` (
   `id` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `disciplina_id` int(11) NOT NULL,
@@ -1288,7 +1328,7 @@ INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador
 -- Estrutura para tabela `usuarios`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `RM` varchar(10) NOT NULL,
   `cpf` varchar(11) DEFAULT NULL,
@@ -1322,7 +1362,9 @@ INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_toke
 (2, '2526', NULL, NULL, 'tramontino@gmail.com', '$2y$10$Rm3G6xsbYPb6N09ecoh4PO8hjjW6ue.LqLxdkdmrTo0oCUhsQ3Rli', NULL, NULL, 'tramontino da silva', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-14 13:32:09', '2024-11-14 13:32:09'),
 (3, '123456789', '12345678910', 'foto1.jpg', 'usuario1@example.com', 'senha1', NULL, NULL, 'João Silva', '11999999999', 'solteiro', '2000-01-01', 'masculino', 'Rua A, 123', 'aluno', 'ativo', '2022-02-01', '2023-02-01', 'Brasileiro', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
 (4, '987654321', '10987654321', 'foto2.jpg', 'usuario2@example.com', 'senha2', NULL, NULL, 'Maria Souza', '11988888888', 'casado', '1995-05-15', 'feminino', 'Avenida B, 456', 'professor', 'ativo', '2020-03-05', NULL, 'Brasileira', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
-(5, '4132', NULL, NULL, 'eli-tutu@hotmail.com', '$2y$10$ez9oP0VLzFmOTsuEy91be.cJyOGU8Wc0HRQkC17g8tnDqNQBncn1.', NULL, NULL, 'Eliane Alves Goes Rodrigues', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-26 14:44:06', '2024-11-26 14:45:10');
+(5, '4132', NULL, '674e12b932ed0_IMG_20230308_195104_633.jpg', 'eli-tutu@hotmail.com', '$2y$10$whNP5AWXTcgwL.xFAPX6vuRSFuecLayvD/YLirVHewg8goVT8HErq', NULL, NULL, 'Eliane Alves Goes', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-26 14:44:06', '2024-12-02 20:27:13'),
+(8, '1805', NULL, NULL, 'diego@gmail.com', '$2y$10$vzwvi/ZabGYAvJzlxtybu.nwV0uIknEmlQ5iUu3h2dtWmciQMSShi', NULL, NULL, 'diego valote', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:24:22', '2024-12-03 01:24:22'),
+(9, '3563', NULL, NULL, 'denis@gmail.com', '$2y$10$HSmJ9UV0dyUg2/zwB9w0KOwjuQrSI14j6qVQLbv8YVWgoxTK9a99S', NULL, NULL, 'Denis Ramiro', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:25:18', '2024-12-03 01:25:18');
 
 --
 -- Índices para tabelas despejadas
@@ -1545,6 +1587,12 @@ ALTER TABLE `notificacoes`
   ADD KEY `fk_notificacoes_user` (`user_id`);
 
 --
+-- Índices de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `professor`
 --
 ALTER TABLE `professor`
@@ -1561,6 +1609,12 @@ ALTER TABLE `progresso_academico`
 -- Índices de tabela `relatorio`
 --
 ALTER TABLE `relatorio`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1584,6 +1638,12 @@ ALTER TABLE `secretaria`
   ADD KEY `fk_secretaria_diretor` (`diretor_id`),
   ADD KEY `fk_secretaria_coordendor` (`coordenador_id`),
   ADD KEY `fk_secretaria_professor` (`professor_id`);
+
+--
+-- Índices de tabela `sistema`
+--
+ALTER TABLE `sistema`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `solicitacoes`
@@ -1751,6 +1811,12 @@ ALTER TABLE `notificacoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `permissoes`
+--
+ALTER TABLE `permissoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `progresso_academico`
 --
 ALTER TABLE `progresso_academico`
@@ -1760,6 +1826,12 @@ ALTER TABLE `progresso_academico`
 -- AUTO_INCREMENT de tabela `relatorio`
 --
 ALTER TABLE `relatorio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1781,6 +1853,12 @@ ALTER TABLE `secretaria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `sistema`
+--
+ALTER TABLE `sistema`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `solicitacoes`
 --
 ALTER TABLE `solicitacoes`
@@ -1796,7 +1874,7 @@ ALTER TABLE `turma`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas

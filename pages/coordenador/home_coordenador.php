@@ -6,6 +6,9 @@ if (!isset($_SESSION['user'])) {
 }
 require_once '../../php/global/funcao.php';
 require '../../php/global/cabecario.php';
+require '../../php/global/notificacao.php';
+$notificacoes = obterNotificacoes($conn, $id);
+$countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
 // Obtenha todos os usuários e os totais.
 $usuarios = get_todos_usuarios($conn);
 $totalAlunos = total_alunos($conn);

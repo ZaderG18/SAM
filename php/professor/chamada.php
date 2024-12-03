@@ -1,4 +1,10 @@
 <?php
+
+// Habilitar a exibição de erros
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
 // Conectar ao banco de dados
 $host = "localhost";
 $username = "root";
@@ -30,23 +36,47 @@ function carregarMaterias($conn) {
     return $materias;
 }
 
-// Função para carregar alunos
 function carregarAlunos($conn, $turmaId, $materiaId) {
-    $stmt = $conn->prepare("SELECT id, nome FROM aluno WHERE turma_id = ? AND materia_id = ?");
+    // Verificando os valores
+    echo "turmaId: " . $turmaId . "<br>";
+    echo "materiaId: " . $materiaId . "<br>";
+    
+    // Preparando a consulta com placeholders (?)
+    $stmt = $conn->prepare("SELECT a.id, a.matricula 
+                            FROM aluno a 
+                            INNER JOIN matricula m ON a.id = m.aluno_id 
+                            WHERE m.turma_id = ? AND m.materia_id = ?");
+    
+    // Verifique se o statement foi preparado corretamente
+    if (!$stmt) {
+        echo "Erro na preparação da consulta: " . $conn->error;
+        exit;
+    }
+
+    // Vinculando os parâmetros
     $stmt->bind_param("ii", $turmaId, $materiaId);
+    
+    // Executando a consulta
     $stmt->execute();
     $result = $stmt->get_result();
     
-    $alunos = [];
-    while ($row = $result->fetch_assoc()) {
-        $alunos[] = $row;
+    // Verifique se a consulta retornou resultados
+    if ($result->num_rows > 0) {
+        $alunos = [];
+        while ($row = $result->fetch_assoc()) {
+            $alunos[] = $row;
+        }
+        return $alunos;
+    } else {
+        echo "Nenhum aluno encontrado para esta turma e matéria.";
+        return [];
     }
-    return $alunos;
 }
-
 // Função para marcar presença
 function marcarPresenca($conn, $id, $presente, $observacao) {
-    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) VALUES (?, ?, ?) 
+    // Inserir ou atualizar a presença do aluno
+    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) 
+                            VALUES (?, ?, ?) 
                             ON DUPLICATE KEY UPDATE presente = VALUES(presente), observacao = VALUES(observacao)");
     $stmt->bind_param("iis", $id, $presente, $observacao);
     $stmt->execute();
@@ -79,7 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcarPresenca'])) {
         echo "<p>Erro ao registrar presença.</p>";
     }
 }
-// Função para carregar turmas e matérias
+
+// Função para carregar filtros
 function carregarFiltros($conn) {
     $turmas = mysqli_query($conn, "SELECT id, nome FROM turma");
     $materias = mysqli_query($conn, "SELECT id, nome_disciplina FROM disciplina");
@@ -89,7 +120,6 @@ function carregarFiltros($conn) {
 list($turmas, $materias) = carregarFiltros($conn);
 
 // Carregar alunos com base nos filtros selecionados
-$alunos = [];
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma'], $_GET['materia'])) {
     $turmaId = $_GET['turma'];
     $materiaId = $_GET['materia'];
@@ -120,3 +150,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alunoId'])) {
             ON DUPLICATE KEY UPDATE presente = '$presente', observacao = '$observacao'";
     mysqli_query($conn, $sql);
 }
+?>

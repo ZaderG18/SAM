@@ -2,6 +2,11 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+include '../../php/professor/perfil.php';
+$usuario = getUsuario($conn, $id);
+$professor = getProfessor($conn, $id);
+$contatoEmergencia = getContatoEmergencia($conn, $id);
+$atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -138,10 +143,10 @@ include '../../php/global/notificacao.php';
             <img src="<?php echo $fotoCaminho ?>" alt="Foto da Professora">
             <div class="info">
                 <h2>Prof. <?php echo htmlspecialchars($user['nome']);?></h2>
-                <p>ID: 987654</p>
-                <p>Email: luana.silva@exemplo.com</p>
-                <p>Departamento: Engenharia de Computação</p>
-                <p>Status: Ativo</p>
+                <p>ID: <?= $user['id']; ?></p>
+                <p>Email: <?= $user['email'];?></p>
+                <p>Departamento: <?= htmlspecialchars($professor['departamento'])?></p>
+                <p>Status: <?= $user['status']?></p>
             </div>
         </div>
 
@@ -155,27 +160,27 @@ include '../../php/global/notificacao.php';
                 </div>
                 <div class="detail-item">
                     <label>Data de Nascimento:</label>
-                    <p>10/05/1975</p>
+                    <p><?= $usuario['data_nascimento']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Telefone:</label>
-                    <p>(11) 98888-8888</p>
-                </div>
+                    <p><?= isset($usuario['telefone']) ? $usuario['telefone'] : 'Não informado'; ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Endereço:</label>
-                    <p>Rua Exemplo, 456, São Paulo - SP</p>
+                    <p><?= $usuario['endereco']; ?></p>
                 </div>
                 <div class="detail-item">
                     <label>Estado Civil:</label>
-                    <p>Casada</p>
+                    <p><?= $usuario['estado_civil']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Nacionalidade:</label>
-                    <p>Brasileira</p>
+                    <p><?= $usuario['nacionalidade']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Data de Admissão:</label>
-                    <p>01/03/2010</p>
+                    <p><?php echo date("d/m/Y",strtotime($professor['data_admissao']))?></p>
                 </div>
             </div>
         </div>
@@ -186,31 +191,31 @@ include '../../php/global/notificacao.php';
             <div class="details">
                 <div class="detail-item">
                     <label>Departamento:</label>
-                    <p>Engenharia de Computação</p>
+                    <p><?= htmlspecialchars($professor['departamento'])?></p>
                 </div>
                 <div class="detail-item">
                     <label>Cargo:</label>
-                    <p>Professora Titular</p>
+                    <p><?= $usuario['cargo']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Disciplinas Ministradas:</label>
-                    <p>Algoritmos, Estrutura de Dados, Inteligência Artificial</p>
+                    <p><?= $professor['disciplinas_id']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Sala:</label>
-                    <p>Sala 101, Bloco A</p>
+                    <p>Sala <?= htmlspecialchars($professor['sala'])?></p>
                 </div>
                 <div class="detail-item">
                     <label>Orientações:</label>
-                    <p>10 alunos de mestrado, 5 alunos de doutorado</p>
+                    <p><?= $professor['orientacoes']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Projetos de Pesquisa:</label>
-                    <p>Inteligência Artificial Aplicada, Robótica Autônoma</p>
+                    <p><?= $professor['projetos_pesquisa']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Publicações:</label>
-                    <p>20 artigos em revistas internacionais</p>
+                    <p><?= $professor['publicacoes']?></p>
                 </div>
             </div>
         </div>
@@ -219,11 +224,16 @@ include '../../php/global/notificacao.php';
         <div class="section">
             <h3 class="section-title">Desempenho Acadêmico</h3>
             <ul>
-                <li>Participação em 95% das reuniões departamentais.</li>
-                <li>Avaliação média pelos alunos: 9.2</li>
+                <?php foreach ($desempenho as $item) :?>
+                <li><?= $item?></li>
+                <!-- <li>Avaliação média pelos alunos: 9.2</li>
                 <li>Coordenação de 3 projetos de extensão.</li>
-                <li>Prêmio de Melhor Professora do Departamento em 2022.</li>
+                <li>Prêmio de Melhor Professora do Departamento em 2022.</li> -->
+                <?php endforeach; ?>
             </ul>
+            <?php else: ?>
+    <p>Sem dados de desempenho.</p>
+<?php endif; ?>
         </div>
 
         <!-- Projetos e Pesquisas -->
@@ -242,19 +252,19 @@ include '../../php/global/notificacao.php';
             <div class="details">
                 <div class="detail-item">
                     <label>Nome do Contato:</label>
-                    <p>João Silva</p>
+                    <p><?= $contatoEmergencia['nome_emergencia']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Parentesco:</label>
-                    <p>Esposo</p>
+                    <p><?= $contatoEmergencia['parente_emergencia']?></p>
                 </div>
                 <div class="detail-item">
                     <label>Telefone de Contato:</label>
-                    <p>(11) 97777-7777</p>
-                </div>
+                    <p><?= isset($contatoEmergencia['telefone_emergencia']) ? $contatoEmergencia['telefone_emergencia'] : 'Não informado'; ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Email de Contato:</label>
-                    <p>joao.silva@email.com</p>
+                    <p><?= $contatoEmergencia['email_emergencia']?></p>
                 </div>
             </div>
         </div>
@@ -263,10 +273,9 @@ include '../../php/global/notificacao.php';
         <div class="section">
             <h3 class="section-title">Atividades Extracurriculares</h3>
             <ul>
-                <li>Participação no grupo de robótica da universidade.</li>
-                <li>Organizadora do Simpósio de Inteligência Artificial.</li>
-                <li>Voluntária no projeto de inclusão digital da comunidade local.</li>
-                <li>Membro do Conselho de Pesquisa da Universidade.</li>
+            <?php foreach ($extracurricularActivities as $activity): ?>
+                    <li><?= $activity; ?></li>
+                <?php endforeach; ?>
             </ul>
         </div>
 
