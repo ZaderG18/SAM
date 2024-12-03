@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para preencher os selects de Turma
-$turmas = $conn->query("SELECT id_turma, nome_turma FROM turma");
+$turmas = $conn->query("SELECT id, nome FROM turma");
 $bimestres = ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"];
 $turnos = ["Manhã", "Tarde", "Noite"];
 $periodos = ["1º Período", "2º Período", "3º Período"];

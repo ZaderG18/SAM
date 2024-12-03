@@ -1,7 +1,7 @@
 <?php
 include '../../php/global/cabecario.php';
 require '../../php/login/validar.php';
-require_once '../../php/global/chat.php';
+// require_once '../../php/global/chat.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

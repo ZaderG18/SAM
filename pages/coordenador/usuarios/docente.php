@@ -42,74 +42,41 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                 <input type="search" placeholder="Search" class="header__input">
             </div>
     
-            <!-- Notificações -->
-            <div class="dropdown notification-dropdown">
-                <div class="dropdown-toggle" id="notification-toggle">
-                    <span class="notification-count">3</span>
-                    <i class='bx bxs-bell'></i>
-                </div>
-                <div class="dropdown-content content-noti" id="notification-content">
-                    <hr>
-                    <h4>Alertas</h4>
-                    <hr>
-                    <ul>
-                        <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
-                    </ul>
-                    <hr>
-                    <h4>Notificações</h4>
-                    <hr>
-                    <div class="box-flex-notification">
-                       <div class="boximg-noti">
-                        <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
-                        <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                       </div>
-                        <div class="dados-notification">
-                            <h6>fulanodetal0110@gmail.com</h6>
-                            <p>Chat - Aluno - 3°DS</p>
-                        </div>
-                    </div>
-                    <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
+             <!-- Notificações -->
+          <div class="dropdown notification-dropdown">
+              <div class="dropdown-toggle" id="notification-toggle">
+                  <span class="notification-count"><?= $countNaoLidas ?></span>
+                  <i class='bx bxs-bell'></i>
+              </div>
+              <div class="dropdown-content content-noti" id="notification-content">
+                  <hr>
+                  <h4>Alertas</h4>
+                  <hr>
+                  <ul>
+                      <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
+                  </ul>
+                  <hr>
+                  <h4>Notificações</h4>
+                  <hr>
+                  <?php if (empty($notificacoes)): ?>
+                    <p>Não há notificações!</p>
+                    <?php else: ?>
+                        <?php foreach ($notificacoes as $notificacao): ?>
+                  <div class="box-flex-notification">
+                     <div class="boximg-noti">
+                      <img src="<?= htmlspecialchars($notificacao['imagem'])?>" alt="Profile">
+                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                      </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - nutrição</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - Física</p>
-                         </div>
-                     </div>
-                </div>
-            </div>
+                      <div class="dados-notification">
+                          <h6><?= htmlspecialchars($notificacao['titulo'])?></h6>
+                          <p><?= htmlspecialchars($notificacao['mensagem'])?></p>
+                          <small><?= date('d/m/Y H:i', strtotime($notificacao['data_criacao']))?></small>
+                      </div>
+                  </div>
+                  <?php endforeach?>
+                  <?php endif?>
+              </div>
+          </div>
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">

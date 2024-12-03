@@ -13,6 +13,7 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     <!-- <link rel="stylesheet" href="../../../assets/scss/global/sidebar.css">
     <link rel="stylesheet" href="../../../assets/scss/global/menumobile.css"> -->
     <link rel="stylesheet" href="../../../assets/scss/diretor/global/navgation.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/aluno/modal-gestao.css">
     <!-- <link rel="stylesheet" href="../../../assets/scss/docente/style.css"> -->
     
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundler.min.css">
@@ -41,74 +42,41 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                 <input type="search" placeholder="Search" class="header__input">
             </div>
     
-            <!-- Notificações -->
-            <div class="dropdown notification-dropdown">
-                <div class="dropdown-toggle" id="notification-toggle">
-                    <span class="notification-count">3</span>
-                    <i class='bx bxs-bell'></i>
-                </div>
-                <div class="dropdown-content content-noti" id="notification-content">
-                    <hr>
-                    <h4>Alertas</h4>
-                    <hr>
-                    <ul>
-                        <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
-                    </ul>
-                    <hr>
-                    <h4>Notificações</h4>
-                    <hr>
-                    <div class="box-flex-notification">
-                       <div class="boximg-noti">
-                        <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
-                        <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                       </div>
-                        <div class="dados-notification">
-                            <h6>fulanodetal0110@gmail.com</h6>
-                            <p>Chat - Aluno - 3°DS</p>
-                        </div>
-                    </div>
-                    <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
+             <!-- Notificações -->
+          <div class="dropdown notification-dropdown">
+              <div class="dropdown-toggle" id="notification-toggle">
+                  <span class="notification-count"><?= $countNaoLidas ?></span>
+                  <i class='bx bxs-bell'></i>
+              </div>
+              <div class="dropdown-content content-noti" id="notification-content">
+                  <hr>
+                  <h4>Alertas</h4>
+                  <hr>
+                  <ul>
+                      <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
+                  </ul>
+                  <hr>
+                  <h4>Notificações</h4>
+                  <hr>
+                  <?php if (empty($notificacoes)): ?>
+                    <p>Não há notificações!</p>
+                    <?php else: ?>
+                        <?php foreach ($notificacoes as $notificacao): ?>
+                  <div class="box-flex-notification">
+                     <div class="boximg-noti">
+                      <img src="<?= htmlspecialchars($notificacao['imagem'])?>" alt="Profile">
+                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                      </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - nutrição</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - Física</p>
-                         </div>
-                     </div>
-                </div>
-            </div>
+                      <div class="dados-notification">
+                          <h6><?= htmlspecialchars($notificacao['titulo'])?></h6>
+                          <p><?= htmlspecialchars($notificacao['mensagem'])?></p>
+                          <small><?= date('d/m/Y H:i', strtotime($notificacao['data_criacao']))?></small>
+                      </div>
+                  </div>
+                  <?php endforeach?>
+                  <?php endif?>
+              </div>
+          </div>
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">
@@ -341,18 +309,170 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                        
               
                       </div>
+                      </div>
                     <div class="swiper-pagination"></div>
                     <div class="swiper-button-next swiper-navBtn"></div>
                     <div class="swiper-button-prev swiper-navBtn"></div>
                   </div>
+                  <!-- Modal única e reutilizável -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="" alt="Foto aluno" srcset="" style="width: 120px; height: 120px; border-radius: 50%;">
+                    <h2 id="modalName">Nome do Usuário</h2>
+                </div>
+                <div class="modal-navigation">
+                    <button class="nav-button" data-topic="personal-info">Informações Pessoais</button>
+                    <button class="nav-button" data-topic="academic-data">Dados Acadêmicos</button>
+                    <button class="nav-button" data-topic="financial-situation">Situação Financeira e Relatórios</button>
+                    <button class="nav-button" data-topic="graficos">Gráficos</button>
+                </div>
+                <div id="modalContent">
+                    <div class="topic" id="personal-info">
+                        <h3>Informações Pessoais</h3>
+                        <p>Nome completo: <span id="fullName"></span></p>
+                        <p>Data de nascimento: <span id="birthDate"></span></p>
+                        <p>Número de matrícula: <span id="registrationNumber"></span></p>
+                        <p>Contatos de emergência: <span id="emergencyContacts"></span></p>
+                        <p>Responsáveis: <span id="responsibles"></span></p>
+                    </div>
+                    <div class="topic" id="academic-data" style="display: none;">
+                        <h3>Dados Acadêmicos</h3>
+                        <p>Série/ano atual: <span id="currentYear"></span></p>
+                        <p>Turma: <span id="class"></span></p>
+                        <p>Boletim: <span id="reportCard"></span></p>
+                        <p>Histórico escolar: <span id="academicHistory"></span></p>
+                        <p>Faltas acumuladas: <span id="absences"></span></p>
+                    </div>
+                    <div class="topic" id="financial-situation" style="display: none;">
+                        <h3>Situação Financeira e Relatórios</h3>
+                        <p>Situacão financeira: <span id="financialStatus"></span></p>
+                        <p>Logs de atividades: <span id="activityLogs"></span></p>
+                        <p>Relatórios de desempenho: <span id="performanceReports"></span></p>
+                        <p>Notas e comentários: <span id="notesComments"></span></p>
+                        <p>Eventos e datas importantes: <span id="importantDates"></span></p>
+                    </div>
+                    <div class="topic topic-grafico" id="graficos" style="display: none;">
+                        <div id="grafico1">
+                            <!-- Gráfico de Faltas Acumuladas -->
+                            <canvas id="graficoFaltas"></canvas>
+
+                            <!-- Gráfico de Desempenho Acadêmico -->
+                            <canvas style="margin-top: 40px;" id="graficoDesempenho"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>             
     </div>
 
-      
+    <script>
+   var ctxFaltas = document.getElementById('graficoFaltas').getContext('2d');
+var graficoFaltas = new Chart(ctxFaltas, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], // Todos os meses
+        datasets: [{
+            label: 'Faltas Acumuladas',
+            data: [1, 2, 3, 2, 1, 3, 0, 4, 5, 3, 2, 1], // Exemplo de faltas para cada mês
+            backgroundColor: '#ebaa31',
+            borderColor: '#ebaa31',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+               text: 'Faltas Acumuladas ao Longo do Ano',
+                font: {
+                    size: 18,
+                    weight: 'bold'
+                },
+                color: '#333'
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
 
+        // Gráfico 2: Desempenho Acadêmico por Bimestre (Dados Acadêmicos)
+var ctxDesempenho = document.getElementById('graficoDesempenho').getContext('2d');
+var graficoDesempenho = new Chart(ctxDesempenho, {
+    type: 'line',
+    data: {
+        labels: ['1º Bim', '2º Bim', '3º Bim', '4º Bim'], // Bimestres
+        datasets: [{
+            label: 'Notas de Desempenho', // Rótulo da linha
+            data: [8.5, 9.2, 7.8, 8.9], // Notas de desempenho
+            fill: false, // Não preencher a área abaixo da linha
+            borderColor: '#ebaa31', // Cor da linha
+            borderWidth: 3, // Espessura da linha
+            tension: 0.4, // Curvatura da linha
+            pointBackgroundColor: '#6923d0', // Cor dos pontos
+            pointBorderColor: '#6923d0', // Cor da borda dos pontos
+            pointRadius: 6, // Tamanho dos pontos
+            pointHoverBackgroundColor: '#FF6384', // Cor do ponto ao passar o mouse
+            pointHoverBorderColor: '#FF6384' // Cor da borda do ponto ao passar o mouse
+        }]
+    },
+    options: {
+        responsive: true, // Tornar o gráfico responsivo
+        plugins: {
+            title: {
+                display: true,
+                text: 'Desempenho Acadêmico por Bimestre', // Título do gráfico
+                font: {
+                    size: 18, // Tamanho da fonte do título
+                    weight: 'bold' // Peso da fonte do título
+                },
+                color: '#333' // Cor do título
+            },
+            tooltip: {
+                mode: 'index', // Mostrar tooltip para cada ponto
+                intersect: false, // Tooltip vai aparecer mesmo quando não estiver no ponto exato
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return 'Nota: ' + tooltipItem.raw.toFixed(2); // Exibir a nota com 2 casas decimais
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: false, // O gráfico não precisa começar do zero
+                min: 6, // Definir o valor mínimo do eixo y
+                max: 10, // Definir o valor máximo do eixo y
+                ticks: {
+                    stepSize: 0.5 // Definir o intervalo das marcas no eixo y
+                }
+            }
+        },
+        animation: {
+            duration: 1000, // Duração da animação do gráfico
+            easing: 'easeOutQuart' // Tipo de animação
+        }
+    }
+});
+
+
+    </script>
     <!-- <script src="../../../assets/js/sidebar/sidebar.js"></script>
     <script src="../../../assets/js/home/bottomnav.js"></script>
     <script src="../../../assets/js/home/menumobile.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../../assets/js/diretor/usuarios/modal-aluno.js"></script>
     <script src="../../../assets/js/diretor/global/navgation.js"></script>
     <script src="../../../assets/js/diretor/global/dropdown.js"></script>
 </body>

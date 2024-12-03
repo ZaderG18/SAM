@@ -135,10 +135,10 @@ function obterDadosPorTipo($conn, $tipo) {
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
-                    <a href="chat.php" class="nav__link">
+                   <!-- <a href="chat.php" class="nav__link">
                         <i class='bx bx-chat nav__icon'></i>
                         <span class="nav__name">Chat</span>
-                    </a>
+                    </a> -->
                     <h2 class="nav__subtitle">Orientador</h2>
                     <a href="dashboard/dashboard.php" class="nav__link">
                         <i class='bx bx-bar-chart-alt-2 nav__icon'></i>

@@ -17,7 +17,10 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundler.min.css">
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/docente/docente.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/docente/modal-gestao.css">
     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Certifique-se de carregar a biblioteca Chart.js antes do script -->
 
       <!-- Swiper JS -->
       <script src="../../../assets/js/diretor/docente/swiper-bundle.min.js"></script>
@@ -42,74 +45,41 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                 <input type="search" placeholder="Search" class="header__input">
             </div>
     
-            <!-- Notificações -->
-            <div class="dropdown notification-dropdown">
-                <div class="dropdown-toggle" id="notification-toggle">
-                    <span class="notification-count">3</span>
-                    <i class='bx bxs-bell'></i>
-                </div>
-                <div class="dropdown-content content-noti" id="notification-content">
-                    <hr>
-                    <h4>Alertas</h4>
-                    <hr>
-                    <ul>
-                        <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
-                    </ul>
-                    <hr>
-                    <h4>Notificações</h4>
-                    <hr>
-                    <div class="box-flex-notification">
-                       <div class="boximg-noti">
-                        <img src="../../../assets/img/persona/minhafoto.PNG" alt="Profile">
-                        <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                       </div>
-                        <div class="dados-notification">
-                            <h6>fulanodetal0110@gmail.com</h6>
-                            <p>Chat - Aluno - 3°DS</p>
-                        </div>
-                    </div>
-                    <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
+             <!-- Notificações -->
+          <div class="dropdown notification-dropdown">
+              <div class="dropdown-toggle" id="notification-toggle">
+                  <span class="notification-count"><?= $countNaoLidas ?></span>
+                  <i class='bx bxs-bell'></i>
+              </div>
+              <div class="dropdown-content content-noti" id="notification-content">
+                  <hr>
+                  <h4>Alertas</h4>
+                  <hr>
+                  <ul>
+                      <li>Aviso: Prazo de matrícula termina em 2 dias!</li>
+                  </ul>
+                  <hr>
+                  <h4>Notificações</h4>
+                  <hr>
+                  <?php if (empty($notificacoes)): ?>
+                    <p>Não há notificações!</p>
+                    <?php else: ?>
+                        <?php foreach ($notificacoes as $notificacao): ?>
+                  <div class="box-flex-notification">
+                     <div class="boximg-noti">
+                      <img src="<?= htmlspecialchars($notificacao['imagem'])?>" alt="Profile">
+                      <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
                      </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/christina-wocintechchat-com-SJvDxw0azqw-unsplash (1).jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Coordenação</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - nutrição</p>
-                         </div>
-                     </div>
-                     <div class="box-flex-notification">
-                        <div class="boximg-noti">
-                         <img src="../../../assets/img/persona/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt="Profile">
-                         <div class="circle-noti"> <i class='bx bx-conversation nav__icon'></i></div>
-                        </div>
-                         <div class="dados-notification">
-                             <h6>fulanodetal0110@gmail.com</h6>
-                             <p>Chat - Professor - Física</p>
-                         </div>
-                     </div>
-                </div>
-            </div>
+                      <div class="dados-notification">
+                          <h6><?= htmlspecialchars($notificacao['titulo'])?></h6>
+                          <p><?= htmlspecialchars($notificacao['mensagem'])?></p>
+                          <small><?= date('d/m/Y H:i', strtotime($notificacao['data_criacao']))?></small>
+                      </div>
+                  </div>
+                  <?php endforeach?>
+                  <?php endif?>
+              </div>
+          </div>
     
             <!-- Perfil -->
             <div class="dropdown profile-dropdown" style="margin: 0 15px;">
@@ -345,6 +315,58 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                     <div class="swiper-button-next swiper-navBtn"></div>
                     <div class="swiper-button-prev swiper-navBtn"></div>
                   </div>
+                   <!-- Modal única e reutilizável -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="assets/img/persona/user-default.jpg" alt="Foto do Usuário" style="width: 120px; height: 120px; border-radius: 50%;">
+            <h2 id="modalName">Nome do Professor</h2>
+        </div>
+        <div class="modal-navigation">
+            <button class="nav-button" data-topic="personal-info">Informações Pessoais</button>
+            <button class="nav-button" data-topic="professional-data">Dados Profissionais</button>
+            <button class="nav-button" data-topic="class-management">Gestão de Turmas</button>
+            <button class="nav-button" data-topic="performance-reports">Relatórios de Desempenho</button>
+        </div>
+        <div id="modalContent">
+            <!-- Informações Pessoais -->
+            <div class="topic" id="personal-info">
+                <h3>Informações Pessoais</h3>
+                <p>Nome completo: <span id="fullName"></span></p>
+                <p>Data de nascimento: <span id="birthDate"></span></p>
+                <p>CPF: <span id="cpf"></span></p>
+                <p>Contatos de emergência: <span id="emergencyContacts"></span></p>
+                <p>Endereço: <span id="address"></span></p>
+            </div>
+            <!-- Dados Profissionais -->
+            <div class="topic" id="professional-data" style="display: none;">
+                <h3>Dados Profissionais</h3>
+                <p>Disciplina(s) lecionada(s): <span id="subjects"></span></p>
+                <p>Carga horária semanal: <span id="weeklyHours"></span></p>
+                <p>Departamento: <span id="department"></span></p>
+                <p>Data de contratação: <span id="hireDate"></span></p>
+                <p>Certificações: <span id="certifications"></span></p>
+            </div>
+            <!-- Gestão de Turmas -->
+            <div class="topic" id="class-management" style="display: none;">
+                <h3>Gestão de Turmas</h3>
+                <p>Turmas atuais: <span id="currentClasses"></span></p>
+                <p>Total de alunos: <span id="totalStudents"></span></p>
+                <p>Agenda de aulas: <span id="classSchedule"></span></p>
+                <p>Projetos ou atividades: <span id="projectsActivities"></span></p>
+            </div>
+            <!-- Relatórios de Desempenho -->
+            <div class="topic" id="performance-reports" style="display: none;">
+                <h3>Relatórios de Desempenho</h3>
+                <p>Notas atribuídas: <span id="assignedGrades"></span></p>
+                <p>Feedbacks enviados: <span id="sentFeedbacks"></span></p>
+                <p>Relatórios de progresso dos alunos: <span id="studentReports"></span></p>
+                <p>Frequência registrada: <span id="attendanceRecords"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
     </main>             
     </div>
 
@@ -355,5 +377,8 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     <script src="../../../assets/js/home/menumobile.js"></script> -->
     <script src="../../../assets/js/diretor/global/navgation.js"></script>
     <script src="../../../assets/js/diretor/global/dropdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../../assets/js/diretor/usuarios/modal-docente.js"></script>
+
 </body>
 </html>

@@ -116,10 +116,10 @@ if (!isset($_SESSION['user'])) {
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
-                    <a href="chat.php" class="nav__link">
+                   <!-- <a href="chat.php" class="nav__link">
                         <i class='bx bx-chat nav__icon'></i>
                         <span class="nav__name">Chat</span>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

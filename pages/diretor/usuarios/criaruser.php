@@ -216,29 +216,29 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
 
         <main>
             <section class="formulario-flex">
-                <div class="box-left">
+                <div class="box-left" style="background-color: #c57dba;">
                     <img src="../../../assets/img/diretor/docente/flat-design-children-back-school_52683-44264.jpg" alt="">
                 </div>
                 <form action="adicionarusuario.html" method="post" class="form-container">
                     
-                    <!-- Primeiro grupo de inputs (Informações Pessoais) -->
+                    <!-- Primeiro grupo de inputs -->
                     <fieldset class="step active">
                         <div class="box-legend">
-                            <legend class="legend1">Informações Pessoais</legend>
+                            <legend class="legend1">Informações Básicas</legend>
                             <div class="line-legend line1"></div>
                         </div>
                         <div class="box-inputs">
                             <div class="input">
-                                <label for="nome">Nome Completo:</label>
-                                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
+                                <label for="nome-completo">Nome Completo:</label>
+                                <input type="text" id="nome-completo" name="nome-completo" placeholder="Digite o nome completo" required>
                             </div>
                             <div class="input input-right">
-                                <label for="cpf">CPF:</label>
-                                <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" required>
+                                <label for="matricula">Matrícula:</label>
+                                <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required>
                             </div>
                             <div class="input">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" placeholder="Digite o email" required>
+                                <label for="email">Email Institucional:</label>
+                                <input type="email" id="email" name="email" placeholder="Digite o email institucional" required>
                             </div>
                             <div class="input input-right">
                                 <label for="telefone">Telefone:</label>
@@ -249,34 +249,38 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                             <button type="button" class="next">Próximo</button>
                         </div>
                     </fieldset>
-
-                    <!-- Segundo grupo de inputs (Informações Pessoais - Continuação) -->
+                    
+                    <!-- Segundo grupo de inputs -->
                     <fieldset class="step">
                         <div class="box-legend">
-                            <legend class="legend2">Continuação Pessoal</legend>
+                            <legend class="legend2">Informações de Acesso</legend>
                             <div class="line-legend line2"></div>
                         </div>
                         <div class="box-inputs">
                             <div class="input">
-                                <label for="data_nascimento">Data de Nascimento:</label>
-                                <input type="date" id="data_nascimento" name="data_nascimento" required>
+                                <label for="tipo-acesso">Tipo de Acesso:</label>
+                                <select id="tipo-acesso" name="tipo-acesso" required>
+                                    <option value="aluno">Aluno</option>
+                                    <option value="professor">Professor</option>
+                                    <option value="coordenador">Coordenador</option>
+                                </select>
                             </div>
                             <div class="input input-right">
-                                <label for="genero">Gênero:</label>
-                                <select id="genero" name="genero" required>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="nao-binario">Não Binário</option>
-                                    <option value="prefiro-nao-dizer">Prefiro não dizer</option>
+                                <label for="nivel-acesso">Nível de Acesso:</label>
+                                <select id="nivel-acesso" name="nivel-acesso" required>
+                                    <option value="1">Nível 1 - Básico</option>
+                                    <option value="2">Nível 2 - Intermediário</option>
+                                    <option value="3">Nível 3 - Avançado</option>
+                                    <option value="4">Nível 4 - Administrativo</option>
                                 </select>
                             </div>
                             <div class="input">
-                                <label for="endereco">Endereço:</label>
-                                <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
+                                <label for="senha">Senha:</label>
+                                <input type="password" id="senha" name="senha" placeholder="Digite uma senha" required>
                             </div>
                             <div class="input input-right">
-                                <label for="cargo">Cargo:</label>
-                                <input type="text" id="cargo" name="cargo" placeholder="Digite o cargo" required>
+                                <label for="confirmar-senha">Confirmar Senha:</label>
+                                <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme a senha" required>
                             </div>
                         </div>
                         <div class="box-buttons">
@@ -284,93 +288,25 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                             <button type="button" class="next">Próximo</button>
                         </div>
                     </fieldset>
-
-                    <!-- Terceiro grupo de inputs (Informações de Acesso) -->
+                    
+                    <!-- Terceiro grupo de inputs -->
                     <fieldset class="step">
                         <div class="box-legend">
-                            <legend class="legend3">Informações de Acesso</legend>
+                            <legend class="legend3">Dados Institucionais</legend>
                             <div class="line-legend line3"></div>
                         </div>
                         <div class="box-inputs">
                             <div class="input">
-                                <label for="status">Status:</label>
-                                <select id="status" name="status" required>
-                                    <option value="ativo">Ativo</option>
-                                    <option value="inativo">Inativo</option>
-                                </select>
-                            </div>
-                            <div class="input input-right">
-                                <label for="data_matricula">Data de Matrícula:</label>
-                                <input type="date" id="data_matricula" name="data_matricula" required>
-                            </div>
-                            <div class="input">
-                                <label for="data_rematricula">Data de Rematrícula:</label>
-                                <input type="date" id="data_rematricula" name="data_rematricula">
-                            </div>
-                            <div class="input input-right">
-                                <label for="nivel_acesso">Tipo de Acesso:</label>
-                                <select id="nivel_acesso" name="nivel_acesso" required>
-                                    <option value="junior">Diretor</option>
-                                    <option value="senior">Coordenador</option>
-                                    <option value="executivo">Aluno</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="box-buttons">
-                            <button type="button" class="prev">Voltar</button>
-                            <button type="button" class="next">Próximo</button>
-                        </div>
-                    </fieldset>
-
-                    <!-- Quarto grupo de inputs (Dados Institucionais) -->
-                    <fieldset class="step">
-                        <div class="box-legend">
-                            <legend class="legend4">Dados Institucionais</legend>
-                            <div class="line-legend line4"></div>
-                        </div>
-                        <div class="box-inputs">
-                            <div class="input">
-                                <label for="nacionalidade">Nacionalidade:</label>
-                                <input type="text" id="nacionalidade" name="nacionalidade" placeholder="Digite a nacionalidade" required>
-                            </div>
-                            <div class="input input-right">
-                                <label for="data_saida">Data de Saída:</label>
-                                <input type="date" id="data_saida" name="data_saida">
-                            </div>
-                            <div class="input">
-                                <label for="estado_civil">Estado Civil:</label>
-                                <select id="estado_civil" name="estado_civil" required>
-                                    <option value="solteiro">Solteiro(a)</option>
-                                    <option value="casado">Casado(a)</option>
-                                    <option value="divorciado">Divorciado(a)</option>
-                                    <option value="viuvo">Viúvo(a)</option>
-                                </select>
-                            </div>
-                            <div class="input input-right">
-                                <label for="setor">Setor:</label>
-                                <input type="text" id="setor" name="setor" placeholder="Digite o setor" required>
-                            </div>
-                        </div>
-                        <div class="box-buttons">
-                            <button type="button" class="prev">Voltar</button>
-                            <button type="button" class="next">Próximo</button>
-                        </div>
-                    </fieldset>
-
-                    <!-- Quinto grupo de inputs (Continuação Institucional) -->
-                    <fieldset class="step fieldset-quinto">
-                        <div class="box-legend">
-                            <legend class="legend5">Continuação Institucional</legend>
-                            <div class="line-legend line5"></div>
-                        </div>
-                        <div class="box-inputs">
-                            <div class="input">
-                                <label for="curso_id">Curso (se aplicável):</label>
-                                <input type="text" id="curso_id" name="curso_id" placeholder="Digite o curso">
-                            </div>
-                            <div class="input input-right">
                                 <label for="departamento">Departamento:</label>
                                 <input type="text" id="departamento" name="departamento" placeholder="Digite o departamento (se aplicável)">
+                            </div>
+                            <div class="input input-right">
+                                <label for="data-admissao">Data de Admissão:</label>
+                                <input type="date" id="data-admissao" name="data-admissao" required>
+                            </div>
+                            <div class="input" style="width: 100%;">
+                                <label for="observacoes">Observações:</label>
+                                <textarea id="observacoes" name="observacoes" rows="3" placeholder="Ex: experiência, especialização ou outras observações"></textarea>
                             </div>
                         </div>
                         <div class="box-buttons">
@@ -378,14 +314,13 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                             <button type="submit" class="salvar">Salvar</button>
                         </div>
                     </fieldset>
-
                 </form>
             </section>
         </main>
         
         
 
-    <script src="../../../assets/js/diretor/docente/criaruser.js"></script>
+    <script src="../../../assets/js/diretor/usuarios/criaruser.js"></script>
     <script src="../../../assets/js/diretor/global/navgation.js"></script>
     <script src="../../../assets/js/diretor/global/dropdown.js"></script>
 </body>

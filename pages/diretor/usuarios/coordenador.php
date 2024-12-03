@@ -17,7 +17,10 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/swiper-bundler.min.css">
     <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/coordenador/coordenador.css">
+    <link rel="stylesheet" href="../../../assets/scss/diretor/usuario/coordenador/modal-gestao.css">
     <link rel="icon" href="../../../assets/img/icone_logo 1.png" type="image/png"> <!-- Ícone da aba do navegador -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Certifique-se de carregar a biblioteca Chart.js antes do script -->
+
 
      <!-- Swiper JS -->
      <script src="../../../assets/js/diretor/docente/swiper-bundle.min.js"></script>
@@ -311,6 +314,55 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
                     <div class="swiper-button-next swiper-navBtn"></div>
                     <div class="swiper-button-prev swiper-navBtn"></div>
                   </div>
+                  <!-- Modal única e reutilizável -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="assets/img/persona/user-default.jpg" alt="Foto do Coordenador" style="width: 120px; height: 120px; border-radius: 50%;">
+                    <h2 id="modalName">Nome do Coordenador</h2>
+                </div>
+                <div class="modal-navigation">
+                    <button class="nav-button" data-topic="personal-info">Informações Pessoais</button>
+                    <button class="nav-button" data-topic="professional-data">Dados Profissionais</button>
+                    <button class="nav-button" data-topic="team-management">Gestão de Equipe</button>
+                    <button class="nav-button" data-topic="performance-reports">Relatórios de Desempenho</button>
+                </div>
+                <div id="modalContent">
+                    <!-- Informações Pessoais -->
+                    <div class="topic" id="personal-info">
+                        <h3>Informações Pessoais</h3>
+                        <p>Nome completo: <span id="fullName"></span></p>
+                        <p>Data de nascimento: <span id="birthDate"></span></p>
+                        <p>CPF: <span id="cpf"></span></p>
+                        <p>Contatos de emergência: <span id="emergencyContacts"></span></p>
+                        <p>Endereço: <span id="address"></span></p>
+                    </div>
+                    <!-- Dados Profissionais -->
+                    <div class="topic" id="professional-data" style="display: none;">
+                        <h3>Dados Profissionais</h3>
+                        <p>Departamento: <span id="department"></span></p>
+                        <p>Data de início como coordenador: <span id="startDate"></span></p>
+                        <p>Carga horária semanal: <span id="weeklyHours"></span></p>
+                        <p>Certificações: <span id="certifications"></span></p>
+                    </div>
+                    <!-- Gestão de Equipe -->
+                    <div class="topic" id="team-management" style="display: none;">
+                        <h3>Gestão de Equipe</h3>
+                        <p>Professores supervisionados: <span id="supervisedTeachers"></span></p>
+                        <p>Projetos em andamento: <span id="ongoingProjects"></span></p>
+                        <p>Reuniões planejadas: <span id="plannedMeetings"></span></p>
+                    </div>
+                    <!-- Relatórios de Desempenho -->
+                    <div class="topic" id="performance-reports" style="display: none;">
+                        <h3>Relatórios de Desempenho</h3>
+                        <p>Relatórios avaliados: <span id="evaluatedReports"></span></p>
+                        <p>Feedbacks enviados: <span id="sentFeedbacks"></span></p>
+                        <p>Média de desempenho da equipe: <span id="teamPerformance"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>             
     </div>
 
@@ -318,6 +370,8 @@ $countNaoLidas = count(array_filter($notificacoes, fn($n) => $n['lida'] == 0));
     <script src="../../../assets/js/home/bottomnav.js"></script>
     <script src="../../../assets/js/home/menumobile.js"></script> -->
     <script src="../../../assets/js/diretor/global/navgation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../../assets/js/diretor/usuarios/modal-coordenador.js"></script>
     <script src="../../../assets/js/diretor/global/dropdown.js"></script>
 </body>
 </html>
