@@ -151,14 +151,14 @@ include '../../php/global/notificacao.php';
                 <label>Email</label>
                 <select>
                     <option>Selecione</option>
-                    <option value="1" <?= $user['notificacao_email'] == 1 ? 'selected' : ''; ?>>Sim</option>
-                    <option value="0" <?= $user['notificacao_email'] == 0 ? 'selected' : ''; ?>>Não</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
                 </select>
                 <label>Telefone</label>
                 <select>
                     <option>Selecione</option>
-                    <option value="1" <?= $user['notificacao_telefone'] == 1 ? 'selected' : ''; ?>>Sim</option>
-                    <option value="0" <?= $user['notificacao_telefone'] == 0 ? 'selected' : ''; ?>>Não</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
                 </select>
                 <button class="btn-padrao">Salvar</button>
             </div>
@@ -193,7 +193,7 @@ include '../../php/global/notificacao.php';
                     <label>Email*</label>
                     <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>">
                     <label>Gênero*</label>
-                    <select required>
+                    <select name="genero" required>
                         <option>Selecione seu gênero</option>
                         <option value="masculino">Homem Cis</option>
                         <option value="feminino">Mulher cis</option>
@@ -218,14 +218,7 @@ include '../../php/global/notificacao.php';
                     <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>">
                     <label>ID</label>
                     <input type="text" name="id" value="<?= htmlspecialchars($user['id']); ?>">
-                    <label>Curso*</label>
-                    <!-- <select required>
-                        <option>Selecione o curso</option>
-                        <option value="desenvolvimento_de_sistemas">Desenvolvimento de Sistemas</option>
-                        <option value="enfermagem">Enfermagem</option>
-                        <option value="nutricao">Nutrição</option>
-                        <option value="gastronomia">Gastronomia</option>
-                    </select> -->
+                   
                     <h3>Contato de Emergência</h3>
                     <label>Nome do Contato*</label>
                     <input type="text" name="nome_emergencia">
@@ -238,7 +231,9 @@ include '../../php/global/notificacao.php';
                     <button class="btn-padrao">Editar</button>
                     <button class="btn-padrao" name="submit_informacoes">Salvar</button>
                 </div>
+                </form>
     
+                <form action="../../php/professor/upload.php" method="post">
                 <div class="password-update">
                     <h3>Atualizar Senha</h3>
                     <label>Senha Atual</label>

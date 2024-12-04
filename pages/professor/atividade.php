@@ -12,8 +12,8 @@ if ($atividade_id == 0) {
 }
 
 // Buscar os dados da atividade no banco de dados
-$query = "SELECT * FROM atividades WHERE id = ?";
-$stmt = $mysqli->prepare($query);
+$query = "SELECT * FROM atividade WHERE id = ?";
+$stmt = $conn->prepare($query);
 $stmt->bind_param('i', $atividade_id); // Bind do parâmetro como inteiro
 $stmt->execute();
 $result = $stmt->get_result();
@@ -25,7 +25,7 @@ if (!$atividade) {
 }
 
 // Dados da atividade
-$conteudo_atividade = $atividade['conteudo']; // Assumindo que a tabela tem uma coluna 'conteudo'
+$conteudo_atividade = $atividade['descricao']; // Assumindo que a tabela tem uma coluna 'conteudo'
 $data_vencimento = $atividade['data_vencimento']; // Assumindo que a tabela tem uma coluna 'data_vencimento'
 
 ?>
@@ -162,19 +162,20 @@ $data_vencimento = $atividade['data_vencimento']; // Assumindo que a tabela tem 
             <div class="activity-page">
                 <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
             
-                <h1>Editar Atividade - <?php echo htmlspecialchars( $atividade['nome'])?></h1>
+                <h1>Editar Atividade - <?php echo htmlspecialchars( $atividade['titulo'])?></h1>
                 <form action="../../php/professor/salvarAtividade.php" method="post">
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($atividade['id']); ?>">
                 <div class="activity-description">
                     <label for="edit-activity" class="activity-label">Editar Conteúdo da Atividade:</label>
-                    <textarea id="edit-activity" rows="6"><?php echo htmlspecialchars( $atividade['conteudo']);?></textarea>
+                    <textarea name="descricao" id="edit-activity" rows="6"><?php echo htmlspecialchars( $atividade['descricao']);?></textarea>
                 </div>
             
                 <div class="due-date-section">
                     <label for="edit-due-date">Editar Data de Vencimento:</label>
-                    <input type="datetime-local" id="edit-due-date" value="<?php echo date('Y-m-d\TH:i', strtotime($data_vencimento))?>">
+                    <input name="data_vencimento" type="datetime-local" id="edit-due-date" value="<?php echo date('Y-m-d\TH:i', strtotime($data_vencimento))?>">
                 </div>
             
-                <button id="submit-button" class="submit-button">Salvar Alterações</button>
+            <button type="submit" id="submit-button" class="submit-button">Salvar Alterações</button>
             </div>
             </form>
         </main>

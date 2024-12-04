@@ -87,6 +87,11 @@ $tableQueries = [
     "materias" => "CREATE TABLE IF NOT EXISTS materias (
         id INT AUTO_INCREMENT PRIMARY KEY,
         descricao VARCHAR(255) NOT NULL,
+        nome VARCHAR(20),
+        imagem ENUM('aula_01.jpg', 'aula_02.jpg', 'aula_03.jpg', 'aula_04.jpg', 'aula_05.jpg', 'aula_06.jpg'),
+        professor_id INT(11),
+        turma_id INT(11),
+        aluno_id INT(11),
         progresso INT DEFAULT 0
     )",
     "aluno" => "CREATE TABLE IF NOT EXISTS aluno (
@@ -98,8 +103,10 @@ $tableQueries = [
         nome varchar(50) NOT NULL,
         disciplina_id int(11) NOT NULL,
         professor_id int(11) NOT NULL,
+        progresso TINYINT(3) UNSIGNED DEFAULT 0,
         coordenador_id int(11) NOT NULL,
         data_inicio date NOT NULL,
+        aluno_id int(11) NOT NULL,
         data_fim date NOT NULL,
         status enum('ativa','concluida','cancelada') DEFAULT 'ativa',
         data_criacao timestamp NOT NULL DEFAULT current_timestamp()
@@ -173,6 +180,7 @@ $tableQueries = [
             id INT AUTO_INCREMENT PRIMARY KEY,
             tipo_declaracao VARCHAR(50),
             motivo TEXT,
+            tipo_declaracao ENUM('atestado', 'historico', 'planoEnsino', 'relatorio', 'transporte', 'matricula', 'conclusao', 'frequencia' ),
             usuario_id INT NOT NULL,
             turma_id INT NOT NULL,
             protocolo VARCHAR(50) UNIQUE,
@@ -227,6 +235,7 @@ $tableQueries = [
         declaracao_id INT(11) NOT NULL,
         aulas_dadas INT,
         faltas INT,
+        observacao VARCHAR(200),
         professor_id INT,
         faltas_permitidas INT,
         frequencia_atual DECIMAL(5,2),
@@ -255,6 +264,7 @@ $tableQueries = [
         nome_disciplina varchar(30) NOT NULL,
         carga_horaria int(11) NOT NULL,
         semestre int(11) NOT NULL,
+        taxa_reprovacao FLOAT DEFAULT 0,
         ano int(11) NOT NULL,
         professor_id int(11) NOT NULL,
         coordenador_id int(11) NOT NULL,
@@ -344,6 +354,16 @@ $tableQueries = [
     kpis TEXT NOT NULL,
     frequencia_relatorios VARCHAR(255) NOT NULL
 )",
+"preferencias_notificacao" => "CREATE TABLE IF NOT EXISTS preferencias_notificacao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    notificacao_email TINYINT(1) DEFAULT 0, -- 1 para sim, 0 para não
+    notificacao_telefone TINYINT(1) DEFAULT 0, -- 1 para sim, 0 para não
+    senha_segura TINYINT(1) DEFAULT 0, -- 1 para sim, 0 para não
+    receber_notificacoes TINYINT(1) DEFAULT 0, -- 1 para sim, 0 para não
+    compartilhar_dados TINYINT(1) DEFAULT 0, -- 1 para sim, 0 para não
+    FOREIGN KEY (user_id) REFERENCES usuarios(id) -- Relacionamento com a tabela de usuários
+)",
     "permissoes" => "CREATE TABLE IF NOT EXISTS permissoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     papel VARCHAR(255) NOT NULL,
@@ -418,6 +438,13 @@ $tableQueries = [
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(255) NOT NULL,
     data DATETIME NOT NULL
+)",
+"feedback" => "CREATE TABLE feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    atividade_id INT NOT NULL,
+    feedback TEXT NOT NULL,
+    data_feedback TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (atividade_id) REFERENCES atividade(id) ON DELETE CASCADE
 )"
 ];
 
@@ -477,6 +504,10 @@ FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE modulo 
 ADD CONSTRAINT fk_modulo_matricula 
 FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
+"ALTER TABLE materias ADD CONSTRAINT fk_materias_professor FOREIGN KEY (professor_id) REFERENCES usuarios(id)",
+"ALTER TABLE materias ADD CONSTRAINT fk_materias_turma FOREIGN KEY (turma_id) REFERENCES turma(id)",
+"ALTER TABLE materias ADD CONSTRAINT fk_materias_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id)",
+"ALTER TABLE turma ADD CONSTRAINT fk_turma_aluno FOREIGN key (aluno_id) REFERENCES usuarios(id)",
     "ALTER TABLE modulo ADD CONSTRAINT fk_modulo_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE curso ADD CONSTRAINT fk_aluno_curso FOREIGN KEY (aluno_id) REFERENCES usuarios (id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE",

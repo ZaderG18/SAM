@@ -162,49 +162,52 @@ include '../../php/global/notificacao.php';
 
         <!-- Alunos que Fizeram e Não Fizeram Atividades -->
         <div class="section activities-status">
-            <h3>Status das Atividades</h3>
-            <div class="sub-section">
-                <h4>Alunos que Fizeram</h4>
-                <ul>
-                    <?php
-                    $query = "SELECT nome FROM usuarios WHERE cargo = 'aluno' AND status = 'concluida'";
-                    $result = $conn->query($query);
+    <h3>Status das Atividades</h3>
+    
+    <!-- Alunos que fizeram -->
+    <div class="sub-section">
+        <h4>Alunos que Fizeram</h4>
+        <ul>
+        <?php
+        $queryFeitos = "SELECT u.nome FROM usuarios u 
+                        INNER JOIN atividade a ON u.id = a.aluno_id
+                        WHERE u.cargo = 'aluno' AND a.status = 'concluida'";
+        $resultFeitos = $conn->query($queryFeitos);
+        
+        if ($resultFeitos->num_rows > 0) {
+            while ($row = $resultFeitos->fetch_assoc()) {
+                echo "<li>" . htmlspecialchars($row['nome']) . "</li>";
+            }
+        } else {
+            echo '<li>Nenhum aluno concluiu as atividades.</li>';
+        }
+        ?>
+        </ul>
+    </div>
+    
+    <!-- Alunos que não fizeram -->
+    <div class="sub-section">
+        <h4>Alunos que Não Fizeram</h4>
+        <ul>
+        <?php
+        $queryNaoFeitos = "SELECT u.nome FROM usuarios u 
+                           INNER JOIN atividade a ON u.id = a.aluno_id
+                           WHERE u.cargo = 'aluno' AND a.status = 'pendente'";
+        $resultNaoFeitos = $conn->query($queryNaoFeitos);
+        
+        if ($resultNaoFeitos->num_rows > 0) {
+            while ($row = $resultNaoFeitos->fetch_assoc()) {
+                echo "<li>" . htmlspecialchars($row['nome']) . "</li>";
+            }
+        } else {
+            echo '<li>Todos os alunos concluíram as atividades.</li>';
+        }
+        ?>
+        </ul>
+    </div>
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <li>
-                        <?php echo htmlspecialchars($row['nome']); ?> 
-                        <a href="feedback.php" class="feedback-link">Enviar Feedback</a>
-                    </li>
-                    <?php
-                        }
-                    } else {
-                        echo '<li>Nenhum aluno concluiu as atividades.</li>';
-                    }
-                    ?>
-                </ul>
-            </div>
-            <div class="sub-section">
-                <h4>Alunos que Não Fizeram</h4>
-                <ul>
-                    <?php
-                    $query = "SELECT nome FROM usuarios WHERE cargo = 'aluno' AND status = 'pendente'";
-                    $result = $conn->query($query);
+</div>
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <li><?php echo htmlspecialchars($row['nome']); ?></li>
-                    <?php
-                        }
-                    } else {
-                        echo '<li>Todos os alunos concluíram as atividades.</li>';
-                    }
-                    ?>
-                </ul>
-            </div>
-        </div>
 
         <!-- Tarefas Atribuídas e Pendentes -->
         <div class="section assigned-tasks">
@@ -221,7 +224,7 @@ include '../../php/global/notificacao.php';
                     <span><?php echo htmlspecialchars($row['titulo']); ?></span>
                     <div class="task-buttons">
                         <a href="atividade.php?id=<?php echo $row['id']; ?>" class="edit-link">Editar</a>
-                        <a href="excluir_atividade.php?id=<?php echo $row['id']; ?>" class="delete-link">Excluir</a>
+                        <a href="../../php/professor/excluirAtividade.php?id=<?php echo $row['id']; ?>" class="delete-link">Excluir</a>
                     </div>
                 </li>
                 <?php
@@ -237,38 +240,51 @@ include '../../php/global/notificacao.php';
         <div class="section individual-communication">
             <h4>Comunicação Individual</h4>
             <div class="forum">
-                <select>
-                    <?php
-                    $query = "SELECT id, nome FROM usuarios WHERE cargo = 'aluno'";
-                    $result = $conn->query($query);
+            <form action="../../php/global/enviarNotificacoes.php" method="post">
+            <select name="user_id">
+                <?php
+                $query = "SELECT id, nome FROM usuarios WHERE cargo = 'aluno'";
+                $result = $conn->query($query);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                    ?>
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                ?>
                     <option value="<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></option>
-                    <?php
-                        }
+                <?php
                     }
-                    ?>
-                </select>
-                <div class="forum-messages">
-                    <!-- Mensagens podem ser carregadas aqui dinamicamente -->
-                </div>
-                <textarea rows="4" placeholder="Digite sua resposta..."></textarea>
-                <button class="btn" id="send-reply-btn">Enviar Resposta</button>
+                }
+                ?>
+            </select>
+            
+            <div class="forum-messages">
+                <!-- Mensagens podem ser carregadas aqui dinamicamente -->
             </div>
-        </div>
+            
+            <input class="forum-messages" type="text" name="titulo" id="titulo" placeholder="Título da mensagem" required>
+
+            <textarea name="mensagem" rows="4" placeholder="Digite sua resposta..."></textarea>
+            <button type="submit" class="btn">Enviar Resposta</button>
+        </form>
+    </div>
+</div>
 
         <!-- Lançar Atividades -->
         <div class="section launch-activities">
-            <h4>Lançar Atividades</h4>
-            <form method="POST" action="../../php/professor/lancarAtividade.php" enctype="multipart/form-data">
-                <textarea name="titulo" rows="2" placeholder="Nome da atividade..." required></textarea>
-                <textarea name="descricao" rows="4" placeholder="Descrição da atividade..." required></textarea>
-                <input type="file" name="arquivo" id="activity-file" style="display: none;" required>
-                <button class="btn" id="launch-activity-btn" type="submit">Lançar Atividade</button>
-                <label for="activity-file" class="btnarq">Escolher Arquivo</label>
-            </form>
+    <h4>Lançar Atividades</h4>
+    <form method="post" action="../../php/professor/lancarAtividade.php" enctype="multipart/form-data">
+    <select name="turma_id" required>
+            <option value="" disabled selected>Escolha a turma</option>
+            <option value="1">Turma 1</option>
+            <option value="2">Turma 2</option>
+        </select>
+        <textarea name="titulo" rows="2" placeholder="Nome da atividade..." required></textarea>
+        <textarea name="descricao" rows="4" placeholder="Descrição da atividade..." required></textarea>
+        <input type="file" name="arquivo" id="activity-file" style="display: none;" required>
+        <button class="btn" type="submit">Lançar Atividade</button>
+        <label for="activity-file" class="btnarq">Escolher Arquivo</label>
+    </form>
+</div>
+
         </div>
     </div>
 </main>

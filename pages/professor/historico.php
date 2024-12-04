@@ -195,7 +195,7 @@ include '../../php/professor/historico.php';
                 <div class="card">
                     <h3>Progresso da Turma</h3>
                     <div class="progress-bar">
-                        <div class="progress" style="width: 65%;">65% Concluído</div>
+                        <div class="progress" style="width: <?= $progressoMédio ?>%;"><?= $progressoMédio?>% Concluído</div>
                     </div>
                 </div>
                 <div class="card">
@@ -220,7 +220,7 @@ include '../../php/professor/historico.php';
 
             <!-- Resumo Acadêmico do Aluno -->
             <div class="summary">
-                <?php $resumo = $alunoResumo->fetch_assoc(); ?>
+                <?php if ($resumo) : ?>
                 <p><strong>Nome:</strong> <?= $resumo['nome']; ?></p>
                 <p><strong>RM:</strong> <?= $resumo['rm']; ?></p>
                 <p><strong>Média Geral:</strong> <?= $resumo['media_geral']; ?></p>
@@ -230,6 +230,9 @@ include '../../php/professor/historico.php';
                 <div class="progress-bar">
                     <div class="progress" style="width: <?php echo $progresso; ?>%;"><?php echo round($progresso); ?>% Concluído</div>
                 </div>
+                <?php else: ?>
+                    <p>Não há dados disponíveis para o aluno selecionado.</p>
+                    <?php endif; ?>
             </div>
 
             <!-- Desempenho por Disciplina -->
@@ -245,14 +248,18 @@ include '../../php/professor/historico.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($disciplina = $desempenhoDisciplinas->fetch_assoc()) { ?>
+                    <?php if ($desempenhoDisciplinas && $desempenhoDisciplinas->num_rows > 0): ?>
+                        <?php while ($disciplina = $desempenhoDisciplinas->fetch_assoc()): ?>
                         <tr>
                             <td><?= $disciplina['nome']; ?></td>
-                            <td><?= $disciplina['nota']; ?></td>
+                            <td><?= $disciplina['nota_media']; ?></td>
                             <td><?= $disciplina['faltas']; ?></td>
                             <td class="<?= strtolower($disciplina['status']) ?>"><?=  $disciplina['status']; ?></td>
                         </tr>
-                        <?php } ?>
+                        <?php endwhile ?>
+                        <?php else: ?>
+                            <tr><td colspan="4">Nenhum dado disponível.</td></tr>
+                        <?php endif ?>
                     </tbody>
                 </table>
             </div>

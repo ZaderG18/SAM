@@ -2,6 +2,23 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+
+$atividadeId = $_GET['id'];
+$query = "SELECT * FROM atividade WHERE id = $atividadeId";
+$result = $conn->query($query);
+$atividade = $result->fetch_assoc();
+
+// Verifique se a atividade foi encontrada
+if (!$atividade) {
+    echo "<script>alert('Atividade não encontrada!')";
+    exit;
+}
+
+// Buscar o feedback do professor (se já tiver sido dado)
+$queryFeedback = "SELECT * FROM feedback WHERE atividade_id = $atividadeId";
+$resultFeedback = $conn->query($queryFeedback);
+$feedback = $resultFeedback->fetch_assoc();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -133,26 +150,28 @@ include '../../php/global/notificacao.php';
 <main>
     <div class="activity-page">
         <a href="aulas.php" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
-        <h1>Atividade 11/01 - Redação Inglês</h1>
-        <p class="due-date">Vence 17 de janeiro de 2024 às 23:59 • Fecha 17 de janeiro de 2024 às 23:59</p>
+        <h1><?php echo htmlspecialchars($atividade['titulo']); ?></h1>
+        <p class="due-date">Vence <?php echo date('d \d\e F \d\e Y', strtotime($atividade['data_vencimento'])); ?> às <?php echo date('H:i', strtotime($atividade['data_vencimento'])); ?></p>
         
         <div class="activity-description">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id libero id neque pulvinar sodales. 
-               Vivamus vehicula, mi id tincidunt vulputate, magna odio vehicula ligula, vitae placerat risus lorem nec justo.</p>
+            <p><?php echo nl2br($atividade['descricao']);?></p>
         </div>
     
         <div class="uploaded-file-section">
             <h2>Arquivo Enviado</h2>
-            <input type="text" value="Redação_Juliana_Santos.pdf" readonly>
+            <input type="text" value="<?php echo $atividade['arquivo'];?>" readonly>
             <!-- Botão de download do arquivo -->
             <button id="download-file" class="file-upload-label"><i class="fas fa-download"></i> Baixar Arquivo</button>
         </div>
     
         <div class="feedback-section">
-            <h2>Feedback Professor</h2>            
+            <h2>Feedback Professor</h2>
+            <form action="feedback.php" method="post">
             <!-- Textarea para o feedback do professor -->
-            <textarea id="feedback-text" placeholder="Escreva seu feedback aqui..." rows="4"></textarea>
-            <button id="send-feedback" class="file-upload-label"><i class="fas fa-paper-plane"></i> Enviar Feedback</button>
+            <textarea id="feedback-text" name="feedback" placeholder="Escreva seu feedback aqui..." rows="4"><?php echo $feedback['feedback'] ?? '';?></textarea>
+            <input type="hidden" name="atividade_id" value="<?php echo $atividadeId; ?>">
+            <button id="send-feedback" type="submit" class="file-upload-label"><i class="fas fa-paper-plane"></i> Enviar Feedback</button>
+            </form>
         </div>
     </div>
     

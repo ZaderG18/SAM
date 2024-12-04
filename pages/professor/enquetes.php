@@ -2,7 +2,7 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
-$sql = "SELECT * FROM enquete";
+$sql = "SELECT * FROM enquetes";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -142,14 +142,14 @@ $result = $conn->query($sql);
             <!-- Enquete sobre Aulas -->
             <?php
             // Consulta para buscar as enquetes
-            $sql = "SELECT id, pergunta FROM enquetes";
+            $sql = "SELECT id, titulo FROM enquetes";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 while ($enquete = $result->fetch_assoc()) {
                     ?>
                     <li class="poll-item">
-                        <h3><?php echo htmlspecialchars($enquete['pergunta']); ?></h3>
+                        <h3><?php echo htmlspecialchars($enquete['titulo']); ?></h3>
                         <form class="poll-form" data-poll="<?php echo $enquete['id']; ?>" action="../../php/global/enquetes.php" method="post">
                             <ul class="poll-options">
                                 <?php

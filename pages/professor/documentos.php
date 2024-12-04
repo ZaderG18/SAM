@@ -2,6 +2,10 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
+// Buscar documentos do banco de dados
+$sql = "SELECT tipo_declaracao FROM declaracao";
+$result = $conn->query($sql);
+$documentos = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -137,13 +141,13 @@ include '../../php/global/notificacao.php';
         <div class="left-column">
             <div class="box">
                 <h2>Solicitação de Documentos</h2>
+                <form action="../../php/professor/documentos.php" method="post">
                 <label for="documento">Selecione o Documento:</label>
                 <select id="documento" name="documento" class="caixa" required>
                     <option value="">Selecione o tipo de documento</option>
-                    <option value="atestado">Atestado de Frequência</option>
-                    <option value="historico">Histórico Escolar</option>
-                    <option value="plano">Plano de Ensino</option>
-                    <option value="relatorio">Relatório de Desempenho</option>
+                    <?php foreach ($documentos as $documento) :?>
+                    <option value="<?= htmlspecialchars($documento['tipo_declaracao'])?>"><?= htmlspecialchars($documento['tipo_declaracao'])?></option>
+                   <?php endforeach; ?>
                 </select>
     
                 <label for="motivo">Motivo da Solicitação:</label>
@@ -154,22 +158,24 @@ include '../../php/global/notificacao.php';
                 <p>Prazo para retirada dos documentos: até 3 dias úteis.</p>
     
                 <div style="display: flex; justify-content: space-between;">
-                    <button type="button" onclick="buscarProtocolo()">Buscar</button>
-                    <button type="submit">Enviar</button>
+                    <button type="button" name="acao" onclick="buscarProtocolo()">Buscar</button>
+                    <button type="submit" name="acao">Enviar</button>
                 </div>
+                </form>
             </div>
     
             <div class="box">
                 <h2>Documentos Disponíveis</h2>
+                <form action="../../php/global/gerarPDF.php" method="post" target="_blank">
                 <label for="tipo-documento">Selecione o Tipo de Documento:</label>
                 <select id="tipo-documento" name="tipo-documento" class="caixa" required>
                     <option value="">Selecione o tipo de documento</option>
-                    <option value="atestado">Atestado de Frequência</option>
-                    <option value="historico">Histórico Escolar</option>
-                    <option value="plano">Plano de Ensino</option>
-                    <option value="relatorio">Relatório de Desempenho</option>
+                    <?php foreach ($documentos as $documento) :?>
+                    <option value="<?= htmlspecialchars($documento['tipo_declaracao'])?>"><?= htmlspecialchars($documento['tipo_declaracao'])?></option>
+                   <?php endforeach?>
                 </select>
-                <button type="button" onclick="gerarDocumento()">Gerar Documento</button>
+                <button type="submit">Gerar Documento</button>
+                </form>
             </div>
         </div>
     

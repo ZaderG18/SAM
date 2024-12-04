@@ -6,7 +6,13 @@ include '../../php/professor/perfil.php';
 $usuario = getUsuario($conn, $id);
 $professor = getProfessor($conn, $id);
 $contatoEmergencia = getContatoEmergencia($conn, $id);
-$atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
+$extracurricularActivities = getAtividadesExtraCurriculares($conn, $id);
+if ($extracurricularActivities && is_array($extracurricularActivities)) {
+    foreach ($extracurricularActivities as $atividade) {
+        echo $atividade;
+    }
+}
+$projetos = getProjetosProfessor($conn, $id);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -145,7 +151,7 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
                 <h2>Prof. <?php echo htmlspecialchars($user['nome']);?></h2>
                 <p>ID: <?= $user['id']; ?></p>
                 <p>Email: <?= $user['email'];?></p>
-                <p>Departamento: <?= htmlspecialchars($professor['departamento'])?></p>
+                <p>Departamento: <?= htmlspecialchars(isset($professor['departamento']) ? $professor['departamento'] : 'Não informado');?></p>
                 <p>Status: <?= $user['status']?></p>
             </div>
         </div>
@@ -180,7 +186,7 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
                 </div>
                 <div class="detail-item">
                     <label>Data de Admissão:</label>
-                    <p><?php echo date("d/m/Y",strtotime($professor['data_admissao']))?></p>
+                    <p><?php echo date("d/m/Y",strtotime(isset($professor['data_admissao']) ? $professor['data_admissao'] : '0'))?></p>
                 </div>
             </div>
         </div>
@@ -191,32 +197,32 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
             <div class="details">
                 <div class="detail-item">
                     <label>Departamento:</label>
-                    <p><?= htmlspecialchars($professor['departamento'])?></p>
-                </div>
+                    <p><?= isset($professor['departamento']) ? htmlspecialchars($professor['departamento']) : 'Não informado' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Cargo:</label>
-                    <p><?= $usuario['cargo']?></p>
-                </div>
+                    <p><?= isset($usuario['cargo']) ? $usuario['cargo'] : 'Não informado' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Disciplinas Ministradas:</label>
-                    <p><?= $professor['disciplinas_id']?></p>
-                </div>
+                    <p><?= isset($professor['disciplinas_id']) ? $professor['disciplinas_id'] : 'Não informado' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Sala:</label>
-                    <p>Sala <?= htmlspecialchars($professor['sala'])?></p>
-                </div>
+                    <p>Sala <?= isset($professor['sala']) ? htmlspecialchars($professor['sala']) : 'Não informada' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Orientações:</label>
-                    <p><?= $professor['orientacoes']?></p>
-                </div>
+                    <p><?= isset($professor['orientacoes']) ? $professor['orientacoes'] : 'Não informado' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Projetos de Pesquisa:</label>
-                    <p><?= $professor['projetos_pesquisa']?></p>
-                </div>
+                    <p><?= isset($professor['projetos_pesquisa']) ? $professor['projetos_pesquisa'] : 'Não informado' ?></p>
+                    </div>
                 <div class="detail-item">
                     <label>Publicações:</label>
-                    <p><?= $professor['publicacoes']?></p>
-                </div>
+                    <p><?= isset($professor['publicacoes']) ? $professor['publicacoes'] : 'Não informada' ?></p>
+                    </div>
             </div>
         </div>
 
@@ -241,9 +247,13 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
         <div class="section">
             <h3 class="section-title">Projetos e Pesquisas</h3>
             <ul>
-                <li>Projeto de robótica autônoma (em andamento).</li>
-                <li>Pesquisa sobre algoritmos de inteligência artificial (concluída em 2023).</li>
-                <li>Projeto de Sistema de Energia Solar (em desenvolvimento).</li>
+            <?php if (!empty($projetos)): ?>
+            <?php foreach ($projetos as $projeto): ?>
+                <li><?php echo htmlspecialchars(trim($projeto)); ?></li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <li>Nenhum projeto encontrado.</li>
+        <?php endif; ?>
             </ul>
         </div>
 
@@ -253,11 +263,11 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
             <div class="details">
                 <div class="detail-item">
                     <label>Nome do Contato:</label>
-                    <p><?= $contatoEmergencia['nome_emergencia']?></p>
+                    <p><?= isset($contatoEmergencia['nome_emergencia']) ? $contatoEmergencia['nome_emergencia'] : 'Não informado'?></p>
                 </div>
                 <div class="detail-item">
                     <label>Parentesco:</label>
-                    <p><?= $contatoEmergencia['parente_emergencia']?></p>
+                    <p><?= isset($contatoEmergencia['parente_emergencia']) ? $contatoEmergencia['parente_emergencia'] : 'Não informado'?></p>
                 </div>
                 <div class="detail-item">
                     <label>Telefone de Contato:</label>
@@ -265,7 +275,7 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
                     </div>
                 <div class="detail-item">
                     <label>Email de Contato:</label>
-                    <p><?= $contatoEmergencia['email_emergencia']?></p>
+                    <p><?= isset($contatoEmergencia['email_emergencia']) ? $contatoEmergencia['email_emergencia'] : 'Não informado'?></p>
                 </div>
             </div>
         </div>
@@ -284,9 +294,13 @@ $atividadeExtraCurricular = getAtividadesExtraCurriculares($conn, $id);
         <div class="section">
             <h3 class="section-title">Eventos Acadêmicos</h3>
             <ul>
-                <li>Semana da Engenharia - 12/11/2024</li>
-                <li>Hackathon Acadêmico - 25/11/2024</li>
-                <li>Feira de Ciências e Tecnologia - 10/12/2024</li>
+            <?php if (!empty($eventos)): ?>
+            <?php foreach ($eventos as $evento): ?>
+                <li><?php echo htmlspecialchars($evento['nome_evento']); ?> - <?php echo date('d/m/Y', strtotime($evento['data_evento'])); ?></li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <li>Nenhum evento encontrado.</li>
+        <?php endif; ?>
             </ul>
         </div>
     </div>

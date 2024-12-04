@@ -141,7 +141,7 @@ include_once '../../php/professor/chamada.php';
         <!-- Filtros -->
         <div class="filters">
             <form action="../../php/professor/chamada.php" method="get">
-            <select id="turma" name="turma" required>
+            <select id="turma" name="turma">
                 <option value="">Selecione a Turma</option>
                 <?php foreach ($turmas as $turma) :?>
                     <option value="<?= $turma['id'] ?>" <?= (isset($_GET['turma']) && $_GET['turma'] == $turma['id']) ? 'selected' : '' ?>>
@@ -150,7 +150,7 @@ include_once '../../php/professor/chamada.php';
                 <?php endforeach; ?>
                     </select>
 
-            <select id="materia" name="materia" required>
+            <select id="materia" name="materia" >
                 <option value="">Selecione a Matéria</option>
                 <?php foreach ($materias as $materia) :?>
                     <option value="<?= $materia['id'] ?>" <?= (isset($_GET['materia']) && $_GET['materia'] == $materia['id']) ? 'selected' : '' ?>>
@@ -159,14 +159,14 @@ include_once '../../php/professor/chamada.php';
                 <?php endforeach; ?>
             </select>
 
-            <select id="turno" name="turno" required>
+            <select id="turno" name="turno" >
                 <option value="">Selecione o Turno</option>
                 <option value="manha">Matutino</option>
                 <option value="tarde">Vespertino</option>
                 <option value="noite">Noturno</option>
             </select>
 
-            <select id="periodo" name="periodo" required>
+            <select id="periodo" name="periodo" >
                 <option value="">Selecione o Período</option>
                 <option value="1">1º Período</option>
                 <option value="2">2º Período</option>
@@ -174,7 +174,7 @@ include_once '../../php/professor/chamada.php';
                 <option value="4">4º Período</option>
             </select>
 
-            <select id="periodo-dia" name="periodo-dia" required>
+            <select id="periodo-dia" name="periodo-dia" >
                 <option value="">Selecione o Período do Dia</option>
                 <option value="1aula">1° aula</option>
                 <option value="2aula">2° aula</option>
@@ -182,19 +182,17 @@ include_once '../../php/professor/chamada.php';
                 <option value="4aula">4° aula</option>
             </select>
 
-            <input type="date" name="filtro-dia" value="<?= isset($_GET['filtro-dia']) ? $_GET['filtro-dia'] : '' ?>" required>
+            <input type="date" name="filtro-dia" value="<?= isset($_GET['filtro-dia']) ? $_GET['filtro-dia'] : '' ?>" >
 
             <select id="status-chamada">
                 <option value="">Status da Chamada</option>
                 <option value="feitas">Feitas</option>
                 <option value="pendentes">Pendentes</option>
             </select>
-            <button type="submit">Carregar Alunos</button>
         </div>
         </form>
 
         <!-- Tabela de Chamada -->
-         <?php if (!empty($alunos)) : ?>
         <div class="table-wrapper">
             <form action="../../php/professor/chamada.php" method="post">
             <table>
@@ -208,36 +206,59 @@ include_once '../../php/professor/chamada.php';
                     </tr>
                 </thead>
                 <tbody id="tabela-alunos">
+                <?php if (!empty($alunos)): ?>
                 <?php foreach ($alunos as $index => $aluno): ?>
                     <tr>
-                    <td><?= $index + 1 ?></td>
-                    <td><?= $aluno['nome'] ?></td>
-                    <td><?= $aluno['status'] ?></td>
+                        <td><?= $index + 1 ?></td>
+                        <td><?= htmlspecialchars($aluno['nome']) ?></td>
                         <td class="actions">
-                            <button onclick="marcarPresenca(this)" value="1">Presente</button>
-                            <button onclick="marcarAusencia(this)" value="0">Ausente</button>
+                        <button type="button" class="presente-btn" data-aluno-id="<?= $aluno['id'] ?>" onclick="marcarPresenca(<?= $aluno['id'] ?>, 1)">Presente</button>
+                        <button type="button" class="ausente-btn" data-aluno-id="<?= $aluno['id'] ?>" onclick="marcarAusencia(<?= $aluno['id'] ?>, 0)">Ausente</button>
                         </td>
-                        <td><textarea name="observacao[<?= $aluno['id'] ?>]" placeholder="Adicionar observação"></textarea></td>
+                        <td>
+                            <textarea placeholder="Adicionar observação" data-aluno-id="<?= $aluno['id'] ?>"></textarea>
+                        </td>
                         <td class="actions">
-                            <button class="edit" onclick="editarStatus(this)">Editar</button>
+                            <button class="edit" onclick="editarStatus(this, <?= $aluno['id'] ?>)">Editar</button>
                         </td>
-                    </td>
                     </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5">Nenhum aluno encontrado.</td>
+                </tr>
+            <?php endif; ?>
                 </tbody>
             </table>
-
         </div>
 
         <!-- Botão de Salvar Chamada -->
         <div class="save-button">
-            <button type="submit" name="salvar" id="salvarChamada()">Salvar Chamada</button>
+            <button type="submit" name="salvar" id="salvarChamada">Salvar Chamada</button>
         </div>
         </form>
-        <?php endif; ?>
     </div>
 </main>
     <!-- Scripts -->
+     <script>function marcarPresenca(button, alunoId) {
+    // Marcar como presente (apenas visualmente)
+    button.innerText = "Presente ✔️";
+    button.style.backgroundColor = "green";
+    // Realizar outra lógica, como alterar valores no DOM
+}
+
+function marcarAusencia(button, alunoId) {
+    // Marcar como ausente (apenas visualmente)
+    button.innerText = "Ausente ❌";
+    button.style.backgroundColor = "red";
+}
+
+function editarStatus(button, alunoId) {
+    // Lógica de edição no status
+    alert("Editando status para o aluno com ID: " + alunoId);
+}
+
+</script>
     <script src="../../assets/js/sidebar/sidebar.js"></script>
    <script src="../../assets/js/global/search.js"></script>
     <script src="../../assets/js/professor/frequencia/frequencia.js"></script>

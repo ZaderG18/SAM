@@ -36,48 +36,22 @@ function carregarMaterias($conn) {
     return $materias;
 }
 
-function carregarAlunos($conn, $turmaId, $materiaId) {
-    // Verificando os valores
-    echo "turmaId: " . $turmaId . "<br>";
-    echo "materiaId: " . $materiaId . "<br>";
-    
-    // Preparando a consulta com placeholders (?)
-    $stmt = $conn->prepare("SELECT a.id, a.matricula 
-                            FROM aluno a 
-                            INNER JOIN matricula m ON a.id = m.aluno_id 
-                            WHERE m.turma_id = ? AND m.materia_id = ?");
-    
-    // Verifique se o statement foi preparado corretamente
-    if (!$stmt) {
-        echo "Erro na preparação da consulta: " . $conn->error;
-        exit;
-    }
-
-    // Vinculando os parâmetros
-    $stmt->bind_param("ii", $turmaId, $materiaId);
-    
-    // Executando a consulta
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Verifique se a consulta retornou resultados
-    if ($result->num_rows > 0) {
-        $alunos = [];
-        while ($row = $result->fetch_assoc()) {
-            $alunos[] = $row;
-        }
-        return $alunos;
-    } else {
-        echo "Nenhum aluno encontrado para esta turma e matéria.";
-        return [];
-    }
+// Função para carregar todos os alunos
+function carregarAlunos($conn) {
+    $query = "
+        SELECT a.id, a.nome, f.presenca, f.observacao 
+        FROM usuarios a 
+        LEFT JOIN frequencia f ON f.aluno_id = a.id 
+        WHERE a.cargo = 'aluno'
+        ORDER BY a.nome ASC";
+    return $conn->query($query)->fetch_all(MYSQLI_ASSOC);
 }
 // Função para marcar presença
 function marcarPresenca($conn, $id, $presente, $observacao) {
     // Inserir ou atualizar a presença do aluno
-    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presente, observacao) 
+    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presenca, observacao) 
                             VALUES (?, ?, ?) 
-                            ON DUPLICATE KEY UPDATE presente = VALUES(presente), observacao = VALUES(observacao)");
+                            ON DUPLICATE KEY UPDATE presenca = VALUES(presenca), observacao = VALUES(observacao)");
     $stmt->bind_param("iis", $id, $presente, $observacao);
     $stmt->execute();
     return $stmt->affected_rows > 0;
@@ -90,16 +64,12 @@ $materias = carregarMaterias($conn);
 // Inicializar variáveis
 $turmaId = isset($_GET['turma']) ? $_GET['turma'] : '';
 $materiaId = isset($_GET['materia']) ? $_GET['materia'] : '';
-$alunos = [];
+$alunos = carregarAlunos($conn);
 
-// Carregar alunos se turma e matéria forem selecionadas
-if ($turmaId && $materiaId) {
-    $alunos = carregarAlunos($conn, $turmaId, $materiaId);
-}
 
 // Marcar presença
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcarPresenca'])) {
-    $id = $_POST['alunoId'];
+    $id = $_POST['id'];
     $presente = $_POST['presente'];
     $observacao = $_POST['observacao'];
 
@@ -130,24 +100,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma'], $_GET['materia
 
     // Consulta para obter os alunos
     $query = "SELECT a.id, a.nome 
-              FROM aluno a 
+              FROM usuarios a 
               INNER JOIN matricula m ON a.id = m.aluno_id
-              WHERE m.turma_id = '$turmaId' AND m.materia_id = '$materiaId'";
+              WHERE m.turma_id = '$turmaId' AND m.id = '$materiaId' AND a.cargo = 'aluno'";
     $resultado = mysqli_query($conn, $query);
     $alunos = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 }
 
-// Marcar presença via POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alunoId'])) {
-    $id = $_POST['alunoId'];
-    $presente = $_POST['presente'];
-    $observacao = $_POST['observacao'];
-    $data = date('Y-m-d');
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcarPresenca'])) {
+    $id = $_POST['alunoId'];  // ID do aluno
+    $presente = $_POST['presente'];  // 1 para presente, 0 para ausente
+    $observacao = $_POST['observacao'];  // Observação (se fornecida)
+    $data = date('Y-m-d');  // Data atual
 
-    // Inserir ou atualizar a presença no banco de dados
-    $sql = "INSERT INTO frequencia (aluno_id, presente, observacao, data) 
-            VALUES ('$id', '$presente', '$observacao', '$data') 
-            ON DUPLICATE KEY UPDATE presente = '$presente', observacao = '$observacao'";
-    mysqli_query($conn, $sql);
+    // Verifica se a presença já foi registrada para o aluno na data
+    $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presenca, observacao, data) 
+                            VALUES (?, ?, ?, ?) 
+                            ON DUPLICATE KEY UPDATE presenca = VALUES(presenca), observacao = VALUES(observacao)");
+    $stmt->bind_param("iiss", $id, $presente, $observacao, $data);
+
+    if ($stmt->execute()) {
+        echo "<p>Presença registrada com sucesso!</p>";
+    } else {
+        echo "<p>Erro ao registrar presença.</p>";
+    }
 }
-?>
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar'])) {
+    // Verifica se há dados de presença
+    if (!empty($_POST['aluno_id']) && !empty($_POST['presenca'])) {
+        foreach ($_POST['aluno_id'] as $index => $alunoId) {
+            $presenca = $_POST['presenca'][$alunoId];
+            $observacao = $_POST['observacao'][$alunoId] ?? '';
+
+            // Atualizar ou inserir a presença no banco de dados
+            $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presenca, observacao, data) 
+                                    VALUES (?, ?, ?, ?) 
+                                    ON DUPLICATE KEY UPDATE presenca = ?, observacao = ?");
+            $stmt->bind_param("iisssi", $alunoId, $presenca, $observacao, date('Y-m-d'), $presenca, $observacao);
+            $stmt->execute();
+        }
+
+        echo "<p>Chamada salva com sucesso!</p>";
+    }
+}

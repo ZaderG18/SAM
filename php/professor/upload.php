@@ -73,6 +73,30 @@ function redirecionarComMensagem($mensagem, $url) {
     echo "<script>alert('$mensagem'); window.location.href = '$url';</script>";
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Conectar ao banco de dados
+    $notificacao_email = $_POST['notificacao_email'];
+    $notificacao_telefone = $_POST['notificacao_telefone'];
+    $senha_segura = isset($_POST['senha_segura']) ? 1 : 0; // Assumindo checkbox ou toggle
+    $receber_notificacoes = isset($_POST['receber_notificacoes']) ? 1 : 0;
+    $compartilhar_dados = isset($_POST['compartilhar_dados']) ? 1 : 0;
+
+    // Atualizar na tabela preferencias_notificacao
+    $query = "UPDATE preferencias_notificacao SET 
+                notificacao_email = ?, 
+                notificacao_telefone = ?, 
+                senha_segura = ?, 
+                receber_notificacoes = ?, 
+                compartilhar_dados = ? 
+              WHERE user_id = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("iiiiii", $notificacao_email, $notificacao_telefone, $senha_segura, $receber_notificacoes, $compartilhar_dados, $userId);
+    $stmt->execute();
+    $stmt->close();
+    
+    // Redirecionar ou exibir mensagem de sucesso
+    header("Location: perfil.php?status=sucesso");
+}
 
 // Função para atualizar informações pessoais
 function atualizarInformacoes($conn) {
@@ -89,7 +113,7 @@ function atualizarInformacoes($conn) {
     // Atualizar no banco de dados
     $sql = "UPDATE usuarios SET nome=?, telefone=?, email=?, genero=?, estado_civil=?, data_nascimento=?, nacionalidade=?, endereco=?, RM=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $_SESSION['user_id']);
+    $stmt->bind_param("sssssssssi", $nome, $telefone, $email, $genero, $estado_civil, $data_nascimento, $nacionalidade, $endereco, $RM, $_SESSION['user']['id']);
 
     if ($stmt->execute()) {
         redirecionarComMensagem('Informações pessoais atualizadas com sucesso!', '../../pages/professor/configuracoes.php');
@@ -125,7 +149,7 @@ function atualizarSenha($conn) {
                 $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
                 $sql_update = "UPDATE professor SET senha = ? WHERE id = ?";
                 $stmt_update = $conn->prepare($sql_update);
-                $stmt_update->bind_param("si", $nova_senha_hash, $_SESSION['user_id']);
+                $stmt_update->bind_param("si", $nova_senha_hash, $_SESSION['user']['id']);
 
                 if ($stmt_update->execute()) {
                     redirecionarComMensagem('Senha atualizada com sucesso!', '../../pages/professor/configuracoes.php');
