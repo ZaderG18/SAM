@@ -135,11 +135,12 @@ $result = $conn->query($sql);
         <?php while($row = $result->fetch_assoc()) { ?>
             <!--------------------- Card ------------------------->
             <div class="course-card">
-                <img src="../../assets/img/home/cards/<?= htmlspecialchars($row['imagem']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
-                <h3><?= htmlspecialchars($row['nome']); ?></h3>
-                <p>Professores: <?= htmlspecialchars($row['professor_nome']); ?></p>
-                <a href="aulas.php?id=<?= $row['id']?>" class="start-btn">Entrar</a>
+                <img src="../../assets/img/home/cards/<?= htmlspecialchars($row['imagem'] ?? '') ?>" alt="<?= htmlspecialchars($row['nome'] ?? 'Sem Nome') ?>">
+                <h3><?= htmlspecialchars($row['nome'] ?? 'Sem Nome'); ?></h3>
+                <p>Professores: <?= htmlspecialchars($row['professor_nome'] ?? 'Sem Professor'); ?></p>
+                <a href="aulas.php?id=<?= htmlspecialchars($row['id'] ?? '') ?>" class="start-btn">Entrar</a>
             </div>
+
         <?php } ?>
     <?php } else { ?>
         <p>Nenhuma matéria encontrada.</p>

@@ -4,6 +4,19 @@ require_once '../../php/login/validar.php';
 require_once '../../php/aluno/documentos.php';
 include '../../php/global/notificacao.php';
 //include '../../php/global/gerarPDF.php';
+// Defina as datas do período de rematrícula
+$dataInicio = '2024-12-01';
+$dataFim = '2024-12-16';
+
+// Data atual
+$dataAtual = date('Y-m-d');
+
+// Verifica se está dentro ou fora do prazo
+if ($dataAtual >= $dataInicio && $dataAtual <= $dataFim) {
+    $statusPrazo = 'Atualmente Dentro do Prazo.';
+} else {
+    $statusPrazo = 'Atualmente Fora do Prazo.';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -176,7 +189,7 @@ include '../../php/global/notificacao.php';
         <div class="right-column">
             <div class="box">
                 <h2>Rematrícula</h2>
-                <p>Prazo para rematricula: 09/10/2024 a 16/12/24 - Atualmente Fora do Prazo.</p>
+                <p>Prazo para rematrícula: <?= date('d/m/Y', strtotime($dataInicio)) ?> a <?= date('d/m/Y', strtotime($dataFim)) ?> - <?= $statusPrazo ?></p>
                 <form action="../../php/aluno/documentos.php" method="post" id="rematriculaForm">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" class="caixa" required>

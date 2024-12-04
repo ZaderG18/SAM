@@ -13,10 +13,10 @@ $sqlTurmas = "SELECT DISTINCT nome FROM turma";
 $turmasResult = $conn->query($sqlTurmas);
 
 // Consultar alunos com base na turma e buscar desempenho na tabela desempenho_aluno
-$sqlAlunos = "SELECT u.nome, u.foto, t.nome AS turma, d.desempenho
+$sqlAlunos = "SELECT u.id, u.nome, u.foto, t.nome AS turma, d.desempenho
               FROM usuarios u
-              JOIN turma t ON u.id_usuario = t.id_usuario
-              LEFT JOIN desempenho_alunos d ON u.id_usuario = d.id_usuario
+              JOIN turma t ON u.id = t.aluno_id
+              LEFT JOIN desempenho_alunos d ON u.id = d.aluno_id
               WHERE u.cargo = 'aluno'";
 
 // Adicionar filtro de turma se necessário
@@ -179,25 +179,27 @@ $alunosResult = $conn->query($sqlAlunos);
         </div>
 
         <div class="student-list" id="studentList">
-        <?php if ($alunosResult->num_rows > 0) {
-                // Exibir os alunos encontrados
-                while ($row = $alunosResult->fetch_assoc()) {
-                    $nome = $row['nome'];
-                    $turma = $row['turma'];
-                    $desempenho = $row['desempenho'] ?? 'Não disponível';
-                    $foto = $row['foto'];
-            ?>
-        <div class="student-card" data-turma="<?php echo $turma; ?>">
-                        <img src="<?php echo $foto; ?>" alt="<?php echo $nome; ?>">
-                        <h3><?php echo $nome; ?></h3>
-                        <p>Turma: <?php echo $turma; ?> | Desempenho: <?php echo $desempenho; ?>%</p>
-                        <a href="../detalhes/detalhes_alunos.php">Ver Detalhes</a>
-                    </div>
-            <?php
-                }
-            } else {
-                echo "<p>Nenhum aluno encontrado.</p>";
-            } ?>
+    <?php if ($alunosResult->num_rows > 0) {
+        while ($row = $alunosResult->fetch_assoc()) {
+            $id = $row['id']; 
+            $nome = $row['nome'];
+            $turma = $row['turma'];
+            $desempenho = $row['desempenho'] ?? 'Não disponível';
+            $foto = $row['foto'];
+    ?>
+    <div class="student-card" data-turma="<?php echo $turma; ?>">
+        <img src="../../../assets/img/uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>">
+        <h3><?php echo $nome; ?></h3>
+        <p>Turma: <?php echo $turma; ?> | Desempenho: <?php echo $desempenho; ?>%</p>
+        <a href="../detalhes/detalhes_alunos.php?id=<?php echo $id; ?>">Ver Detalhes</a>
+    </div>
+    <?php
+        }
+    } else {
+        echo "<p>Nenhum aluno encontrado.</p>";
+    } ?>
+</div>
+
             <!-- <div class="student-card" data-turma="turma2">
                 <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Ana Souza">
                 <h3>Ana Souza</h3>

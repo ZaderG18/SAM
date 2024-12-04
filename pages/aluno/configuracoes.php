@@ -149,14 +149,14 @@ if (!isset($_SESSION['user'])) {
                 <label>Email</label>
                 <select>
                     <option>Selecione</option>
-                    <option value="1" <?= $user['notificacao_email'] == 1 ? 'selected' : ''; ?>>Sim</option>
-                    <option value="0" <?= $user['notificacao_email'] == 0 ? 'selected' : ''; ?>>Não</option>
+                    <option value="1" <?= isset($user['notificacao_email']) && $user['notificacao_email'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= isset($user['notificacao_email']) && $user['notificacao_email'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <label>Telefone</label>
                 <select>
                     <option>Selecione</option>
-                    <option value="1" <?= $user['notificacao_telefone'] == 1 ? 'selected' : ''; ?>>Sim</option>
-                    <option value="0" <?= $user['notificacao_telefone'] == 0 ? 'selected' : ''; ?>>Não</option>
+                    <option value="1" <?= isset($user['notificacao_telefone']) && $user['notificacao_telefone'] == 1 ? 'selected' : ''; ?>>Sim</option>
+                    <option value="0" <?= isset($user['notificacao_telefone']) && $user['notificacao_telefone'] == 0 ? 'selected' : ''; ?>>Não</option>
                 </select>
                 <button class="btn-padrao">Salvar</button>
             </div>
@@ -185,11 +185,11 @@ if (!isset($_SESSION['user'])) {
                 <div class="personal-info">
                     <h3>Informações Pessoais</h3>
                     <label>Nome Completo*</label>
-                    <input type="text" name="nome" value="<?= htmlspecialchars($user['nome']); ?>">
+                    <input type="text" name="nome" value="<?= htmlspecialchars(isset($user['nome']) ? $user['nome'] : ''); ?>">
                     <label>Telefone*</label>
-                    <input type="tel" name="telefone" value="<?= htmlspecialchars($user['telefone']); ?>">
+                    <input type="tel" name="telefone" value="<?= htmlspecialchars(isset($user['telefone']) ? $user['telefone'] : ''); ?>">
                     <label>Email*</label>
-                    <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>">
+                    <input type="email" name="email" value="<?= htmlspecialchars(isset($user['email']) ? $user['email'] : ''); ?>">
                     <label>Gênero*</label>
                     <select name="genero">
                         <option>Selecione seu gênero</option>
@@ -209,13 +209,13 @@ if (!isset($_SESSION['user'])) {
                         <option value="viuvo">Viúvo</option>
                     </select>
                     <label>Data de Nascimento*</label>
-                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars($user['data_nascimento']); ?>">
+                    <input type="date" name="data_nascimento" value="<?= htmlspecialchars(isset($user['data_nascimento']) ? $user['data_nascimento'] : ''); ?>">
                     <label>Nacionalidade*</label>
-                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars($user['nacionalidade']); ?>">
+                    <input type="text" name="nacionalidade" value="<?= htmlspecialchars(isset($user['nacionalidade']) ? $user['nacionalidade'] : ''); ?>">
                     <label>Endereço*</label>
-                    <input type="text" name="endereco" value="<?= htmlspecialchars($user['endereco']); ?>">
+                    <input type="text" name="endereco" value="<?= htmlspecialchars(isset($user['endereco']) ? $user['endereco'] : ''); ?>">
                     <label>RM</label>
-                    <input type="text" name="RM" value="<?= htmlspecialchars($user['RM']); ?>">
+                    <input type="text" name="RM" value="<?= htmlspecialchars(isset($user['RM']) ? $user['RM'] : ''); ?>">
                     <label>Curso*</label>
                     <select name="curso">
                         <option>Selecione o curso</option>

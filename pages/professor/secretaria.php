@@ -3,22 +3,19 @@ include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
 function obterDadosPorTipo($conn, $tipo) {
-    // Verifica se o tipo fornecido é válido
     $validTypes = ['horario', 'prazo_documentos', 'comunicado_rematricula', 'equipe', 'documentos_necessarios', 'eventos', 'faq', 'formulario_suporte'];
-    
+
     if (!in_array($tipo, $validTypes)) {
         echo "Tipo inválido: $tipo";
         return false;
     }
 
-    // Prepara a consulta para buscar o tipo especificado na coluna `tipo`
     $stmt = $conn->prepare("SELECT * FROM secretaria WHERE tipo = ?");
     if ($stmt === false) {
         echo "Erro ao preparar a consulta: " . $conn->error;
         return false;
     }
 
-    // Associa o parâmetro e executa a consulta
     $stmt->bind_param("s", $tipo);
     if (!$stmt->execute()) {
         echo "Erro ao executar a consulta: " . $stmt->error;
@@ -27,6 +24,15 @@ function obterDadosPorTipo($conn, $tipo) {
 
     return $stmt->get_result();
 }
+
+// Obtém os dados para cada seção
+$horario = obterDadosPorTipo($conn, 'horario')->fetch_assoc();
+$prazoDocumentos = obterDadosPorTipo($conn, 'prazo_documentos')->fetch_assoc();
+$comunicadoRematricula = obterDadosPorTipo($conn, 'comunicado_rematricula')->fetch_assoc();
+$documentos = obterDadosPorTipo($conn, 'documentos_necessarios')->fetch_assoc();
+$equipe = obterDadosPorTipo($conn, 'equipe');
+$eventos = obterDadosPorTipo($conn, 'eventos');
+$faq = obterDadosPorTipo($conn, 'faq');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -169,32 +175,19 @@ function obterDadosPorTipo($conn, $tipo) {
         <!-- Horário de Atendimento -->
         <div class="section">
             <h3>Horário de Atendimento Exclusivo</h3>
-            <p>Segunda a Sexta-feira: 9h às 13h e 15h às 20h</p>
-            <p>Atendimento prioritário aos professores pelo email exclusivo: <strong>suporteprofessores@escola.com</strong></p>
+            <p><?= isset($horario['conteudo']) ? $horario['conteudo'] : 'Não informado' ?></p>
         </div>
     
         <!-- Prazo para Entrega de Documentos -->
         <div class="section">
             <h3>Prazo para Solicitação de Documentos</h3>
-            <p>Relatórios de Desempenho de Turmas: 3 dias úteis</p>
-            <p>Certificados de Participação em Eventos: 5 dias úteis</p>
-            <p>Solicitação de Documentos Administrativos: 7 dias úteis</p>
+            <p><?= isset($prazoDocumentos['conteudo']) ? $prazoDocumentos['conteudo'] : 'Não informado'  ?></p>
         </div>
     
         <!-- Comunicados Gerais -->
         <div class="section">
             <h3>Comunicados Importantes</h3>
-            <p>
-            Prezados Professores,
-            <br><br>
-            Lembramos que o prazo para lançamento das notas do semestre é até (data de término). Pedimos que façam o envio dos relatórios de desempenho dos alunos dentro do prazo para evitar atrasos no processamento de informações.
-            <br><br>
-            Em caso de dúvidas, entrem em contato com a secretaria através do email <strong>suporteprofessores@escola.com</strong>.
-            <br><br>
-            Atenciosamente,
-            <br>
-            [Nome da Escola]
-            </p>
+            <p><?= isset($comunicadoRematricula['conteudo']) ? $comunicadoRematricula['conteudo'] : 'Não informado' ?></p>
         </div>
     
         <!-- Equipe da Secretaria -->
@@ -202,9 +195,9 @@ function obterDadosPorTipo($conn, $tipo) {
             <h3>Equipe de Suporte ao Professor</h3>
             <p>Equipe responsável por atender os professores:</p>
             <ul>
-            <li><strong>Maria Silva</strong> - Coordenadora de Suporte ao Professor | Email: maria@escola.com</li>
-            <li><strong>João Pereira</strong> - Atendimento de Demandas Acadêmicas | Email: joao@escola.com</li>
-            <li><strong>Ana Costa</strong> - Gestão de Documentos e Relatórios | Email: ana@escola.com</li>
+            <?php while ($membro = $equipe->fetch_assoc()): ?>
+                    <li><?= $membro['conteudo'] ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
     
@@ -213,9 +206,9 @@ function obterDadosPorTipo($conn, $tipo) {
             <h3>Documentos Necessários para Solicitações</h3>
             <p>Para solicitar documentos específicos, tenha os seguintes itens prontos:</p>
             <ul>
-            <li>Relatórios de Desempenho: Solicitação formal via sistema.</li>
-            <li>Certificados de Eventos: Comprovante de participação no evento.</li>
-            <li>Documentação Administrativa: Documento de identificação (RG, CPF).</li>
+            <?php while ($evento = $eventos->fetch_assoc()): ?>
+                    <li><?= $documentos['conteudo'] ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
     
@@ -223,9 +216,9 @@ function obterDadosPorTipo($conn, $tipo) {
         <div class="section">
             <h3>Próximos Eventos para Professores</h3>
             <ul>
-            <li>Workshop de Metodologias Ativas: 18/10/2024 às 14h.</li>
-            <li>Treinamento de Ferramentas Digitais: 25/10/2024 às 16h.</li>
-            <li>Encontro de Planejamento Semestral: 01/11/2024.</li>
+            <?php while ($evento = $eventos->fetch_assoc()): ?>
+                    <li><?= $evento['conteudo'] ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
     
@@ -233,9 +226,9 @@ function obterDadosPorTipo($conn, $tipo) {
         <div class="section">
             <h3>Perguntas Frequentes (FAQ)</h3>
             <ul>
-            <li><strong>Como solicito um relatório de desempenho da turma?</strong> <br> A solicitação deve ser feita através do sistema de gestão acadêmica.</li>
-            <li><strong>Como altero meu horário de aulas?</strong> <br> Entre em contato com a coordenação pelo email de suporte.</li>
-            <li><strong>Qual o prazo para envio de certificados de eventos?</strong> <br> O prazo é de 5 dias úteis após a solicitação.</li>
+            <?php while ($faqItem = $faq->fetch_assoc()): ?>
+                    <li><?= $faqItem['conteudo'] ?></li>
+                <?php endwhile; ?>
             </ul>
         </div>
     

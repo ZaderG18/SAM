@@ -142,7 +142,7 @@ $result = $conn->query($sql);
             <div class="course-card">
                 <img src="../../assets/img/home/cards/<?= htmlspecialchars($row['imagem']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
                 <h3><?= htmlspecialchars($row['nome']); ?></h3>
-                <p>Professores: <?= htmlspecialchars($row['professor_nome']); ?></p>
+                <p>Professores: <?= htmlspecialchars(isset($row['professor_nome']) ? $row['professor_nome'] : 'Sem Professor'); ?></p>
                 <a href="aulas.php" class="start-btn">Entrar</a>
             </div>
         <?php } ?>

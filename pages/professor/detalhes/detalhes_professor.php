@@ -2,6 +2,50 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Verifica se o ID foi passado na URL
+if (isset($_GET['id'])) {
+    $userId = $_GET['id'];
+
+    // Consulta SQL para pegar os dados do professor
+    $sql = "SELECT u.id, u.nome, u.foto, AVG(a.nota) AS media_avaliacoes, 
+            GROUP_CONCAT(m.nome SEPARATOR ', ') AS materias, f.frequencia_total, f.faltas
+            FROM usuarios u
+            LEFT JOIN avaliacao a ON a.professor_id = u.id
+            LEFT JOIN materias m ON m.professor_id = u.id
+            LEFT JOIN frequencia f ON f.professor_id = u.id
+            WHERE u.id = ?
+            GROUP BY u.id";
+
+    // Preparar a consulta
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Verifica se o professor foi encontrado
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    } else {
+        echo "Professor não encontrado.";
+        exit();
+    }
+     // Consulta para pegar as observações
+     $sqlObservacoes = "SELECT observacao FROM observacoes WHERE usuario_id = ?";
+     $stmtObservacoes = $conn->prepare($sqlObservacoes);
+     $stmtObservacoes->bind_param("s", $userId);
+     $stmtObservacoes->execute();
+     $resultObservacoes = $stmtObservacoes->get_result();
+ 
+     // Consulta para pegar os relatórios
+     $sqlRelatorios = "SELECT titulo, mes_ano FROM relatorios WHERE usuario_id = ?";
+     $stmtRelatorios = $conn->prepare($sqlRelatorios);
+     $stmtRelatorios->bind_param("s", $userId);
+     $stmtRelatorios->execute();
+     $resultRelatorios = $stmtRelatorios->get_result();
+} else {
+    echo "ID de usuário não fornecido.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -142,9 +186,9 @@ include '../../../php/global/notificacao.php';
     <div class="container">
         <div class="student-header">
             <div class="student-info">
-                <h2>Prof: Maria Silva</h2>
-                <p>ID: 2023005678</p>
-                <p>Departamento: Ciências da Computação</p>
+            <h2>Prof: <?= htmlspecialchars(isset($row['nome']) ? $row['nome'] : 'Sem Nome') ?></h2>
+            <p>ID: <?= htmlspecialchars(isset($row['id']) ? $row['id'] : 'Sem ID') ?></p>
+            <p>Departamento: <?= htmlspecialchars(isset($row['departamento']) ? $row['departamento'] : 'Sem Departamento') ?></p>
             </div>   
         </div>
 
@@ -153,30 +197,44 @@ include '../../../php/global/notificacao.php';
             <div class="card">
                 <h3>Desempenho Profissional</h3>
                 <i class="fas fa-chart-line icon"></i>
-                <p>Média de Avaliações: 9.2</p>
-                <p>Disciplinas Ministradas: Algoritmos, Estrutura de Dados</p>
+                <p>Média de Avaliações: <?= number_format(isset($row['media_avaliacoes']) ? $row['media_avaliacoes'] : 0, 1) ?></p>
+                <p>Disciplinas Ministradas: <?= htmlspecialchars(isset($row['materias']) ? $row['materias'] : 'Sem Disciplinas') ?></p>
             </div>
 
             <div class="card">
                 <h3>Frequência</h3>
                 <i class="fas fa-calendar-check icon"></i>
-                <p>Frequência Geral: 98%</p>
-                <p>Faltas: 2</p>
+                <p>Frequência Geral: <?= htmlspecialchars($row['frequencia_total']) ?>%</p>
+                <p>Faltas: <?= htmlspecialchars($row['faltas']) ?></p>
             </div>
 
             <div class="card">
                 <h3>Observações</h3>
                 <i class="fas fa-sticky-note icon"></i>
-                <p>Excelente didática e comprometimento com os alunos.</p>
-            </div>
+                <?php
+                if ($resultObservacoes->num_rows > 0) {
+                    while ($observacao = $resultObservacoes->fetch_assoc()) {
+                        echo "<p>" . htmlspecialchars($observacao['observacao']) . "</p>";
+                    }
+                } else {
+                    echo "<p>Não há observações disponíveis.</p>";
+                }
+                ?>
+            </div>            </div>
 
             <div class="card">
                 <h3>Relatórios</h3>
                 <i class="fas fa-file-alt icon"></i>
                 <ul>
-                    <li><a href="#">Relatório de Desempenho - Set 2024</a></li>
-                    <li><a href="#">Relatório de Frequência - Out 2024</a></li>
-                    <li><a href="#">Relatório de Participação - Jul 2024</a></li>
+                <?php
+                    if ($resultRelatorios->num_rows > 0) {
+                        while ($relatorio = $resultRelatorios->fetch_assoc()) {
+                            echo "<li><a href='#'>" . htmlspecialchars($relatorio['titulo']) . " - " . htmlspecialchars($relatorio['mes_ano']) . "</a></li>";
+                        }
+                    } else {
+                        echo "<li>Não há relatórios disponíveis.</li>";
+                    }
+                    ?>
                 </ul>
             </div>
         </div>

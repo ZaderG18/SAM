@@ -2,6 +2,45 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Variáveis para armazenar os filtros
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$classFilter = isset($_GET['classFilter']) ? $_GET['classFilter'] : 'all';
+
+// Consulta para obter os professores, matérias e turmas com base nos filtros
+$sql = "SELECT u.id, u.nome, u.foto, t.nome, GROUP_CONCAT(m.nome SEPARATOR ', ') AS materias
+        FROM usuarios u
+        LEFT JOIN turma t ON t.professor_id = u.id
+        LEFT JOIN materias m ON m.professor_id = u.id
+        WHERE 1=1";
+
+
+// Se houver uma busca, adicionar filtro de nome
+if ($search) {
+    $sql .= " AND nome LIKE ?";
+}
+
+// Se houver um filtro de turma, adicionar filtro de turma
+if ($classFilter !== 'all') {
+    $sql .= " AND turma = ?";
+}
+
+// Preparar e executar a consulta
+$stmt = $conn->prepare($sql);
+
+// Bind dos parâmetros de busca
+if ($search && $classFilter !== 'all') {
+    $search = "%" . $search . "%";
+    $stmt->bind_param("ss", $search, $classFilter);
+} elseif ($search) {
+    $search = "%" . $search . "%";
+    $stmt->bind_param("s", $search);
+} elseif ($classFilter !== 'all') {
+    $stmt->bind_param("s", $classFilter);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -150,13 +189,20 @@ include '../../../php/global/notificacao.php';
             </select>
         </div>
         <div class="teacher-list" id="teacherList">
-            <div class="teacher-card" data-turma="turma1">
-            <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Maria Silva">
-            <h3>Maria Silva</h3>
-            <p>Turma: 1 | Matérias: HTML, CSS</p>
-            <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
+        <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="teacher-card" data-turma="<?= htmlspecialchars($row['nome']) ?>">
+                        <img src="../../../assets/img/uploads/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
+                        <h3><?= htmlspecialchars($row['nome']) ?></h3>
+                        <p>Turma: <?= htmlspecialchars($row['nome']) ?> | Matérias: <?= htmlspecialchars($row['materias']) ?></p>
+                        <a href="../detalhes/detalhes_professor.php?id=<?= $row['id'] ?>">Ver Detalhes</a>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>Nenhum professor encontrado.</p>
+            <?php endif; ?>
             </div>
-            <div class="teacher-card" data-turma="turma2">
+            <!-- <div class="teacher-card" data-turma="turma2">
             <img src="../../../assets/img/home/fotos/Ana_Icon.png" alt="Ana Souza">
             <h3>Ana Souza</h3>
             <p>Turma: 2 | Matérias: JavaScript, React</p>
@@ -210,7 +256,7 @@ include '../../../php/global/notificacao.php';
             <p>Turma: 1 | Matérias: SQL, NoSQL</p>
             <a href="../detalhes/detalhes_professor.php">Ver Detalhes</a>
             </div>
-        </div>
+        </div> -->
 
         <div class="pagination">
             <button disabled>&laquo; Anterior</button>

@@ -2,6 +2,25 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Recupera o ID da matéria a partir da URL
+$materia_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+// Verifica se o ID foi passado
+if ($materia_id) {
+    // Conecte-se ao banco de dados e recupere as informações sobre a matéria
+    $sql = "SELECT nome, id, professor_nome FROM materias WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $materia_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $materia = $result->fetch_assoc();
+} else {
+    // Caso não tenha um ID válido, redireciona ou exibe um erro
+    echo "<script>alert('Erro: ID da matéria não encontrado.')
+    window.location.href = '../dashboard/disciplina.php';</script>";
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -95,23 +114,23 @@ include '../../../php/global/notificacao.php';
             <div class="nav__list">
                 <div class="nav__items">
                     <h3 class="nav__subtitle">Home</h3>
-                    <a href="home_professor.php" class="nav__link">
+                    <a href="../home_professor.php" class="nav__link">
                         <i class='bx bx-home nav__icon'></i>
                         <span class="nav__name">Home</span>
                     </a>
-                    <a href="historico.php" class="nav__link active">
+                    <a href="../historico.php" class="nav__link active">
                         <i class='bx bx-history nav__icon'></i>
                         <span class="nav__name">Histórico</span>
                     </a>
-                    <a href="documentos.php" class="nav__link">
+                    <a href="../documentos.php" class="nav__link">
                         <i class='bx bx-file nav__icon'></i>
                         <span class="nav__name">Documentos</span>
                     </a>
-                    <a href="calendario.php" class="nav__link">
+                    <a href="../calendario.php" class="nav__link">
                         <i class='bx bx-calendar nav__icon'></i>
                         <span class="nav__name">Cronograma</span>
                     </a>
-                    <a href="enquetes.php" class="nav__link">
+                    <a href="../enquetes.php" class="nav__link">
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
@@ -120,14 +139,14 @@ include '../../../php/global/notificacao.php';
                         <span class="nav__name">Chat</span>
                     </a> -->
                     <h2 class="nav__subtitle">Orientador</h2>
-                    <a href="dashboard/dashboard.php" class="nav__link">
+                    <a href="../dashboard/dashboard.php" class="nav__link">
                         <i class='bx bx-bar-chart-alt-2 nav__icon'></i>
                         <span class="nav__name">Dashboard</span>
                     </a>
                 </div>
             </div>
         </div>
-        <a href="../../php/login/logout.php" class="nav__link nav__logout">
+        <a href="../../../php/login/logout.php" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon'></i>
             <span class="nav__name">Sair</span>
         </a>
@@ -144,16 +163,16 @@ include '../../../php/global/notificacao.php';
             <div class="info-section">
                 <div class="info-header">
                     <div>
-                        <p>Nome: <strong>Programação Avançada</strong></p>
+                    <p>Nome: <strong><?= htmlspecialchars($materia['nome']) ?></strong></p>
                     </div>
                     <div>
-                        <p>Código: <strong>CS201</strong></p>
+                    <p>Código: <strong><?= htmlspecialchars($materia['id']) ?></strong></p>
                     </div>
                     <div>
-                        <p>Semestre: <strong>2º Semestre - 2024</strong>
+                    <p>Semestre: <strong><?= htmlspecialchars(isset($materia['semestre']) ? $materia['semestre'] : 'Semestre não definido') ?></strong></p>
                     </div>
                     <div>
-                        <p>Professor: <strong>Maria Silva</strong></p>
+                    <p>Professor: <strong><?= htmlspecialchars(isset($materia['professor_nome']) ? $materia['professor_nome'] : 'Professor não definido') ?></strong></p>
                     </div>
                 </div>
             </div>
@@ -170,18 +189,24 @@ include '../../../php/global/notificacao.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Prova 1</td>
-                            <td>2024-05-10</td>
-                            <td>30%</td>
-                            <td><button class="btn secondary" onclick="openModal('editEvaluationModal')">Editar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Projeto Final</td>
-                            <td>2024-06-15</td>
-                            <td>50%</td>
-                            <td><button class="btn secondary" onclick="openModal('editEvaluationModal')">Editar</button></td>
-                        </tr>
+                    <?php
+                    // Consultar as avaliações da matéria
+                    $sqlAvaliacoes = "SELECT * FROM avaliacao WHERE materia_id = ?";
+                    $stmt = $conn->prepare($sqlAvaliacoes);
+                    $stmt->bind_param("i", $materia_id);
+                    $stmt->execute();
+                    $resultAvaliacoes = $stmt->get_result();
+
+                    // Exibir as avaliações
+                    while ($avaliacao = $resultAvaliacoes->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($avaliacao['titulo']) . "</td>";
+                        echo "<td>" . htmlspecialchars($avaliacao['data_entrega']) . "</td>";
+                        echo "<td>" . htmlspecialchars($avaliacao['peso']) . "%</td>";
+                        echo "<td><button class='btn secondary' onclick=\"openModal('editEvaluationModal')\">Editar</button></td>";
+                        echo "</tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
                 <button class="btn" onclick="openModal('addEvaluationModal')">Adicionar Avaliação</button>
@@ -205,18 +230,24 @@ include '../../../php/global/notificacao.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Turma A</td>
-                            <td>25</td>
-                            <td>Segunda - 14:00</td>
-                            <td><button class="btn secondary" onclick="openModal('detailsClassModal', 'Turma A', 25, 'Segunda - 14:00')">Ver Detalhes</button></td>
-                        </tr>
-                        <tr>
-                            <td>Turma B</td>
-                            <td>30</td>
-                            <td>Quarta - 10:00</td>
-                            <td><button class="btn secondary" onclick="openModal('detailsClassModal', 'Turma B', 30, 'Quarta - 10:00')">Ver Detalhes</button></td>
-                        </tr>
+                    <?php
+                    // Consultar turmas associadas à matéria
+                    $sqlTurmas = "SELECT * FROM turma WHERE materia_id = ?";
+                    $stmt = $conn->prepare($sqlTurmas);
+                    $stmt->bind_param("i", $materia_id);
+                    $stmt->execute();
+                    $resultTurmas = $stmt->get_result();
+
+                    // Exibir as turmas
+                    while ($turma = $resultTurmas->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($turma['nome']) . "</td>";
+                        echo "<td>" . htmlspecialchars($turma['num_alunos']) . "</td>";
+                        echo "<td>" . htmlspecialchars($turma['horario']) . "</td>";
+                        echo "<td><button class='btn secondary' onclick=\"openModal('detailsClassModal', '" . htmlspecialchars($turma['nome']) . "', " . $turma['num_alunos'] . ", '" . htmlspecialchars($turma['horario']) . "')\">Ver Detalhes</button></td>";
+                        echo "</tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>

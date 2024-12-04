@@ -2,6 +2,45 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
+// Obtém o ID do aluno da URL
+$idAluno = $_GET['id'] ?? null;
+
+if ($idAluno) {
+    // Busca os dados do aluno
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE cargo = 'aluno' AND id = ?");
+    $stmt->bind_param("i", $idAluno);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $aluno = $result->fetch_assoc();
+
+    // Busca o desempenho acadêmico
+    $stmt = $conn->prepare("SELECT nota_media, disciplinas_risco, observacoes FROM notas WHERE aluno_id = ?");
+    $stmt->bind_param("i", $idAluno);
+    $stmt->execute();
+    $notas = $stmt->get_result()->fetch_assoc();
+
+    // Busca a frequência
+    $stmt = $conn->prepare("SELECT frequencia_total, faltas FROM frequencia WHERE aluno_id = ?");
+    $stmt->bind_param("i", $idAluno);
+    $stmt->execute();
+    $frequencia = $stmt->get_result()->fetch_assoc();
+
+    // busca turmas
+    $stmt = $conn->prepare("SELECT * FROM turma WHERE aluno_id = ?");
+    $stmt->bind_param("i", $idAluno);
+    $stmt->execute();
+    $turmas = $stmt->get_result()->fetch_assoc();
+
+    // Busca relatórios
+    $stmt = $conn->prepare("SELECT descricao FROM relatorio WHERE aluno_id = ?");
+    $stmt->bind_param("i", $idAluno);
+    $stmt->execute();
+    $relatorios = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+} else {
+    echo "<script>alert('ID do aluno não fornecido.')</script>";
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -95,23 +134,23 @@ include '../../../php/global/notificacao.php';
             <div class="nav__list">
                 <div class="nav__items">
                     <h3 class="nav__subtitle">Home</h3>
-                    <a href="home_professor.php" class="nav__link">
+                    <a href="../home_professor.php" class="nav__link">
                         <i class='bx bx-home nav__icon'></i>
                         <span class="nav__name">Home</span>
                     </a>
-                    <a href="historico.php" class="nav__link active">
+                    <a href="../historico.php" class="nav__link active">
                         <i class='bx bx-history nav__icon'></i>
                         <span class="nav__name">Histórico</span>
                     </a>
-                    <a href="documentos.php" class="nav__link">
+                    <a href="../documentos.php" class="nav__link">
                         <i class='bx bx-file nav__icon'></i>
                         <span class="nav__name">Documentos</span>
                     </a>
-                    <a href="calendario.php" class="nav__link">
+                    <a href="../calendario.php" class="nav__link">
                         <i class='bx bx-calendar nav__icon'></i>
                         <span class="nav__name">Cronograma</span>
                     </a>
-                    <a href="enquetes.php" class="nav__link">
+                    <a href="../enquetes.php" class="nav__link">
                         <i class='bx bx-poll nav__icon'></i>
                         <span class="nav__name">Pesquisas Secretaria</span>
                     </a>
@@ -120,14 +159,14 @@ include '../../../php/global/notificacao.php';
                         <span class="nav__name">Chat</span>
                     </a> -->
                     <h2 class="nav__subtitle">Orientador</h2>
-                    <a href="dashboard/dashboard.php" class="nav__link">
+                    <a href="../dashboard/dashboard.php" class="nav__link">
                         <i class='bx bx-bar-chart-alt-2 nav__icon'></i>
                         <span class="nav__name">Dashboard</span>
                     </a>
                 </div>
             </div>
         </div>
-        <a href="../../php/login/logout.php" class="nav__link nav__logout">
+        <a href="../../../php/login/logout.php" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon'></i>
             <span class="nav__name">Sair</span>
         </a>
@@ -142,9 +181,9 @@ include '../../../php/global/notificacao.php';
     <div class="container">
         <div class="student-header">
             <div class="student-info">
-                <h2>Maria Silva</h2>
-                <p>Matrícula: 2023001234</p>
-                <p>Turma: 3º Ano B</p>
+                <h2><?= htmlspecialchars($aluno['nome'] ?? 'Sem Nome')?></h2>
+                <p>Matrícula: <?= htmlspecialchars($aluno['rm'] ?? 'Sem Matrícula');?></p>
+                <p>Turma: <?= htmlspecialchars(isset($turmas['nome']) ? $turmas['nome'] : 'Sem Turma');?></p>
             </div>   
         </div>
 
@@ -153,30 +192,38 @@ include '../../../php/global/notificacao.php';
             <div class="card">
                 <h3>Desempenho Acadêmico</h3>
                 <i class="fas fa-chart-line icon"></i>
-                <p>Média: 8.7</p>
-                <p>Disciplinas em Risco: Lógica de Programação e Phyton</p>
-            </div>
+                <p>Média: <?= $notas['nota_media'] ?? 'Sem Média';?></p>
+                <p>Disciplinas em Risco: <?php 
+    // Verifica se 'disciplinas_risco' é um array ou string e converte para array, caso necessário
+    if (!empty($notas['disciplinas_risco'])) {
+        // Se for uma string, transforma em array
+        $disciplinasRisco = is_array($notas['disciplinas_risco']) ? $notas['disciplinas_risco'] : explode(',', $notas['disciplinas_risco']);
+        echo implode(', ', $disciplinasRisco); 
+    } else {
+        echo 'Nenhuma Disciplina em Risco';
+    }
+?></p>            </div>
 
             <div class="card">
                 <h3>Frequência</h3>
                 <i class="fas fa-calendar-check icon"></i>
-                <p>Frequência Geral: 95%</p>
-                <p>Faltas: 5</p>
+                <p>Frequência Geral: <?= $frequencia['frequencia_total'] ?? 'Sem Frequência';?>%</p>
+                <p>Faltas: <?= $frequencia['faltas'] ?? 'Sem Faltas';?></p>
             </div>
 
             <div class="card">
                 <h3>Observações</h3>
                 <i class="fas fa-sticky-note icon"></i>
-                <p>Bom desenvolvimento, mas precisa de mais prática em Matemática.</p>
+                <p><?php echo $notas['observacoes'] ?? 'Sem Observações';?></p>
             </div>
 
             <div class="card">
                 <h3>Relatórios</h3>
                 <i class="fas fa-file-alt icon"></i>
                 <ul>
-                    <li><a href="#">Relatório de Desempenho - Set 2024</a></li>
-                    <li><a href="#">Relatório de Frequência - Out 2024</a></li>
-                    <li><a href="#">Relatório de Participação - Jul 2024</a></li>
+                <?php foreach ($relatorios as $relatorio) : ?>
+                        <li><a href="<?php echo $relatorio['url']; ?>"><?php echo $relatorio['titulo']; ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>

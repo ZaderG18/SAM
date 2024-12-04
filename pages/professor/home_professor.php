@@ -211,7 +211,7 @@ include '../../php/global/cabecario.php';
                     <p>Professora de Matemática</p>
                     <p>Matrícula:<?php echo htmlspecialchars($user['RM']);?></p>
                     <p>Email: <?php echo htmlspecialchars($user['email']);?></p>
-                    <p>Telefone: <?php echo htmlspecialchars($user['telefone']);?></p>
+                    <p>Telefone: <?php echo htmlspecialchars(isset($user['telefone']) ? $user['telefone'] : 'Não informado');?></p>
                 </div>
 
                 <!-- Tarefas Pendentes -->

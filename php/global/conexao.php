@@ -91,6 +91,9 @@ $tableQueries = [
         imagem ENUM('aula_01.jpg', 'aula_02.jpg', 'aula_03.jpg', 'aula_04.jpg', 'aula_05.jpg', 'aula_06.jpg'),
         professor_id INT(11),
         turma_id INT(11),
+        codigo VARCHAR(100), 
+        semestre VARCHAR(50), 
+        professor VARCHAR(255),
         aluno_id INT(11),
         progresso INT DEFAULT 0
     )",
@@ -107,6 +110,7 @@ $tableQueries = [
         coordenador_id int(11) NOT NULL,
         data_inicio date NOT NULL,
         aluno_id int(11) NOT NULL,
+        imagem ENUM('aula_01.jpg', 'aula_02.jpg', 'aula_03.jpg', 'aula_04.jpg', 'aula_05.jpg', 'aula_06.jpg'),
         data_fim date NOT NULL,
         status enum('ativa','concluida','cancelada') DEFAULT 'ativa',
         data_criacao timestamp NOT NULL DEFAULT current_timestamp()
@@ -317,6 +321,8 @@ $tableQueries = [
     nome_disciplina VARCHAR(255),
     turma_id VARCHAR(10),
     desempenho DECIMAL(5,2),
+    disciplinas_risco VARCHAR(255),
+    observacoes TEXT,
     img_path VARCHAR(255)
 )",
     "progresso_academico" => "CREATE TABLE IF NOT EXISTS progresso_academico (
@@ -349,6 +355,7 @@ $tableQueries = [
         turma_id int(11) NOT NULL,
         modulo_id int(11) NOT NULL,
         recuperacao DECIMAL(5,2),
+        disciplinas_risco VARCHAR(255),
         media_rec DECIMAL(5,2),
         nota1 decimal(5,2) DEFAULT NULL,
         nota2 decimal(5,2) DEFAULT NULL,
@@ -423,9 +430,18 @@ $tableQueries = [
         coordenador_id INT,
         professor_id INT
     )",
+"observacoes" => "CREATE TABLE observacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    observacao TEXT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+)",
     "relatorio" => "CREATE TABLE IF NOT EXISTS relatorio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(255) NOT NULL,
+     usuario_id INT NOT NULL,
+     titulo VARCHAR(255) NOT NULL,
+     mes_ano VARCHAR(7) NOT NULL,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pendente', 'concluido') DEFAULT 'pendente'
 )",
@@ -508,6 +524,7 @@ FOREIGN KEY (aluno_id) REFERENCES aluno(id) ON DELETE CASCADE",
     "ALTER TABLE notas 
 ADD CONSTRAINT fk_notas_disciplina 
 FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
+"ALTER TABLE relatorios ADD CONSTRAINT fk_relatorios_usuario ADD FOREIGN KEY (usuario_id) REFERENCES usuarios(id)",
     "ALTER TABLE notas 
 ADD CONSTRAINT fk_notas_turma 
 FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
@@ -528,6 +545,8 @@ FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
     "ALTER TABLE professor ADD CONSTRAINT fk_professor_disciplina FOREIGN KEY (disciplinas_id) REFERENCES disciplina(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_receptor_id FOREIGN KEY (receptor_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE mensagens_chat ADD CONSTRAINT fk_mensagem_turma FOREIGN KEY (chat_turma) REFERENCES turma(id) ON DELETE CASCADE",
+    "ALTER TABLE avaliacao ADD CONSTRAINT fk_materia FOREIGN KEY (materia_id) REFERENCES materias(id) ON DELETE CASCADE",
+    "ALTER TABLE avaliacao ADD CONSTRAINT fk_materia FOREIGN KEY (materia_id) REFERENCES materias(id) ON DELETE CASCADE",
     "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE matricula ADD CONSTRAINT fk_matricula_historico FOREIGN KEY (historico_academico_id) REFERENCES historico_academico(id) ON DELETE CASCADE",

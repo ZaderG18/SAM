@@ -2,26 +2,22 @@
 include '../../../php/global/cabecario2.php';
 require_once '../../../php/login/validar.php';
 include '../../../php/global/notificacao.php';
-// Consulta para obter os dados dos alunos e suas turmas
-$sql = "SELECT nome_disciplina AS nome, turma_id, desempenho, img_path 
-        FROM desempenho_alunos"; // Ajuste essa consulta com base na sua tabela
+$sql = "
+    SELECT t.id AS turma_id, t.progresso, t.imagem, t.disciplina_id, a.nome AS aluno_nome
+    FROM turma t
+    INNER JOIN usuarios a ON t.aluno_id = a.id 
+";
 $result = $conn->query($sql);
 
-$alunos = [];
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $alunos[] = $row;
-    }
-}
 
 // Consulta para obter as turmas distintas
-$sqlTurmas = "SELECT DISTINCT turma_id FROM desempenho_alunos";
+$sqlTurmas = "SELECT DISTINCT aluno_id FROM turma";
 $resultTurmas = $conn->query($sqlTurmas);
 
 $turmasDisponiveis = [];
 if ($resultTurmas && $resultTurmas->num_rows > 0) {
     while ($row = $resultTurmas->fetch_assoc()) {
-        $turmasDisponiveis[] = $row['turma_id'];
+        $turmasDisponiveis[] = $row['aluno_id'];
     }
 }
 ?>
@@ -173,14 +169,22 @@ if ($resultTurmas && $resultTurmas->num_rows > 0) {
         </div>
 
         <div class="student-list" id="studentList">
-            <?php foreach ($alunos as $aluno) : ?>
-            <div class="student-card" data-turma="<?= htmlspecialchars($aluno['turma']) ?>">
-            <img src="<?= htmlspecialchars($aluno['img_path']) ?>" alt="<?= htmlspecialchars($aluno['nome']) ?>">
-            <h3><?= htmlspecialchars($aluno['nome'])?></h3>
-            <p>Turma: <?= htmlspecialchars($aluno['turma'])?> | Desempenho: <?= htmlspecialchars($aluno['desempenho'])?>%</p>
-            <a href="../detalhes/detalhes_material.php">Ver Detalhes</a>
+        <?php
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Formatação do card para cada aluno
+            echo '
+                <div class="student-card" data-turma="turma' . htmlspecialchars($row['turma_id']) . '">
+                    <img src="../../../assets/img/home/cards/' . htmlspecialchars($row['imagem']) . '" alt="' . htmlspecialchars($row['aluno_nome']) . '">
+                    <h3>' . htmlspecialchars($row['aluno_nome']) . '</h3>
+                    <p>Turma: ' . htmlspecialchars($row['turma_id']) . ' | Desempenho: ' . htmlspecialchars($row['progresso']) . '%</p>
+                    <a href="../detalhes/detalhes_material.php?id=">Ver Detalhes</a>
+                </div>
+            ';
+        }
+    }
+    ?>
             </div>
-            <?php endforeach; ?>
             <!-- <div class="student-card" data-turma="turma2">
             <img src="../../../assets/img/home/cards/aula_01.jpg" alt="CSS">
             <h3>CSS</h3>
