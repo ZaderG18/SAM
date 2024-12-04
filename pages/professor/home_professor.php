@@ -208,7 +208,7 @@ include '../../php/global/cabecario.php';
                     <h3>Dados do <?php $denominacao; ?></h3>
                     <img src="<?php echo htmlspecialchars($fotoCaminho) ?>" alt="Perfil da Professora">
                     <h2><?php echo htmlspecialchars($user['nome']);?></h2>
-                    <p>Professora de Matemática</p>
+                    <p>Professor</p>
                     <p>Matrícula:<?php echo htmlspecialchars($user['RM']);?></p>
                     <p>Email: <?php echo htmlspecialchars($user['email']);?></p>
                     <p>Telefone: <?php echo htmlspecialchars(isset($user['telefone']) ? $user['telefone'] : 'Não informado');?></p>

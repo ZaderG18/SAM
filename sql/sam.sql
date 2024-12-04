@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/12/2024 às 06:16
+-- Tempo de geração: 04/12/2024 às 20:30
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `sam`
 --
+CREATE DATABASE IF NOT EXISTS `sam` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `sam`;
 
 -- --------------------------------------------------------
 
@@ -27,8 +29,8 @@ SET time_zone = "+00:00";
 -- Estrutura para tabela `academico`
 --
 
-CREATE TABLE `academico` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `academico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) DEFAULT NULL,
   `curso` varchar(255) DEFAULT NULL,
   `periodo` varchar(50) DEFAULT NULL,
@@ -37,8 +39,10 @@ CREATE TABLE `academico` (
   `nome_professor` varchar(255) DEFAULT NULL,
   `bolsas_auxilios` varchar(255) DEFAULT NULL,
   `horas_complementares` int(11) DEFAULT NULL,
-  `estagio_atual` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `estagio_atual` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_academico_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `academico`
@@ -53,9 +57,11 @@ INSERT INTO `academico` (`id`, `aluno_id`, `curso`, `periodo`, `modulo_atual`, `
 -- Estrutura para tabela `aluno`
 --
 
-CREATE TABLE `aluno` (
+CREATE TABLE IF NOT EXISTS `aluno` (
   `id` int(11) NOT NULL,
-  `matricula` varchar(20) NOT NULL
+  `matricula` varchar(20) NOT NULL,
+  UNIQUE KEY `matricula` (`matricula`),
+  KEY `fk_aluno_usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -71,8 +77,8 @@ INSERT INTO `aluno` (`id`, `matricula`) VALUES
 -- Estrutura para tabela `atividade`
 --
 
-CREATE TABLE `atividade` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `atividade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `descricao` text NOT NULL,
@@ -84,8 +90,12 @@ CREATE TABLE `atividade` (
   `criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('pendente','concluida') DEFAULT 'pendente',
-  `titulo` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `titulo` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_atividade_turma` (`turma_id`),
+  KEY `fk_atividade_aluno` (`aluno_id`),
+  KEY `fk_atividade_id` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `atividade`
@@ -100,8 +110,8 @@ INSERT INTO `atividade` (`id`, `aluno_id`, `turma_id`, `descricao`, `professor_i
 -- Estrutura para tabela `atividade_extracurricular`
 --
 
-CREATE TABLE `atividade_extracurricular` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `atividade_extracurricular` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `tipo_atividade` varchar(100) NOT NULL,
   `descricao` text DEFAULT NULL,
@@ -112,8 +122,11 @@ CREATE TABLE `atividade_extracurricular` (
   `criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('em_andamento','concluida','cancelada') DEFAULT 'em_andamento',
-  `professor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `professor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ati_extra_usuarios` (`aluno_id`),
+  KEY `fk_ati_usuarios` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `atividade_extracurricular`
@@ -128,13 +141,16 @@ INSERT INTO `atividade_extracurricular` (`id`, `aluno_id`, `tipo_atividade`, `de
 -- Estrutura para tabela `atualizacoes`
 --
 
-CREATE TABLE `atualizacoes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `atualizacoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
   `data_atualizacao` datetime DEFAULT NULL,
-  `professor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `professor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_atualizacao_aluno` (`aluno_id`),
+  KEY `fk_atualizacoes_professor` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `atualizacoes`
@@ -149,22 +165,28 @@ INSERT INTO `atualizacoes` (`id`, `aluno_id`, `descricao`, `data_atualizacao`, `
 -- Estrutura para tabela `avaliacao`
 --
 
-CREATE TABLE `avaliacao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `avaliacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `nota` decimal(3,2) NOT NULL CHECK (`nota` >= 0 and `nota` <= 10),
   `data_avaliacao` date DEFAULT curdate(),
-  `disciplina_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `disciplina_id` int(11) DEFAULT NULL,
+  `materia_id` int(11) DEFAULT NULL,
+  `professor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_avaliacao_aluno` (`aluno_id`),
+  KEY `fk_avaliacao_turma` (`turma_id`),
+  KEY `fk_materia` (`materia_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `avaliacao`
 --
 
-INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`, `disciplina_id`) VALUES
-(1, 1, 1, 8.50, '2024-04-10', NULL),
-(2, 1, 1, 8.50, '2024-04-10', NULL);
+INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`, `disciplina_id`, `materia_id`, `professor_id`) VALUES
+(1, 1, 1, 8.50, '2024-04-10', NULL, NULL, NULL),
+(2, 1, 1, 8.50, '2024-04-10', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -172,10 +194,11 @@ INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`,
 -- Estrutura para tabela `comunicado`
 --
 
-CREATE TABLE `comunicado` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comunicado` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
-  `data` datetime NOT NULL
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -184,15 +207,18 @@ CREATE TABLE `comunicado` (
 -- Estrutura para tabela `contato_emergencia`
 --
 
-CREATE TABLE `contato_emergencia` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `contato_emergencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) DEFAULT NULL,
   `professor_id` int(11) DEFAULT NULL,
   `nome_emergencia` varchar(255) DEFAULT NULL,
   `parente_emergencia` varchar(50) DEFAULT NULL,
   `telefone_emergencia` varchar(20) DEFAULT NULL,
-  `email_emergencia` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `email_emergencia` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_contato_aluno` (`aluno_id`),
+  KEY `fk_contato_professor` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `contato_emergencia`
@@ -207,9 +233,10 @@ INSERT INTO `contato_emergencia` (`id`, `aluno_id`, `professor_id`, `nome_emerge
 -- Estrutura para tabela `coordenador`
 --
 
-CREATE TABLE `coordenador` (
+CREATE TABLE IF NOT EXISTS `coordenador` (
   `id` int(11) NOT NULL,
-  `setor` varchar(50) NOT NULL
+  `setor` varchar(50) NOT NULL,
+  KEY `fk_coordenador` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -225,12 +252,13 @@ INSERT INTO `coordenador` (`id`, `setor`) VALUES
 -- Estrutura para tabela `cronograma`
 --
 
-CREATE TABLE `cronograma` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `cronograma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `horario` varchar(20) NOT NULL,
   `dia` varchar(10) NOT NULL,
-  `disciplina` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `disciplina` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `cronograma`
@@ -246,8 +274,8 @@ INSERT INTO `cronograma` (`id`, `horario`, `dia`, `disciplina`) VALUES
 -- Estrutura para tabela `curso`
 --
 
-CREATE TABLE `curso` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `curso` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome_curso` varchar(255) NOT NULL,
   `codigo` varchar(50) NOT NULL,
   `descricao` text NOT NULL,
@@ -266,8 +294,11 @@ CREATE TABLE `curso` (
   `observacoes` text DEFAULT NULL,
   `imagem_curso` varchar(255) NOT NULL,
   `fk_professor_id` int(11) NOT NULL,
-  `aluno_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_professor_usuarios` (`fk_professor_id`),
+  KEY `fk_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -275,16 +306,20 @@ CREATE TABLE `curso` (
 -- Estrutura para tabela `declaracao`
 --
 
-CREATE TABLE `declaracao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `declaracao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_declaracao` enum('atestado','historico','planoEnsino','relatorio','transporte','matricula','conclusao','frequencia') DEFAULT NULL,
   `motivo` text DEFAULT NULL,
   `usuario_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `protocolo` varchar(50) DEFAULT NULL,
   `data_solicitacao` datetime DEFAULT current_timestamp(),
-  `status` enum('pendente','pronto') DEFAULT 'pendente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `status` enum('pendente','pronto') DEFAULT 'pendente',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `protocolo` (`protocolo`),
+  KEY `fk_declaracao_turma` (`turma_id`),
+  KEY `fk_declaracao_usuarios` (`usuario_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `declaracao`
@@ -299,13 +334,18 @@ INSERT INTO `declaracao` (`id`, `tipo_declaracao`, `motivo`, `usuario_id`, `turm
 -- Estrutura para tabela `desempenho_alunos`
 --
 
-CREATE TABLE `desempenho_alunos` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `desempenho_alunos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_disciplina` varchar(255) DEFAULT NULL,
   `turma` varchar(10) DEFAULT NULL,
   `desempenho` decimal(5,2) DEFAULT NULL,
   `img_path` varchar(255) DEFAULT NULL,
-  `turma_id` int(11) DEFAULT NULL
+  `turma_id` int(11) DEFAULT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  `disciplinas_risco` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_desempenho_turma` (`turma_id`),
+  KEY `fk_desempenho_aluno` (`aluno_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -314,13 +354,15 @@ CREATE TABLE `desempenho_alunos` (
 -- Estrutura para tabela `desempenho_turmas`
 --
 
-CREATE TABLE `desempenho_turmas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `desempenho_turmas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_turma` varchar(255) NOT NULL,
   `media_notas` decimal(5,2) NOT NULL,
   `professor_id` int(11) DEFAULT NULL,
-  `nota` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `nota` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professor_id` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `desempenho_turmas`
@@ -338,9 +380,10 @@ INSERT INTO `desempenho_turmas` (`id`, `nome_turma`, `media_notas`, `professor_i
 -- Estrutura para tabela `diretor`
 --
 
-CREATE TABLE `diretor` (
+CREATE TABLE IF NOT EXISTS `diretor` (
   `id` int(11) NOT NULL,
-  `nivel_acesso` enum('junior','senior','executivo') NOT NULL
+  `nivel_acesso` enum('junior','senior','executivo') NOT NULL,
+  KEY `fk_diretor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -357,8 +400,8 @@ INSERT INTO `diretor` (`id`, `nivel_acesso`) VALUES
 -- Estrutura para tabela `disciplina`
 --
 
-CREATE TABLE `disciplina` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `disciplina` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_disciplina` varchar(30) NOT NULL,
   `carga_horaria` int(11) NOT NULL,
   `semestre` int(11) NOT NULL,
@@ -368,8 +411,13 @@ CREATE TABLE `disciplina` (
   `aluno_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
   `declaracao_id` int(11) NOT NULL,
-  `taxa_reprovacao` float DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `taxa_reprovacao` float DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `fk_disciplina_avaliacao` (`avaliacao_id`),
+  KEY `fk_disciplina_aluno` (`aluno_id`),
+  KEY `fk_disciplina_coordenador` (`coordenador_id`),
+  KEY `fk_professor_disciplina` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `disciplina`
@@ -384,11 +432,12 @@ INSERT INTO `disciplina` (`id`, `nome_disciplina`, `carga_horaria`, `semestre`, 
 -- Estrutura para tabela `enquetes`
 --
 
-CREATE TABLE `enquetes` (
+CREATE TABLE IF NOT EXISTS `enquetes` (
   `id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `descricao` text NOT NULL,
-  `data_criacao` timestamp NOT NULL DEFAULT current_timestamp()
+  `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -442,13 +491,15 @@ INSERT INTO `enquetes` (`id`, `titulo`, `descricao`, `data_criacao`) VALUES
 -- Estrutura para tabela `eventos`
 --
 
-CREATE TABLE `eventos` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `eventos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `data` date NOT NULL,
   `titulo` varchar(255) NOT NULL,
-  `descricao` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `descricao` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_eventos_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `eventos`
@@ -464,11 +515,13 @@ INSERT INTO `eventos` (`id`, `aluno_id`, `data`, `titulo`, `descricao`) VALUES
 -- Estrutura para tabela `feedback`
 --
 
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `atividade_id` int(11) NOT NULL,
   `feedback` text NOT NULL,
-  `data_feedback` timestamp NOT NULL DEFAULT current_timestamp()
+  `data_feedback` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `atividade_id` (`atividade_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -477,8 +530,8 @@ CREATE TABLE `feedback` (
 -- Estrutura para tabela `frequencia`
 --
 
-CREATE TABLE `frequencia` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `frequencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `status` varchar(50) NOT NULL,
@@ -493,8 +546,15 @@ CREATE TABLE `frequencia` (
   `data` date NOT NULL,
   `presenca` tinyint(1) NOT NULL,
   `disciplina_id` int(11) DEFAULT NULL,
-  `observacao` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `observacao` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_frequencia_disciplina` (`disciplina_id`),
+  KEY `fk_frequencia_aluno` (`aluno_id`),
+  KEY `fk_frequencia_turma` (`turma_id`),
+  KEY `fk_frequencia_professor` (`professor_id`),
+  KEY `fk_frequencia_declaracao` (`declaracao_id`),
+  KEY `fk_frequencia_avaliacao` (`avaliacao_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `frequencia`
@@ -509,8 +569,8 @@ INSERT INTO `frequencia` (`id`, `aluno_id`, `turma_id`, `status`, `avaliacao_id`
 -- Estrutura para tabela `historico_academico`
 --
 
-CREATE TABLE `historico_academico` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `historico_academico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `disciplina_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -521,8 +581,15 @@ CREATE TABLE `historico_academico` (
   `faltas` int(11) DEFAULT 0,
   `nota` decimal(4,2) DEFAULT NULL,
   `status` enum('aprovado','reprovado','pendente') NOT NULL DEFAULT 'pendente',
-  `data_conclusao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `data_conclusao` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_historico_aluno_id` (`aluno_id`),
+  KEY `fk_historico_disciplina_id` (`disciplina_id`),
+  KEY `fk_historico_turma` (`turma_id`),
+  KEY `fk_historico_avaliacao` (`avaliacao_id`),
+  KEY `fk_historico_declaracao` (`declaracao_id`),
+  KEY `fk_historico_frequencia` (`frequencia_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -530,8 +597,8 @@ CREATE TABLE `historico_academico` (
 -- Estrutura para tabela `horario`
 --
 
-CREATE TABLE `horario` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `horario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
@@ -541,8 +608,16 @@ CREATE TABLE `horario` (
   `dia_semana` enum('Segunda','Terça','Quarta','Quinta','Sexta','Sábado') DEFAULT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fim` time NOT NULL,
-  `professor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `professor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_horario_aluno` (`aluno_id`),
+  KEY `fk_horario_disciplina` (`disciplina_id`),
+  KEY `fk_horario_turma` (`turma_id`),
+  KEY `fk_horario_avaliacao` (`avaliacao_id`),
+  KEY `fk_horario_declaracao` (`declaracao_id`),
+  KEY `fk_horario_frequencia` (`frequencia_id`),
+  KEY `fk_professor_horario` (`professor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -550,13 +625,15 @@ CREATE TABLE `horario` (
 -- Estrutura para tabela `materiais_complementares`
 --
 
-CREATE TABLE `materiais_complementares` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `materiais_complementares` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(255) NOT NULL,
   `descricao` text DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
   `data_publicacao` date DEFAULT NULL,
-  `materias_id` int(11) DEFAULT NULL
+  `materias_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_materiais_materias` (`materias_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -565,8 +642,8 @@ CREATE TABLE `materiais_complementares` (
 -- Estrutura para tabela `materias`
 --
 
-CREATE TABLE `materias` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `materias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
   `progresso` int(11) DEFAULT 0,
   `nome` varchar(20) DEFAULT NULL,
@@ -574,16 +651,23 @@ CREATE TABLE `materias` (
   `professor_id` int(11) DEFAULT NULL,
   `professor_nome` varchar(100) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
-  `turma_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `turma_id` int(11) DEFAULT NULL,
+  `codigo` varchar(100) DEFAULT NULL,
+  `semestre` varchar(50) DEFAULT NULL,
+  `professor` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_materias_professor` (`professor_id`),
+  KEY `fk_materias_aluno` (`aluno_id`),
+  KEY `fk_materia_turma` (`turma_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `materias`
 --
 
-INSERT INTO `materias` (`id`, `descricao`, `progresso`, `nome`, `imagem`, `professor_id`, `professor_nome`, `aluno_id`, `turma_id`) VALUES
-(1, 'Matemática Aplicada', 75, 'matematica', 'aula_02.jpg', 2, 'Tramontino', 1, 1),
-(2, 'Programação em PHP', 50, 'PHP', 'aula_04.jpg', NULL, NULL, NULL, NULL);
+INSERT INTO `materias` (`id`, `descricao`, `progresso`, `nome`, `imagem`, `professor_id`, `professor_nome`, `aluno_id`, `turma_id`, `codigo`, `semestre`, `professor`) VALUES
+(1, 'Matemática Aplicada', 75, 'matematica', 'aula_02.jpg', 2, 'Tramontino', 1, 1, NULL, NULL, NULL),
+(2, 'Programação em PHP', 50, 'PHP', 'aula_04.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -591,15 +675,21 @@ INSERT INTO `materias` (`id`, `descricao`, `progresso`, `nome`, `imagem`, `profe
 -- Estrutura para tabela `matricula`
 --
 
-CREATE TABLE `matricula` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `matricula` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
   `frequencia_id` int(11) NOT NULL,
   `historico_academico_id` int(11) NOT NULL,
   `data_matricula` date NOT NULL,
-  `status` enum('ativo','inativo','concluido') DEFAULT 'ativo'
+  `status` enum('ativo','inativo','concluido') DEFAULT 'ativo',
+  PRIMARY KEY (`id`),
+  KEY `fk_matricula_aluno` (`aluno_id`),
+  KEY `fk_matricula_turma` (`turma_id`),
+  KEY `fk_matricula_historico` (`historico_academico_id`),
+  KEY `fk_matricula_avaliacao` (`avaliacao_id`),
+  KEY `fk_matricula_frequencia` (`frequencia_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -608,14 +698,18 @@ CREATE TABLE `matricula` (
 -- Estrutura para tabela `mensagens_chat`
 --
 
-CREATE TABLE `mensagens_chat` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mensagens_chat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `receptor_id` int(11) NOT NULL,
   `chat_turma` int(11) NOT NULL,
   `mensagem` text NOT NULL,
   `data_envio` datetime DEFAULT current_timestamp(),
-  `tipo_chat` enum('privado','grupo') DEFAULT 'privado'
+  `tipo_chat` enum('privado','grupo') DEFAULT 'privado',
+  PRIMARY KEY (`id`),
+  KEY `fk_user_id` (`user_id`),
+  KEY `fk_receptor_id` (`receptor_id`),
+  KEY `fk_mensagem_turma` (`chat_turma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -624,16 +718,20 @@ CREATE TABLE `mensagens_chat` (
 -- Estrutura para tabela `modulo`
 --
 
-CREATE TABLE `modulo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `modulo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_modulo` varchar(255) NOT NULL,
   `descricao_modulo` text DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   `turma_id` int(11) DEFAULT NULL,
   `curso_id` int(11) DEFAULT NULL,
   `matricula_id` int(11) DEFAULT NULL,
-  `criterio` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `criterio` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_modulo_turma` (`turma_id`),
+  KEY `fk_modulo_matricula` (`matricula_id`),
+  KEY `fk_modulo_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `modulo`
@@ -648,8 +746,8 @@ INSERT INTO `modulo` (`id`, `nome_modulo`, `descricao_modulo`, `aluno_id`, `turm
 -- Estrutura para tabela `notas`
 --
 
-CREATE TABLE `notas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `notas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `disciplina_id` int(11) DEFAULT NULL,
   `turma_id` int(11) NOT NULL,
@@ -660,34 +758,39 @@ CREATE TABLE `notas` (
   `nota2` decimal(5,2) DEFAULT NULL,
   `nota_media` decimal(5,2) DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
-  `data_avaliacao` date DEFAULT curdate()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `data_avaliacao` date DEFAULT curdate(),
+  `disciplinas_risco` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `notas`
 --
 
-INSERT INTO `notas` (`id`, `aluno_id`, `disciplina_id`, `turma_id`, `modulo_id`, `recuperacao`, `media_rec`, `nota1`, `nota2`, `nota_media`, `observacoes`, `data_avaliacao`) VALUES
-(1, 1, NULL, 0, NULL, 0.00, 0.00, 10.00, 10.00, 0.00, '', '2024-11-28'),
-(2, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-11-28'),
-(3, 1, NULL, 0, NULL, 0.00, 0.00, 10.00, 10.00, 0.00, '', '2024-11-28'),
-(4, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-11-28'),
-(5, 1, NULL, 0, NULL, 5.00, 5.00, 5.00, 7.00, 6.00, 'incrivel', '2024-11-28'),
-(6, 3, NULL, 0, NULL, 6.00, 7.00, 7.00, 9.00, 8.00, 'exemplar', '2024-11-28'),
-(7, 1, NULL, 0, NULL, 5.00, 6.00, 9.00, 6.00, 7.00, 'continue tentando', '2024-11-28'),
-(8, 3, NULL, 0, NULL, 5.00, 5.00, 5.00, 6.00, 5.00, 'ruinzinho hein', '2024-11-28'),
-(9, 1, NULL, 0, NULL, 6.00, 0.00, 5.00, 7.00, 6.00, '', '2024-12-03'),
-(10, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(11, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(12, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(13, 3, NULL, 0, NULL, 2.00, 0.00, 5.00, 9.00, 0.00, '', '2024-12-03'),
-(14, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(15, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(16, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
-(17, 8, NULL, 0, NULL, 5.00, 0.00, 10.00, 10.00, 10.00, 'ai sim hein', '2024-12-03'),
-(18, 1, NULL, 0, NULL, 5.00, 0.00, 8.00, 10.00, 9.00, 'ai sim hein', '2024-12-03'),
-(19, 3, NULL, 0, NULL, 5.00, 0.00, 4.00, 3.00, 3.00, 'tem que melhorar patrão', '2024-12-03'),
-(20, 8, NULL, 0, NULL, 5.00, 0.00, 4.00, 7.00, 5.00, 'juizo hein', '2024-12-03');
+INSERT INTO `notas` (`id`, `aluno_id`, `disciplina_id`, `turma_id`, `modulo_id`, `recuperacao`, `media_rec`, `nota1`, `nota2`, `nota_media`, `observacoes`, `data_avaliacao`, `disciplinas_risco`) VALUES
+(1, 1, NULL, 0, NULL, 0.00, 0.00, 10.00, 10.00, 0.00, '', '2024-11-28', NULL),
+(2, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-11-28', NULL),
+(3, 1, NULL, 0, NULL, 0.00, 0.00, 10.00, 10.00, 0.00, '', '2024-11-28', NULL),
+(4, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-11-28', NULL),
+(5, 1, NULL, 0, NULL, 5.00, 5.00, 5.00, 7.00, 6.00, 'incrivel', '2024-11-28', NULL),
+(6, 3, NULL, 0, NULL, 6.00, 7.00, 7.00, 9.00, 8.00, 'exemplar', '2024-11-28', NULL),
+(7, 1, NULL, 0, NULL, 5.00, 6.00, 9.00, 6.00, 7.00, 'continue tentando', '2024-11-28', NULL),
+(8, 3, NULL, 0, NULL, 5.00, 5.00, 5.00, 6.00, 5.00, 'ruinzinho hein', '2024-11-28', NULL),
+(9, 1, NULL, 0, NULL, 6.00, 0.00, 5.00, 7.00, 6.00, '', '2024-12-03', NULL),
+(10, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(11, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(12, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(13, 3, NULL, 0, NULL, 2.00, 0.00, 5.00, 9.00, 0.00, '', '2024-12-03', NULL),
+(14, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(15, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(16, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03', NULL),
+(17, 8, NULL, 0, NULL, 5.00, 0.00, 10.00, 10.00, 10.00, 'ai sim hein', '2024-12-03', NULL),
+(18, 1, NULL, 0, NULL, 5.00, 0.00, 8.00, 10.00, 9.00, 'ai sim hein', '2024-12-03', NULL),
+(19, 3, NULL, 0, NULL, 5.00, 0.00, 4.00, 3.00, 3.00, 'tem que melhorar patrão', '2024-12-03', NULL),
+(20, 8, NULL, 0, NULL, 5.00, 0.00, 4.00, 7.00, 5.00, 'juizo hein', '2024-12-03', NULL),
+(21, 1, NULL, 0, NULL, 5.00, 0.00, 8.00, 10.00, 9.00, 'esse Ã© o meu garoto', '2024-12-04', NULL),
+(22, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-04', NULL),
+(23, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-04', NULL);
 
 -- --------------------------------------------------------
 
@@ -695,8 +798,8 @@ INSERT INTO `notas` (`id`, `aluno_id`, `disciplina_id`, `turma_id`, `modulo_id`,
 -- Estrutura para tabela `notificacoes`
 --
 
-CREATE TABLE `notificacoes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `notificacoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `tipo_usuarios` enum('aluno','professor','coordenador','diretor') NOT NULL,
   `titulo` varchar(255) NOT NULL,
@@ -706,8 +809,10 @@ CREATE TABLE `notificacoes` (
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `lida` tinyint(1) DEFAULT 0,
   `canais` text NOT NULL,
-  `frequencia_notif` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `frequencia_notif` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_notificacoes_user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `notificacoes`
@@ -722,10 +827,24 @@ INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensage
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `observacoes`
+--
+
+CREATE TABLE IF NOT EXISTS `observacoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) DEFAULT NULL,
+  `observacao` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `opcoes`
 --
 
-CREATE TABLE `opcoes` (
+CREATE TABLE IF NOT EXISTS `opcoes` (
   `id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
   `texto` varchar(255) NOT NULL
@@ -925,7 +1044,7 @@ INSERT INTO `opcoes` (`id`, `pergunta_id`, `texto`) VALUES
 -- Estrutura para tabela `perguntas`
 --
 
-CREATE TABLE `perguntas` (
+CREATE TABLE IF NOT EXISTS `perguntas` (
   `id` int(11) NOT NULL,
   `enquete_id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL
@@ -1059,10 +1178,11 @@ INSERT INTO `perguntas` (`id`, `enquete_id`, `titulo`) VALUES
 -- Estrutura para tabela `permissoes`
 --
 
-CREATE TABLE `permissoes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `papel` varchar(255) NOT NULL,
-  `modulo_acesso` varchar(255) NOT NULL
+  `modulo_acesso` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1071,14 +1191,16 @@ CREATE TABLE `permissoes` (
 -- Estrutura para tabela `preferencias_notificacao`
 --
 
-CREATE TABLE `preferencias_notificacao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `preferencias_notificacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `notificacao_email` tinyint(1) DEFAULT 0,
   `notificacao_telefone` tinyint(1) DEFAULT 0,
   `senha_segura` tinyint(1) DEFAULT 0,
   `receber_notificacoes` tinyint(1) DEFAULT 0,
-  `compartilhar_dados` tinyint(1) DEFAULT 0
+  `compartilhar_dados` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1087,7 +1209,7 @@ CREATE TABLE `preferencias_notificacao` (
 -- Estrutura para tabela `professor`
 --
 
-CREATE TABLE `professor` (
+CREATE TABLE IF NOT EXISTS `professor` (
   `id` int(11) NOT NULL,
   `departamento` varchar(50) NOT NULL,
   `data_admissao` date DEFAULT NULL,
@@ -1097,7 +1219,8 @@ CREATE TABLE `professor` (
   `projetos_pesquisa` text DEFAULT NULL,
   `publicacoes` text DEFAULT NULL,
   `desempenho` text DEFAULT NULL,
-  `projetos` text DEFAULT NULL
+  `projetos` text DEFAULT NULL,
+  KEY `fk_usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1106,12 +1229,14 @@ CREATE TABLE `professor` (
 -- Estrutura para tabela `progresso_academico`
 --
 
-CREATE TABLE `progresso_academico` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `progresso_academico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_disciplina` varchar(255) NOT NULL,
   `progresso` int(11) NOT NULL,
-  `aluno_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `aluno_id` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `progresso_academico`
@@ -1129,7 +1254,7 @@ INSERT INTO `progresso_academico` (`id`, `nome_disciplina`, `progresso`, `aluno_
 -- Estrutura para tabela `propostas_cursos`
 --
 
-CREATE TABLE `propostas_cursos` (
+CREATE TABLE IF NOT EXISTS `propostas_cursos` (
   `id` int(11) NOT NULL,
   `nome_curso` varchar(255) NOT NULL,
   `codigo` varchar(50) NOT NULL,
@@ -1179,11 +1304,14 @@ INSERT INTO `propostas_cursos` (`id`, `nome_curso`, `codigo`, `descricao`, `depa
 -- Estrutura para tabela `relatorio`
 --
 
-CREATE TABLE `relatorio` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `relatorio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
   `data_criacao` datetime DEFAULT current_timestamp(),
-  `status` enum('pendente','concluido') DEFAULT 'pendente'
+  `status` enum('pendente','concluido') DEFAULT 'pendente',
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_relatorio_aluno` (`aluno_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1192,10 +1320,15 @@ CREATE TABLE `relatorio` (
 -- Estrutura para tabela `relatorios`
 --
 
-CREATE TABLE `relatorios` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `relatorios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kpis` text NOT NULL,
-  `frequencia_relatorios` varchar(255) NOT NULL
+  `frequencia_relatorios` varchar(255) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `mes_ano` varchar(7) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1204,12 +1337,16 @@ CREATE TABLE `relatorios` (
 -- Estrutura para tabela `rematricula`
 --
 
-CREATE TABLE `rematricula` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `rematricula` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aluno_id` int(11) NOT NULL,
   `data_rematricula` date NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'pendente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `status` varchar(20) NOT NULL DEFAULT 'pendente',
+  `data_inicio` date DEFAULT NULL,
+  `data_fim` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_rematricula_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1217,7 +1354,7 @@ CREATE TABLE `rematricula` (
 -- Estrutura para tabela `resposta`
 --
 
-CREATE TABLE `resposta` (
+CREATE TABLE IF NOT EXISTS `resposta` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
@@ -1240,7 +1377,7 @@ INSERT INTO `resposta` (`id`, `usuario_id`, `pergunta_id`, `opcao_id`) VALUES
 -- Estrutura para tabela `respostas`
 --
 
-CREATE TABLE `respostas` (
+CREATE TABLE IF NOT EXISTS `respostas` (
   `id` int(11) NOT NULL,
   `enquete_id` int(11) NOT NULL,
   `pergunta_id` int(11) NOT NULL,
@@ -1286,7 +1423,7 @@ INSERT INTO `respostas` (`id`, `enquete_id`, `pergunta_id`, `opcao_id`, `data_re
 -- Estrutura para tabela `respostas_usuarios`
 --
 
-CREATE TABLE `respostas_usuarios` (
+CREATE TABLE IF NOT EXISTS `respostas_usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -1309,10 +1446,11 @@ INSERT INTO `respostas_usuarios` (`id`, `nome`, `email`, `enquete_id`) VALUES
 -- Estrutura para tabela `reuniao`
 --
 
-CREATE TABLE `reuniao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `reuniao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
-  `data` datetime NOT NULL
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1321,8 +1459,8 @@ CREATE TABLE `reuniao` (
 -- Estrutura para tabela `secretaria`
 --
 
-CREATE TABLE `secretaria` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `secretaria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` enum('horario','prazo_documentos','comunicado_rematricula','equipe','documentos_necessarios','eventos','faq','formulario_suporte') NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
@@ -1335,7 +1473,11 @@ CREATE TABLE `secretaria` (
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `diretor_id` int(11) DEFAULT NULL,
   `coordenador_id` int(11) DEFAULT NULL,
-  `professor_id` int(11) DEFAULT NULL
+  `professor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_secretaria_diretor` (`diretor_id`),
+  KEY `fk_secretaria_coordendor` (`coordenador_id`),
+  KEY `fk_secretaria_professor` (`professor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1344,12 +1486,13 @@ CREATE TABLE `secretaria` (
 -- Estrutura para tabela `sistema`
 --
 
-CREATE TABLE `sistema` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `sistema` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ano_letivo` varchar(255) NOT NULL,
   `nota_minima` decimal(5,2) NOT NULL,
   `frequencia_minima` decimal(5,2) NOT NULL,
-  `modulos` text NOT NULL
+  `modulos` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1358,8 +1501,8 @@ CREATE TABLE `sistema` (
 -- Estrutura para tabela `solicitacoes`
 --
 
-CREATE TABLE `solicitacoes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `solicitacoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_completo` varchar(255) NOT NULL,
   `telefone` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -1367,7 +1510,8 @@ CREATE TABLE `solicitacoes` (
   `curso_id` int(11) NOT NULL,
   `mensagem` text NOT NULL,
   `arquivo` varchar(255) DEFAULT NULL,
-  `data_envio` timestamp NOT NULL DEFAULT current_timestamp()
+  `data_envio` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1376,8 +1520,8 @@ CREATE TABLE `solicitacoes` (
 -- Estrutura para tabela `turma`
 --
 
-CREATE TABLE `turma` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `turma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `disciplina_id` int(11) NOT NULL,
   `professor_id` int(11) NOT NULL,
@@ -1389,16 +1533,23 @@ CREATE TABLE `turma` (
   `turno` enum('manha','tarde','noite') DEFAULT NULL,
   `periodo` enum('1bim','2bim','3bim','4bim') DEFAULT NULL,
   `progresso` tinyint(3) UNSIGNED DEFAULT 0,
-  `aluno_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `aluno_id` int(11) DEFAULT NULL,
+  `imagem` enum('aula_01.jpg','aula_02.jpg','aula_03.jpg','aula_04.jpg','aula_05.jpg','aula_06.jpg') DEFAULT NULL,
+  `materia_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_turma_disciplina` (`disciplina_id`),
+  KEY `fk_turma_professor` (`professor_id`),
+  KEY `fk_turma_coordenador` (`coordenador_id`),
+  KEY `fk_turma_aluno` (`aluno_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `turma`
 --
 
-INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador_id`, `data_inicio`, `data_fim`, `status`, `data_criacao`, `turno`, `periodo`, `progresso`, `aluno_id`) VALUES
-(1, 'Turma A', 1, 2, 1, '2024-02-01', '2024-12-01', '', '2024-11-14 16:29:57', NULL, NULL, 0, 1),
-(2, 'banco de dados', 2, 2, 3, '2024-08-05', '2025-12-08', '', '2024-11-15 17:54:09', 'tarde', '1bim', 0, NULL);
+INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador_id`, `data_inicio`, `data_fim`, `status`, `data_criacao`, `turno`, `periodo`, `progresso`, `aluno_id`, `imagem`, `materia_id`) VALUES
+(1, 'Turma A', 1, 2, 1, '2024-02-01', '2024-12-01', '', '2024-11-14 16:29:57', NULL, NULL, 0, 1, 'aula_01.jpg', NULL),
+(2, 'banco de dados', 2, 2, 3, '2024-08-05', '2025-12-08', '', '2024-11-15 17:54:09', 'tarde', '1bim', 0, NULL, 'aula_02.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -1406,11 +1557,13 @@ INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador
 -- Estrutura para tabela `tutores`
 --
 
-CREATE TABLE `tutores` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tutores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `materia_id` int(11) NOT NULL
+  `materia_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `materia_id` (`materia_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1419,8 +1572,8 @@ CREATE TABLE `tutores` (
 -- Estrutura para tabela `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `RM` varchar(10) NOT NULL,
   `cpf` varchar(11) DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
@@ -1441,8 +1594,11 @@ CREATE TABLE `usuarios` (
   `nacionalidade` varchar(50) DEFAULT NULL,
   `data_saida` date DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `RM` (`RM`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
@@ -1457,574 +1613,6 @@ INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_toke
 (8, '1805', NULL, NULL, 'diego@gmail.com', '$2y$10$vzwvi/ZabGYAvJzlxtybu.nwV0uIknEmlQ5iUu3h2dtWmciQMSShi', NULL, NULL, 'diego valote', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:24:22', '2024-12-03 01:24:22'),
 (9, '3563', NULL, NULL, 'denis@gmail.com', '$2y$10$HSmJ9UV0dyUg2/zwB9w0KOwjuQrSI14j6qVQLbv8YVWgoxTK9a99S', NULL, NULL, 'Denis Ramiro', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:25:18', '2024-12-03 01:25:18'),
 (10, '4621', NULL, NULL, 'wesley@gmail.com', '$2y$10$dHtivBS45DaCC921NSbq1OnA8HB22rnzp99rXwPmpzf9eenbR8J66', NULL, NULL, 'wesley Santos', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 12:50:18', '2024-12-03 12:51:12');
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices de tabela `academico`
---
-ALTER TABLE `academico`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_academico_aluno` (`aluno_id`);
-
---
--- Índices de tabela `aluno`
---
-ALTER TABLE `aluno`
-  ADD UNIQUE KEY `matricula` (`matricula`),
-  ADD KEY `fk_aluno_usuarios` (`id`);
-
---
--- Índices de tabela `atividade`
---
-ALTER TABLE `atividade`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_atividade_turma` (`turma_id`),
-  ADD KEY `fk_atividade_aluno` (`aluno_id`),
-  ADD KEY `fk_atividade_id` (`professor_id`);
-
---
--- Índices de tabela `atividade_extracurricular`
---
-ALTER TABLE `atividade_extracurricular`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ati_extra_usuarios` (`aluno_id`),
-  ADD KEY `fk_ati_usuarios` (`professor_id`);
-
---
--- Índices de tabela `atualizacoes`
---
-ALTER TABLE `atualizacoes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_atualizacao_aluno` (`aluno_id`),
-  ADD KEY `fk_atualizacoes_professor` (`professor_id`);
-
---
--- Índices de tabela `avaliacao`
---
-ALTER TABLE `avaliacao`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_avaliacao_aluno` (`aluno_id`),
-  ADD KEY `fk_avaliacao_turma` (`turma_id`);
-
---
--- Índices de tabela `comunicado`
---
-ALTER TABLE `comunicado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `contato_emergencia`
---
-ALTER TABLE `contato_emergencia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_contato_aluno` (`aluno_id`),
-  ADD KEY `fk_contato_professor` (`professor_id`);
-
---
--- Índices de tabela `coordenador`
---
-ALTER TABLE `coordenador`
-  ADD KEY `fk_coordenador` (`id`);
-
---
--- Índices de tabela `cronograma`
---
-ALTER TABLE `cronograma`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `curso`
---
-ALTER TABLE `curso`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_professor_usuarios` (`fk_professor_id`),
-  ADD KEY `fk_aluno` (`aluno_id`);
-
---
--- Índices de tabela `declaracao`
---
-ALTER TABLE `declaracao`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `protocolo` (`protocolo`),
-  ADD KEY `fk_declaracao_turma` (`turma_id`),
-  ADD KEY `fk_declaracao_usuarios` (`usuario_id`);
-
---
--- Índices de tabela `desempenho_alunos`
---
-ALTER TABLE `desempenho_alunos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_desempenho_turma` (`turma_id`);
-
---
--- Índices de tabela `desempenho_turmas`
---
-ALTER TABLE `desempenho_turmas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `professor_id` (`professor_id`);
-
---
--- Índices de tabela `diretor`
---
-ALTER TABLE `diretor`
-  ADD KEY `fk_diretor` (`id`);
-
---
--- Índices de tabela `disciplina`
---
-ALTER TABLE `disciplina`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_disciplina_avaliacao` (`avaliacao_id`),
-  ADD KEY `fk_disciplina_aluno` (`aluno_id`),
-  ADD KEY `fk_disciplina_coordenador` (`coordenador_id`),
-  ADD KEY `fk_professor_disciplina` (`professor_id`);
-
---
--- Índices de tabela `enquetes`
---
-ALTER TABLE `enquetes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `eventos`
---
-ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_eventos_aluno` (`aluno_id`);
-
---
--- Índices de tabela `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `atividade_id` (`atividade_id`);
-
---
--- Índices de tabela `frequencia`
---
-ALTER TABLE `frequencia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_frequencia_disciplina` (`disciplina_id`),
-  ADD KEY `fk_frequencia_aluno` (`aluno_id`),
-  ADD KEY `fk_frequencia_turma` (`turma_id`),
-  ADD KEY `fk_frequencia_professor` (`professor_id`),
-  ADD KEY `fk_frequencia_declaracao` (`declaracao_id`),
-  ADD KEY `fk_frequencia_avaliacao` (`avaliacao_id`);
-
---
--- Índices de tabela `historico_academico`
---
-ALTER TABLE `historico_academico`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_historico_aluno_id` (`aluno_id`),
-  ADD KEY `fk_historico_disciplina_id` (`disciplina_id`),
-  ADD KEY `fk_historico_turma` (`turma_id`),
-  ADD KEY `fk_historico_avaliacao` (`avaliacao_id`),
-  ADD KEY `fk_historico_declaracao` (`declaracao_id`),
-  ADD KEY `fk_historico_frequencia` (`frequencia_id`);
-
---
--- Índices de tabela `horario`
---
-ALTER TABLE `horario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_horario_aluno` (`aluno_id`),
-  ADD KEY `fk_horario_disciplina` (`disciplina_id`),
-  ADD KEY `fk_horario_turma` (`turma_id`),
-  ADD KEY `fk_horario_avaliacao` (`avaliacao_id`),
-  ADD KEY `fk_horario_declaracao` (`declaracao_id`),
-  ADD KEY `fk_horario_frequencia` (`frequencia_id`),
-  ADD KEY `fk_professor_horario` (`professor_id`);
-
---
--- Índices de tabela `materiais_complementares`
---
-ALTER TABLE `materiais_complementares`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_materiais_materias` (`materias_id`);
-
---
--- Índices de tabela `materias`
---
-ALTER TABLE `materias`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_materias_professor` (`professor_id`),
-  ADD KEY `fk_materias_aluno` (`aluno_id`),
-  ADD KEY `fk_materia_turma` (`turma_id`);
-
---
--- Índices de tabela `matricula`
---
-ALTER TABLE `matricula`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_matricula_aluno` (`aluno_id`),
-  ADD KEY `fk_matricula_turma` (`turma_id`),
-  ADD KEY `fk_matricula_historico` (`historico_academico_id`),
-  ADD KEY `fk_matricula_avaliacao` (`avaliacao_id`),
-  ADD KEY `fk_matricula_frequencia` (`frequencia_id`);
-
---
--- Índices de tabela `mensagens_chat`
---
-ALTER TABLE `mensagens_chat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id` (`user_id`),
-  ADD KEY `fk_receptor_id` (`receptor_id`),
-  ADD KEY `fk_mensagem_turma` (`chat_turma`);
-
---
--- Índices de tabela `modulo`
---
-ALTER TABLE `modulo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_modulo_turma` (`turma_id`),
-  ADD KEY `fk_modulo_matricula` (`matricula_id`),
-  ADD KEY `fk_modulo_aluno` (`aluno_id`);
-
---
--- Índices de tabela `notas`
---
-ALTER TABLE `notas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `notificacoes`
---
-ALTER TABLE `notificacoes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_notificacoes_user` (`user_id`);
-
---
--- Índices de tabela `permissoes`
---
-ALTER TABLE `permissoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `preferencias_notificacao`
---
-ALTER TABLE `preferencias_notificacao`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Índices de tabela `professor`
---
-ALTER TABLE `professor`
-  ADD KEY `fk_usuarios` (`id`);
-
---
--- Índices de tabela `progresso_academico`
---
-ALTER TABLE `progresso_academico`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `aluno_id` (`aluno_id`);
-
---
--- Índices de tabela `relatorio`
---
-ALTER TABLE `relatorio`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `relatorios`
---
-ALTER TABLE `relatorios`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `rematricula`
---
-ALTER TABLE `rematricula`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_rematricula_aluno` (`aluno_id`);
-
---
--- Índices de tabela `reuniao`
---
-ALTER TABLE `reuniao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `secretaria`
---
-ALTER TABLE `secretaria`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_secretaria_diretor` (`diretor_id`),
-  ADD KEY `fk_secretaria_coordendor` (`coordenador_id`),
-  ADD KEY `fk_secretaria_professor` (`professor_id`);
-
---
--- Índices de tabela `sistema`
---
-ALTER TABLE `sistema`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `solicitacoes`
---
-ALTER TABLE `solicitacoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `turma`
---
-ALTER TABLE `turma`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_turma_disciplina` (`disciplina_id`),
-  ADD KEY `fk_turma_professor` (`professor_id`),
-  ADD KEY `fk_turma_coordenador` (`coordenador_id`),
-  ADD KEY `fk_turma_aluno` (`aluno_id`);
-
---
--- Índices de tabela `tutores`
---
-ALTER TABLE `tutores`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `materia_id` (`materia_id`);
-
---
--- Índices de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `RM` (`RM`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `academico`
---
-ALTER TABLE `academico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `atividade`
---
-ALTER TABLE `atividade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de tabela `atividade_extracurricular`
---
-ALTER TABLE `atividade_extracurricular`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `atualizacoes`
---
-ALTER TABLE `atualizacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `avaliacao`
---
-ALTER TABLE `avaliacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `comunicado`
---
-ALTER TABLE `comunicado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `contato_emergencia`
---
-ALTER TABLE `contato_emergencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `cronograma`
---
-ALTER TABLE `cronograma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `curso`
---
-ALTER TABLE `curso`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de tabela `declaracao`
---
-ALTER TABLE `declaracao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `desempenho_alunos`
---
-ALTER TABLE `desempenho_alunos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `desempenho_turmas`
---
-ALTER TABLE `desempenho_turmas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `disciplina`
---
-ALTER TABLE `disciplina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de tabela `eventos`
---
-ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `frequencia`
---
-ALTER TABLE `frequencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `historico_academico`
---
-ALTER TABLE `historico_academico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de tabela `horario`
---
-ALTER TABLE `horario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `materiais_complementares`
---
-ALTER TABLE `materiais_complementares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `materias`
---
-ALTER TABLE `materias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `matricula`
---
-ALTER TABLE `matricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `mensagens_chat`
---
-ALTER TABLE `mensagens_chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `modulo`
---
-ALTER TABLE `modulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de tabela `notas`
---
-ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT de tabela `notificacoes`
---
-ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `permissoes`
---
-ALTER TABLE `permissoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `preferencias_notificacao`
---
-ALTER TABLE `preferencias_notificacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `progresso_academico`
---
-ALTER TABLE `progresso_academico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `relatorio`
---
-ALTER TABLE `relatorio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `relatorios`
---
-ALTER TABLE `relatorios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `rematricula`
---
-ALTER TABLE `rematricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `reuniao`
---
-ALTER TABLE `reuniao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `secretaria`
---
-ALTER TABLE `secretaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `sistema`
---
-ALTER TABLE `sistema`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `solicitacoes`
---
-ALTER TABLE `solicitacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `turma`
---
-ALTER TABLE `turma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de tabela `tutores`
---
-ALTER TABLE `tutores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restrições para tabelas despejadas
@@ -2069,7 +1657,8 @@ ALTER TABLE `atualizacoes`
 --
 ALTER TABLE `avaliacao`
   ADD CONSTRAINT `fk_avaliacao_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_avaliacao_turma` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_avaliacao_turma` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_materia` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `contato_emergencia`
@@ -2103,6 +1692,7 @@ ALTER TABLE `declaracao`
 -- Restrições para tabelas `desempenho_alunos`
 --
 ALTER TABLE `desempenho_alunos`
+  ADD CONSTRAINT `fk_desempenho_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `fk_desempenho_turma` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`) ON DELETE CASCADE;
 
 --
@@ -2220,6 +1810,12 @@ ALTER TABLE `notificacoes`
   ADD CONSTRAINT `fk_notificacoes_user` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
+-- Restrições para tabelas `observacoes`
+--
+ALTER TABLE `observacoes`
+  ADD CONSTRAINT `observacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
 -- Restrições para tabelas `preferencias_notificacao`
 --
 ALTER TABLE `preferencias_notificacao`
@@ -2236,6 +1832,18 @@ ALTER TABLE `professor`
 --
 ALTER TABLE `progresso_academico`
   ADD CONSTRAINT `progresso_academico_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Restrições para tabelas `relatorio`
+--
+ALTER TABLE `relatorio`
+  ADD CONSTRAINT `fk_relatorio_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Restrições para tabelas `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD CONSTRAINT `relatorios_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Restrições para tabelas `rematricula`
