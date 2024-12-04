@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/12/2024 às 02:26
+-- Tempo de geração: 04/12/2024 às 06:16
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -92,9 +92,7 @@ CREATE TABLE `atividade` (
 --
 
 INSERT INTO `atividade` (`id`, `aluno_id`, `turma_id`, `descricao`, `professor_id`, `data_vencimento`, `hora_vencimento`, `arquivo`, `data_entrega`, `criacao`, `atualizacao`, `status`, `titulo`) VALUES
-(1, 1, 1, 'Trabalho de Pesquisa', 1, '2024-11-10', '23:59:00', NULL, '2024-11-09', '2024-11-14 16:41:45', '2024-11-14 16:41:45', 'pendente', NULL),
-(2, 1, 1, 'Trabalho de Pesquisa', 2, '2024-11-10', '23:59:00', NULL, '2024-11-09', '2024-11-14 17:03:45', '2024-11-14 17:03:45', 'pendente', NULL),
-(3, 1, 1, 'Trabalho de Pesquisa', 2, '2024-11-10', '23:59:00', NULL, '2024-11-09', '2024-11-14 17:04:56', '2024-11-14 17:04:56', 'pendente', NULL);
+(2, 1, 1, 'Trabalho de Pesquisa do leonardo da vince', 2, '2024-12-03', '23:59:00', NULL, '2024-11-09', '2024-11-14 17:03:45', '2024-12-03 22:17:23', 'concluida', 'leozinho');
 
 -- --------------------------------------------------------
 
@@ -113,15 +111,16 @@ CREATE TABLE `atividade_extracurricular` (
   `certificado` longblob DEFAULT NULL,
   `criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `atualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status` enum('em_andamento','concluida','cancelada') DEFAULT 'em_andamento'
+  `status` enum('em_andamento','concluida','cancelada') DEFAULT 'em_andamento',
+  `professor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `atividade_extracurricular`
 --
 
-INSERT INTO `atividade_extracurricular` (`id`, `aluno_id`, `tipo_atividade`, `descricao`, `data_inicio`, `data_fim`, `carga_horaria`, `certificado`, `criacao`, `atualizacao`, `status`) VALUES
-(1, 1, 'Projeto de Extensão', 'Participação em evento', '2024-05-01', '2024-05-15', 40, NULL, '2024-11-14 16:30:18', '2024-11-14 16:30:18', 'em_andamento');
+INSERT INTO `atividade_extracurricular` (`id`, `aluno_id`, `tipo_atividade`, `descricao`, `data_inicio`, `data_fim`, `carga_horaria`, `certificado`, `criacao`, `atualizacao`, `status`, `professor_id`) VALUES
+(1, 1, 'Projeto de Extensão', 'Participação em evento', '2024-05-01', '2024-05-15', 40, NULL, '2024-11-14 16:30:18', '2024-11-14 16:30:18', 'em_andamento', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,16 +154,17 @@ CREATE TABLE `avaliacao` (
   `aluno_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
   `nota` decimal(3,2) NOT NULL CHECK (`nota` >= 0 and `nota` <= 10),
-  `data_avaliacao` date DEFAULT curdate()
+  `data_avaliacao` date DEFAULT curdate(),
+  `disciplina_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `avaliacao`
 --
 
-INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`) VALUES
-(1, 1, 1, 8.50, '2024-04-10'),
-(2, 1, 1, 8.50, '2024-04-10');
+INSERT INTO `avaliacao` (`id`, `aluno_id`, `turma_id`, `nota`, `data_avaliacao`, `disciplina_id`) VALUES
+(1, 1, 1, 8.50, '2024-04-10', NULL),
+(2, 1, 1, 8.50, '2024-04-10', NULL);
 
 -- --------------------------------------------------------
 
@@ -265,7 +265,8 @@ CREATE TABLE `curso` (
   `material_recurso` text DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
   `imagem_curso` varchar(255) NOT NULL,
-  `fk_professor_id` int(11) NOT NULL
+  `fk_professor_id` int(11) NOT NULL,
+  `aluno_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -276,7 +277,7 @@ CREATE TABLE `curso` (
 
 CREATE TABLE `declaracao` (
   `id` int(11) NOT NULL,
-  `tipo_declaracao` varchar(50) DEFAULT NULL,
+  `tipo_declaracao` enum('atestado','historico','planoEnsino','relatorio','transporte','matricula','conclusao','frequencia') DEFAULT NULL,
   `motivo` text DEFAULT NULL,
   `usuario_id` int(11) NOT NULL,
   `turma_id` int(11) NOT NULL,
@@ -290,7 +291,7 @@ CREATE TABLE `declaracao` (
 --
 
 INSERT INTO `declaracao` (`id`, `tipo_declaracao`, `motivo`, `usuario_id`, `turma_id`, `protocolo`, `data_solicitacao`, `status`) VALUES
-(1, 'Conclusão de Curso', 'Solicitação para fins de emprego', 1, 1, 'PRT20240001', '2024-11-14 13:40:28', 'pendente');
+(1, '', 'Solicitação para fins de emprego', 1, 1, 'PRT20240001', '2024-11-14 13:40:28', 'pendente');
 
 -- --------------------------------------------------------
 
@@ -366,15 +367,16 @@ CREATE TABLE `disciplina` (
   `coordenador_id` int(11) NOT NULL,
   `aluno_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
-  `declaracao_id` int(11) NOT NULL
+  `declaracao_id` int(11) NOT NULL,
+  `taxa_reprovacao` float DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `disciplina`
 --
 
-INSERT INTO `disciplina` (`id`, `nome_disciplina`, `carga_horaria`, `semestre`, `ano`, `professor_id`, `coordenador_id`, `aluno_id`, `avaliacao_id`, `declaracao_id`) VALUES
-(5, 'matematica', 3600, 3, 2024, 2, 3, 1, 1, 1);
+INSERT INTO `disciplina` (`id`, `nome_disciplina`, `carga_horaria`, `semestre`, `ano`, `professor_id`, `coordenador_id`, `aluno_id`, `avaliacao_id`, `declaracao_id`, `taxa_reprovacao`) VALUES
+(5, 'matematica', 3600, 3, 2024, 2, 3, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -459,6 +461,19 @@ INSERT INTO `eventos` (`id`, `aluno_id`, `data`, `titulo`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `atividade_id` int(11) NOT NULL,
+  `feedback` text NOT NULL,
+  `data_feedback` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `frequencia`
 --
 
@@ -477,15 +492,16 @@ CREATE TABLE `frequencia` (
   `frequencia_total` int(11) DEFAULT NULL,
   `data` date NOT NULL,
   `presenca` tinyint(1) NOT NULL,
-  `disciplina_id` int(11) DEFAULT NULL
+  `disciplina_id` int(11) DEFAULT NULL,
+  `observacao` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `frequencia`
 --
 
-INSERT INTO `frequencia` (`id`, `aluno_id`, `turma_id`, `status`, `avaliacao_id`, `declaracao_id`, `aulas_dadas`, `faltas`, `professor_id`, `faltas_permitidas`, `frequencia_atual`, `frequencia_total`, `data`, `presenca`, `disciplina_id`) VALUES
-(4, 1, 2, 'concluida', 1, 1, 55, 5, 2, 20, 90.00, 98, '2024-11-15', 100, NULL);
+INSERT INTO `frequencia` (`id`, `aluno_id`, `turma_id`, `status`, `avaliacao_id`, `declaracao_id`, `aulas_dadas`, `faltas`, `professor_id`, `faltas_permitidas`, `frequencia_atual`, `frequencia_total`, `data`, `presenca`, `disciplina_id`, `observacao`) VALUES
+(4, 1, 2, 'concluida', 1, 1, 55, 5, 2, 20, 90.00, 98, '2024-11-15', 100, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -531,22 +547,43 @@ CREATE TABLE `horario` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `materiais_complementares`
+--
+
+CREATE TABLE `materiais_complementares` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `data_publicacao` date DEFAULT NULL,
+  `materias_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `materias`
 --
 
 CREATE TABLE `materias` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) NOT NULL,
-  `progresso` int(11) DEFAULT 0
+  `progresso` int(11) DEFAULT 0,
+  `nome` varchar(20) DEFAULT NULL,
+  `imagem` enum('aula_01.jpg','aula_02.jpg','aula_03.jpg','aula_04.jpg','aula_05.jpg','aula_06.jpg') NOT NULL,
+  `professor_id` int(11) DEFAULT NULL,
+  `professor_nome` varchar(100) DEFAULT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  `turma_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `materias`
 --
 
-INSERT INTO `materias` (`id`, `descricao`, `progresso`) VALUES
-(1, 'Matemática Aplicada', 75),
-(2, 'Programação em PHP', 50);
+INSERT INTO `materias` (`id`, `descricao`, `progresso`, `nome`, `imagem`, `professor_id`, `professor_nome`, `aluno_id`, `turma_id`) VALUES
+(1, 'Matemática Aplicada', 75, 'matematica', 'aula_02.jpg', 2, 'Tramontino', 1, 1),
+(2, 'Programação em PHP', 50, 'PHP', 'aula_04.jpg', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -638,7 +675,19 @@ INSERT INTO `notas` (`id`, `aluno_id`, `disciplina_id`, `turma_id`, `modulo_id`,
 (5, 1, NULL, 0, NULL, 5.00, 5.00, 5.00, 7.00, 6.00, 'incrivel', '2024-11-28'),
 (6, 3, NULL, 0, NULL, 6.00, 7.00, 7.00, 9.00, 8.00, 'exemplar', '2024-11-28'),
 (7, 1, NULL, 0, NULL, 5.00, 6.00, 9.00, 6.00, 7.00, 'continue tentando', '2024-11-28'),
-(8, 3, NULL, 0, NULL, 5.00, 5.00, 5.00, 6.00, 5.00, 'ruinzinho hein', '2024-11-28');
+(8, 3, NULL, 0, NULL, 5.00, 5.00, 5.00, 6.00, 5.00, 'ruinzinho hein', '2024-11-28'),
+(9, 1, NULL, 0, NULL, 6.00, 0.00, 5.00, 7.00, 6.00, '', '2024-12-03'),
+(10, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(11, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(12, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(13, 3, NULL, 0, NULL, 2.00, 0.00, 5.00, 9.00, 0.00, '', '2024-12-03'),
+(14, 8, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(15, 1, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(16, 3, NULL, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, '', '2024-12-03'),
+(17, 8, NULL, 0, NULL, 5.00, 0.00, 10.00, 10.00, 10.00, 'ai sim hein', '2024-12-03'),
+(18, 1, NULL, 0, NULL, 5.00, 0.00, 8.00, 10.00, 9.00, 'ai sim hein', '2024-12-03'),
+(19, 3, NULL, 0, NULL, 5.00, 0.00, 4.00, 3.00, 3.00, 'tem que melhorar patrão', '2024-12-03'),
+(20, 8, NULL, 0, NULL, 5.00, 0.00, 4.00, 7.00, 5.00, 'juizo hein', '2024-12-03');
 
 -- --------------------------------------------------------
 
@@ -665,7 +714,10 @@ CREATE TABLE `notificacoes` (
 --
 
 INSERT INTO `notificacoes` (`id`, `user_id`, `tipo_usuarios`, `titulo`, `mensagem`, `imagem`, `link`, `data_criacao`, `lida`, `canais`, `frequencia_notif`) VALUES
-(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0, 'email,sms,internas', 'Diária');
+(1, 1, 'aluno', 'Aviso de Férias', 'As férias começam em 20 de dezembro.', NULL, NULL, '2024-11-14 16:24:49', 0, 'email,sms,internas', 'Diária'),
+(2, 1, '', 'parabens', 'ai sim hein meu garoto', NULL, NULL, '2024-12-03 18:40:01', 0, '', ''),
+(3, 1, '', 'parabens', 'ai sim hein meu garoto', NULL, NULL, '2024-12-03 18:40:22', 0, '', ''),
+(4, 1, '', 'parabens', 'ai sim hein meu garoto', NULL, NULL, '2024-12-03 18:44:21', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -1016,12 +1068,36 @@ CREATE TABLE `permissoes` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `preferencias_notificacao`
+--
+
+CREATE TABLE `preferencias_notificacao` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `notificacao_email` tinyint(1) DEFAULT 0,
+  `notificacao_telefone` tinyint(1) DEFAULT 0,
+  `senha_segura` tinyint(1) DEFAULT 0,
+  `receber_notificacoes` tinyint(1) DEFAULT 0,
+  `compartilhar_dados` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `professor`
 --
 
 CREATE TABLE `professor` (
   `id` int(11) NOT NULL,
-  `departamento` varchar(50) NOT NULL
+  `departamento` varchar(50) NOT NULL,
+  `data_admissao` date DEFAULT NULL,
+  `disciplinas_id` int(11) NOT NULL,
+  `sala` varchar(50) DEFAULT NULL,
+  `orientacoes` text DEFAULT NULL,
+  `projetos_pesquisa` text DEFAULT NULL,
+  `publicacoes` text DEFAULT NULL,
+  `desempenho` text DEFAULT NULL,
+  `projetos` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1311,16 +1387,31 @@ CREATE TABLE `turma` (
   `status` enum('ativo','pendente','risco','concluido') DEFAULT NULL,
   `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
   `turno` enum('manha','tarde','noite') DEFAULT NULL,
-  `periodo` enum('1bim','2bim','3bim','4bim') DEFAULT NULL
+  `periodo` enum('1bim','2bim','3bim','4bim') DEFAULT NULL,
+  `progresso` tinyint(3) UNSIGNED DEFAULT 0,
+  `aluno_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `turma`
 --
 
-INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador_id`, `data_inicio`, `data_fim`, `status`, `data_criacao`, `turno`, `periodo`) VALUES
-(1, 'Turma A', 1, 2, 1, '2024-02-01', '2024-12-01', '', '2024-11-14 16:29:57', NULL, NULL),
-(2, 'banco de dados', 2, 2, 3, '2024-08-05', '2025-12-08', '', '2024-11-15 17:54:09', 'tarde', '1bim');
+INSERT INTO `turma` (`id`, `nome`, `disciplina_id`, `professor_id`, `coordenador_id`, `data_inicio`, `data_fim`, `status`, `data_criacao`, `turno`, `periodo`, `progresso`, `aluno_id`) VALUES
+(1, 'Turma A', 1, 2, 1, '2024-02-01', '2024-12-01', '', '2024-11-14 16:29:57', NULL, NULL, 0, 1),
+(2, 'banco de dados', 2, 2, 3, '2024-08-05', '2025-12-08', '', '2024-11-15 17:54:09', 'tarde', '1bim', 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tutores`
+--
+
+CREATE TABLE `tutores` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `materia_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1358,13 +1449,14 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `RM`, `cpf`, `foto`, `email`, `senha`, `reset_token`, `reset_expires`, `nome`, `telefone`, `estado_civil`, `data_nascimento`, `genero`, `endereco`, `cargo`, `status`, `data_matricula`, `data_rematricula`, `nacionalidade`, `data_saida`, `data_criacao`, `updated_at`) VALUES
-(1, '4232', NULL, NULL, 'arthurhenriquegr818@gmail.com', '$2y$10$.OW4CDR0gz0f5QF9siZAe.pWrq/RveXAU9guyyMkbxufVOsa6ABna', NULL, NULL, 'Arthur Henrique Goes Rodrigues', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-11-10 16:05:01', '2024-11-10 16:05:01'),
-(2, '2526', NULL, NULL, 'tramontino@gmail.com', '$2y$10$Rm3G6xsbYPb6N09ecoh4PO8hjjW6ue.LqLxdkdmrTo0oCUhsQ3Rli', NULL, NULL, 'tramontino da silva', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-14 13:32:09', '2024-11-14 13:32:09'),
+(1, '4232', NULL, '674f52fd027db_IMG_20230308_195104_633.jpg', 'arthurhenriquegr818@gmail.com', '$2y$10$.OW4CDR0gz0f5QF9siZAe.pWrq/RveXAU9guyyMkbxufVOsa6ABna', NULL, NULL, 'Arthur Henrique Goes Rodrigues', '11955301309', 'solteiro', '2002-01-26', 'masculino', 'Rua Profeta Elias, 41', 'aluno', 'ativo', NULL, NULL, 'brasileiro', NULL, '2024-11-10 16:05:01', '2024-12-04 05:14:35'),
+(2, '2', NULL, '674e7906e0563_IMG_20230308_195104_633.jpg', 'tramontino@gmail.com', '$2y$10$Rm3G6xsbYPb6N09ecoh4PO8hjjW6ue.LqLxdkdmrTo0oCUhsQ3Rli', NULL, NULL, 'tramontino da silva', '11955301309', 'solteiro', '2005-01-26', 'masculino', 'Rua Profeta Elias, 41', 'professor', 'ativo', NULL, NULL, 'brasileiro', NULL, '2024-11-14 13:32:09', '2024-12-03 21:24:37'),
 (3, '123456789', '12345678910', 'foto1.jpg', 'usuario1@example.com', 'senha1', NULL, NULL, 'João Silva', '11999999999', 'solteiro', '2000-01-01', 'masculino', 'Rua A, 123', 'aluno', 'ativo', '2022-02-01', '2023-02-01', 'Brasileiro', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
 (4, '987654321', '10987654321', 'foto2.jpg', 'usuario2@example.com', 'senha2', NULL, NULL, 'Maria Souza', '11988888888', 'casado', '1995-05-15', 'feminino', 'Avenida B, 456', 'professor', 'ativo', '2020-03-05', NULL, 'Brasileira', NULL, '2024-11-14 16:27:04', '2024-11-14 16:27:04'),
 (5, '4132', NULL, '674e12b932ed0_IMG_20230308_195104_633.jpg', 'eli-tutu@hotmail.com', '$2y$10$whNP5AWXTcgwL.xFAPX6vuRSFuecLayvD/YLirVHewg8goVT8HErq', NULL, NULL, 'Eliane Alves Goes', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-11-26 14:44:06', '2024-12-02 20:27:13'),
 (8, '1805', NULL, NULL, 'diego@gmail.com', '$2y$10$vzwvi/ZabGYAvJzlxtybu.nwV0uIknEmlQ5iUu3h2dtWmciQMSShi', NULL, NULL, 'diego valote', NULL, NULL, '0000-00-00', 'masculino', NULL, 'aluno', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:24:22', '2024-12-03 01:24:22'),
-(9, '3563', NULL, NULL, 'denis@gmail.com', '$2y$10$HSmJ9UV0dyUg2/zwB9w0KOwjuQrSI14j6qVQLbv8YVWgoxTK9a99S', NULL, NULL, 'Denis Ramiro', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:25:18', '2024-12-03 01:25:18');
+(9, '3563', NULL, NULL, 'denis@gmail.com', '$2y$10$HSmJ9UV0dyUg2/zwB9w0KOwjuQrSI14j6qVQLbv8YVWgoxTK9a99S', NULL, NULL, 'Denis Ramiro', NULL, NULL, '0000-00-00', 'masculino', NULL, 'professor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 01:25:18', '2024-12-03 01:25:18'),
+(10, '4621', NULL, NULL, 'wesley@gmail.com', '$2y$10$dHtivBS45DaCC921NSbq1OnA8HB22rnzp99rXwPmpzf9eenbR8J66', NULL, NULL, 'wesley Santos', NULL, NULL, '0000-00-00', 'masculino', NULL, 'diretor', 'ativo', NULL, NULL, NULL, NULL, '2024-12-03 12:50:18', '2024-12-03 12:51:12');
 
 --
 -- Índices para tabelas despejadas
@@ -1398,7 +1490,8 @@ ALTER TABLE `atividade`
 --
 ALTER TABLE `atividade_extracurricular`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ati_extra_usuarios` (`aluno_id`);
+  ADD KEY `fk_ati_extra_usuarios` (`aluno_id`),
+  ADD KEY `fk_ati_usuarios` (`professor_id`);
 
 --
 -- Índices de tabela `atualizacoes`
@@ -1447,7 +1540,8 @@ ALTER TABLE `cronograma`
 --
 ALTER TABLE `curso`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_professor_usuarios` (`fk_professor_id`);
+  ADD KEY `fk_professor_usuarios` (`fk_professor_id`),
+  ADD KEY `fk_aluno` (`aluno_id`);
 
 --
 -- Índices de tabela `declaracao`
@@ -1502,6 +1596,13 @@ ALTER TABLE `eventos`
   ADD KEY `fk_eventos_aluno` (`aluno_id`);
 
 --
+-- Índices de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `atividade_id` (`atividade_id`);
+
+--
 -- Índices de tabela `frequencia`
 --
 ALTER TABLE `frequencia`
@@ -1539,10 +1640,20 @@ ALTER TABLE `horario`
   ADD KEY `fk_professor_horario` (`professor_id`);
 
 --
+-- Índices de tabela `materiais_complementares`
+--
+ALTER TABLE `materiais_complementares`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_materiais_materias` (`materias_id`);
+
+--
 -- Índices de tabela `materias`
 --
 ALTER TABLE `materias`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_materias_professor` (`professor_id`),
+  ADD KEY `fk_materias_aluno` (`aluno_id`),
+  ADD KEY `fk_materia_turma` (`turma_id`);
 
 --
 -- Índices de tabela `matricula`
@@ -1591,6 +1702,13 @@ ALTER TABLE `notificacoes`
 --
 ALTER TABLE `permissoes`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `preferencias_notificacao`
+--
+ALTER TABLE `preferencias_notificacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Índices de tabela `professor`
@@ -1658,7 +1776,15 @@ ALTER TABLE `turma`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_turma_disciplina` (`disciplina_id`),
   ADD KEY `fk_turma_professor` (`professor_id`),
-  ADD KEY `fk_turma_coordenador` (`coordenador_id`);
+  ADD KEY `fk_turma_coordenador` (`coordenador_id`),
+  ADD KEY `fk_turma_aluno` (`aluno_id`);
+
+--
+-- Índices de tabela `tutores`
+--
+ALTER TABLE `tutores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `materia_id` (`materia_id`);
 
 --
 -- Índices de tabela `usuarios`
@@ -1682,7 +1808,7 @@ ALTER TABLE `academico`
 -- AUTO_INCREMENT de tabela `atividade`
 --
 ALTER TABLE `atividade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `atividade_extracurricular`
@@ -1757,6 +1883,12 @@ ALTER TABLE `eventos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `frequencia`
 --
 ALTER TABLE `frequencia`
@@ -1773,6 +1905,12 @@ ALTER TABLE `historico_academico`
 --
 ALTER TABLE `horario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `materiais_complementares`
+--
+ALTER TABLE `materiais_complementares`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `materias`
@@ -1802,18 +1940,24 @@ ALTER TABLE `modulo`
 -- AUTO_INCREMENT de tabela `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `permissoes`
 --
 ALTER TABLE `permissoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `preferencias_notificacao`
+--
+ALTER TABLE `preferencias_notificacao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1871,10 +2015,16 @@ ALTER TABLE `turma`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de tabela `tutores`
+--
+ALTER TABLE `tutores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restrições para tabelas despejadas
@@ -1904,7 +2054,8 @@ ALTER TABLE `atividade`
 -- Restrições para tabelas `atividade_extracurricular`
 --
 ALTER TABLE `atividade_extracurricular`
-  ADD CONSTRAINT `fk_ati_extra_usuarios` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_ati_extra_usuarios` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ati_usuarios` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `atualizacoes`
@@ -1937,6 +2088,7 @@ ALTER TABLE `coordenador`
 -- Restrições para tabelas `curso`
 --
 ALTER TABLE `curso`
+  ADD CONSTRAINT `fk_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `fk_curso_professor` FOREIGN KEY (`fk_professor_id`) REFERENCES `professor` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_professor_usuarios` FOREIGN KEY (`fk_professor_id`) REFERENCES `usuarios` (`id`);
 
@@ -1982,6 +2134,12 @@ ALTER TABLE `eventos`
   ADD CONSTRAINT `fk_eventos_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
+-- Restrições para tabelas `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`atividade_id`) REFERENCES `atividade` (`id`) ON DELETE CASCADE;
+
+--
 -- Restrições para tabelas `frequencia`
 --
 ALTER TABLE `frequencia`
@@ -2016,6 +2174,20 @@ ALTER TABLE `horario`
   ADD CONSTRAINT `fk_professor_horario` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`);
 
 --
+-- Restrições para tabelas `materiais_complementares`
+--
+ALTER TABLE `materiais_complementares`
+  ADD CONSTRAINT `fk_materiais_materias` FOREIGN KEY (`materias_id`) REFERENCES `materias` (`id`);
+
+--
+-- Restrições para tabelas `materias`
+--
+ALTER TABLE `materias`
+  ADD CONSTRAINT `fk_materia_turma` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`),
+  ADD CONSTRAINT `fk_materias_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `fk_materias_professor` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`);
+
+--
 -- Restrições para tabelas `matricula`
 --
 ALTER TABLE `matricula`
@@ -2048,6 +2220,12 @@ ALTER TABLE `notificacoes`
   ADD CONSTRAINT `fk_notificacoes_user` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
+-- Restrições para tabelas `preferencias_notificacao`
+--
+ALTER TABLE `preferencias_notificacao`
+  ADD CONSTRAINT `preferencias_notificacao_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`);
+
+--
 -- Restrições para tabelas `professor`
 --
 ALTER TABLE `professor`
@@ -2077,9 +2255,16 @@ ALTER TABLE `secretaria`
 -- Restrições para tabelas `turma`
 --
 ALTER TABLE `turma`
+  ADD CONSTRAINT `fk_turma_aluno` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `fk_turma_coordenador` FOREIGN KEY (`coordenador_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_turma_disciplina` FOREIGN KEY (`disciplina_id`) REFERENCES `materias` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_turma_professor` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `tutores`
+--
+ALTER TABLE `tutores`
+  ADD CONSTRAINT `tutores_ibfk_1` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

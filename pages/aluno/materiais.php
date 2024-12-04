@@ -2,17 +2,10 @@
 include '../../php/global/cabecario.php';
 require_once '../../php/login/validar.php';
 include '../../php/global/notificacao.php';
-// Consulta para buscar os cursos
-$sql = "SELECT nome_curso, fk_professor_id, imagem_curso FROM curso";
+// Consulta SQL para obter as matérias
+$sql = "SELECT * FROM materias";
 $result = $conn->query($sql);
 
-// Verifica se há resultados
-$cursos = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $cursos[] = $row;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -137,18 +130,21 @@ if ($result->num_rows > 0) {
 <!--=================================================================== MAIN CONTENT ============================================================-->
 
 <main>
-    <div class="course-grid">
-        <!--------------------- Card --------------------------------->
-        <?php foreach ($cursos as $curso) : ?>
-        <div class="course-card">
-            <img src="../../assets/img/home/cards/<?php echo $curso['imagem']; ?>" alt="Imagem do curso <?php echo htmlspecialchars($curso['nome']); ?>">
-            <h3><?php echo htmlspecialchars($curso['nome']); ?></h3>
-            <p>Professores: <?php echo htmlspecialchars($curso['professor'])?></p>
-            <a href="aulas.php" class="start-btn">Entrar</a>
-        </div>
-            <?php endforeach; ?>
-    </div>
-    
+<div class="course-grid">
+    <?php if($result->num_rows > 0) { ?>
+        <?php while($row = $result->fetch_assoc()) { ?>
+            <!--------------------- Card ------------------------->
+            <div class="course-card">
+                <img src="../../assets/img/home/cards/<?= htmlspecialchars($row['imagem']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
+                <h3><?= htmlspecialchars($row['nome']); ?></h3>
+                <p>Professores: <?= htmlspecialchars($row['professor_nome']); ?></p>
+                <a href="aulas.php?id=<?= $row['id']?>" class="start-btn">Entrar</a>
+            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <p>Nenhuma matéria encontrada.</p>
+    <?php } ?>
+</div>
 </main>
 
     <!-- Scripts -->

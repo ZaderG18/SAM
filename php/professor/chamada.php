@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar'])) {
             $stmt = $conn->prepare("INSERT INTO frequencia (aluno_id, presenca, observacao, data) 
                                     VALUES (?, ?, ?, ?) 
                                     ON DUPLICATE KEY UPDATE presenca = ?, observacao = ?");
-            $stmt->bind_param("iisssi", $alunoId, $presenca, $observacao, date('Y-m-d'), $presenca, $observacao);
+            $stmt->bind_param("iisssi", $alunoId, $presenca, $observacao, $presenca, $observacao);
             $stmt->execute();
         }
 

@@ -39,7 +39,7 @@ function getMateria($conn, $materia_id,  $descricao = false, $progresso = false)
 
 // Função para obter atividades
 function getAtividades($conn, $materia_id) {
-    $sql = "SELECT id, titulo FROM atividades WHERE materia_id = ?";
+    $sql = "SELECT id, titulo FROM atividade WHERE aluno_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
@@ -54,7 +54,7 @@ function getAtividades($conn, $materia_id) {
 
 // Função para obter atividades pendentes
 function getAtividadesPendentes($conn, $materia_id) {
-    $sql = "SELECT id, titulo FROM atividades WHERE materia_id = ? AND status = 'pendente'";
+    $sql = "SELECT id, titulo FROM atividade WHERE aluno_id = ? AND status = 'pendente'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
@@ -69,10 +69,10 @@ function getAtividadesPendentes($conn, $materia_id) {
 
 // Função para obter feedbacks do professor
 function getFeedbacks($conn, $materia_id) {
-    $sql = "SELECT atividades.titulo, feedbacks.comentario 
-            FROM feedbacks 
-            JOIN atividades ON feedbacks.atividade_id = atividades.id 
-            WHERE atividades.materia_id = ?";
+    $sql = "SELECT atividade.titulo, feedback.feedback 
+            FROM feedback 
+            JOIN atividade ON feedback.atividade_id = atividade.id 
+            WHERE atividade.aluno_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
@@ -87,7 +87,7 @@ function getFeedbacks($conn, $materia_id) {
 
 // Função para obter materiais complementares
 function getMateriaisComplementares($conn, $materia_id) {
-    $sql = "SELECT titulo, link FROM materiais_complementares WHERE materia_id = ?";
+    $sql = "SELECT titulo, link FROM materiais_complementares WHERE materias_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();

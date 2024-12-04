@@ -187,7 +187,14 @@ $tableQueries = [
             data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
             status ENUM('pendente', 'pronto') DEFAULT 'pendente'
     )",
-    
+    "materias_complementares" => "CREATE TABLE materiais_complementares (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    link VARCHAR(255),
+    materias_id INT,
+    data_publicacao DATE
+)",
     "diretor" => "CREATE TABLE IF NOT EXISTS diretor (
         id INT(11) NOT NULL,
         nivel_acesso ENUM('junior', 'senior', 'executivo') NOT NULL
@@ -445,6 +452,13 @@ $tableQueries = [
     feedback TEXT NOT NULL,
     data_feedback TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (atividade_id) REFERENCES atividade(id) ON DELETE CASCADE
+)",
+"tutores" => "CREATE TABLE tutores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    materia_id INT NOT NULL,
+    FOREIGN KEY (materia_id) REFERENCES materias(id)
 )"
 ];
 
@@ -540,6 +554,7 @@ FOREIGN KEY (matricula_id) REFERENCES matricula(id) ON DELETE CASCADE",
     "ALTER TABLE historico_academico ADD CONSTRAINT fk_historico_frequencia FOREIGN KEY (frequencia_id) REFERENCES frequencia(id) ON DELETE CASCADE",
     "ALTER TABLE atividade ADD CONSTRAINT fk_atividade_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
     "ALTER TABLE atividade ADD CONSTRAINT fk_atividade_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
+    "ALTER TABLE materiais_complementares ADD CONSTRAINT fk_materiais_materias FOREIGN KEY (materias_id) REFERENCES materias(id)",
     "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplina(id) ON DELETE CASCADE",
     "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_aluno FOREIGN KEY (aluno_id) REFERENCES usuarios(id) ON DELETE CASCADE",
     "ALTER TABLE frequencia ADD CONSTRAINT fk_frequencia_turma FOREIGN KEY (turma_id) REFERENCES turma(id) ON DELETE CASCADE",
